@@ -1,0 +1,109 @@
+<!--
+  Generated template for the PerfilPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>perfil</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recaregando...">
+        </ion-refresher-content>
+      </ion-refresher>
+    
+    <div style="width: 100%">
+        <div class="fundo-perfil">
+          <div class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)">
+          </div>
+          <div class="button-like">
+            <span class="bola"></span>
+            <button *ngIf="seguindo" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)">Seguindo</button>
+            <button *ngIf="!seguindo" ion-button small class="botao-seguir" (click)="seguir(perfilId, userId)">Seguir</button>
+          </div>
+          <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)">
+          <h3 class="nome_usuario">{{ perfil_nome }}</h3>
+        </div>
+      </div>
+    
+      <ion-item>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <p>{{ stat_anuncios }}</p>
+            <p>Publicações</p>
+          </ion-col>
+          <ion-col style="text-align: center" (click)="goStats('Seguidores')">
+            <p>{{ stat_seguidores }}</p>
+            <p>Seguidores</p>
+          </ion-col>
+          <ion-col style="text-align: center" (click)="goStats('Seguindo')">
+            <p>{{ stat_seguindo }}</p>
+            <p>Seguindo</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      
+  <ion-card *ngFor="let item of anuncios">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{ item.user_image }}">
+      </ion-avatar>
+      <P style="white-space: initial; max-width: 80%;">
+          <b>{{ item.nome }}</b>
+          <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin"></ion-icon> {{ item.local }}</b></span>
+        </P>
+      <p>{{ item.atras }}</p>
+    </ion-item>
+    <ion-card-content>
+      <p>{{ item.texto }}</p>
+    </ion-card-content>
+    <div style="max-height: 340px; overflow: hidden;">
+      <img *ngIf="item.imagem && item.imagem != 'none'" (click)="ampliarImagem(item.imagem, item.texto)" src="https://bluedropsproducts.com/app/uploads/{{ item.imagem }}">
+    </div>
+    <ion-row>
+
+      <ion-col col-5 *ngIf="userId == item.id">
+        <a class="texto-excluir" *ngIf="userId == item.id" (click)="deleteAnuncio(item)">Excluir</a>
+      </ion-col>
+
+      <ion-col col-5 *ngIf="userId != item.id">
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <ion-item class="item-post-range">
+          <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
+        </ion-item>
+
+      </ion-col>
+      <ion-col col-7 style="border-left: 1px solid #7f7f7f; margin: 3px 0;">
+        <button style="padding: 0; float: left;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          Comentários
+        </button>
+      </ion-col>
+
+    </ion-row>
+  </ion-card>
+  <!-- <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingText="Carregando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+</ion-content>

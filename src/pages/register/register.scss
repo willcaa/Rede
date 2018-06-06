@@ -1,0 +1,43 @@
+page-register {
+    .toolbar-md-dark .toolbar-background-md {
+        background: linear-gradient(to right, #73395c , #0a2386);
+    }
+    .content-md {
+        background-color: #fff;
+        background-image: url("../assets/imgs/fundo_login.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-origin: border-box;
+        background-clip: border-box;
+        background-attachment: fixed;
+    }
+    .button-facebook {
+        right: 0;
+        height: 18vw;
+        bottom: calc(50% - 9vw);
+        position: absolute;
+    }
+    .button-temp {
+        right: 5%;
+        bottom: 5%;
+        position: absolute;
+        color: #fff;
+        font-size: 20px;
+    }
+    .logo-login {
+        right: calc(50% - 12.5%);
+        bottom: 75%;
+        width: 25%;
+        position: absolute;
+    }
+    .texto {
+        text-align: center;
+        color: #fff;
+        font-size: 5vw;
+        width: 40vw;
+        position: absolute;
+        bottom: 68%;
+        right: calc(50% - 20vw);
+    }
+}

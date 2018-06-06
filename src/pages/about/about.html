@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar color="dark"> 
+
+    <ion-title>
+      Criar Publicação
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button *ngIf="!publicando" (click)="uploadFile()">
+        PUBLICAR
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+      <ion-avatar item-start>
+        <img src="{{ foto_usuario }}">
+      </ion-avatar>
+      <h2>{{ nome_usuario }}</h2>
+  </ion-item>
+
+  <ion-item>
+    <img src="{{ imageURI }}" alt="" width="100%" height="100%"/>
+    <p>{{ checkin }}</p>
+  </ion-item>
+  <ion-item>
+      <ion-textarea [(ngModel)]="texto" rows="8" placeholder="O que gostaria de informar?"></ion-textarea>
+  </ion-item>
+  <ion-list style="margin-top: 50px;">
+    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getImage()">
+      <ion-icon color="secondary" name="images" isActive="true" item-start></ion-icon>
+        Galeria
+    </ion-item>
+    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="getPicture()">
+      <ion-icon color="primary" name="camera" isActive="true" item-start></ion-icon>
+        Foto/Video
+    </ion-item>
+    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="checkIn()">
+      <ion-icon color="danger" name="pin" isActive="true" item-start></ion-icon>
+        Check-in
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  </ion-footer>

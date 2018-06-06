@@ -1,0 +1,168 @@
+<!--
+  Generated tem late for the FeedPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+
+  <ion-toolbar color="dark">
+    
+    <ion-title>
+      <img class="imageLogoFeed" src="assets/imgs/logo.png">
+    </ion-title>
+
+    <ion-buttons end>
+      <button id="notification-button" ion-button clear (click)="notificacoes($event)">
+        <ion-icon name="notifications">
+          <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
+        </ion-icon>
+      </button>
+      <button ion-button icon-only (click)="goPerfil()">
+        <img class="imageUserFeed" src="assets/imgs/user_round.png">
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+
+
+  <ion-toolbar class="buttons_header">
+
+    <ion-segment [(ngModel)]="local" color="primary" item-end>
+      <button ion-button class="btn-TopOrNews" (click)="alterarTopNews($event)">
+        <img style="margin-top: 3px;" src="assets/imgs/opts.png">
+      </button>
+      <ion-segment-button value="proximidade" style="margin: 1px; padding-top: 4px; padding-left: 9px;" (ionSelect)="alterarLocal('proximidade')">
+        <img *ngIf="local == 'proximidade'" src="assets/imgs/local_round_blue.png">
+        <img *ngIf="local != 'proximidade'" src="assets/imgs/local_round_black.png">
+      </ion-segment-button>
+      <ion-segment-button value="amigos" (ionSelect)="alterarLocal('amigos')">
+        <ion-icon name="contacts" style="padding-top: 0px;"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="bairro" (ionSelect)="alterarLocal('bairro')">
+        <p style="margin-top: 2px;">Bairro</p>
+      </ion-segment-button>
+      <ion-segment-button value="cidade" (ionSelect)="alterarLocal('cidade')">
+        <p style="margin-top: 2px;">Cidade</p>
+      </ion-segment-button>
+      <ion-segment-button value="estado" (ionSelect)="alterarLocal('estado')">
+        <p style="margin-top: 2px;">Estado</p>
+      </ion-segment-button>
+      <ion-segment-button value="pais" (ionSelect)="alterarLocal('pais')">
+        <p style="margin-top: 2px;">País</p>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-item  class="item-range-range" *ngIf="!platform.is('ios')"no-lines>
+    <ion-range class="range-range" min="0" max="1000" step="200" (ionChange)="alterarLocal('range')" [(ngModel)]="range"></ion-range>
+  </ion-item>
+
+
+  <!-- <ion-toolbar class="border_subheader">
+    <ion-buttons item-start>
+      <button *ngIf="btnNews" ion-button style="margin-left: -8px;box-shadow: none; color: blue;">
+          News
+        </button>
+        <button *ngIf="btnTop" ion-button style="margin-left: -8px;box-shadow: none;">
+        News
+      </button>
+    </ion-buttons>
+  </ion-toolbar> -->
+
+  <ion-toolbar id="sendbar" color="light" style="height: 45px; min-height: 0px;" (click)="goImage()">
+    <ion-item>
+      <p>O que gostaria de informar ?</p>
+      <ion-avatar item-start>
+        <img src="{{ userImagem }}">
+      </ion-avatar>
+    </ion-item>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="ios-phone-portrait"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content #contentRef (ionScroll)="scrollingFun($event)">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recaregando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{ item.user_image }}" (click)="goPerfil(item.id)">
+      </ion-avatar>
+      <P style="white-space: initial; max-width: 80%;">
+        <b>{{ item.nome }}</b>
+        <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin"></ion-icon> {{ item.local }}</b></span>
+      </P>
+      <p>{{ item.atras }}</p>
+      <button class="button-more" ion-button icon-only clear (click)="opts($event, item)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-card-content style="padding: 0">
+      <p>{{ item.texto }}</p>
+    </ion-card-content>
+    <div style="max-height: 340px; overflow: hidden;">
+      <img *ngIf="item.hasImage == true" (click)="ampliarImagem(item.imagem, item.texto)" src="{{ item.imagem }}">
+    </div>
+
+    <ion-row>
+
+      <ion-col col-5 *ngIf="userId == item.id">
+        <a class="texto-excluir" *ngIf="userId == item.id" (click)="deleteAnuncio(item)">Excluir</a>
+      </ion-col>
+
+      <ion-col col-5 *ngIf="userId != item.id">
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <button class="btn-star">
+          <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+        </button>
+        <ion-item class="item-post-range">
+          <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-7 style="border-left: 1px solid #7f7f7f; margin: 3px 0;">
+        <button style="padding: 0; float: left;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          Comentários
+        </button>
+        <button style="padding: 0; float: right;" (click)="navigate(item.lat, item.lng)" ion-button icon-left clear small>
+          <ion-badge item-end>{{ item.distance }} {{ item.unit }}</ion-badge>
+        </button>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-title class="titulo-recentes" *ngIf="item.hasImage == false && item.local && item.imagem">Recentes nesse local:</ion-title>
+    <ion-scroll class="scroll-Images" *ngIf="item.hasImage == false && item.local && item.imagem" scrollX="true" style="width:100%; height:25vw; margin-bottom: 5px;">
+      <ion-row nowrap>
+        <img class="imagem-recentes" *ngFor="let image of item.imagem" (click)="ampliarImagem(image)" src="{{ image }}">
+      </ion-row>
+    </ion-scroll>
+
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingText="Carregando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
