@@ -1,0 +1,21 @@
+page-ferramentas {
+    .book > .button-inner{
+        flex-direction: column;
+    }
+    .cash > .button-inner{
+        flex-direction: column;
+    }
+    .paper > .button-inner{
+        flex-direction: column;
+    }
+    .calculator > .button-inner{
+        flex-direction: column;
+    }
+    .button-md{
+        width: 181px;
+        height: 150px;
+    }
+    .toolbar-md-dark .toolbar-background-md {
+        background: linear-gradient(45deg, rgba(55, 197, 233, 1) 0%, rgba(73, 125, 190, 1) 100%);
+      }
+}

@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { FeedPage } from '../pages/feed/feed';
 import { RegisterPage } from '../pages/register/register';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { FerramentasPage } from '../pages/ferramentas/ferramentas';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,7 +28,7 @@ export class MyApp {
                 if(val) {
                   storage.get('nome').then((val) => {
                     if(val) {
-                      this.rootPage = RegisterPage;
+                      this.rootPage = FerramentasPage;
                     } else {
                       this.rootPage = RegisterPage;
                     } 
