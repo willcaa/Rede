@@ -38,6 +38,7 @@ import { PopoverOptsAnunciosComponent } from '../components/popover-opts-anuncio
 import { PopoverNotificacoesComponent } from '../components/popover-notificacoes/popover-notificacoes';
 import { StatsPage } from '../pages/stats/stats';
 
+
 @NgModule({
   declarations: [
     MyApp,

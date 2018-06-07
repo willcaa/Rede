@@ -1,17 +1,12 @@
-page-codigo-de-erro {
+page-produtos-brastemp {
     .toolbar-md-dark .toolbar-background-md {
         background: linear-gradient(45deg, rgba(55, 197, 233, 1) 0%, rgba(73, 125, 190, 1) 100%);
     }
-    .arcondicionado > .button-inner {
-        flex-direction: column;
-    }
-    .button-md {
-        width: 370px;
-        height: 6.6rem;
+    .button-md{
         background-repeat: no-repeat;
         background-size: cover;
-        left: 56px;
         width: 250px;
         height: 100px;
+        left: 65px;
     }
 }
