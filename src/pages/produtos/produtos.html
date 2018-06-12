@@ -7,14 +7,15 @@
 <ion-header>
 
   <ion-navbar color="dark">
-    <ion-title>Produtos Brastemp</ion-title>
+    <ion-title>Produtos</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <button ion-button name="Brastemp" style="background-image: url(assets/imgs/arbrastemp.png);"></button>
-  <h3 style="margin-left: 125px; margin-top: -0.4rem; font-size: 3.2rem; color: rgba(55, 197, 233, 1);">Brastemp</h3>
+  <button ion-button *ngFor="let item of marca" name=" {{item.name}} " style="background-image: url( {{item.img}})" (click) = "goList(item.product_id)">
+    
+  </button>
 
 </ion-content>

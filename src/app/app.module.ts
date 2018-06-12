@@ -37,7 +37,11 @@ import { PopoverTopComponent } from '../components/popover-top/popover-top';
 import { PopoverOptsAnunciosComponent } from '../components/popover-opts-anuncios/popover-opts-anuncios';
 import { PopoverNotificacoesComponent } from '../components/popover-notificacoes/popover-notificacoes';
 import { StatsPage } from '../pages/stats/stats';
-
+import { CodigoDeErroPage } from '../pages/codigo-de-erro/codigo-de-erro';
+import { FerramentasPage } from '../pages/ferramentas/ferramentas';
+import { MarcasArCondicionadoPage } from '../pages/marcas-ar-condicionado/marcas-ar-condicionado';
+import { ProdutosPage } from '../pages/produtos/produtos';
+import { ListaPage } from '../pages/lista/lista';
 
 @NgModule({
   declarations: [
@@ -55,7 +59,12 @@ import { StatsPage } from '../pages/stats/stats';
     PopoverDenunciarComponent,
     PopoverTopComponent,
     PopoverOptsAnunciosComponent,
-    PopoverNotificacoesComponent
+    PopoverNotificacoesComponent,
+    CodigoDeErroPage,
+    FerramentasPage,
+    MarcasArCondicionadoPage,
+    ProdutosPage,
+    ListaPage
   ],
   
   imports: [
@@ -83,7 +92,12 @@ import { StatsPage } from '../pages/stats/stats';
     PopoverDenunciarComponent,
     PopoverTopComponent,
     PopoverOptsAnunciosComponent,
-    PopoverNotificacoesComponent
+    PopoverNotificacoesComponent,
+    CodigoDeErroPage,
+    FerramentasPage,
+    MarcasArCondicionadoPage,
+    ProdutosPage,
+    ListaPage
   ],
   providers: [
     StatusBar,

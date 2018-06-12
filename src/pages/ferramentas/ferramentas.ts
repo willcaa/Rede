@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CodigoDeErroPage } from '../codigo-de-erro/codigo-de-erro';
 
-/**
- * Generated class for the FerramentasPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,6 +11,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class FerramentasPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  goErrorCode(){
+    this.navCtrl.push(CodigoDeErroPage);
   }
 
   ionViewDidLoad() {

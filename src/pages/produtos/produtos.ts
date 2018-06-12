@@ -1,51 +1,47 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { ListaPage } from '../lista/lista';
 
-import { ProdutosPage } from '../produtos/produtos';
+
 
 @IonicPage()
 @Component({
-  selector: 'page-marcas-ar-condicionado',
-  templateUrl: 'marcas-ar-condicionado.html',
+  selector: 'page-produtos',
+  templateUrl: 'produtos.html',
 })
-
-export class MarcasArCondicionadoPage {
-
-  userId: any;
-  public notificacoes_qts: any;
-  public marcas: any;
+export class ProdutosPage {
   public marca: any;
+  public marcaId: any;
+  public produtos: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
-    this.http = http;
+    this.marcaId = this.navParams.get("marcaId");
   }
 
-  getMarcas() {
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ProdutosPage');
+    this.getProdutos();
+  }
+  getProdutos(){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
     headers.append('Access-Control-Expose-Headers', "true");
 
-    let body = {}
+    let body = {marcaId: this.marcaId}
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getMarcas';
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getMarca';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
-        this.marcas = data;
-        console.log(this.marcas);
+        this.marca = data;
+        console.log(this.marca);
       });
   }
-
-  goMarca(id){
-    this.navCtrl.push(ProdutosPage, {marcaId: id});
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MarcasArCondicionadoPage');
-    this.getMarcas();
+  goList(product_id){
+    this.navCtrl.push(ListaPage, {productId: product_id});
   }
 
 }

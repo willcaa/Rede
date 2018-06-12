@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { MarcasArCondicionadoPage } from '../marcas-ar-condicionado/marcas-ar-condicionado';
+
 /**
  * Generated class for the CodigoDeErroPage page.
  *
@@ -14,7 +17,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CodigoDeErroPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  }
+  goPage(){
+    this.navCtrl.push(MarcasArCondicionadoPage);
   }
 
   ionViewDidLoad() {
