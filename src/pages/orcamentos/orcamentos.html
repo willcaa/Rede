@@ -1,0 +1,344 @@
+<!--
+  Generated template for the OrcamentosPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar color="dark">
+
+    <ion-title>
+      <img class="imageLogoFeed" src="assets/imgs/logo.png">
+    </ion-title>
+
+    <ion-buttons end>
+      <button id="notification-button" ion-button clear (click)="notificacoes($event)">
+        <ion-icon name="notifications">
+          <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
+        </ion-icon>
+      </button>
+      <button ion-button icon-only (click)="goPerfil()">
+        <img class="imageUserFeed" src="assets/imgs/user_round.png">
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+
+
+  <ion-toolbar class="buttons_header">
+
+    <ion-segment [(ngModel)]="local" color="primary" item-end>
+      <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('orcamentos', fab)">
+        <p style="margin-top: 2px;">Orçamentos</p>
+      </ion-segment-button>
+      <ion-segment-button value="clientes" (ionSelect)="alterarTab('clientes', fab)">
+        <p style="margin-top: 2px;">Clientes</p>
+      </ion-segment-button>
+      <ion-segment-button value="produtos" (ionSelect)="alterarTab('produtos', fab)">
+        <p style="margin-top: 2px;">Produtos</p>
+      </ion-segment-button>
+      <ion-segment-button value="servicos" (ionSelect)="alterarTab('servicos', fab)">
+        <p style="margin-top: 2px;">Serviços</p>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div id="orcamentos" *ngIf="pageId == 'orcamentos'">
+    <ion-list>
+      <ion-item style="color: cornflowerblue;">
+        <ion-icon name="md-clock" item-start></ion-icon>
+        PENDENTES
+        <ion-badge name="rose" item-end>100</ion-badge>
+        <ion-icon name="md-play" item-end></ion-icon>
+      </ion-item>
+      <ion-item style="color: limegreen;">
+        <ion-icon name="md-checkmark-circle" item-start></ion-icon>
+        APROVADOS
+        <ion-badge color="secondary" name="rose" item-end>100</ion-badge>
+        <ion-icon name="md-play" item-end></ion-icon>
+      </ion-item>
+      <ion-item style="color: firebrick;">
+        <ion-icon name="md-close-circle" style="color: firebrick;" item-start></ion-icon>
+        CANCELADOS
+        <ion-badge color="danger" name="rose" item-end>100</ion-badge>
+        <ion-icon name="md-play" style="color: firebrick;" item-end></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div id="clientes"  class="pagetabs" *ngIf="pageId == 'clientes'">clientes</div>
+  <div id="clientes_n" class="pagetabs" *ngIf="pageId == 'clientes_n'">
+    <h5>Informações do cliente</h5>
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary" stacked>Nome</ion-label>
+        <ion-input type="text" placeholder="Insira o nome completo"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>E-mail</ion-label>
+        <ion-input type="email" placeholder="Insira o e-mail"></ion-input>
+      </ion-item>
+      
+      <!-- <ion-item>
+        <ion-label>Pepperoni</ion-label>
+        <ion-checkbox  *ngIf="habCheck == 1" [(ngModel)]="pepperoni"></ion-checkbox>
+        <ion-icon name="md-play" item-end></ion-icon>
+      </ion-item> -->
+    </ion-list>
+    <h5>Tipo de usuário</h5>
+    <ion-list radio-group [(ngModel)]="tipoPessoa">
+      <ion-item>
+        <ion-label>Pessoa Física</ion-label>
+        <ion-radio value="cpf" checked></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Pessoa Jurídica</ion-label>
+        <ion-radio value="cnpj" checked></ion-radio>
+      </ion-item>
+      </ion-list>
+      <ion-list>
+            <ion-item *ngIf="tipoPessoa == 'cpf'">
+              <ion-label color="primary" stacked>CPF</ion-label>
+              <ion-input type="number" placeholder="Insira o CPF"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="tipoPessoa == 'cnpj'">
+              <ion-label color="primary" stacked>CNPJ</ion-label>
+              <ion-input type="number" placeholder="Insira o CNPJ"></ion-input>
+            </ion-item>
+      </ion-list>
+      <h5>Informações do cliente</h5>
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary" stacked>Telefone</ion-label>
+          <ion-input type="tel" placeholder="Insira o telefone"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Endereço</ion-label>
+          <ion-input type="text" placeholder="Insira o endereço"></ion-input>
+        </ion-item>
+    </ion-list>
+    <button ion-button icon-end class="btnCadastrar" color="primary">
+      Cadastrar Cliente          
+      <ion-icon name="md-add" item-end></ion-icon> 
+    </button>
+  </div>
+  <div id="produtos"  class="pagetabs" *ngIf="pageId == 'produtos'">produtos</div>
+  <div id="produtos_n"  class="pagetabs" *ngIf="pageId == 'produtos_n'">
+    <h5>Informações do Produto</h5>
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary" stacked>Nome</ion-label>
+        <ion-input type="text" placeholder="Nome do produto"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Valor</ion-label>
+        <ion-input type="number" placeholder="R$"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Quantidade</ion-label>
+        <ion-input type="number" placeholder=""></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Unidade</ion-label>
+        <ion-input type="text" placeholder=""></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button icon-end class="btnCadastrar" color="primary">
+        Cadastrar Produto          
+        <ion-icon name="md-add" item-end></ion-icon> 
+      </button>
+  </div>
+  <div id="servicos"  class="pagetabs" *ngIf="pageId == 'servicos'">servicos</div>
+  <div id="servicos_n"  class="pagetabs" *ngIf="pageId == 'servicos_n'">
+    <h5>Informações do Serviço</h5>
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary" stacked>Descrição</ion-label>
+        <ion-input type="text" placeholder="Descreva o serviço"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Valor</ion-label>
+        <ion-input type="number" placeholder="R$"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Quantidade</ion-label>
+        <ion-input type="number" placeholder=""></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button icon-end full class="btnCadastrar" color="primary">
+      Cadastrar Serviço          
+      <ion-icon name="md-add" item-end></ion-icon> 
+    </button>
+  </div>
+  <div id="orcamentos_p"  class="pagetabs" *ngIf="pageId == 'orcamentos_p'">
+    <ion-item>
+      <ion-label>Pepperoni</ion-label>
+      <ion-checkbox  *ngIf="habCheck == 1" [(ngModel)]="pepperoni"></ion-checkbox>
+      <ion-icon name="md-play" item-end></ion-icon>
+    </ion-item>
+  </div>
+  <div id="orcamentos_c" class="pagetabs" *ngIf="pageId == 'orcamentos_c'">orcamentos cancelados</div>
+  <div id="orcamentos_a" class="pagetabs" *ngIf="pageId == 'orcamentos_a'">orcamentos aprovados</div>
+  <div id="orcamentos_n" class="pagetabs" *ngIf="pageId == 'orcamentos_n'">
+      <h5>Informações Pessoais</h5>
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary" stacked>Nome</ion-label>
+          <ion-input type="text" placeholder="{{ userName }}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Email</ion-label>
+          <ion-input type="email" placeholder="{{ userEmail }}"></ion-input>
+        </ion-item>
+      </ion-list>
+      <h5>Informações do Cliente</h5>
+      <ion-list  *ngIf="!clienteNome">
+        <ion-item>
+          <ion-label color="primary" stacked>Selecionar Cliente</ion-label>
+          <ion-icon name="md-play" item-end></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Novo Cliente</ion-label>
+          <ion-icon name="md-add" item-end></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-list  *ngIf="!clienteNome">
+        <ion-item>
+          <ion-label color="primary" stacked>Nome</ion-label>
+          <div item-content>
+              {{ clienteNome }}
+            </div>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Documento</ion-label>
+          <div item-content>
+              {{ clienteDocumento }}
+            </div>
+        </ion-item>
+        <ion-item>
+        <ion-label color="primary" stacked>Email</ion-label>
+          <div item-content>
+            {{ clienteEmail }}
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Telefone</ion-label>
+            <div item-content>
+              {{ clienteTelefone }}
+            </div>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Endereço</ion-label>
+          <div item-content>
+              <p>
+                  {{ clienteEndereco }}
+              </p>
+            </div>
+        </ion-item>
+      </ion-list>
+      <h5>Materiais e Produtos</h5>
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary" stacked>Nome</ion-label>
+          <ion-input type="text" placeholder="Nome do Produto"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Quantidade</ion-label>
+          <ion-input type="text" placeholder=""></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Unidade</ion-label>
+          <ion-input type="text" placeholder=""></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Valor</ion-label>
+          <ion-input type="text" placeholder="Preço por unidade"></ion-input>
+        </ion-item>
+        <ion-item color="darkBlue">
+                Adicionar Produto          
+                <ion-icon name="md-add" item-end></ion-icon> 
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item color="darkBlue">
+                Selecionar Produto da Lista         
+                <ion-icon name="md-play" item-end></ion-icon> 
+        </ion-item>
+      </ion-list>
+      <ion-list  *ngIf="!clienteNome">
+          <ion-item (click)="showP(produtoNome)">
+            <ion-label color="primary" stacked>Nome</ion-label>
+            <div item-content>
+                {{ produtoNome }}
+              </div>
+              <ion-icon name="md-play" item-end></ion-icon> 
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" stacked>Quantidade</ion-label>
+            <div item-content>
+                {{ produtoQtd }} {{ produtoUn }}
+              </div>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" stacked>Valor</ion-label>
+              <div item-content>
+                {{ produtoValor }}
+              </div>
+          </ion-item>
+        </ion-list>
+  </div>
+</ion-content>
+<button color="light" ion-button icon-only name="projetos" (click)="alterarTab('orcamentos_n', fab)">
+  <div>
+    <div>
+      <ion-icon name="md-add-circle"></ion-icon>
+    </div>
+  </div>
+</button>
+<ion-footer>
+    <button ion-button icon-end full class="btnCadastrar" color="primary">
+        Cadastrar Serviço          
+        <ion-icon name="md-add" item-end></ion-icon> 
+      </button>
+  <ion-toolbar *ngIf="pageId == 'orcamentos' || pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'">
+    <button ion-button name="notificações" (click)="alterarTab('orcamentos_p', fab)">
+      <div>
+        <div>
+          <ion-icon name="md-clock"></ion-icon>
+        </div>
+        <label>PENDENTES</label>
+      </div>
+    </button>
+    <button color="secondary" ion-button name="mensagens" (click)="alterarTab('orcamentos_a', fab);">
+      <div>
+        <div>
+          <ion-icon icon-top name="md-checkmark-circle"></ion-icon>
+        </div>
+        <label>APROVADOS</label>
+      </div>
+    </button>
+    <button color="danger" ion-button name="projetos" (click)="alterarTab('orcamentos_c', fab)">
+      <div>
+        <div>
+          <ion-icon name="md-close-circle"></ion-icon>
+        </div>
+        <label>CANCELADOS</label>
+      </div>
+    </button>
+  </ion-toolbar>
+  <ion-fab #fab right bottom style="bottom: 75px;">
+      <button ion-fab color="primary"><ion-icon name="arrow-dropleft"></ion-icon></button>
+      <ion-fab-list side="left">
+        <button  ion-fab *ngIf="pageId == 'orcamentos' || pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="alterarTab('orcamentos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
+        <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'clientes_n'" (click)="alterarTab('clientes_n', fab)"><ion-icon name="md-add"></ion-icon></button>
+        <button ion-fab *ngIf="pageId == 'produtos' || pageId == 'produtos_n'" (click)="alterarTab('produtos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
+        <button ion-fab *ngIf="pageId == 'servicos' || pageId == 'servicos_n'" (click)="alterarTab('servicos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
+        <button ion-fab (click)="showCheck()"><ion-icon name="md-checkmark"></ion-icon></button>
+        <button ion-fab (click)="deleteChecked()"><ion-icon name="md-trash"></ion-icon></button>
+      </ion-fab-list>
+    </ion-fab>
+</ion-footer>
+

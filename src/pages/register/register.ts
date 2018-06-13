@@ -65,12 +65,6 @@ export class RegisterPage {
         .subscribe(data => {
           
           if ( data ) {
-            let toast = this.toastCtrl.create({
-              message: data,
-              duration: 30000,
-              position: 'top'
-            });
-            toast.present();
             this.setStorage(data);
           };
           console.log(data);

@@ -61,6 +61,7 @@ export class FeedPage {
   userImagem: any;
   userName: any;
   usuario: any;
+  userEmail: any;
   public local: any = "proximidade";
   public range: any;
   public notificacoes_qts: any;
@@ -72,9 +73,30 @@ export class FeedPage {
     for (let i = 1; i <= 50; i++) {
       this.items.push({ "number": i });
     }
-    this.userId = this.get('meuid');
-    this.userImagem = this.get('imagem');
-    this.userName = this.get('nome');
+    this.storage.get('meuid')
+    .then( res =>{
+        console.log(res);
+        this.userId = res;
+      } 
+    );
+    this.storage.get('nome')
+    .then( res =>{
+        console.log(res);
+        this.userName = res;
+      } 
+    );
+    this.storage.get('imagem')
+    .then( res =>{
+        console.log(res);
+        this.userImagem = res;
+      } 
+    );
+    this.storage.get('email')
+    .then( res =>{
+        console.log(res);
+        this.userEmail = res;
+      } 
+    );
     
   }
 

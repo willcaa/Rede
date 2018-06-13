@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { FeedPage } from '../pages/feed/feed';
 import { RegisterPage } from '../pages/register/register';
+import { OrcamentosPage } from '../pages/orcamentos/orcamentos';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
@@ -27,21 +28,21 @@ export class MyApp {
                 if(val) {
                   storage.get('nome').then((val) => {
                     if(val) {
-                      this.rootPage = RegisterPage;
+                      this.rootPage = OrcamentosPage;
                     } else {
-                      this.rootPage = RegisterPage;
+                      this.rootPage = OrcamentosPage;
                     } 
                   });
                 } else {
-                  this.rootPage = RegisterPage;
+                  this.rootPage = OrcamentosPage;
                 } 
               });
             } else {
-              this.rootPage = RegisterPage;
+              this.rootPage = OrcamentosPage;
             } 
           });
         } else { 
-          this.rootPage = RegisterPage;
+          this.rootPage = OrcamentosPage;
         }
       });
     });

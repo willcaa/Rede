@@ -21,6 +21,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register';
+import { OrcamentosPage } from '../pages/orcamentos/orcamentos';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -54,7 +55,8 @@ import { StatsPage } from '../pages/stats/stats';
     PopoverDenunciarComponent,
     PopoverTopComponent,
     PopoverOptsAnunciosComponent,
-    PopoverNotificacoesComponent
+    PopoverNotificacoesComponent,
+    OrcamentosPage
   ],
   
   imports: [
@@ -82,7 +84,8 @@ import { StatsPage } from '../pages/stats/stats';
     PopoverDenunciarComponent,
     PopoverTopComponent,
     PopoverOptsAnunciosComponent,
-    PopoverNotificacoesComponent
+    PopoverNotificacoesComponent,
+    OrcamentosPage
   ],
   providers: [
     StatusBar,
