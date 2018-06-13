@@ -32,7 +32,7 @@
       <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('orcamentos', fab)">
         <p style="margin-top: 2px;">Orçamentos</p>
       </ion-segment-button>
-      <ion-segment-button value="clientes" (ionSelect)="alterarTab('clientes', fab)">
+      <ion-segment-button value="clientes" (ionSelect)="alterarTab('clientes', fab)" (click) = "getClientes()">
         <p style="margin-top: 2px;">Clientes</p>
       </ion-segment-button>
       <ion-segment-button value="produtos" (ionSelect)="alterarTab('produtos', fab)">
@@ -69,17 +69,22 @@
       </ion-item>
     </ion-list>
   </div>
-  <div id="clientes"  class="pagetabs" *ngIf="pageId == 'clientes'">clientes</div>
+  <div id="clientes"  class="pagetabs" *ngIf="pageId == 'clientes'">
+    <ion-item *ngFor = "let item of clientes">
+      {{item}}
+      
+    </ion-item>
+</div>
   <div id="clientes_n" class="pagetabs" *ngIf="pageId == 'clientes_n'">
     <h5>Informações do cliente</h5>
     <ion-list>
       <ion-item>
         <ion-label color="primary" stacked>Nome</ion-label>
-        <ion-input type="text" placeholder="Insira o nome completo"></ion-input>
+        <ion-input type="text" placeholder="Insira o nome completo" [(ngModel)]="nome_cliente" ></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>E-mail</ion-label>
-        <ion-input type="email" placeholder="Insira o e-mail"></ion-input>
+        <ion-input type="email" placeholder="Insira o e-mail" [(ngModel)]="email_cliente"></ion-input>
       </ion-item>
       
       <!-- <ion-item>
@@ -102,27 +107,27 @@
       <ion-list>
             <ion-item *ngIf="tipoPessoa == 'cpf'">
               <ion-label color="primary" stacked>CPF</ion-label>
-              <ion-input type="number" placeholder="Insira o CPF"></ion-input>
+              <ion-input type="number" placeholder="Insira o CPF" [(ngModel)]="doc"></ion-input>
             </ion-item>
             <ion-item *ngIf="tipoPessoa == 'cnpj'">
               <ion-label color="primary" stacked>CNPJ</ion-label>
-              <ion-input type="number" placeholder="Insira o CNPJ"></ion-input>
+              <ion-input type="number" placeholder="Insira o CNPJ" [(ngModel)]="doc" ></ion-input>
             </ion-item>
       </ion-list>
       <h5>Informações do cliente</h5>
       <ion-list>
         <ion-item>
           <ion-label color="primary" stacked>Telefone</ion-label>
-          <ion-input type="tel" placeholder="Insira o telefone"></ion-input>
+          <ion-input type="tel" placeholder="Insira o telefone" [(ngModel)]="tel" ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label color="primary" stacked>Endereço</ion-label>
-          <ion-input type="text" placeholder="Insira o endereço"></ion-input>
+          <ion-input type="text" placeholder="Insira o endereço" [(ngModel)]="address"></ion-input>
         </ion-item>
     </ion-list>
-    <button ion-button icon-end class="btnCadastrar" color="primary">
+    <button ion-button icon-end class="btnCadastrar" color="primary"(click)="setCliente(nome_cliente, email_cliente, doc, tel, address, tipoPessoa)">
       Cadastrar Cliente          
-      <ion-icon name="md-add" item-end></ion-icon> 
+      <ion-icon name="md-add" item-end ></ion-icon> 
     </button>
   </div>
   <div id="produtos"  class="pagetabs" *ngIf="pageId == 'produtos'">produtos</div>
@@ -131,24 +136,24 @@
     <ion-list>
       <ion-item>
         <ion-label color="primary" stacked>Nome</ion-label>
-        <ion-input type="text" placeholder="Nome do produto"></ion-input>
+        <ion-input type="text" placeholder="Nome do produto" [(ngModel)]="nome_produto"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Valor</ion-label>
-        <ion-input type="number" placeholder="R$"></ion-input>
+        <ion-input type="number" placeholder="R$" [(ngModel)]="valor_produto"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Quantidade</ion-label>
-        <ion-input type="number" placeholder=""></ion-input>
+        <ion-input type="number" placeholder="" [(ngModel)]="quantidade_produto"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Unidade</ion-label>
-        <ion-input type="text" placeholder=""></ion-input>
+        <ion-input type="text" placeholder="" [(ngModel)]="unidade_produto"></ion-input>
       </ion-item>
     </ion-list>
-    <button ion-button icon-end class="btnCadastrar" color="primary">
+    <button ion-button icon-end class="btnCadastrar" color="primary" (click)="setProduto(nome_produto, valor_produto, quantidade_produto, unidade_produto)">
         Cadastrar Produto          
-        <ion-icon name="md-add" item-end></ion-icon> 
+        <ion-icon name="md-add" item-end ></ion-icon> 
       </button>
   </div>
   <div id="servicos"  class="pagetabs" *ngIf="pageId == 'servicos'">servicos</div>
@@ -157,18 +162,18 @@
     <ion-list>
       <ion-item>
         <ion-label color="primary" stacked>Descrição</ion-label>
-        <ion-input type="text" placeholder="Descreva o serviço"></ion-input>
+        <ion-input type="text" placeholder="Descreva o serviço" [(ngModel)] = "descricao"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Valor</ion-label>
-        <ion-input type="number" placeholder="R$"></ion-input>
+        <ion-input type="number" placeholder="R$" [(ngModel)] = "valor_serv"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Quantidade</ion-label>
-        <ion-input type="number" placeholder=""></ion-input>
+        <ion-input type="number" placeholder="" [(ngModel)] = "quantidade_serv"></ion-input>
       </ion-item>
     </ion-list>
-    <button ion-button icon-end full class="btnCadastrar" color="primary">
+    <button ion-button icon-end full class="btnCadastrar" color="primary" (click) = "setServico(descricao, valor_serv, quantidade_serv)">
       Cadastrar Serviço          
       <ion-icon name="md-add" item-end></ion-icon> 
     </button>
@@ -200,7 +205,7 @@
           <ion-label color="primary" stacked>Selecionar Cliente</ion-label>
           <ion-icon name="md-play" item-end></ion-icon>
         </ion-item>
-        <ion-item>
+        <ion-item >   <!--//(click)-->
           <ion-label color="primary" stacked>Novo Cliente</ion-label>
           <ion-icon name="md-add" item-end></ion-icon>
         </ion-item>
