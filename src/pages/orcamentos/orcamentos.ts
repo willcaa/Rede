@@ -16,6 +16,9 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 })
 export class OrcamentosPage {
   public produtos: any;
+  public clienteDados: any;
+  public produtoDados: any;
+  public servicoDados: any;
   public servicos: any;
   public clientes: any;
   public fabBottom: any;
@@ -28,6 +31,9 @@ export class OrcamentosPage {
   userId: any;
   userImagem: any;
   userEmail: any;
+  public clienteId: any;
+  public produtoId: any;
+  public servicoId: any;
   clienteNome: any;
   clienteDocumento: any;
   clienteEmail: any;
@@ -313,5 +319,164 @@ export class OrcamentosPage {
       }
     });
   }
+
+getCliente(id, fab){
+    this.clienteId = id;
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id: id
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getCliente';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.clienteDados = data;
+        this.alterarTab("clientes_m", fab);
+        console.log(data);
+      }
+    });
+  }
   
+  public updateCliente(nome_cliente, email_cliente, doc, tel, address, tipo){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      nome: nome_cliente,
+      email: email_cliente,
+      documento: doc,
+      telefone: tel,
+      endereço: address,
+      tipo_documento: tipo,
+      id: this.clienteId
+    }
+    var link = 'https://bluedropsproducts.com/app/ferramentas/updateCliente';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.clienteDados=data;
+      }
+      console.log(data);
+    });
+  }
+
+  getProduto(id, fab){
+    this.produtoId = id;
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id: id
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getProduto';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.produtoDados = data;
+        this.alterarTab("produtos_m", fab);
+        console.log(data);
+      }
+    });
+  }
+
+  public updateProduto(nome_produto, valor_produto, quantidade_produto, unidade_produto){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      nome: nome_produto,
+      valor: valor_produto,
+      quantidade: quantidade_produto,
+      unidade: unidade_produto,
+      id: this.produtoId
+    }
+    var link = 'https://bluedropsproducts.com/app/ferramentas/updateProduto';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.produtoDados=data;
+      }
+      console.log(data);
+    });
+  }
+
+  public getServico(id, fab){
+    this.servicoId = id;
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id: id
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getServico';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.servicoDados = data;
+        this.alterarTab("servicos_m", fab);
+        console.log(data);
+      }
+    });
+  }
+
+  
+  public updateServico(descricao, valor_serv, quantidade_serv){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+
+      descricao: descricao,
+      valor: valor_serv,
+      quantidade: quantidade_serv,
+      id: this.servicoId
+    }
+    var link = 'https://bluedropsproducts.com/app/ferramentas/updateServico';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.servicoDados=data;
+      }
+      console.log(data);
+    });
+  }
+
 }
