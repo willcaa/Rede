@@ -35,10 +35,10 @@
       <ion-segment-button value="clientes" (ionSelect)="alterarTab('clientes', fab)" (click) = "getClientes()">
         <p style="margin-top: 2px;">Clientes</p>
       </ion-segment-button>
-      <ion-segment-button value="produtos" (ionSelect)="alterarTab('produtos', fab)">
+      <ion-segment-button value="produtos" (ionSelect)="alterarTab('produtos', fab)" (click) = "getProdutos()">
         <p style="margin-top: 2px;">Produtos</p>
       </ion-segment-button>
-      <ion-segment-button value="servicos" (ionSelect)="alterarTab('servicos', fab)">
+      <ion-segment-button value="servicos" (ionSelect)="alterarTab('servicos', fab)" (click) = "getServicos()">
         <p style="margin-top: 2px;">Serviços</p>
       </ion-segment-button>
     </ion-segment>
@@ -47,7 +47,8 @@
 
 
 <ion-content>
-  <div id="orcamentos" *ngIf="pageId == 'orcamentos'">
+  <div id="orcamentos" class="pagetabs" *ngIf="pageId == 'orcamentos'">
+    <h4>Meus Orçamentos</h4>
     <ion-list>
       <ion-item style="color: cornflowerblue;">
         <ion-icon name="md-clock" item-start></ion-icon>
@@ -70,9 +71,15 @@
     </ion-list>
   </div>
   <div id="clientes"  class="pagetabs" *ngIf="pageId == 'clientes'">
-    <ion-item *ngFor = "let item of clientes">
-      {{item}}
-      
+    <h4>Meus Clientes</h4>
+    <ion-item *ngFor = "let item of clientes" style="height: 100px;">
+        <ion-label id="{{item.id}}" color="primary" stacked>{{item.full_name}}</ion-label>
+        <div item-content class="itemContent">
+          Tel: {{item.phone}}<br>
+          Email: {{item.email}}
+        </div>
+        <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectCliente($event, item.id)"item-end></ion-checkbox>
+      <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
     </ion-item>
 </div>
   <div id="clientes_n" class="pagetabs" *ngIf="pageId == 'clientes_n'">
@@ -130,7 +137,18 @@
       <ion-icon name="md-add" item-end ></ion-icon> 
     </button>
   </div>
-  <div id="produtos"  class="pagetabs" *ngIf="pageId == 'produtos'">produtos</div>
+  <div id="produtos"  class="pagetabs" *ngIf="pageId == 'produtos'">
+      <h4>Meus Produtos</h4>
+      <ion-item *ngFor = "let item of produtos" style="height: 100px;">
+          <ion-label color="primary" stacked>{{item.name}}</ion-label>
+          <div item-content class="itemContent">
+            Unidade: {{item.un}}<br>
+            Preço por unidade: R$ {{item.price}},00
+          </div>
+          <ion-checkbox  *ngIf="habCheck == 1" [(ngModel)]="item.id" item-end></ion-checkbox>
+        <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
+      </ion-item>
+  </div>
   <div id="produtos_n"  class="pagetabs" *ngIf="pageId == 'produtos_n'">
     <h5>Informações do Produto</h5>
     <ion-list>
@@ -156,7 +174,17 @@
         <ion-icon name="md-add" item-end ></ion-icon> 
       </button>
   </div>
-  <div id="servicos"  class="pagetabs" *ngIf="pageId == 'servicos'">servicos</div>
+  <div id="servicos"  class="pagetabs" *ngIf="pageId == 'servicos'">
+      <h4>Meus Serviços</h4>
+      <ion-item *ngFor = "let item of servicos" style="height: 80px;">
+          <ion-label color="primary" stacked>{{item.name}}</ion-label>
+          <div item-content class="itemContent">
+            Valor: R$ {{item.price}},00
+          </div>
+          <ion-checkbox  *ngIf="habCheck == 1" [(ngModel)]="item.id" item-end></ion-checkbox>
+        <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
+      </ion-item>
+  </div>
   <div id="servicos_n"  class="pagetabs" *ngIf="pageId == 'servicos_n'">
     <h5>Informações do Serviço</h5>
     <ion-list>
@@ -185,8 +213,10 @@
       <ion-icon name="md-play" item-end></ion-icon>
     </ion-item>
   </div>
+
   <div id="orcamentos_c" class="pagetabs" *ngIf="pageId == 'orcamentos_c'">orcamentos cancelados</div>
   <div id="orcamentos_a" class="pagetabs" *ngIf="pageId == 'orcamentos_a'">orcamentos aprovados</div>
+  <!-- Criar orçamento -->
   <div id="orcamentos_n" class="pagetabs" *ngIf="pageId == 'orcamentos_n'">
       <h5>Informações Pessoais</h5>
       <ion-list>
@@ -304,10 +334,6 @@
   </div>
 </button>
 <ion-footer>
-    <button ion-button icon-end full class="btnCadastrar" color="primary">
-        Cadastrar Serviço          
-        <ion-icon name="md-add" item-end></ion-icon> 
-      </button>
   <ion-toolbar *ngIf="pageId == 'orcamentos' || pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'">
     <button ion-button name="notificações" (click)="alterarTab('orcamentos_p', fab)">
       <div>
@@ -334,7 +360,7 @@
       </div>
     </button>
   </ion-toolbar>
-  <ion-fab #fab right bottom style="bottom: 75px;">
+  <ion-fab #fab right bottom [ngStyle]="{'bottom': fabBottom}">
       <button ion-fab color="primary"><ion-icon name="arrow-dropleft"></ion-icon></button>
       <ion-fab-list side="left">
         <button  ion-fab *ngIf="pageId == 'orcamentos' || pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="alterarTab('orcamentos_n', fab)"><ion-icon name="md-add"></ion-icon></button>

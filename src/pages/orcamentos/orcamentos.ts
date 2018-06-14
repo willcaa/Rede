@@ -18,6 +18,8 @@ export class OrcamentosPage {
   public produtos: any;
   public servicos: any;
   public clientes: any;
+  public fabBottom: any;
+  public clientesSelecionados = [];
   pageId: any;
   checkB: any;
   mbFab: any;
@@ -39,13 +41,14 @@ export class OrcamentosPage {
   servDesc: any;
   servVal: any;
   servQty: any;
+  cucumber: boolean;
   constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public http: Http) {
     this.storage.get('meuid')
-    .then( res =>{
-        console.log(res);
-        this.userId = res;
-      } 
-    );
+      .then( res =>{
+          console.log(res);
+          this.userId = res;
+        } 
+      );
     this.storage.get('nome')
     .then( res =>{
         console.log(res);
@@ -64,7 +67,9 @@ export class OrcamentosPage {
         this.userEmail = res;
       } 
     );
+    this.fabBottom = '10px';
   }
+
   public get(key: string) {
     let returnData;
     this.storage.get(key)
@@ -83,6 +88,15 @@ export class OrcamentosPage {
     this.closeFab(fab);
     this.pageId = tabId;
     console.log(tabId);
+    if(tabId == 'orcamentos' || tabId == 'orcamentos_p' || tabId == 'orcamentos_c'|| tabId == 'orcamentos_a'){
+      this.fabBottom = '75px';
+    } else {
+      this.fabBottom = '10px';
+    }
+  }
+  selectCliente(e: any, a:any) {
+    console.log(e);
+    console.log(a);
   }
   closeFab(fab){
       fab.close();
@@ -107,7 +121,7 @@ export class OrcamentosPage {
     }
   }
 
-  setCliente(nome_cliente, email_cliente, doc, tel, address, tipo){
+  public setCliente(nome_cliente, email_cliente, doc, tel, address, tipo){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -123,24 +137,21 @@ export class OrcamentosPage {
       tipo_documento: tipo,
       id: this.userId
     }
-
     var link = 'https://bluedropsproducts.com/app/ferramentas/setCliente';
     
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        if(data){
-          this.clienteNome = nome_cliente;
-          this.clienteEmail = email_cliente;
-          this.clienteDocumento = doc;
-          this.clienteTelefone = tel;
-          this.clienteEndereco = address;
-          this.userId = data.id;
-        }
-        console.log(data);
-      });
-    
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.clienteNome = nome_cliente;
+        this.clienteEmail = email_cliente;
+        this.clienteDocumento = doc;
+        this.clienteTelefone = tel;
+        this.clienteEndereco = address;
+      }
+      console.log(data);
+    });
   }
 
   public getClientes(){
@@ -151,26 +162,46 @@ export class OrcamentosPage {
     headers.append('Access-Control-Expose-Headers', "true");
 
     let body = {
+      id: this.userId
     }
-
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getCliente';
+    console.log(this.userId);
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getClientes';
     
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        // if(data){
-        //   this.clienteNome = data.nome;
-        //   this.clienteEmail = data.email;
-        //   this.clienteDocumento = data.documento;
-        //   this.clienteTelefone = data.telefone;
-        //   this.clienteEndereco = data.endereço;
-        // }
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.clientes = data;
         console.log(data);
-      });
-    
+      }
+    });
   }
 
+  public deleteClientes(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+        clientes: this.clientesSelecionados
+    }
+    console.log(this.userId);
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getClientes';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.clientes = data;
+        console.log(data);
+      }
+    });
+  }
+  
   public setProduto(nome_produto, valor_produto, quantidade_produto, unidade_produto){
     console.log(valor_produto);
     console.log(quantidade_produto);
@@ -180,31 +211,55 @@ export class OrcamentosPage {
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
     headers.append('Access-Control-Expose-Headers', "true");
-
+    
     let body = {
       nome: nome_produto,
       valor: valor_produto,
       quantidade: quantidade_produto,
-      unidade: unidade_produto
+      unidade: unidade_produto,
+      userId: this.userId
+    }
+    
+    var link = 'https://bluedropsproducts.com/app/ferramentas/setProduto';
+    
+    
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        
+        this.productName = nome_produto;
+        this.productQty = quantidade_produto;
+        this.productVal = valor_produto;
+        this.productUni = unidade_produto;
+        this.productId = data.id;
+      }
+      console.log(data);
+    });
+  }
+  
+  public getProdutos(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id: this.userId
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/setProduto';
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getProdutos';
     
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        if(data){
-          
-          this.productName = nome_produto;
-          this.productQty = quantidade_produto;
-          this.productVal = valor_produto;
-          this.productUni = unidade_produto;
-          this.productId = data.id;
-        }
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.produtos = data;
         console.log(data);
-      });
-    
+      }
+    });
   }
 
   public setServico(descricao, valor_serv, quantidade_serv){
@@ -217,26 +272,46 @@ export class OrcamentosPage {
     let body = {
       descricao: descricao,
       valor: valor_serv,
-      quantidade: quantidade_serv
+      quantidade: quantidade_serv,
+      userId: this.userId
     }
 
     var link = 'https://bluedropsproducts.com/app/ferramentas/setServico';
     
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        if(data){
-          this.servDesc = descricao;
-          this.servQty = quantidade_serv;
-          this.servVal = valor_serv;
-        }
-        console.log(data);
-      });
-    
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.servDesc = descricao;
+        this.servQty = quantidade_serv;
+        this.servVal = valor_serv;
+      }
+      console.log(data);
+    });
   }
 
+  public getServicos(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
 
+    let body = {
+      id: this.userId
+    }
 
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getServicos';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.servicos = data;
+        console.log(data);
+      }
+    });
+  }
   
 }

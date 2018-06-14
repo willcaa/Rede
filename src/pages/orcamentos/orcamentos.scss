@@ -29,10 +29,19 @@ page-orcamentos {
     }
     .pagetabs{
         text-align: center !important;
+        color: cornflowerblue;
     }
     .btnCadastrar{
         width: 100% !important;
     }
+    .itemContent{
+        text-align: left;
+        position: absolute;
+        top: 40px;
+        left: 25px;
+        line-height: 20px;
+    }
+    
     // .fab-md{
     //     margin-bottom: 75px !important;
     // }
