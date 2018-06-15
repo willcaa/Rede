@@ -31,6 +31,7 @@
 
     <ion-segment [(ngModel)]="local" color="primary" item-end>
       <button ion-button class="btn-TopOrNews" (click)="alterarTopNews($event)">
+        <img style="margin-top: 10px;" src="assets/imgs/opts.png">
         <ion-icon name="construct" style="padding-top: 0px; padding-top: 0px; font-size: 26px; text-shadow: 1px 1px #000;"></ion-icon>
       </button>
       <ion-segment-button value="proximidade" style="margin: 1px; padding-top: 4px; padding-left: 9px;" (ionSelect)="alterarLocal('proximidade')">
