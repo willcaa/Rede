@@ -29,21 +29,21 @@ export class MyApp {
                 if(val) {
                   storage.get('nome').then((val) => {
                     if(val) {
-                      this.rootPage = FerramentasPage;
+                      this.rootPage = FeedPage;
                     } else {
-                      this.rootPage = OrcamentosPage;
+                      this.rootPage = RegisterPage;
                     } 
                   });
                 } else {
-                  this.rootPage = OrcamentosPage;
+                  this.rootPage = RegisterPage;
                 } 
               });
             } else {
-              this.rootPage = OrcamentosPage;
+              this.rootPage = RegisterPage;
             } 
           });
         } else { 
-          this.rootPage = OrcamentosPage;
+          this.rootPage = RegisterPage;
         }
       });
     });
