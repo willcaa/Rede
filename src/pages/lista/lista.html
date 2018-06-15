@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar color="dark">
+      
+      <ion-title>
+        <img class="imageLogoFeed" src="assets/imgs/logo.png">
+      </ion-title>
+  
+      <ion-buttons end>
+        <button id="notification-button" ion-button clear (click)="notificacoes($event)">
+          <ion-icon name="notifications">
+            <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
+          </ion-icon>
+        </button>
+        <button ion-button icon-only (click)="goPerfil()">
+          <img class="imageUserFeed" src="assets/imgs/user_round.png">
+        </button>
+      </ion-buttons>
+  
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="headerrow" style="border-bottom: solid 1px black">
+      <ion-col col-3 style="border-right: solid 1px black;">ERRO</ion-col>
+      <ion-col col-7 style="border-right: solid 1px black;">RESUMO DO ERRO</ion-col>
+      <ion-col col-2><ion-icon name="eye"></ion-icon></ion-col>
+    </ion-row>
+    <ion-row style="border-bottom: solid 1px black;" *ngFor = "let item of produto">
+      <ion-col col-3 style="border-right: solid 1px black;"><div class="hifen">-</div></ion-col>
+      <ion-col col-7 style="border-right: solid 1px black;">{{item.error_resume}}</ion-col>
+      <ion-col col-2><ion-icon name="eye"></ion-icon></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
