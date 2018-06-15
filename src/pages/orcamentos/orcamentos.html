@@ -465,7 +465,7 @@
         <div *ngIf="servicoSelecionado">
           <ion-item *ngFor="let item of dadosServico" style="height: 150px;">
               <ion-label color="primary" stacked>{{item.name}}</ion-label>
-              <ion-label color="primary" stacked>Preço por unidade: R$ {{item.price}},00 </ion-label>
+              <ion-label color="primary" stacked>Preço do serviço: R$ {{item.price}},00 </ion-label>
               <ion-input type="number" placeholder="Descrição do serviço"></ion-input>
           </ion-item>
       </div>
@@ -474,6 +474,7 @@
         <h5>Forma de pagamento</h5>
         <ion-input type="text" placeholder="Ex: 5x no cartão" stacked></ion-input>
       </ion-list>
+
       <!-- <ion-list>
         <ion-item>
           <ion-label color="primary" stacked>Nome</ion-label>
