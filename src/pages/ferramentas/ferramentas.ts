@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CodigoDeErroPage } from '../codigo-de-erro/codigo-de-erro';
+import { OrcamentosPage } from '../orcamentos/orcamentos';
 
 
 @IonicPage()
@@ -15,6 +16,10 @@ export class FerramentasPage {
 
   goErrorCode(){
     this.navCtrl.push(CodigoDeErroPage);
+  }
+
+  goOrcamentosPage(){
+    this.navCtrl.push(OrcamentosPage);
   }
 
   ionViewDidLoad() {
