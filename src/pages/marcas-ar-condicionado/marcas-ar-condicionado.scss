@@ -1,0 +1,40 @@
+page-marcas-ar-condicionado {
+    .toolbar-md-dark .toolbar-background-md {
+        background: linear-gradient(45deg, rgba(55, 197, 233, 1) 0%, rgba(73, 125, 190, 1) 100%);
+    }
+    .buttons_header {
+        min-height: 0px;
+        height: 30px;
+        padding: 20px 0 19px 0;
+      }
+      hr.vertical {
+        background-color: #000;
+        width: 1px;
+        height: auto;
+      }
+      // IMAGES //
+      img.imageLogoFeed {
+        height: 50px;
+        margin: 0 0 -4px -12px
+      }
+      img.imageUserFeed {
+        height: 32px;
+      }
+    .arcondicionado > .button-inner {
+        flex-direction: column;
+    }
+    .content-md{
+        text-align: center;
+    }
+    .button-md{
+        width: 150px;
+        height: 150px;
+        background-repeat: no-repeat;
+        background-color: #fff;
+        background-size: 70%;
+        background-position: center;
+    }
+    .scroll-content{
+        text-align: center;
+    }
+}
