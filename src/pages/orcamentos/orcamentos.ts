@@ -26,6 +26,7 @@ export class OrcamentosPage {
   public clientesSelecionados = [];
   public idToRemove = [];
   public i = 0;
+  public total = 0;
   public produtoSelecionado: boolean;
   public dados: any;
   public dadosProduto= [];
@@ -47,6 +48,9 @@ export class OrcamentosPage {
   clienteEmail: any;
   clienteTelefone: any;
   clienteEndereco: any;
+  orcamento: any;
+  servico: any;
+  produto: any;
   productId: any;
   productName: any;
   productVal: any;
@@ -607,14 +611,101 @@ export class OrcamentosPage {
     this.alterarTab('orcamentos_n', fab);
   }
   usarProduto(item, fab){
+    this.total = this.total + Number(item.price);
     this.dadosProduto.push(item);
     this.produtoSelecionado = true;
     this.alterarTab('orcamentos_n', fab);
   }
   usarServico(item, fab){
+    this.total= this.total + Number(item.price);
     this.dadosServico.push(item);
     this.servicoSelecionado = true;
     this.alterarTab('orcamentos_n', fab);
+  }
+
+  setOrcamento(descricao, formaDePagamento){
+    this.setBudget(descricao, formaDePagamento, this.dados.user_id, this.dados.id);
+    
+  }
+
+  setBudget(descricao, pagamento, technicianId, clientId){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      description: descricao,
+      payment: pagamento,
+      tecid: technicianId,
+      clid: clientId
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/setBudget';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.orcamento = data;
+        console.log(data);
+      }
+    });
+    this.setBLabors();
+    
+  }
+
+  setBLabors(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      dados: this.dadosServico,
+      orcamentoid: this.orcamento.id
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/setBLabors';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.servico = data;
+        console.log(data);
+      }
+    });
+    this.setBProducts();
+  }
+
+  setBProducts(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      dados: this.dadosProduto,
+      orcamentoid: this.orcamento.id
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/setBProducts';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.produto = data;
+        console.log(data);
+      }
+    });
   }
 
 }
