@@ -7,6 +7,7 @@ import { AboutPage } from '../about/about';
 import { CommentsPage } from '../comments/comments';
 import { PerfilPage } from '../perfil/perfil';
 import { MapPage } from '../map/map';
+import { FerramentasPage } from '../ferramentas/ferramentas';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Storage } from '@ionic/storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
@@ -834,7 +835,9 @@ export class FeedPage {
     this.getUserPosition();
   }
 
-
+  goFerramentas(){
+    this.navCtrl.push(FerramentasPage);
+  }
 
 
   ionViewDidLoad() {
