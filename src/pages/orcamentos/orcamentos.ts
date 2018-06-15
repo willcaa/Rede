@@ -21,8 +21,16 @@ export class OrcamentosPage {
   public servicoDados: any;
   public servicos: any;
   public clientes: any;
+  public clienteSelecionado: boolean;
   public fabBottom: any;
   public clientesSelecionados = [];
+  public idToRemove = [];
+  public i = 0;
+  public produtoSelecionado: boolean;
+  public dados: any;
+  public dadosProduto= [];
+  public servicoSelecionado: boolean;
+  public dadosServico=[];
   pageId: any;
   checkB: any;
   mbFab: any;
@@ -100,9 +108,19 @@ export class OrcamentosPage {
       this.fabBottom = '10px';
     }
   }
-  selectCliente(e: any, a:any) {
-    console.log(e);
-    console.log(a);
+
+  selectChecked(e: any, a:any) {
+    console.log(e.value);
+    if(e.value){
+      console.log(a);
+      this.idToRemove.push(a);
+    }
+    else{
+      this.idToRemove.splice(this.idToRemove.indexOf(a),1);
+      
+    }
+    console.log(this.idToRemove.valueOf());
+    
   }
   closeFab(fab){
       fab.close();
@@ -161,6 +179,7 @@ export class OrcamentosPage {
   }
 
   public getClientes(){
+    this.idToRemove = [];
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -184,7 +203,35 @@ export class OrcamentosPage {
     });
   }
 
-  public deleteClientes(){
+  public deleteChecked(pageId){
+    console.log(pageId);
+    if(pageId == 'clientes'){
+      if(this.idToRemove != null){
+          console.log(this.idToRemove);
+          this.deleteCliente(this.idToRemove); 
+      }
+      else
+        console.log("Nao há clientes a serem removidos!");
+    }
+    else if(pageId == 'produtos'){
+      if(this.idToRemove != null){
+        console.log(this.idToRemove);
+        this.deleteProduto(this.idToRemove); 
+      }
+      else
+        console.log("Nao há produtos a serem removidos!");
+    }
+    else if(pageId == 'servicos'){
+      if(this.idToRemove != null){
+        console.log(this.idToRemove);
+        this.deleteServico(this.idToRemove); 
+      }
+      else
+        console.log("Nao há serviços a serem removidos!");
+    }
+  }
+
+  public deleteCliente(id){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -192,10 +239,10 @@ export class OrcamentosPage {
     headers.append('Access-Control-Expose-Headers', "true");
 
     let body = {
-        clientes: this.clientesSelecionados
+        id: id
     }
-    console.log(this.userId);
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getClientes';
+    console.log(id);
+    var link = 'https://bluedropsproducts.com/app/ferramentas/removeCliente';
     
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -207,7 +254,55 @@ export class OrcamentosPage {
       }
     });
   }
-  
+
+  public deleteProduto(id){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+        id: id
+    }
+    console.log(id);
+    var link = 'https://bluedropsproducts.com/app/ferramentas/removeProduto';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.clientes = data;
+        console.log(data);
+      }
+    });
+  }
+
+  public deleteServico(id){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+        id: id
+    }
+    console.log(id);
+    var link = 'https://bluedropsproducts.com/app/ferramentas/removeServico';
+    
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.clientes = data;
+        console.log(data);
+      }
+    });
+  }
+
   public setProduto(nome_produto, valor_produto, quantidade_produto, unidade_produto){
     console.log(valor_produto);
     console.log(quantidade_produto);
@@ -245,6 +340,7 @@ export class OrcamentosPage {
   }
   
   public getProdutos(){
+    this.idToRemove = [];
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -298,6 +394,7 @@ export class OrcamentosPage {
   }
 
   public getServicos(){
+    this.idToRemove = [];
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -320,7 +417,7 @@ export class OrcamentosPage {
     });
   }
 
-getCliente(id, fab){
+  getCliente(id, fab){
     this.clienteId = id;
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -340,6 +437,31 @@ getCliente(id, fab){
       if(data){
         this.clienteDados = data;
         this.alterarTab("clientes_m", fab);
+        console.log(data);
+      }
+    });
+  }
+  
+  getClient(id){
+    
+    this.clienteId = id;
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id: id
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/getCliente';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.dados = data;  
         console.log(data);
       }
     });
@@ -477,6 +599,22 @@ getCliente(id, fab){
       }
       console.log(data);
     });
+  }
+
+  public usarCliente(item, fab){
+    this.dados = item;
+    this.clienteSelecionado = true;
+    this.alterarTab('orcamentos_n', fab);
+  }
+  usarProduto(item, fab){
+    this.dadosProduto.push(item);
+    this.produtoSelecionado = true;
+    this.alterarTab('orcamentos_n', fab);
+  }
+  usarServico(item, fab){
+    this.dadosServico.push(item);
+    this.servicoSelecionado = true;
+    this.alterarTab('orcamentos_n', fab);
   }
 
 }

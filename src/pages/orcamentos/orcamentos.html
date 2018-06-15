@@ -78,10 +78,24 @@
           Tel: {{item.phone}}<br>
           Email: {{item.email}}
         </div>
-        <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectCliente($event, item.id)"item-end></ion-checkbox>
+        <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)"item-end></ion-checkbox>
       <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
     </ion-item>
 </div>
+
+<div id="clientes_o"  class="pagetabs" *ngIf="pageId == 'clientes_o'">
+    <h4>Meus Clientes</h4>
+    <ion-item *ngFor = "let item of clientes" style="height: 100px;" (click)="usarCliente(item, fab)">
+        <ion-label id="{{item.id}}" color="primary" stacked>{{item.full_name}}</ion-label>
+        <div item-content class="itemContent">
+          Tel: {{item.phone}}<br>
+          Email: {{item.email}}
+        </div>
+        <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)"item-end></ion-checkbox>
+      <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
+    </ion-item>
+</div>
+
   <div id="clientes_n" class="pagetabs" *ngIf="pageId == 'clientes_n'">
     <h5>Informações do cliente</h5>
     <ion-list>
@@ -203,10 +217,24 @@
             Unidade: {{item.un}}<br>
             Preço por unidade: R$ {{item.price}},00
           </div>
-          <ion-checkbox  *ngIf="habCheck == 1" [(ngModel)]="item.id" item-end></ion-checkbox>
+          <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)"item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
       </ion-item>
   </div>
+
+  <div id="produtos_o"  class="pagetabs" *ngIf="pageId == 'produtos_o'">
+      <h4>Meus Produtos</h4>
+      <ion-item *ngFor = "let item of produtos" style="height: 100px;" (click)="usarProduto(item, fab)">
+          <ion-label color="primary" stacked>{{item.name}}</ion-label>
+          <div item-content class="itemContent">
+            Unidade: {{item.un}}<br>
+            Preço por unidade: R$ {{item.price}},00
+          </div>
+          <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)"item-end></ion-checkbox>
+        <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
+      </ion-item>
+  </div>
+
   <div id="produtos_n"  class="pagetabs" *ngIf="pageId == 'produtos_n'">
     <h5>Informações do Produto</h5>
     <ion-list>
@@ -259,6 +287,8 @@
       </button>
   </div>
 
+  
+
   <div id="servicos"  class="pagetabs" *ngIf="pageId == 'servicos'">
       <h4>Meus Serviços</h4>
       <ion-item *ngFor = "let item of servicos" style="height: 80px;" (click)="getServico(item.id, fab)">
@@ -266,10 +296,23 @@
           <div item-content class="itemContent">
             Valor: R$ {{item.price}},00
           </div>
-          <ion-checkbox  *ngIf="habCheck == 1" [(ngModel)]="item.id" item-end></ion-checkbox>
+          <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
       </ion-item>
   </div>
+
+  <div id="servicos_o"  class="pagetabs" *ngIf="pageId == 'servicos_o'">
+      <h4>Meus Serviços</h4>
+      <ion-item *ngFor = "let item of servicos" style="height: 80px;" (click)="usarServico(item, fab)">
+          <ion-label color="primary" stacked>{{item.name}}</ion-label>
+          <div item-content class="itemContent">
+            Valor: R$ {{item.price}},00
+          </div>
+          <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
+        <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
+      </ion-item>
+  </div>
+
   <div id="servicos_n"  class="pagetabs" *ngIf="pageId == 'servicos_n'">
     <h5>Informações do Serviço</h5>
     <ion-list>
@@ -339,16 +382,24 @@
       </ion-list>
       <h5>Informações do Cliente</h5>
       <ion-list  *ngIf="!clienteNome">
-        <ion-item>
+        <ion-item (click) = "alterarTab('clientes_o', fab); getClientes();">
           <ion-label color="primary" stacked>Selecionar Cliente</ion-label>
           <ion-icon name="md-play" item-end></ion-icon>
         </ion-item>
-        <ion-item >   <!--//(click)-->
+        <ion-item (click)="alterarTab('clientes_n', fab)">   <!--//(click)-->
           <ion-label color="primary" stacked>Novo Cliente</ion-label>
           <ion-icon name="md-add" item-end></ion-icon>
         </ion-item>
+        <ion-item *ngIf="clienteSelecionado" style="height: 100px;" >
+            <ion-label id="{{dados.id}}" color="primary" stacked>{{dados.full_name}}</ion-label>
+            <div item-content class="itemContent">
+              Tel: {{dados.phone}}<br>
+              Email: {{dados.email}}
+            </div>
+        </ion-item>
       </ion-list>
-      <ion-list  *ngIf="!clienteNome">
+
+      <!-- <ion-list  *ngIf="!clienteNome">
         <ion-item>
           <ion-label color="primary" stacked>Nome</ion-label>
           <div item-content>
@@ -381,9 +432,49 @@
               </p>
             </div>
         </ion-item>
-      </ion-list>
+      </ion-list> -->
       <h5>Materiais e Produtos</h5>
       <ion-list>
+        <ion-item (click) = "alterarTab('produtos_o', fab); getProdutos()">
+          <ion-label color="primary" stacked>Selecionar Produto</ion-label>
+          <ion-icon name="md-play" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click) = "alterarTab('produtos_n', fab)">   <!--//(click)-->
+          <ion-label color="primary" stacked>Novo Produto</ion-label>
+          <ion-icon name="md-add" item-end></ion-icon>
+        </ion-item>
+        <div *ngIf="produtoSelecionado">
+          <ion-item *ngFor="let item of dadosProduto" style="height: 150px;">
+              <ion-label color="primary" stacked>{{item.name}}</ion-label>
+              <ion-label color="primary" stacked>Preço por unidade: R$ {{item.price}},00 </ion-label>
+              <ion-input type="number" placeholder="Quantidade"></ion-input>
+              <ion-label color="primary" stacked>{{item.un}}</ion-label>
+          </ion-item>
+      </div>
+      </ion-list>
+      <h5>Mão de obra e Serviços</h5>
+      <ion-list>
+        <ion-item (click) = "alterarTab('servicos_o', fab); getServicos()">
+          <ion-label color="primary" stacked>Selecionar Servico</ion-label>
+          <ion-icon name="md-play" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click) = "alterarTab('produtos_n', fab)">   <!--//(click)-->
+          <ion-label color="primary" stacked>Novo Servico</ion-label>
+          <ion-icon name="md-add" item-end></ion-icon>
+        </ion-item>
+        <div *ngIf="servicoSelecionado">
+          <ion-item *ngFor="let item of dadosServico" style="height: 150px;">
+              <ion-label color="primary" stacked>{{item.name}}</ion-label>
+              <ion-label color="primary" stacked>Preço por unidade: R$ {{item.price}},00 </ion-label>
+              <ion-input type="number" placeholder="Descrição do serviço"></ion-input>
+          </ion-item>
+      </div>
+      </ion-list>
+      <ion-list>
+        <h5>Forma de pagamento</h5>
+        <ion-input type="text" placeholder="Ex: 5x no cartão" stacked></ion-input>
+      </ion-list>
+      <!-- <ion-list>
         <ion-item>
           <ion-label color="primary" stacked>Nome</ion-label>
           <ion-input type="text" placeholder="Nome do Produto"></ion-input>
@@ -405,8 +496,8 @@
                 <ion-icon name="md-add" item-end></ion-icon> 
         </ion-item>
       </ion-list>
-      <ion-list>
-        <ion-item color="darkBlue">
+      <ion-list> -->
+        <!-- <ion-item color="darkBlue">
                 Selecionar Produto da Lista         
                 <ion-icon name="md-play" item-end></ion-icon> 
         </ion-item>
@@ -431,7 +522,7 @@
                 {{ produtoValor }}
               </div>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
   </div>
 </ion-content>
 <button color="light" ion-button icon-only name="projetos" (click)="alterarTab('orcamentos_n', fab)">
@@ -476,7 +567,7 @@
         <button ion-fab *ngIf="pageId == 'produtos' || pageId == 'produtos_n'" (click)="alterarTab('produtos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
         <button ion-fab *ngIf="pageId == 'servicos' || pageId == 'servicos_n'" (click)="alterarTab('servicos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
         <button ion-fab (click)="showCheck()"><ion-icon name="md-checkmark"></ion-icon></button>
-        <button ion-fab (click)="deleteChecked()"><ion-icon name="md-trash"></ion-icon></button>
+        <button ion-fab (click)="deleteChecked(pageId)"><ion-icon name="md-trash"></ion-icon></button>
       </ion-fab-list>
     </ion-fab>
 </ion-footer>
