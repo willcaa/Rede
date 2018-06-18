@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CodigoDeErroPage } from '../codigo-de-erro/codigo-de-erro';
 import { OrcamentosPage } from '../orcamentos/orcamentos';
+import { CalculadoraPage } from '../calculadora/calculadora';
 
 
 @IonicPage()
@@ -20,6 +21,10 @@ export class FerramentasPage {
 
   goOrcamentosPage(){
     this.navCtrl.push(OrcamentosPage);
+  }
+ 
+  goCalculadoraPage(){
+    this.navCtrl.push(CalculadoraPage);
   }
 
   ionViewDidLoad() {

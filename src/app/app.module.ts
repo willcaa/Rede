@@ -22,6 +22,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register';
 import { OrcamentosPage } from '../pages/orcamentos/orcamentos';
+import { CalculadoraPage } from '../pages/calculadora/calculadora';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -66,6 +67,7 @@ import { ListaPage } from '../pages/lista/lista';
     FerramentasPage,
     MarcasArCondicionadoPage,
     ProdutosPage,
+    CalculadoraPage,
     ListaPage
   ],
   
@@ -100,6 +102,7 @@ import { ListaPage } from '../pages/lista/lista';
     FerramentasPage,
     MarcasArCondicionadoPage,
     ProdutosPage,
+    CalculadoraPage,
     ListaPage
   ],
   providers: [
