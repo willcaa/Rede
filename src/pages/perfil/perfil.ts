@@ -35,6 +35,8 @@ export class PerfilPage {
   public perfil_imagem: any;
   public perfil_nome: any;
   public index_anuncio: any;
+  usuarioProfissional: any;
+  pageId: any;
   enviandoSeguir: boolean;
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public photoViewer: PhotoViewer, public popoverCtrl: PopoverController, private _sanitizer: DomSanitizer, public navParams: NavParams, public http: Http, private storage: Storage,) {
     this.perfilId = this.navParams.get("perfilId");
@@ -44,6 +46,11 @@ export class PerfilPage {
     this.enviandoSeguir = false;
   }
   
+alterarTab(Id){
+    this.pageId = Id;
+    console.log(this.pageId);
+  }
+
   ionViewDidLoad() {
     this.checkSeguir(this.perfilId, this.userId);
     this.getStats();
@@ -271,4 +278,66 @@ export class PerfilPage {
     })
   }
 
+  setUsuarioProfissional(nome, tipo, doc, xp, esp, sub, formacao, subesp){
+  
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      nome: nome,
+      tipo: tipo,
+      doc: doc,
+      xp: xp,
+      esp: esp,
+      sub: sub,
+      subesp: subesp,
+      formacao: formacao,
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/setUsuarioProfissional';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.usuarioProfissional = data;
+        if(this.usuarioProfissional == data){
+          this.getUsuarioProfissional();
+        }
+        console.log(data);
+      }
+    });
+  }
+
+  getUsuarioProfissional(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioProfissional';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.usuarioProfissional = data;
+        console.log(data);
+        if(data.length != 0 && data.length){
+          this.alterarTab("profissional_m");
+          return data;
+        }
+        else{
+          this.alterarTab("profissional_n");
+        }
+      }
+    });
+  }
 }
