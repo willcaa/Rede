@@ -18,11 +18,22 @@
       </ion-buttons>
   
     </ion-navbar>
+    <ion-toolbar class="buttons_header">
+
+        <ion-segment [(ngModel)]="local" color="primary" item-end>
+          <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('calcHoras')">
+            <p style="margin-top: 2px;">Horas</p>
+          </ion-segment-button>
+          <ion-segment-button icon-left value="clientes" (ionSelect)="alterarTab('calcPrecos')">
+            <p style="margin-top: 2px;">Preços</p>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
   </ion-header>
 
 
 <ion-content padding>
-    <div class="pagetabs" id="">
+    <div class="pagetabs" id="calcHoras" *ngIf="pageId == 'calcHoras'">
         <h4>Hora de Trabalho</h4>
         <ion-list>
           <ion-item>
@@ -49,7 +60,7 @@
             <ion-input type="number" placeholder="R$" [(ngModel)]="nCustoValor" ></ion-input>
           </ion-item>
           <br>
-          <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addFixos(nome_cliente, email_cliente, doc, tel, address, tipoPessoa, fab)">
+          <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addFixos()">
               Adicionar Custo          
               <ion-icon name="md-add" item-end ></ion-icon> 
             </button>
@@ -67,15 +78,126 @@
           </ion-list>
           <br>
           <h5>Total: R${{totalCustos}},00</h5>
-          <h5 *ngIf="custosHora && custosHora != 'undefined'">Custos por hora: R${{custosHora}},00</h5>
-       
+          <h3 *ngIf="custosHora && custosHora != 'undefined'">Custos por hora: R${{custosHora}},00</h3>
+
+    </div>
+
+    <div class="pagetabs" id="calcPrecos" *ngIf="pageId == 'calcPrecos'">
+      <h4>Insumos</h4>
+      <ion-list>
+        <br>
+        <span>Novo Insumo</span>
         <ion-item>
-            <ion-label color="danger" style="text-align: center;">{{ clienteMsg }}</ion-label>
+          <ion-label color="primary" stacked>Descrição</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="nInsumoDesc" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Valor</ion-label>
+          <ion-input type="number" placeholder="R$" [(ngModel)]="nInsumoValor" ></ion-input>
+        </ion-item>
+        <br>
+        <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addInsumos()">
+            Adicionar Insumo          
+            <ion-icon name="md-add" item-end ></ion-icon> 
+          </button>
+      </ion-list>
+      <ion-list *ngIf="custosInsumos">
+          <ion-item *ngFor="let item of custosInsumos;let i = index" id="s_{{item.i}}" style="height: 50px;" >  
+              <div item-content style="width: 100%;">
+                <div style="position: relative; float: left; width: 50%;">{{item.desc}} </div>
+                <div style="position: relative; float: right; width: 50%;"> R$ {{item.val}},00</div>
+              </div>
+              <button ion-buttom item-end icon-right (click) = "remInsumos(item)" style="background: #aaa0">
+                  <ion-icon name="md-trash"></ion-icon>
+                </button>
           </ion-item>
-        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="setCliente(nome_cliente, email_cliente, doc, tel, address, tipoPessoa, fab)">
-          Calcular Preços          
-          <ion-icon name="md-play" item-end ></ion-icon> 
-        </button>
+      </ion-list>
+      <br>
+      <h5>Custo Insumos: R${{totalInsumos}},00</h5>
+      <h4>Ajudantes</h4>
+      <ion-list>
+        <br>
+        <span>Novo Ajudante</span>
+        <ion-item>
+          <ion-label color="primary" stacked>Nome</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="nAjudanteDesc" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Custo</ion-label>
+          <ion-input type="number" placeholder="R$" [(ngModel)]="nAjudanteValor" ></ion-input>
+        </ion-item>
+        <br>
+        <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addAjudantes()">
+            Adicionar Ajudante          
+            <ion-icon name="md-add" item-end ></ion-icon> 
+          </button>
+      </ion-list>
+      <ion-list *ngIf="custosAjudantes">
+          <ion-item *ngFor="let item of custosAjudantes;let i = index" id="s_{{item.i}}" style="height: 50px;" >  
+              <div item-content style="width: 100%;">
+                <div style="position: relative; float: left; width: 50%;">{{item.desc}} </div>
+                <div style="position: relative; float: right; width: 50%;"> R$ {{item.val}},00</div>
+              </div>
+              <button ion-buttom item-end icon-right (click) = "remAjudantes(item)" style="background: #aaa0">
+                  <ion-icon name="md-trash"></ion-icon>
+                </button>
+          </ion-item>
+      </ion-list>
+      <br>
+      <h5>Custo Ajudantes: R${{totalAjudantes}},00</h5>
+      <br>
+      <h4>Detalhes</h4>
+      <ion-list>
+        <br>
+        <ion-item>
+          <ion-label color="primary" stacked>Horas para execução</ion-label>
+          <ion-input type="number" placeholder="" [(ngModel)]="hExecucao"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Imposto</ion-label>
+            <ion-input type="number" placeholder="%" [(ngModel)]="imposto"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label color="primary" stacked>Lucro</ion-label>
+          <ion-input type="number" placeholder="%" [(ngModel)]="lucro"></ion-input>
+        </ion-item>
+      </ion-list>
+        <ion-item>
+          <ion-label color="danger" style="text-align: center;">{{ calcMsg }}</ion-label>
+        </ion-item>
+        <!-- <h4>Preço Sugerido para o serviço: </h4>
+          <h3>R${{precoSugerido}},00</h3> -->
+       <button ion-button icon-end class="btnCadastrar" color="primary"(click)="alterarTab('relatGerado')">
+        Gerar Relatório        
+        <ion-icon name="md-archive" item-end ></ion-icon>
+      </button>
+    </div>
+    <div class="pagetabs" id="relatGerado" *ngIf="pageId == 'relatGerado'">
+        <h4>Relatório de preços</h4>
+        <br>
+        <h5>Insumos:</h5>
+        <br>
+        <ion-item style="height: 75px;"  *ngFor="let item of custosInsumos;let i = index, let totalVal = totalVal + item.val" id="s_{{item.id}}">
+            <ion-label stacked>{{item.desc}}</ion-label>
+            <div item-content class="itemContent">
+               Valor: R${{item.val}},00
+            </div>
+            <div item-content class="itemContent">
+                Total: R${{item.totalVal}},00
+             </div>
+        </ion-item>
+        <br>
+        <h5>Ajudantes:</h5>
+        <br>
+        <ion-item style="height: 75px;"  *ngFor="let item of custosAjudantes;let i = index, let totalVal = totalVal + item.val" id="s_{{item.id}}">
+            <ion-label stacked>{{item.desc}}</ion-label>
+            <div item-content class="itemContent">
+               Valor: R${{item.val}},00
+            </div>
+            <div item-content class="itemContent">
+               Total: R${{item.totalInsVal}},00
+            </div>
+        </ion-item>
       </div>
 
 </ion-content>
