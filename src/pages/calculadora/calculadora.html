@@ -22,7 +22,7 @@
 
 
 <ion-content padding>
-    <div class="pagetabs">
+    <div class="pagetabs" id="">
         <h4>Hora de Trabalho</h4>
         <ion-list>
           <ion-item>
@@ -68,44 +68,14 @@
           <br>
           <h5>Total: R${{totalCustos}},00</h5>
           <h5 *ngIf="custosHora && custosHora != 'undefined'">Custos por hora: R${{custosHora}},00</h5>
-        <!-- <ion-list radio-group [(ngModel)]="tipoPessoa">
-          <ion-item>
-            <ion-label>Pessoa Física</ion-label>
-            <ion-radio value="cpf" checked></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label>Pessoa Jurídica</ion-label>
-            <ion-radio value="cnpj" checked></ion-radio>
-          </ion-item>
-          </ion-list>
-          <ion-list>
-                <ion-item *ngIf="tipoPessoa == 'cpf'">
-                  <ion-label color="primary" stacked>CPF</ion-label>
-                  <ion-input type="number" placeholder="Insira o CPF" [(ngModel)]="doc"></ion-input>
-                </ion-item>
-                <ion-item *ngIf="tipoPessoa == 'cnpj'">
-                  <ion-label color="primary" stacked>CNPJ</ion-label>
-                  <ion-input type="number" placeholder="Insira o CNPJ" [(ngModel)]="doc" ></ion-input>
-                </ion-item>
-          </ion-list>
-          <h5>Informações do cliente</h5>
-          <ion-list>
-            <ion-item>
-              <ion-label color="primary" stacked>Telefone</ion-label>
-              <ion-input type="tel" placeholder="Insira o telefone" [(ngModel)]="tel" ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary" stacked>Endereço</ion-label>
-              <ion-input type="text" placeholder="Insira o endereço" [(ngModel)]="address"></ion-input>
-            </ion-item>
-        </ion-list>
+       
         <ion-item>
             <ion-label color="danger" style="text-align: center;">{{ clienteMsg }}</ion-label>
           </ion-item>
         <button ion-button icon-end class="btnCadastrar" color="primary"(click)="setCliente(nome_cliente, email_cliente, doc, tel, address, tipoPessoa, fab)">
-          Cadastrar Cliente          
-          <ion-icon name="md-add" item-end ></ion-icon> 
-        </button> -->
+          Calcular Preços          
+          <ion-icon name="md-play" item-end ></ion-icon> 
+        </button>
       </div>
 
 </ion-content>
