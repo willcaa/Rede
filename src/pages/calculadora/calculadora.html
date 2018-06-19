@@ -175,29 +175,77 @@
     <div class="pagetabs" id="relatGerado" *ngIf="pageId == 'relatGerado'">
         <h4>Relatório de preços</h4>
         <br>
+        <div *ngIf="custosInsumos">
         <h5>Insumos:</h5>
         <br>
-        <ion-item style="height: 75px;"  *ngFor="let item of custosInsumos;let i = index, let totalVal = totalVal + item.val" id="s_{{item.id}}">
-            <ion-label stacked>{{item.desc}}</ion-label>
+        <ion-list>
+          <ion-item style="height: 75px;"  *ngFor="let item of custosInsumos;let i = index" id="s_{{item.id}}">
+              <ion-label >{{item.desc}}</ion-label>
+              <div item-content class="itemContent">
+                 Valor: R${{item.val}},00
+              </div>
+            </ion-item>
+            <ion-item style="height: 75px;" >
+            <ion-label >Total:</ion-label>
             <div item-content class="itemContent">
-               Valor: R${{item.val}},00
+              Valor: R${{totalInsumos}},00
             </div>
-            <div item-content class="itemContent">
-                Total: R${{item.totalVal}},00
-             </div>
-        </ion-item>
+          </ion-item>
+        </ion-list>
+
+        </div>
         <br>
+        <div *ngIf="custosAjudantes">
         <h5>Ajudantes:</h5>
         <br>
-        <ion-item style="height: 75px;"  *ngFor="let item of custosAjudantes;let i = index, let totalVal = totalVal + item.val" id="s_{{item.id}}">
-            <ion-label stacked>{{item.desc}}</ion-label>
+        <ion-list>
+          <ion-item style="height: 75px;"  *ngFor="let item of custosAjudantes;let i = index" id="s_{{item.id}}">
+              <ion-label >{{item.desc}}</ion-label>
+              <div item-content class="itemContent">
+                 Valor: R${{item.val}},00
+              </div>
+            </ion-item>
+            <ion-item style="height: 75px;" >
+                <ion-label >Total:</ion-label>
+                <div item-content class="itemContent">
+                  Valor: R${{totalInsumos}},00
+                </div>
+              </ion-item>
+            </ion-list>
+        </div>
+        <br>
+        <h5>Dados do serviço:</h5>
+        <br>
+        <ion-item style="height: 75px;">
+            <ion-label >Horas</ion-label>
             <div item-content class="itemContent">
-               Valor: R${{item.val}},00
+               {{hExecucao}} horas
             </div>
+          </ion-item>
+        <ion-item style="height: 75px;">
+            <ion-label >Preço sugerido</ion-label>
             <div item-content class="itemContent">
-               Total: R${{item.totalInsVal}},00
+               Valor: R${{totalHorasVal}},00
             </div>
-        </ion-item>
+          </ion-item>
+        <ion-item style="height: 75px;">
+            <ion-label >Imposto à pagar</ion-label>
+            <div item-content class="itemContent">
+               Valor: R${{totalImposto}},00
+            </div>
+          </ion-item>
+        <ion-item style="height: 75px;">
+            <ion-label >Lucro estipulado</ion-label>
+            <div item-content class="itemContent">
+               Valor: R${{totalLucro}},00
+            </div>
+          </ion-item>
+        <ion-item style="height: 75px;">
+            <ion-label >Capital Acumulado</ion-label>
+            <div item-content class="itemContent">
+               Valor: R${{totalCapital}},00
+            </div>
+          </ion-item>
       </div>
 
 </ion-content>

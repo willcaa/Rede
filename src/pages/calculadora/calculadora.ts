@@ -14,6 +14,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'calculadora.html',
 })
 export class CalculadoraPage {
+  totalCustosI: number;
+  totalCustosA: number;
+  totalHorasVal: number;
+  totalImposto: number;
+  totalLucro: number;
+  totalCapital: number;
   hExecucao: any;
   imposto: any;
   lucro: any;
@@ -117,6 +123,14 @@ export class CalculadoraPage {
       this.totalAjudantes = this.totalAjudantes - parseInt(id.val);
       console.log(this.custosAjudantes, this.totalAjudantes);
     }
+  }
+
+  gerarRelatorio(){
+
+    this.totalHorasVal = this.totalHoras * this.hExecucao;
+    this.totalImposto = (this.imposto / 100) * this.totalHorasVal;
+    this.totalLucro = (this.lucro / 100) * this.totalHorasVal;
+    this.totalCapital = this.totalHorasVal - this.totalImposto - this.totalLucro;
   }
 
   alterarTab(tabId){

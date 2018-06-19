@@ -155,6 +155,7 @@ export class AboutPage {
           let path = imageData;
           let new_path = path.substring(path.indexOf('s'));
           this.localFileName = new_path;
+          this.presentToast(this.localFileName);
         }, (err) => {
           console.log(err);
           this.presentToast(err);
@@ -261,7 +262,7 @@ export class AboutPage {
       local: this.checkin
     }
 
-    var link = 'https://bluedropsproducts.com/app/anuncios/criar';
+    var link = 'https://bluedropsproducts.com/app/anuncios/criarRefri';
     //this.presentToast("antes");
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

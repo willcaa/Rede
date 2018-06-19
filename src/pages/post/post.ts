@@ -10,7 +10,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   
 })
 export class PostPage {
-  imageURI:any;
+  imageURI:any = [];
   imageFileName:any;
   options: GeolocationOptions;
   currentPos: Geoposition;
@@ -30,7 +30,7 @@ export class PostPage {
         }
       
         this.camera.getPicture(options).then((imageData) => {
-          this.imageURI = imageData;
+          this.imageURI.push(imageData);
         }, (err) => {
           console.log(err);
           this.presentToast(err);
@@ -52,19 +52,22 @@ export class PostPage {
           headers: {}
         }
       
-        fileTransfer.upload(this.imageURI, 'http://192.168.0.7:8080/api/uploadImage', options)
+        this.imageURI.forEach(element => {
+          
+          fileTransfer.upload(element, 'http://192.168.0.7:8080/api/uploadImage', options)
           .then((data) => {
-          console.log(data+" Uploaded Successfully");
-          this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
-          loader.dismiss();
-          this.presentToast("Image uploaded successfully");
-        }, (err) => {
-          console.log(err);
-          loader.dismiss();
-          this.presentToast(err);
+            console.log(data+" Uploaded Successfully");
+            this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+            loader.dismiss();
+            this.presentToast("Image uploaded successfully");
+          }, (err) => {
+            console.log(err);
+            loader.dismiss();
+            this.presentToast(err);
+          });
         });
-      }
-
+        }
+        
       presentToast(msg) {
         let toast = this.toastCtrl.create({
           message: msg,
