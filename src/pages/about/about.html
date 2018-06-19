@@ -6,7 +6,7 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button *ngIf="!publicando" (click)="uploadFile()">
+      <button ion-button *ngIf="!publicando" (click)="getUserPosition()">
         PUBLICAR
       </button>
     </ion-buttons>
@@ -23,8 +23,10 @@
   </ion-item>
 
   <ion-item>
-    <img src="{{ imageURI }}" alt="" width="100%" height="100%"/>
+    <img *ngFor='let image of imagesNames' src="https://bluedropsproducts.com/app/uploads/{{ image }}" alt="" width="100%" height="100%"/>
     <p>{{ checkin }}</p>
+    <p *ngFor='let image of imagesNames'>{{ image }}</p>
+    <p *ngFor='let image of imagesNames'>https://bluedropsproducts.com/app/uploads/{{ image }}</p>
   </ion-item>
   <ion-item>
       <ion-textarea [(ngModel)]="texto" rows="8" placeholder="O que gostaria de informar?"></ion-textarea>
