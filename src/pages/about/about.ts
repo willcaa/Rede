@@ -34,7 +34,7 @@ export class AboutPage {
   public publicando: boolean;
   userId: any;
   texto:string = "";
-  public imageURI:any;
+  public imageURI:any = [];
   imageFileName:any;
   fileUrl:any;
   local: any = "bairro";
@@ -43,6 +43,7 @@ export class AboutPage {
   options: GeolocationOptions;
   currentPos: Geoposition;
   loading: any;
+  imagesNames: any = [];
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
     private camera: Camera,
@@ -119,9 +120,8 @@ export class AboutPage {
       
         this.camera.getPicture(options).then((imageData) => {
           this.imageURI = imageData;
-          let path = imageData;
-          let new_path = path.substring(path.indexOf('s'));
-          this.localFileName = new_path;
+          this.presentToast(this.imageURI);
+          this.uploadFile(imageData);
         }, (err) => {
           console.log(err);
           this.presentToast(err);
@@ -157,6 +157,7 @@ export class AboutPage {
           let path = imageData;
           let new_path = path.substring(path.indexOf('s'));
           this.localFileName = new_path;
+          this.presentToast(imageData);
           this.presentToast(this.localFileName);
         }, (err) => {
           console.log(err);
@@ -164,12 +165,9 @@ export class AboutPage {
         });
       }
 
-      uploadFile() {
-        this.presentLoadingDefault();
-        this.navCtrl.push('FeedPage', { id: this.userId});
-        this.publicando = true;
 
-        if(this.imageURI != null) {
+      uploadFile(fileToUp){
+        if(fileToUp != null) {
           const fileTransfer: FileTransferObject = this.transfer.create();
           
           let formattedDate = new Date();
@@ -180,27 +178,24 @@ export class AboutPage {
           let random = Math.floor(Math.random() * 1000000) + 100000;
           let random2 = Math.floor(Math.random() * 1000000) + 100000;
           this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
-
+          this.imagesNames.push(this.imageFileName);
           let options: FileUploadOptions = {
             fileKey: 'imagem',
             fileName: this.imageFileName,
             chunkedMode: false,
-            mimeType: "image/jpeg",
+            mimeType: "multipart/form-data",
             headers: {}
           }
         
-          fileTransfer.upload(this.imageURI, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
             .then((data) => {
             console.log(data+" Uploaded Successfully");
-            //this.presentToast(data+" Uploaded Successfully");
-            this.getUserPosition();
+            this.presentToast(this.imagesNames);
           }, (err) => {
             console.log(err);
             this.presentToast(err);
           });
-        } else {
-          this.getUserPosition();
-        }
+        } 
       }
       presentToast(msg, time = 3000) {
         let toast = this.toastCtrl.create({
@@ -217,7 +212,9 @@ export class AboutPage {
       }
 
       getUserPosition() {
-        //this.presentLoadingDefault();
+        this.presentLoadingDefault();
+        this.navCtrl.push('FeedPage', { id: this.userId});
+        this.publicando = true;
         this.options = {
           enableHighAccuracy: true
         };
@@ -251,7 +248,7 @@ export class AboutPage {
     }
 
     let body = {
-      imagem: this.imageFileName,
+      imagem: this.imagesNames,
       texto: this.texto,
       lat: lat,
       long: long,
@@ -271,6 +268,7 @@ export class AboutPage {
       .subscribe(data => {
         //this.presentToast("depois");
         this.publicando = false;
+        this.imagesNames = '';
         //this.presentToast(data.data);
         this.navCtrl.push('FeedPage', { id: this.userId});
         this.loading.dismiss();
