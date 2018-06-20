@@ -45,6 +45,8 @@ import { MarcasArCondicionadoPage } from '../pages/marcas-ar-condicionado/marcas
 import { ProdutosPage } from '../pages/produtos/produtos';
 import { ListaPage } from '../pages/lista/lista';
 import { FileChooser } from '@ionic-native/file-chooser';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -109,6 +111,7 @@ import { FileChooser } from '@ionic-native/file-chooser';
     StatusBar,
     Geolocation,
     GoogleMaps,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FileTransfer,
     FileTransferObject,

@@ -75,7 +75,7 @@ export class AboutPage {
   cahngeYoutube(){
     let link;
     link = this.linkYoutube.split('=')
-    this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[1] + "?rel=1&amp;controls=0&amp;showinfo=0'";
+    this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[1] + "?rel=1&amp;controls=1&amp;showinfo=0'";
     console.log(this.youtubeSaneado);
   }
 
@@ -290,7 +290,6 @@ export class AboutPage {
           .then((data) => {
             this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
-            this.presentToast(this.imagesNames);
           }, (err) => {
             console.log(err);
             this.presentToast(err);

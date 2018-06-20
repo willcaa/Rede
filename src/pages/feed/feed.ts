@@ -17,6 +17,7 @@ import { PopoverTopComponent } from '../../components/popover-top/popover-top';
 import { PopoverOptsAnunciosComponent } from '../../components/popover-opts-anuncios/popover-opts-anuncios';
 import { PopoverNotificacoesComponent } from '../../components/popover-notificacoes/popover-notificacoes';
 import { DomSanitizer } from '@angular/platform-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import $ from 'jquery';
 /**
  * Generated class for the FeedPage page.
@@ -69,7 +70,7 @@ export class FeedPage {
   public range: any;
   public notificacoes_qts: any;
 
-  constructor(public platform: Platform, public navCtrl: NavController, public sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
+  constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, public sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
     this.http = http;
     this.start = "";
     this.destination = "";
@@ -101,6 +102,11 @@ export class FeedPage {
       } 
     );
     
+  }
+
+  openBrowser(url){
+    console.log(url);
+    const browser = this.iab.create(url);
   }
 
   public update(key: string, data: string) {

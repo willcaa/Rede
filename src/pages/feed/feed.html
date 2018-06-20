@@ -117,8 +117,8 @@
     <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 1">
       <ion-row>
         <ion-col *ngFor="let imagem of item.imagem">
-          <img *ngIf="item.hasImage == true && item.imagem.length > 1" style="height: auto; width: 100%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="https://bluedropsproducts.com/app/uploads/{{ imagem.img_name }}">
-          <img *ngIf="item.hasImage == true && item.imagem.length <= 1" style="height: auto; width: 100%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="https://bluedropsproducts.com/app/uploads/{{ imagem.img_name }}">
+          <img *ngIf="item.hasImage == true && item.imagem.length > 1" style="height: auto; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="{{ imagem.img_name }}">
+          <img *ngIf="item.hasImage == true && item.imagem.length <= 1" style="height: auto; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="{{ imagem.img_name }}">
         </ion-col>
       </ion-row>
     </div>
@@ -126,8 +126,8 @@
     <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 3">
       <div  *ngIf='item.link'>
         <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
-          <a href="item.link">
-        {{ item.link }}</a>
+          <h5 (click)="openBrowser(item.link)">
+        {{ item.link }}</h5>
       </div>
     </div>
     
