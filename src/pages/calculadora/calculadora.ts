@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the CalculadoraPage page.
  *
@@ -41,9 +41,22 @@ export class CalculadoraPage {
   custosInsumos: any = [];
   custosAjudantes: any = [];
   precoSugerido: number;
+  data = [];
+  dataget: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+    this.storage.get('user')
+      .then( res =>{
+          console.log(res);
+          this.data = res;
+        } 
+      );
+      this.gMensais = this.data[0];
+      this.hTrabalhadas = this.data[1];
+      this.totalHoras = this.data[2];
+      this.custosFixos = this.data[5];
+      this.custosHora = this.data[6];
+    
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.totalHoras = 0;
   }
 
   
@@ -57,7 +70,7 @@ export class CalculadoraPage {
     }
   }
 
-  addFixos(){
+ addFixos(){
     if(this.nCustoDesc && this.nCustoValor){
       var custoN = [];
       custoN['desc'] = this.nCustoDesc;
@@ -156,4 +169,10 @@ export class CalculadoraPage {
     this.pageId = tabId;
     console.log(this.pageId);
   }
+  public salvarHoras(){
+    this.data.push(this.gMensais, this.hTrabalhadas, this.totalHoras, this.nCustoDesc, this.nCustoValor, this.custosFixos, this.custosHora);
+    this.storage.set('user', this.data);
+    console.log(this.data);
+  }
+  
 }

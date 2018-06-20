@@ -8,6 +8,8 @@ import { PopoverDenunciarComponent } from '../../components/popover-denunciar/po
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { CommentsPage } from '../comments/comments';
 import { StatsPage } from '../stats/stats';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the PerfilPage page.
@@ -38,7 +40,19 @@ export class PerfilPage {
   usuarioProfissional: any;
   pageId: any;
   enviandoSeguir: boolean;
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public photoViewer: PhotoViewer, public popoverCtrl: PopoverController, private _sanitizer: DomSanitizer, public navParams: NavParams, public http: Http, private storage: Storage,) {
+  public imageURI: any;
+  imageFileName: any;
+  constructor(public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public photoViewer: PhotoViewer, 
+    public popoverCtrl: PopoverController, 
+    private _sanitizer: DomSanitizer, 
+    public navParams: NavParams, 
+    public http: Http, 
+    private storage: Storage,
+    public camera: Camera,
+    public transfer: FileTransfer ) {
+    
     this.perfilId = this.navParams.get("perfilId");
     this.userId = this.navParams.get("userId");
     this.perfil_imagem = this.navParams.get("image");
@@ -339,5 +353,113 @@ alterarTab(Id){
         }
       }
     });
+  }
+  alterarImagemPerfil(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      correctOrientation: true,
+      targetWidth: 1600,
+      targetHeight: 1600
+    }
+  
+    this.camera.getPicture(options).then((imageData) => {
+      this.imageURI = imageData;
+      this.uploadFile(imageData);
+    }, (err) => {
+      console.log(err);
+      
+    });
+  }
+  uploadFile(fileToUp){
+    if(fileToUp != null) {
+      const fileTransfer: FileTransferObject = this.transfer.create();
+      
+      let formattedDate = new Date();
+      let d = formattedDate.getDate();
+      let m = formattedDate.getMonth();
+      m += 1;  // JavaScript months are 0-11
+      let y = formattedDate.getFullYear();
+      let random = Math.floor(Math.random() * 1000000) + 100000;
+      let random2 = Math.floor(Math.random() * 1000000) + 100000;
+      this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+      let options: FileUploadOptions = {
+        fileKey: 'imagem',
+        fileName: this.imageFileName,
+        chunkedMode: false,
+        mimeType: "multipart/form-data",
+        headers: {}
+      }
+      fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          .then((data) => {
+            'https://bluedropsproducts.com/app/uploads/' + this.imageFileName;
+            console.log(data+" Uploaded Successfully");
+            this.setImage();
+          }, (err) => {
+            console.log(err);
+          });
+    }
+  }
+
+  setImage(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      image: 'https://bluedropsproducts.com/app/uploads/' + this.imageFileName,
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/setNewImage';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.usuarioProfissional = data;
+        console.log(data);
+      }
+    });
+  }
+
+  updateUsuarioProfissional(nome, tipo, doc, xp, esp, sub, formacao, subesp){
+  
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      nome: nome,
+      tipo: tipo,
+      doc: doc,
+      xp: xp,
+      esp: esp,
+      sub: sub,
+      subesp: subesp,
+      formacao: formacao,
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuarioProfissional';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.usuarioProfissional = data;
+        if(this.usuarioProfissional == data){
+          this.getUsuarioProfissional();
+        }
+        console.log(data);
+      }
+    });
+  }
+
+  updatePerfilProfissional(){
+    this.alterarTab('profissional_o');
   }
 }

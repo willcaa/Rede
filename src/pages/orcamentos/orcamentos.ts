@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { AlertController } from 'ionic-angular';
 /**
  * Generated class for the OrcamentosPage page.
  *
@@ -73,7 +74,7 @@ export class OrcamentosPage {
   servVal: any;
   servQty: any;
   cucumber: boolean;
-  constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public http: Http) {
+  constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public http: Http, public alertCtrl: AlertController) {
     this.storage.get('meuid')
       .then( res =>{
           console.log(res);
@@ -237,7 +238,7 @@ export class OrcamentosPage {
     });
   }
 
-  public deleteChecked(pageId){
+  public deleteChecked(pageId, fab){
     console.log(pageId);
     if(pageId == 'clientes'){
       if(this.idToRemove != null){
@@ -262,6 +263,14 @@ export class OrcamentosPage {
       }
       else
         console.log("Nao há serviços a serem removidos!");
+    }
+    else if(pageId=='orcamentos_c'){
+      if(this.idToRemove != null){
+        console.log(this.idToRemove)
+        this.deleteOrcamentoCancelado(this.idToRemove, fab);
+      }
+      else
+        console.log("Nao há orçamentos a serem removidos");
     }
   }
 
@@ -311,6 +320,50 @@ export class OrcamentosPage {
         console.log(data);
       }
     });
+  }
+
+  public deleteOrcamentoCancelado(id, fab){
+    
+    let confirm = this.alertCtrl.create({
+      title: 'Você realmente deseja deletar este orçamento?',
+      message: 'Caso você delete este orçamento ele desaparecerá permanentemente!',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Aceitar',
+          handler: () => {
+            
+            let headers = new Headers();
+            headers.append('Access-Control-Allow-Origin', '*');
+            headers.append('Accept', 'application/json');
+            headers.append('content-type', 'application/json');
+
+            let body = {
+              id: id
+            }
+            console.log(id);
+            var link = 'https://bluedropsproducts.com/app/ferramentas/removeOrcamentoCancelado';
+          
+      
+            this.http.post(link, JSON.stringify(body), { headers: headers })
+            .map(res => res.json())
+            .subscribe(data => {
+              if(data){
+                this.clientes = data;
+                console.log(data);
+                this.alterarTab('orcamentos_c', fab);
+              }
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
+    
   }
 
   public deleteServico(id){
@@ -802,7 +855,7 @@ export class OrcamentosPage {
         console.log( this.dadosServico, id);
   }
 
-  aprovaOrcamento(){
+  aprovaOrcamento(fab){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -823,12 +876,12 @@ export class OrcamentosPage {
       if(data){
         console.log(data);
         this.orcamentoSelecionado = "";
-        
+        this.alterarTab('orcamentos_a', fab);
       }
     });
   }
  
-  cancelaOrcamento(){
+  cancelaOrcamento(fab){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -849,14 +902,14 @@ export class OrcamentosPage {
       if(data){
         console.log(data);
         this.orcamentoSelecionado = "";
-
+        this.alterarTab('orcamentos', fab);
       }
     });
   }
 
-  setOrcamento(descricao, formaDePagamento){
+  setOrcamento(descricao, formaDePagamento, fab){
     if(descricao && formaDePagamento && this.dados.technician_id && this.dados.id){
-      this.setBudget(descricao, formaDePagamento, this.dados.technician_id, this.dados.id);
+      this.setBudget(descricao, formaDePagamento, this.dados.technician_id, this.dados.id, fab);
       this.budgetMsg = "";
     } else {
       this.budgetMsg = "Preencha todos os dados!";
@@ -865,7 +918,7 @@ export class OrcamentosPage {
     
   }
 
-  setBudget(descricao, pagamento, technicianId, clientId){
+  setBudget(descricao, pagamento, technicianId, clientId, fab){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -890,8 +943,10 @@ export class OrcamentosPage {
       if(data){
         this.orcamento = data;
         console.log(data);
+        this.alterarTab('orcamentos', fab);
       }
     });
+
     
   }
 

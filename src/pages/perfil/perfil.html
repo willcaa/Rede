@@ -7,7 +7,8 @@
 <ion-header>
 
   <ion-navbar color="dark">
-    <ion-title>perfil</ion-title>
+    <ion-title>Perfil</ion-title>
+    <button ion-button icon-only *ngIf="perfilId == userId" (click)="updatePerfilProfissional()" ><ion-icon name="settings"></ion-icon></button>
   </ion-navbar>
 
 </ion-header>
@@ -20,12 +21,13 @@
     
     <div style="width: 100%">
         <div class="fundo-perfil">
-          <div class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)">
-        </div>
+          <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
+            
+          </button>
 
           <div class="button-like">
             <span class="bola"></span>
-            <button *ngIf="seguindo" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)">Seguindo</button>
+            <button *ngIf="seguindo" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)"></button>
             <button *ngIf="!seguindo" ion-button small class="botao-seguir" (click)="seguir(perfilId, userId)">Seguir</button>
           </div>
           <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)">
@@ -275,7 +277,100 @@
                 </ion-item>
           </ion-list>
     </div>
+    <div id="profissional_o" class="pagetabs" *ngIf="pageId == 'profissional_o'">
+      <br> <h5>Informações do profissional</h5><br>
+       <ion-list>
+         <ion-item>
+           <ion-label color="primary" >Nome da empresa</ion-label>
+           <ion-input type="text" placeholder="{{usuarioProfissional[0].nome_empresa}}" [(ngModel)]="nome_empresa" ></ion-input>
+         </ion-item>
+       </ion-list>
+       <ion-list radio-group [(ngModel)]="tipoPessoa">
+         <ion-item>
+           <ion-label>Pessoa Física</ion-label>
+           <ion-radio value="cpf" checked></ion-radio>
+         </ion-item>
+         <ion-item>
+           <ion-label>Pessoa Jurídica</ion-label>
+           <ion-radio value="cnpj" checked></ion-radio>
+         </ion-item>
+         </ion-list>
+         <ion-list>
+               <ion-item *ngIf="tipoPessoa == 'cpf'">
+                 <ion-label color="primary">CPF</ion-label>
+                 <ion-input type="number" placeholder="{{usuarioProfissional[0].cpf}}" [(ngModel)]="doc"></ion-input>
+               </ion-item>
+               <ion-item *ngIf="tipoPessoa == 'cnpj'">
+                 <ion-label color="primary">CNPJ</ion-label>
+                 <ion-input type="number" placeholder="{{usuarioProfissional[0].cnpj}}" [(ngModel)]="doc" ></ion-input>
+               </ion-item>
+         </ion-list>
+         
+         <ion-list>
+           <ion-item>
+             <ion-label>Tempo de experiência</ion-label>
+             <ion-select [(ngModel)]="experiencia">
+               <ion-option value="Menos de 2 anos">Menos de 2 anos</ion-option>
+               <ion-option value="2 a 5 anos">2 a 5 anos</ion-option>
+               <ion-option value="5 a 10 anos">5 a 10 anos</ion-option>
+               <ion-option value="Mais de 10 anos">Mais de 10 anos</ion-option>
+             </ion-select>
+           </ion-item>
+       </ion-list>
+       <ion-list>
+           <ion-item>
+             <ion-label>Especialidade</ion-label>
+             <ion-select [(ngModel)]="especialidade">
+               <ion-option value="Climatização">Climatização</ion-option>
+               <ion-option value="Linha Branca">Linha Branca</ion-option>
+               <ion-option value="Refrigeração Comercial">Refrigeração Comercial</ion-option>
+             </ion-select>
+           </ion-item>
+       </ion-list>
+       <ion-list>
+           <ion-item>
+             <ion-label>Subespecialidade</ion-label>
+             <ion-select [(ngModel)]="subespecialidade">
+               <ion-option value="Mini Split" *ngIf="especialidade == 'Climatização'">Mini Split</ion-option>
+               <ion-option value="Comercial" *ngIf="especialidade == 'Climatização'">Comercial</ion-option>
+               <ion-option value="VRF" *ngIf="especialidade == 'Climatização'">VRF</ion-option>
+               <ion-option value="outros" *ngIf="especialidade == 'Climatização'">Outros Especificar</ion-option>
+               
+               <ion-option value="Cozinha" *ngIf="especialidade == 'Linha Branca'">Cozinha</ion-option>
+               <ion-option value="Lavanderia" *ngIf="especialidade == 'Linha Branca'">Lavanderia</ion-option>
+               <ion-option value="Mini Split" *ngIf="especialidade == 'Linha Branca'">Mini Split</ion-option>
+               <ion-option value="outros" *ngIf="especialidade == 'Linha Branca'">Outros Especificar</ion-option>
 
+               <ion-option value="Câmara fria" *ngIf="especialidade == 'Refrigeração Comercial'">Câmara Fria</ion-option>
+               <ion-option value="Frio Alimentar" *ngIf="especialidade == 'Refrigeração Comercial'">Frio Alimentar</ion-option>
+               <ion-option value="Máquinas" *ngIf="especialidade == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
+               <ion-option value="outros" *ngIf="especialidade == 'Refrigeração Comercial'">Outros Especificar</ion-option>
+             </ion-select>
+             <ion-input type="text" [(ngModel)]="sub" *ngIf="subespecialidade == 'outros'" placeholder="Outros..."></ion-input>
+           </ion-item>
+       </ion-list>
+
+       <ion-list>
+         <ion-item>
+           <ion-label>Formação</ion-label>
+           <ion-select [(ngModel)]="formacao">
+             <ion-option value="Técnico até 12 meses">Técnico até 12 meses</ion-option>
+             <ion-option value="Técnico até 24 meses">Técnico até 24 meses</ion-option>
+             <ion-option value="Superior">Superior</ion-option>
+             <ion-option value="Graduado">Graduado</ion-option>
+             <ion-option value="Pós Graduado">Pós Graduado</ion-option>
+             <ion-option value="Mestre">Mestre</ion-option>
+             <ion-option value="Doutor">Doutor</ion-option>
+           </ion-select>
+           
+         </ion-item>
+       </ion-list>
+
+        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="updateUsuarioProfissional(nome_empresa, tipoPessoa, doc, experiencia, especialidade, subespecialidade, formacao, sub)">
+         Salvar Dados          
+         <ion-icon name="md-add" item-end ></ion-icon> 
+       </button>
+   </div>
         
   <!-- <ion-infinite-scroll (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content loadingText="Carregando...">

@@ -615,11 +615,11 @@
         <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'clientes_n'" (click)="alterarTab('clientes_n', fab)"><ion-icon name="md-add"></ion-icon></button>
         <button ion-fab *ngIf="pageId == 'produtos' || pageId == 'produtos_n'" (click)="alterarTab('produtos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
         <button ion-fab *ngIf="pageId == 'servicos' || pageId == 'servicos_n'" (click)="alterarTab('servicos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
-        <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos'" (click)="showCheck()"><ion-icon name="md-checkmark"></ion-icon></button>
+        <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos' || pageId == 'orcamentos_c'" (click)="showCheck()"><ion-icon name="md-checkmark"></ion-icon></button>
         <button ion-fab *ngIf="pageId == 'orcamento_v'" (click)="aprovaOrcamento()"><ion-icon name="md-thumbs-up"></ion-icon></button>
         <!-- <button ion-fab *ngIf="pageId != 'pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="aprovaOrcamentos()"><ion-icon name="md-thumbs-up"></ion-icon></button> -->
         <button ion-fab *ngIf="pageId == 'orcamento_v'" (click)="cancelaOrcamento()"><ion-icon name="md-trash"></ion-icon></button>
-        <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos'" (click)="deleteChecked(pageId)"><ion-icon name="md-trash"></ion-icon></button>
+        <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos' || pageId == 'orcamentos_c'" (click)="deleteChecked(pageId, fab)"><ion-icon name="md-trash"></ion-icon></button>
       </ion-fab-list>
     </ion-fab>
 </ion-footer>
