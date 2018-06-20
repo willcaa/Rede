@@ -226,16 +226,19 @@ page-perfil {
   }
   .botao-profissional{
     width: 50%;
-    height: 50px !important;
+    height: 70px !important;
     font-size: 2.2rem !important;
-    background-color: #37c5e9;
+    color: #37c5e9 !important;
+    flex-direction: column !important;
   }
   .botao-pessoal{
     width: 50%;
-    height: 50px !important;
+    height: 70px !important;
     font-size: 2.2rem !important;
-    background-color: #37c5e9;
+    color: #37c5e9 !important;
+  
   }
+  
   .pagetabs{
     text-align: center !important;
     color: cornflowerblue;
@@ -246,5 +249,20 @@ page-perfil {
     top: 40px;
     left: 25px;
     line-height: 20px;
-}
+  }
+  
+  .segment-md .segment-button{
+    font-size: 10px !important;
+    line-height: 4px;
+  }
+  .segment-md .segment-button ion-icon{
+    font-size: 45px !important;
+    display: block;
+    margin-bottom: 3px !important;
+    margin-top: 10px;
+  }
+  .texto{
+    margin-top: 2px;
+  }
+  
 }

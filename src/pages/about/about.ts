@@ -137,6 +137,7 @@ export class AboutPage {
       getImage() {
         const options: CameraOptions = {
           quality: 100,
+          mediaType: this.camera.MediaType.ALLMEDIA,
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
           mediaType: this.camera.MediaType.PICTURE,
@@ -245,6 +246,7 @@ export class AboutPage {
       getPicture() {
         const options: CameraOptions = {
           quality: 100,
+          mediaType: this.camera.MediaType.ALLMEDIA,
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.CAMERA,
           correctOrientation: true,

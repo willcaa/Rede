@@ -113,8 +113,13 @@
     <ion-card-content style="padding: 0">
       <a href="item.texto">{{ item.texto }}</a>
     </ion-card-content>
-    <div style="max-height: 340px; overflow: hidden;">
-      <img *ngIf="item.hasImage == true" (click)="ampliarImagem(item.imagem, item.texto)" src="{{ item.imagem }}">
+    <div style="overflow: hidden; max-height: 340px;" class="img_card">
+      <ion-row>
+        <ion-col *ngFor="let imagem of item.imagem">
+          <img *ngIf="item.hasImage == true && item.imagem.length > 1" style="height: auto; width: 100%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="https://bluedropsproducts.com/app/uploads/{{ imagem.img_name }}">
+          <img *ngIf="item.hasImage == true && item.imagem.length <= 1" style="height: auto; width: 100%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="https://bluedropsproducts.com/app/uploads/{{ imagem.img_name }}">
+        </ion-col>
+      </ion-row>
     </div>
 
     <ion-row>
