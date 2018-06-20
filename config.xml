@@ -3,7 +3,7 @@
     <name>Refriplay</name>
     <description />
     <author email="hi@ionicframework" href="http://ionicframework.com/">WA Studio</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-navigation href="http://192.168.15.5:8128" />
@@ -110,6 +110,9 @@
         <variable name="APP_ID" value="1505918069504571" />
         <variable name="APP_NAME" value="Redelive" />
     </plugin>
+    <plugin name="cordova-plugin-media-capture" spec="^3.0.2" />
+    <plugin name="cordova-plugin-filechooser" spec="^1.0.1" />
+    <allow-navigation href="http://localhost:8100" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.0.0" />
 </widget>

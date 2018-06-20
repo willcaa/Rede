@@ -44,7 +44,7 @@ import { FerramentasPage } from '../pages/ferramentas/ferramentas';
 import { MarcasArCondicionadoPage } from '../pages/marcas-ar-condicionado/marcas-ar-condicionado';
 import { ProdutosPage } from '../pages/produtos/produtos';
 import { ListaPage } from '../pages/lista/lista';
-
+import { FileChooser } from '@ionic-native/file-chooser';
 @NgModule({
   declarations: [
     MyApp,
@@ -118,6 +118,7 @@ import { ListaPage } from '../pages/lista/lista';
     Camera,
     Facebook,
     PhotoViewer,
+    FileChooser,
     LocatonsProvider,
     ScreenOrientation
   ]

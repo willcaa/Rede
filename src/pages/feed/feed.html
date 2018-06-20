@@ -111,7 +111,7 @@
       </button>
     </ion-item>
     <ion-card-content style="padding: 0">
-      <p>{{ item.texto }}</p>
+      <a href="item.texto">{{ item.texto }}</a>
     </ion-card-content>
     <div style="max-height: 340px; overflow: hidden;">
       <img *ngIf="item.hasImage == true" (click)="ampliarImagem(item.imagem, item.texto)" src="{{ item.imagem }}">

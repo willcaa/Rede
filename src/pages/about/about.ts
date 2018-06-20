@@ -8,6 +8,9 @@ import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
 import { PopoverTopComponent } from '../../components/popover-top/popover-top';
+import { HtmlInfoWindow } from '@ionic-native/google-maps';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FileChooser } from '@ionic-native/file-chooser';
 
 @Component({
   selector: 'page-about',
@@ -36,7 +39,9 @@ export class AboutPage {
   texto:string = "";
   public imageURI:any = [];
   imageFileName:any;
+  imageFileNameVideo:any;
   fileUrl:any;
+  imageUriVideo:any;
   local: any = "bairro";
   localFileName:any;
   hasID: any = false;
@@ -44,17 +49,39 @@ export class AboutPage {
   currentPos: Geoposition;
   loading: any;
   imagesNames: any = [];
+  postType: number;
+  linkPost: any;
+  linkYoutube: any;
+  youtubeSaneado: any;
+  loader: any;
+  videoId: any;
+  flag_upload = true;
+  flag_play = true;
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
     private camera: Camera,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public http: Http,
+    public http: Http, 
+    public fileChooser: FileChooser,
+    public sanitizer: DomSanitizer,
     private storage: Storage,
     public popoverCtrl: PopoverController,
     private geolocation: Geolocation) {
 
+  }
+
+  cahngeYoutube(){
+    let link;
+    link = this.linkYoutube.split('=')
+    this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[1] + "?rel=0&amp;controls=0&amp;showinfo=0'";
+    console.log(this.youtubeSaneado);
+  }
+
+  cahngeLink(){
+    this.linkPost = this.linkPost;
+    console.log(this.youtubeSaneado);
   }
 
   checkIn() {
@@ -112,6 +139,7 @@ export class AboutPage {
           quality: 100,
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+          mediaType: this.camera.MediaType.PICTURE,
           correctOrientation: true,
           targetWidth: 1600,
           targetHeight: 1600
@@ -119,13 +147,87 @@ export class AboutPage {
       
         this.camera.getPicture(options).then((imageData) => {
           this.imageURI = imageData;
-          this.presentToast(this.imageURI);
           this.uploadFile(imageData);
         }, (err) => {
           console.log(err);
           this.presentToast(err);
         });
       }
+      
+      private setPostType(type){
+        this.postType = type;
+        console.log(this.postType)
+      }
+
+      getVideo() {
+        this.fileChooser.open()
+        .then(uri => {
+        this.videoId = uri;
+        this.flag_play = false;
+        this.flag_upload = false;
+        this.uploadVideo();
+        })
+        .catch(e => 
+          console.log(e));
+        }
+
+        uploadVideo() {
+          
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          let options1: FileUploadOptions = {
+            fileKey: 'video_upload_file',
+            fileName: this.videoId,
+            headers: {},
+            mimeType: 'multipart/form-data',
+            params: { },
+            chunkedMode: false
+          }
+          this.presentLoading();
+          fileTransfer.upload(this.videoId, encodeURI('https://bluedropsproducts.com/upload2.php'), options1)
+          .then((data) => {
+          this.loader.dismissAll();
+          this.flag_upload = true;
+          this.showToast('middle', 'Video is uploaded Successfully!'+ this.videoId);
+          }, (err) => {
+          // error
+          });
+          }
+          presentLoading() {
+          this.loader = this.loadingCtrl.create({
+          content: "Uploading…"
+          });
+          this.loader.present();
+          }
+          showToast(position: string, message: string) {
+          let toast = this.toastCtrl.create({
+          message: message,
+          duration: 3000,
+          position: position
+          });
+          toast.present(toast);
+          }
+
+
+      // getVideo() {
+      //   const options: CameraOptions = {
+      //     quality: 100,
+      //     destinationType: this.camera.DestinationType.FILE_URI,
+      //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      //     mediaType: this.camera.MediaType.VIDEO,
+      //     correctOrientation: true,
+      //     targetWidth: 1600,
+      //     targetHeight: 1600
+      //   }
+      
+      //   this.camera.getPicture(options).then((imageData) => {
+      //     this.imageUriVideo = imageData;
+      //     this.presentToast(imageData);
+      //     this.uploadFileVideo(imageData);
+      //   }, (err) => {
+      //     console.log(err);
+      //     this.presentToast(err);
+      //   });
+      // }
       loadLocation(lat, long) {
         let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
         this.http.get(url).map(res => res.json()).subscribe(data => {
@@ -134,7 +236,7 @@ export class AboutPage {
           this.cidade = data.results[0].address_components[3].long_name;
           this.estado = data.results[0].address_components[5].short_name;
           this.pais = data.results[0].address_components[6].long_name;
-          this.sendPost(lat, long, this.topOrNews);
+          this.sendPost(lat, long);
         });
       }
       pushPage() {
@@ -155,8 +257,8 @@ export class AboutPage {
           let path = imageData;
           let new_path = path.substring(path.indexOf('s'));
           this.localFileName = new_path;
-          this.presentToast(imageData);
-          this.presentToast(this.localFileName);
+          this.uploadFile(imageData);
+    
         }, (err) => {
           console.log(err);
           this.presentToast(err);
@@ -176,7 +278,6 @@ export class AboutPage {
           let random = Math.floor(Math.random() * 1000000) + 100000;
           let random2 = Math.floor(Math.random() * 1000000) + 100000;
           this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
-          this.imagesNames.push(this.imageFileName);
           let options: FileUploadOptions = {
             fileKey: 'imagem',
             fileName: this.imageFileName,
@@ -184,9 +285,10 @@ export class AboutPage {
             mimeType: "multipart/form-data",
             headers: {}
           }
-        
+          
           fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
-            .then((data) => {
+          .then((data) => {
+            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             this.presentToast(this.imagesNames);
           }, (err) => {
@@ -195,7 +297,42 @@ export class AboutPage {
           });
         } 
       }
-      presentToast(msg, time = 3000) {
+      
+      uploadFileVideo(fileToUp){
+        this.presentToast(fileToUp);
+        if(fileToUp != null) {
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          
+          let formattedDate = new Date();
+          let d = formattedDate.getDate();
+          let m = formattedDate.getMonth();
+          m += 1;  // JavaScript months are 0-11
+          let y = formattedDate.getFullYear();
+          let random = Math.floor(Math.random() * 1000000) + 100000;
+          let random2 = Math.floor(Math.random() * 1000000) + 100000;
+          this.imageFileNameVideo = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".mp4";
+          let options: FileUploadOptions = {
+            fileKey: 'imagem',
+            fileName: this.imageFileNameVideo,
+            chunkedMode: false,
+            mimeType: "multipart/form-data",
+            headers: {}
+          }
+          
+          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          .then((data) => {
+            this.imageFileNameVideo = 'https://bluedropsproducts.com/app/uploads/' + this.imageFileNameVideo;
+            console.log(data+" Uploaded Successfully");
+            this.presentToast(data);
+          }, (err) => {
+            console.log(err);
+            this.presentToast(err);
+          });
+        } 
+      }
+    
+
+      presentToast(msg, time = 8000) {
         let toast = this.toastCtrl.create({
           message: msg,
           duration: time,
@@ -228,9 +365,9 @@ export class AboutPage {
         });
         
       }
+      verifyLink
 
-
-  sendPost(lat, long, tipo) {
+  sendPost(lat, long) {
     //this.presentToast(this.pais);
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -239,22 +376,18 @@ export class AboutPage {
     if (!this.imageFileName) {
       this.imageFileName = "none";
     }
-    if(tipo == "Top") {
-      tipo = 1;
-    } else if(tipo == "News") {
-      tipo = 2;
-    }
+ 
 
     let body = {
       imagem: this.imagesNames,
       texto: this.texto,
+      tipo: this.postType,
       lat: lat,
       long: long,
       bairro: this.bairro,
       cidade: this.cidade,
       estado: this.estado,
       pais: this.pais,
-      tipo: tipo,
       usuario: this.userId,
       local: this.checkin
     }

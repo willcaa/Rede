@@ -23,25 +23,73 @@
   </ion-item>
 
   <ion-item>
-    <img *ngFor='let image of imagesNames' src="https://bluedropsproducts.com/app/uploads/{{ image }}" alt="" width="100%" height="100%"/>
     <p>{{ checkin }}</p>
-    <p *ngFor='let image of imagesNames'>{{ image }}</p>
-    <p *ngFor='let image of imagesNames'>https://bluedropsproducts.com/app/uploads/{{ image }}</p>
+    <div *ngIf='postType == 1'>
+      <div *ngIf='imagesNames.length > 1' >
+        <div *ngFor='let image of imagesNames' style="width: 45%;height: auto;position:  relative;float:  left;">
+          <img src="{{ image }}" alt="" width="100%" height="100%"/>
+        </div>
+      </div>
+      <div *ngIf='imagesNames.length <= 1' >
+        <div *ngFor='let image of imagesNames' style="width: 100%; height: auto;">
+          <img src="{{ image }}" alt="" width="100%" height="100%"/>
+        </div>
+      </div>
+    </div>
+    <div *ngIf='postType == 2'>
+      <div style="width: 100%;height: auto;">
+        <video src="{{ image }}" alt="" width="100%" height="100%"></video>
+      </div>
+    </div>
+    <div *ngIf='postType == 3'>
+        <div  *ngIf='linkPost'>
+            <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(linkPost)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe>
+          </div>
+      <div style="width: 100%;height: auto;">
+          <ion-item>
+        <ion-input  [(ngModel)]="linkPost" type="text"  (change)="cahngeLink()" placeholder="Insira o link" ></ion-input>
+      </ion-item>
+      </div>
+    </div>
+    <div *ngIf='postType == 4'>
+      <div  *ngIf='youtubeSaneado'>
+        <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(youtubeSaneado)' width="100%" height="auto" frameborder="0"></iframe>
+      </div>
+      <div style="width: 100%;height: auto;">
+        <ion-item>
+          <ion-input  [(ngModel)]="linkYoutube" type="text"  (change)="cahngeYoutube()" placeholder="Insira o link do Youtube" ></ion-input>
+        </ion-item>
+      </div>
+    </div>
+ 
+
   </ion-item>
   <ion-item>
-      <ion-textarea [(ngModel)]="texto" rows="8" placeholder="O que gostaria de informar?"></ion-textarea>
+      <ion-textarea [(ngModel)]="texto" rows="4" (change)="verifyLink()" placeholder="O que gostaria de informar?"></ion-textarea>
   </ion-item>
   <ion-list style="margin-top: 50px;">
-    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getImage()">
+    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getImage(); setPostType(1);">
       <ion-icon color="secondary" name="images" isActive="true" item-start></ion-icon>
-        Galeria
+        Imagens
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="getPicture()">
-      <ion-icon color="primary" name="camera" isActive="true" item-start></ion-icon>
-        Foto/Video
+    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getVideo(); setPostType(2);">
+      <ion-icon color="primary" name="ios-videocam" isActive="true" item-start></ion-icon>
+        Video
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="checkIn()">
-      <ion-icon color="danger" name="pin" isActive="true" item-start></ion-icon>
+    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="setPostType(3);">
+      <ion-icon color="yellow" name="ios-link" isActive="true" item-start></ion-icon>
+        Link
+    </ion-item>
+    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="setPostType(4);">
+      <ion-icon color="red" name="logo-youtube" isActive="true" item-start></ion-icon>
+        Youtube
+    </ion-item>
+    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="getPicture(); setPostType(5);">
+      <ion-icon color="maroon" name="camera" isActive="true" item-start></ion-icon>
+        Foto
+    </ion-item>
+    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="checkIn(); setPostType(6);">
+      <ion-icon color="orange" name="pin" isActive="true" item-start></ion-icon>
         Check-in
     </ion-item>
   </ion-list>

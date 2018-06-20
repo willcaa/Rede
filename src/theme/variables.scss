@@ -42,7 +42,25 @@ $colors: (
   darkBlue:   (
     base: rgba(73, 125, 190, 1),
     contrast: #ffffff
-  )
+  ),
+  yellow:   (
+    base: rgb(170, 230, 5),
+    contrast: #333
+  ),
+  orange:   (
+    base: rgb(221, 114, 14),
+    contrast: #ffffff
+  ),
+  red:   (
+    base: red,
+    contrast: #ffffff
+  ),
+  maroon:   (
+    base: maroon,
+    contrast: #ffffff
+  ),
+
+
 );
 
 
