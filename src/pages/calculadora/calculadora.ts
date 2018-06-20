@@ -126,13 +126,32 @@ export class CalculadoraPage {
   }
 
   gerarRelatorio(){
+    if(this.calcular()){
 
-    this.totalHorasVal = this.totalHoras * this.hExecucao;
-    this.totalImposto = (this.imposto / 100) * this.totalHorasVal;
-    this.totalLucro = (this.lucro / 100) * this.totalHorasVal;
-    this.totalCapital = this.totalHorasVal - this.totalImposto - this.totalLucro;
+      this.alterarTab('relatGerado');
+    }
+    
   }
-
+  calcular(){
+ 
+    this.precoSugerido = Math.trunc(this.horasVal());
+    let precoSug = Math.trunc(this.horasVal());
+    this.totalHorasVal = Math.trunc(this.totalHoras * this.hExecucao);
+    this.totalImposto = Math.trunc((this.imposto / 100) * precoSug);
+    this.totalLucro = Math.trunc((this.lucro / 100) * precoSug);
+    this.totalCapital = Math.trunc(precoSug - this.totalImposto - this.totalLucro);
+    console.log(precoSug, this.totalHorasVal, this.totalLucro);
+    return true;
+  }
+  horasVal(){
+    let custoH;
+    custoH = Math.trunc(((this.totalAjudantes + this.totalInsumos)/this.hExecucao) + this.custosHora);
+    if((((this.totalHoras* this.hExecucao)-(custoH * this.hExecucao))-((this.totalHoras* this.hExecucao)*(this.imposto / 100))) > ((custoH * this.hExecucao)*((1/(this.imposto / 100))+(((custoH * this.hExecucao)*((1/(this.lucro / 100)))))))){
+      return this.totalHoras * this.hExecucao;
+    } else {
+      return ((custoH * this.hExecucao)*((1/(this.imposto / 100))+(((custoH * this.hExecucao)*((1/(this.lucro / 100)))))));
+    }
+  }
   alterarTab(tabId){
     this.pageId = tabId;
     console.log(this.pageId);

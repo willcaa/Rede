@@ -16,6 +16,8 @@ import { PopoverController } from 'ionic-angular';
 import { PopoverTopComponent } from '../../components/popover-top/popover-top';
 import { PopoverOptsAnunciosComponent } from '../../components/popover-opts-anuncios/popover-opts-anuncios';
 import { PopoverNotificacoesComponent } from '../../components/popover-notificacoes/popover-notificacoes';
+import { DomSanitizer } from '@angular/platform-browser';
+import $ from 'jquery';
 /**
  * Generated class for the FeedPage page.
  *
@@ -67,7 +69,7 @@ export class FeedPage {
   public range: any;
   public notificacoes_qts: any;
 
-  constructor(public platform: Platform, public navCtrl: NavController, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
+  constructor(public platform: Platform, public navCtrl: NavController, public sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
     this.http = http;
     this.start = "";
     this.destination = "";
@@ -391,7 +393,7 @@ export class FeedPage {
 
   deleteAnuncio(post) {
     let confirm = this.alertCtrl.create({
-      title: 'Você Realmente Deseja Deletar Este Anuncio?',
+      title: 'Você realmente deseja deletar este post?',
       message: 'Caso você delete este anuncio ele desaparecerá permanentemente!',
       buttons: [
         {
@@ -534,16 +536,6 @@ export class FeedPage {
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
     headers.append('Access-Control-Expose-Headers', "true"); 
-    if(this.userId.__zone_symbol__value) {
-      this.userId = this.userId.__zone_symbol__value;
-    }
-    if(this.userImagem.__zone_symbol__value) {
-      this.userImagem = this.userImagem.__zone_symbol__value;
-    }
-    if(this.userName.__zone_symbol__value) {
-      this.userName = this.userName.__zone_symbol__value;
-    }
-    console.log(this.userId, this.userImagem);
     this.userId = parseInt(this.userId);
     console.log(this.userId, this.userImagem);
     let tipo:number;
@@ -586,7 +578,7 @@ export class FeedPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
-        console.log(this.feed, data.data);
+        console.log( data.data, data.status);
         if ( data.data ) {
           data.data.forEach(element => {
             // element.usuario == parseInt(element.usuario);
@@ -601,7 +593,7 @@ export class FeedPage {
              console.log(element.distance);
           });
         };
-        if (this.feed && data.status) {
+        if (this.feed && data.status && this.feed != data.data) {
           if(!infiniteScroll) {
             this.index_feed = 0;
             this.feed = [];
@@ -618,12 +610,13 @@ export class FeedPage {
           }
         } else {
           if (!data.status) {
-            this.feed = this.feed;
             if(infiniteScroll) {
               infiniteScroll.complete();
             }
           } else {
-            this.feed = data.data;
+            if(this.feed != data.data) {
+              this.feed = data.data;
+            }
             if(infiniteScroll) {
               infiniteScroll.complete();
             }
@@ -661,10 +654,15 @@ export class FeedPage {
 
     } 
     if(e.deltaY < 0) {
-
-      document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '145px';
-      document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '145px';
-      document.querySelector("#sendbar")['style'].display = 'flex';
+      if(document.getElementsByClassName("scroll-content")[1]){
+        document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '145px';
+      }
+      if(document.getElementsByClassName("scroll-content")[0]){
+        document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '145px';
+      }
+      if(document.querySelector("#sendbar")){
+        document.querySelector("#sendbar")['style'].display = 'flex';
+      }
 
     }//if 
   }//scrollingFun

@@ -75,10 +75,11 @@ export class AboutPage {
   cahngeYoutube(){
     let link;
     link = this.linkYoutube.split('=')
-    this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[1] + "?rel=0&amp;controls=0&amp;showinfo=0'";
+    this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[1] + "?rel=1&amp;controls=0&amp;showinfo=0'";
     console.log(this.youtubeSaneado);
   }
 
+  
   cahngeLink(){
     this.linkPost = this.linkPost;
     console.log(this.youtubeSaneado);
@@ -137,10 +138,8 @@ export class AboutPage {
       getImage() {
         const options: CameraOptions = {
           quality: 100,
-          mediaType: this.camera.MediaType.ALLMEDIA,
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-          mediaType: this.camera.MediaType.PICTURE,
           correctOrientation: true,
           targetWidth: 1600,
           targetHeight: 1600
@@ -184,7 +183,7 @@ export class AboutPage {
             chunkedMode: false
           }
           this.presentLoading();
-          fileTransfer.upload(this.videoId, encodeURI('https://bluedropsproducts.com/upload2.php'), options1)
+          fileTransfer.upload(this.videoId, encodeURI('https://bluedropsproducts.com/upload.php'), options1)
           .then((data) => {
           this.loader.dismissAll();
           this.flag_upload = true;
@@ -246,7 +245,6 @@ export class AboutPage {
       getPicture() {
         const options: CameraOptions = {
           quality: 100,
-          mediaType: this.camera.MediaType.ALLMEDIA,
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.CAMERA,
           correctOrientation: true,
@@ -391,6 +389,8 @@ export class AboutPage {
       estado: this.estado,
       pais: this.pais,
       usuario: this.userId,
+      link: this.linkPost,
+      youtubeA: this.youtubeSaneado,
       local: this.checkin
     }
 
