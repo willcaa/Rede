@@ -49,7 +49,7 @@ export class AboutPage {
   currentPos: Geoposition;
   loading: any;
   imagesNames: any = [];
-  postType: number;
+  postType: number = 0;
   linkPost: any;
   linkYoutube: any;
   youtubeSaneado: any;
@@ -57,6 +57,7 @@ export class AboutPage {
   videoId: any;
   flag_upload = true;
   flag_play = true;
+  aImages: any;
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
     private camera: Camera,
@@ -69,7 +70,7 @@ export class AboutPage {
     private storage: Storage,
     public popoverCtrl: PopoverController,
     private geolocation: Geolocation) {
-
+      
   }
 
   cahngeYoutube(){
@@ -79,6 +80,12 @@ export class AboutPage {
     console.log(this.youtubeSaneado);
   }
 
+  excluiImgArray(id){
+    this.imagesNames =  this.imagesNames.filter(function(el) { 
+      return el.id !== id; 
+        });
+        console.log( this.imagesNames, id);
+  }
   
   cahngeLink(){
     this.linkPost = this.linkPost;
@@ -134,12 +141,20 @@ export class AboutPage {
       
         this.loading.present();
       }
+      presentLoadingCarregando() {
+        this.loading = this.loadingCtrl.create({
+          content: 'Preparando Imagem...'
+        });
+      
+        this.loading.present();
+      }
       
       getImage() {
         const options: CameraOptions = {
           quality: 100,
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+          mediaType: this.camera.MediaType.PICTURE,
           correctOrientation: true,
           targetWidth: 1600,
           targetHeight: 1600
@@ -268,6 +283,7 @@ export class AboutPage {
 
       uploadFile(fileToUp){
         if(fileToUp != null) {
+          this.presentLoadingCarregando();
           const fileTransfer: FileTransferObject = this.transfer.create();
           
           let formattedDate = new Date();
@@ -289,6 +305,7 @@ export class AboutPage {
           fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
           .then((data) => {
             this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.loading.dismiss();
             console.log(data+" Uploaded Successfully");
           }, (err) => {
             console.log(err);

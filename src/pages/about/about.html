@@ -24,22 +24,22 @@
 
   <ion-item>
     <p>{{ checkin }}</p>
-          <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 1">
+          <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="postType == 1">
               <ion-row>
                 <ion-col *ngFor="let imagem of imagesNames">
-                  <img *ngIf="imagesNames.length > 1" style="height: auto; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="{{ imagem.img_name }}">
-                  <img *ngIf="imagesNames <= 1" style="height: auto; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="{{ imagem.img_name }}">
+                  <ion-list>
+                    <ion-item>
+                      <button ion-buttom item-left clear (click)="excluiImgArray(imagem.img_name)">
+                        <ion-icon color="" name="md-close-circle" isActive="true" item-start></ion-icon>
+                      </button>
+                      <img style="max-height: 230px; width: 100%; min-width: 50%;" src="{{ imagem.img_name }}">
+                    </ion-item>
+                  </ion-list>
+                  <!-- <img *ngIf="imagesNames.length <= 1" style="height: auto; width: 100%; min-width: 50%;" src="{{ imagem.img_name }}"> -->
                 </ion-col>
               </ion-row>
             </div>
-        <div *ngFor='let image of imagesNames' style="width: 45%;height: auto;position:  relative;float:  left;">
-          <img src="{{ image }}" alt="" width="100%" height="100%"/>
-        </div>
-      <div *ngIf='imagesNames.length <= 1' >
-        <div *ngFor='let image of imagesNames' style="width: 100%; height: auto;">
-          <img src="{{ image }}" alt="" width="100%" height="100%"/>
-        </div>
-      </div>
+    
     <div *ngIf='postType == 2'>
       <div style="width: 100%;height: auto;">
         <video src="{{ image }}" alt="" width="100%" height="100%"></video>
