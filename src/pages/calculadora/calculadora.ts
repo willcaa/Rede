@@ -38,6 +38,7 @@ export class CalculadoraPage {
   nAjudanteValor: any;
   pageId: any = 'calcHoras';
   custosFixos: any = [];
+  custosFixosSalvos: any = [];
   custosInsumos: any = [];
   custosAjudantes: any = [];
   precoSugerido: number;
@@ -46,15 +47,16 @@ export class CalculadoraPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
     this.storage.get('user')
       .then( res =>{
-          console.log(res);
-          this.data = res;
+            if(res){
+              this.data = res;
+              this.gMensais = res[0];
+              this.hTrabalhadas = res[1];
+              this.totalHoras = res[2];
+              this.custosFixosSalvos = res[5];
+              this.custosHora = res[6];
+            }
         } 
       );
-      this.gMensais = this.data[0];
-      this.hTrabalhadas = this.data[1];
-      this.totalHoras = this.data[2];
-      this.custosFixos = this.data[5];
-      this.custosHora = this.data[6];
     
 
   }
@@ -75,9 +77,10 @@ export class CalculadoraPage {
       var custoN = [];
       custoN['desc'] = this.nCustoDesc;
       custoN['val'] = this.nCustoValor;
+      console.log(custoN);
+
       this.custosFixos.push(custoN);
       this.totalCustos = this.totalCustos + parseInt(this.nCustoValor);
-      console.log(this.custosFixos, this.totalCustos);
       this.nCustoDesc = "";
       this.nCustoValor = '';
       this.custosHora = Math.trunc(this.totalCustos / this.hTrabalhadas);

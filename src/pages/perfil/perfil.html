@@ -51,19 +51,19 @@
         </ion-segment-button>
       </ion-segment>
       <div id="pessoal" class="pagetabs" *ngIf="pageId == 'pessoal'">
-        <ion-item>
+        <ion-item  style="height: 50px; color: teal; background: gold;font-size: 15px;">
           <ion-row>
             <ion-col style="text-align: center">
-              <p>{{ stat_anuncios }}</p>
-              <p>Publicações</p>
+              {{ stat_anuncios }}<br>
+              Publicações
             </ion-col>
             <ion-col style="text-align: center" (click)="goStats('Seguidores')">
-              <p>{{ stat_seguidores }}</p>
-              <p>Seguidores</p>
+              {{ stat_seguidores }}<br>
+              Seguidores
             </ion-col>
             <ion-col style="text-align: center" (click)="goStats('Seguindo')">
-              <p>{{ stat_seguindo }}</p>
-              <p>Seguindo</p>
+              {{ stat_seguindo }}<br>
+              Seguindo
             </ion-col>
           </ion-row>
         </ion-item>
@@ -81,9 +81,30 @@
       <ion-card-content>
         <p>{{ item.texto }}</p>
       </ion-card-content>
-      <div style="max-height: 340px; overflow: hidden;">
-        <img *ngIf="item.imagem && item.imagem != 'none'" (click)="ampliarImagem(item.imagem, item.texto)" src="https://bluedropsproducts.com/app/uploads/{{ item.imagem }}">
-      </div>
+      <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 1">
+          <ion-row>
+            <ion-col *ngFor="let imagem of item.imagem" style="min-width: 50%">
+              <ion-item *ngIf="item.hasImage == true && item.imagem.length > 1"  [style.background-image]="getBackground(imagem.img_name)" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+              <ion-item *ngIf="item.hasImage == true && item.imagem.length <= 1" [style.background-image]="getBackground(imagem.img_name)" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+            </ion-col>
+          </ion-row>
+        </div>
+    
+        <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 3">
+          <div  *ngIf='item.link'>
+            <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
+              <h5 (click)="openBrowser(item.link)">
+            {{ item.link }}</h5>
+          </div>
+        </div>
+        
+        <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 4">
+          <div  *ngIf='item.youtube'>
+            <iframe [src]='getSrc(item.youtube)' width="100%"  style="min-height: 200px;" height="auto" frameborder="0"></iframe>
+            <h5 (click)="openBrowser(item.link)">
+              {{ item.link }}</h5>
+          </div>
+        </div>
       <ion-row>
 
         <ion-col col-5 *ngIf="userId == item.id">
@@ -220,66 +241,74 @@
     </div>
     <div id="profissional_m" class="pagetabs" *ngIf="pageId == 'profissional_m'">
         <br>  
-      <h5>Informações Profissionais</h5>
+      <h3>Informações Profissionais</h3>
       <br>
         <ion-list>
-          <ion-item style="height: 75px;">
-            <ion-label color="primary" stacked>Nome:</ion-label>
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" style="margin-top: 6px;" stacked>Nome:</ion-label>
+            
             <div item-content class="itemContent">
-                 {{ usuarioProfissional[0].nome_empresa }}
-              </div>
-
-            </ion-item>
-          </ion-list>
-
-       <ion-list>
-            <ion-item style="height: 75px;">
-              <ion-label color="primary" stacked>Formação:</ion-label>
-              <div item-content class="itemContent">
-                   {{ usuarioProfissional[0].formacao }}
-                </div>
-            </ion-item>
-          </ion-list>
-
-           <ion-list>
-              <ion-item style="height: 75px;">
-                <ion-label color="primary" stacked>Tempo de Experiência:</ion-label>
-                <div item-content class="itemContent">
-                     {{ usuarioProfissional[0].experiencia }}
-                  </div>
-              </ion-item>
-          </ion-list>
-
-         <ion-list *ngIf="usuarioProfissional[0].cpf">
-                <ion-item style="height: 75px;">
-                  <ion-label color="primary" stacked>CPF:</ion-label>
-                  <div item-content class="itemContent">
-                       {{ usuarioProfissional[0].cpf }}
-                    </div>
-                </ion-item>
-          </ion-list>
-          <ion-list *ngIf="usuarioProfissional[0].cnpj">
-                  <ion-item style="height: 75px;">
-                    <ion-label color="primary" stacked>CNPJ:</ion-label>
-                    <div item-content class="itemContent">
-                         {{ usuarioProfissional[0].cnpj }}
-                      </div>
-                  </ion-item>
-          </ion-list>
-          <ion-list>
-                    <ion-item style="height: 75px;">
-                      <ion-label color="primary" stacked>Especialidade: </ion-label>
-                      <div item-content class="itemContent">
-                          {{ usuarioProfissional[0].especialidade }}
-                        </div>
-                    </ion-item>
-          </ion-list>
-          <ion-list>
-                  <ion-item style="height: 75px;">
-                    <ion-label color="primary" stacked>Subespecialidade: </ion-label>
-                    <div item-content class="itemContent">
-                        {{ usuarioProfissional[0].subespecialidade }}
-                      </div>
+              {{ usuarioProfissional[0].nome_empresa }}
+            </div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-contact" item-end></ion-icon>
+            
+          </ion-item>
+        </ion-list>
+        
+        <ion-list>
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>Formação:</ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].formacao }}
+            </div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-school" item-end></ion-icon>
+          </ion-item>
+        </ion-list>
+        
+        <ion-list>
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>Tempo de Experiência:</ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].experiencia }}
+            </div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-briefcase" item-end></ion-icon>
+          </ion-item>
+        </ion-list>
+        
+        <ion-list *ngIf="usuarioProfissional[0].cpf">
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>CPF:</ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].cpf }}
+            </div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-clipboard" item-end></ion-icon>
+          </ion-item>
+        </ion-list>
+        <ion-list *ngIf="usuarioProfissional[0].cnpj">
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>CNPJ:</ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].cnpj }}
+            </div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-contact" item-end></ion-icon>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>Especialidade: </ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].especialidade }}
+            </div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-construct" item-end></ion-icon>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>Subespecialidade: </ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].subespecialidade }}
+            </div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-hammer" item-end></ion-icon>
                 </ion-item>
           </ion-list>
     </div>

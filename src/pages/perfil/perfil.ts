@@ -103,6 +103,9 @@ alterarTab(Id){
      //   });
    }
   
+   getBackground(image) {
+    return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+  }
   carregarPerfil() {
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -119,7 +122,8 @@ alterarTab(Id){
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
-        this.anuncios = data['anuncios'];
+        this.anuncios = data['anuncios'].data;
+        console.log(data['anuncios']);
         this.usuario = data['usuario'];
         //this.perfil_nome = this.anuncios[0]['nome'];
         //this.perfil_imagem = this.anuncios[0]['user_image'];

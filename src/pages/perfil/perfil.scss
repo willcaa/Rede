@@ -246,11 +246,15 @@ page-perfil {
   .itemContent{
     text-align: left;
     position: absolute;
-    top: 40px;
+    top: 30px;
     left: 25px;
     line-height: 20px;
   }
   
+  .list-md{
+    margin: -1px 0 10px;
+  }
+
   .segment-md .segment-button{
     font-size: 10px !important;
     line-height: 4px;
@@ -264,5 +268,11 @@ page-perfil {
   .texto{
     margin-top: 2px;
   }
+  #profissional_m{
+    background: aliceblue;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   
 }
