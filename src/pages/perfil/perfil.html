@@ -21,10 +21,9 @@
 
 <ion-content padding class="pagetabs">
     <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recaregando...">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
         </ion-refresher-content>
       </ion-refresher>
-    
     <div style="width: 100%">
         <div class="fundo-perfil">
           <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
@@ -37,8 +36,16 @@
             <button *ngIf="!seguindo" ion-button small class="botao-seguir" (click)="seguir(perfilId, userId)">Seguir</button>
           </div>
           <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)">
-          <h3 class="nome_usuario">{{ perfil_nome }}</h3>
+          
+          <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="alterarNome()"><ion-icon name="brush"></ion-icon></button>
+          <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="setNovoNome(novoNome);">OK</button>
+          
+          <ion-input class="altera-nome" [(ngModel)]="novoNome" type="text" placeholder="{{perfil_nome}}" *ngIf="alteraNome == true"></ion-input>
+         
+            <h3 class="nome_usuario" *ngIf="alteraNome == false">{{ perfil_nome }}</h3>
+            
         </div>
+        
       </div>
       <ion-segment [(ngModel)]="tipoPerfil" color="primary" item-end>
         <ion-segment-button class="botao-profissional" (click)="getUsuarioProfissional()">

@@ -36,32 +36,44 @@ export class CalculadoraPage {
   nInsumoValor: any;
   nAjudanteDesc: any;
   nAjudanteValor: any;
-  pageId: any = 'calcHoras';
+  pageId: any;
   custosFixos: any = [];
   custosInsumos: any = [];
   custosAjudantes: any = [];
   precoSugerido: number;
   data = [];
   dataget: any;
+  gMensaisSalvo: any;
+  hTrabalhadasSalvo: any;
+  totalHorasSalvo: any;
+  custosFixosSalvo: any = [];
+  custosHoraSalvo: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
-    this.storage.get('user')
+    this.storage.get('usuario')
       .then( res =>{
           console.log(res);
-          this.data = res;
+          if(res != null){
+            this.gMensaisSalvo = res[0].ganhosMensais;
+            this.hTrabalhadasSalvo = res[1].horasTrabalhadas;
+            this.totalHorasSalvo = res[2].totalHoras;
+            this.custosFixosSalvo = res[3].custosFixos;
+            this.custosHoraSalvo = res[4].custosHora;
+          }
+          
         } 
       );
-      this.gMensais = this.data[0];
-      this.hTrabalhadas = this.data[1];
-      this.totalHoras = this.data[2];
-      this.custosFixos = this.data[5];
-      this.custosHora = this.data[6];
-    
 
   }
 
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad CalculadoraPage');
+    if(this.totalHorasSalvo || this.custosHoraSalvo){
+      this.alterarTab('horas_o');
+    }
+    else{
+      this.alterarTab('calcHoras')
+    }
   }
   
   sumGanhos(){
@@ -170,8 +182,8 @@ export class CalculadoraPage {
     console.log(this.pageId);
   }
   public salvarHoras(){
-    this.data.push(this.gMensais, this.hTrabalhadas, this.totalHoras, this.nCustoDesc, this.nCustoValor, this.custosFixos, this.custosHora);
-    this.storage.set('user', this.data);
+    this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora});
+    this.storage.set('usuario', this.data);
     console.log(this.data);
   }
   

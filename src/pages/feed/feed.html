@@ -93,7 +93,7 @@
 
 <ion-content #contentRef (ionScroll)="scrollingFun($event)">
   <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recaregando...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">

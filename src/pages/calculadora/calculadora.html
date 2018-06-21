@@ -33,7 +33,39 @@
 
 
 <ion-content padding>
+    <div class="pagetabs" id="horas_o" *ngIf="pageId == horas_o">
+        <button ion-button (click)="alterarTab(calcHoras)">
+          Nova Tabela
+        </button>
+        <h4>Hora de Trabalho</h4>
+          <ion-list>
+            <ion-item>
+              <ion-label color="primary" stacked>Ganhos Mensais</ion-label>
+              {{gMensaisSalvo}}
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary" stacked>Horas Trabalhadas</ion-label>
+              {{hTrabalhadasSalvo}}
+            </ion-item>
+          </ion-list>
+            <h5>Ganhos por hora: R${{totalHorasSalvo}},00</h5>
+            <br>
+          <h4>Custos Fixos</h4>
+            <ion-list *ngIf="custosFixosSalvo">
+                <ion-item *ngFor="let item of custosFixos;let i = index" id="s_{{item.i}}" style="height: 50px;" >  
+                    <div item-content style="width: 100%;">
+                      <div style="position: relative; float: left; width: 50%;">{{item.desc}} </div>
+                      <div style="position: relative; float: right; width: 50%;"> R$ {{item.val}},00</div>
+                    </div>
+                </ion-item>
+            </ion-list>
+            <br>
+            <h5>Total: R${{totalCustosSalvo}},00</h5>
+            <h3 *ngIf="custosHoraSalvo && custosHoraSalvo != 'undefined'">Custos por hora: R${{custosHoraSalvo}},00</h3>
+  
+      </div>
     <div class="pagetabs" id="calcHoras" *ngIf="pageId == 'calcHoras'">
+      
         <h4>Hora de Trabalho</h4>
         <ion-list>
           <ion-item>
@@ -81,7 +113,7 @@
           <h3 *ngIf="custosHora && custosHora != 'undefined'">Custos por hora: R${{custosHora}},00</h3>
           <button ion-button icon-end class="btnSalvar" color = "primary" (click)="salvarHoras()">Salvar</button>
     </div>
-
+    
     <div class="pagetabs" id="calcPrecos" *ngIf="pageId == 'calcPrecos'">
       <h4>Insumos</h4>
       <ion-list>
