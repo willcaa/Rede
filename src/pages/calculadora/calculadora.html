@@ -21,7 +21,7 @@
     <ion-toolbar class="buttons_header">
 
         <ion-segment [(ngModel)]="local" color="primary" item-end>
-          <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('calcHoras')">
+          <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('calcHoras');">
             <p style="margin-top: 2px;">Horas</p>
           </ion-segment-button>
           <ion-segment-button icon-left value="clientes" (ionSelect)="alterarTab('calcPrecos')">
@@ -38,11 +38,11 @@
         <ion-list>
           <ion-item>
             <ion-label color="primary" stacked>Ganhos Mensais</ion-label>
-            <ion-input type="number" placeholder="R$" (change)="sumGanhos(gMensais, hTrabalhadas)" [(ngModel)]="gMensais" ></ion-input>
+            <ion-input type="number" placeholder="R$" value="{{gMensais}}" (change)="sumGanhos(gMensais, hTrabalhadas)" [(ngModel)]="gMensais" ></ion-input>
           </ion-item>
           <ion-item>
             <ion-label color="primary" stacked>Horas Trabalhadas</ion-label>
-            <ion-input type="number" placeholder="" (change)="sumGanhos(gMensais, hTrabalhadas)" [(ngModel)]="hTrabalhadas"></ion-input>
+            <ion-input type="number" placeholder="" value = "{{hTrabalhadas}}" (change)="sumGanhos(gMensais, hTrabalhadas)" [(ngModel)]="hTrabalhadas"></ion-input>
           </ion-item>
         </ion-list>
           <h5>Ganhos por hora: R${{totalHoras}},00</h5>
@@ -79,7 +79,7 @@
           <br>
           <h5>Total: R${{totalCustos}},00</h5>
           <h3 *ngIf="custosHora && custosHora != 'undefined'">Custos por hora: R${{custosHora}},00</h3>
-
+          <button ion-button icon-end class="btnSalvar" color = "primary" (click)="salvarHoras()">Salvar</button>
     </div>
 
     <div class="pagetabs" id="calcPrecos" *ngIf="pageId == 'calcPrecos'">
