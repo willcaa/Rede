@@ -7,8 +7,14 @@
 <ion-header>
 
   <ion-navbar color="dark">
+
     <ion-title>Perfil</ion-title>
-    <button ion-button icon-only *ngIf="perfilId == userId" (click)="updatePerfilProfissional()" ><ion-icon name="settings"></ion-icon></button>
+    <ion-buttons end>
+    <button ion-button icon-only *ngIf="perfilId == userId && pageId == 'profissional_m'" (click)="updatePerfilProfissional()" ><ion-icon name="settings"></ion-icon></button>
+    <!-- <button ion-button icon-only (click)="goPerfil()">
+        <img class="imageUserFeed" src="assets/imgs/user_round.png">
+      </button> -->
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -64,7 +70,7 @@
     <ion-card *ngFor="let item of anuncios">
       <ion-item>
         <ion-avatar item-start>
-          <img src="{{ item.user_image }}">
+          <img [src]="getSrc(item.user_image)">
         </ion-avatar>
         <P style="white-space: initial; max-width: 80%;">
             <b>{{ item.nome }}</b>

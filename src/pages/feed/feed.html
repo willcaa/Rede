@@ -78,8 +78,8 @@
   <ion-toolbar id="sendbar" color="light" style="height: 45px; min-height: 0px;" (click)="goImage()">
     <ion-item>
       <p>O que gostaria de informar ?</p>
-      <ion-avatar item-start>
-        <img src="{{ userImagem }}">
+     <ion-avatar item-start *ngIf="getSrc(foto_usuario)">
+        <img [src]="getSrc(foto_usuario)">
       </ion-avatar>
     </ion-item>
     <ion-buttons end>
@@ -98,8 +98,8 @@
   </ion-refresher>
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
     <ion-item>
-      <ion-avatar item-start>
-        <img src="{{ item.user_image }}" (click)="goPerfil(item.id)">
+      <ion-avatar item-start *ngIf="getSrc(item.user_image)">
+        <img  [src]="getSrc(item.user_image)" (click)="goPerfil(item.id)">
       </ion-avatar>
       <P style="white-space: initial; max-width: 80%;">
         <b>{{ item.nome }}</b>
@@ -111,19 +111,19 @@
       </button>
     </ion-item>
     <ion-card-content style="padding: 0">
-      <a href="item.texto">{{ item.texto }}</a>
+      <p style="padding: 5px 10px;">{{ item.texto }}</p>
     </ion-card-content>
 
-    <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 1">
+    <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 1">
       <ion-row>
-        <ion-col *ngFor="let imagem of item.imagem">
-          <img *ngIf="item.hasImage == true && item.imagem.length > 1" style="height: auto; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="{{ imagem.img_name }}">
-          <img *ngIf="item.hasImage == true && item.imagem.length <= 1" style="height: auto; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)" src="{{ imagem.img_name }}">
+        <ion-col *ngFor="let imagem of item.imagem" style="min-width: 50%">
+          <ion-item *ngIf="item.hasImage == true && item.imagem.length > 1"  [style.background-image]="getBackground(imagem.img_name)" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+          <ion-item *ngIf="item.hasImage == true && item.imagem.length <= 1" [style.background-image]="getBackground(imagem.img_name)" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
         </ion-col>
       </ion-row>
     </div>
 
-    <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 3">
+    <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 3">
       <div  *ngIf='item.link'>
         <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
           <h5 (click)="openBrowser(item.link)">
@@ -133,9 +133,9 @@
     
     <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 4">
       <div  *ngIf='item.youtube'>
-        <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.youtube)' width="100%" height="auto" frameborder="0"></iframe>
-          <a href="item.youtube">
-              </a>
+        <iframe [src]='getSrc(item.youtube)' width="100%"  style="min-height: 200px;" height="auto" frameborder="0"></iframe>
+        <h5 (click)="openBrowser(item.link)">
+          {{ item.link }}</h5>
       </div>
     </div>
 
@@ -181,7 +181,7 @@
     <ion-title class="titulo-recentes" *ngIf="item.hasImage == false && item.local && item.imagem">Recentes nesse local:</ion-title>
     <ion-scroll class="scroll-Images" *ngIf="item.hasImage == false && item.local && item.imagem" scrollX="true" style="width:100%; height:25vw; margin-bottom: 5px;">
       <ion-row nowrap>
-        <img class="imagem-recentes" *ngFor="let image of item.imagem" (click)="ampliarImagem(image)" src="{{ image }}">
+        <img class="imagem-recentes" *ngFor="let image of item.imagem" (click)="ampliarImagem(image)" [src]="getSrc(image)">
       </ion-row>
     </ion-scroll>
 

@@ -354,6 +354,11 @@ alterarTab(Id){
       }
     });
   }
+
+  getSrc(link) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(link);
+  }
+
   alterarImagemPerfil(){
     const options: CameraOptions = {
       quality: 100,
@@ -450,8 +455,8 @@ alterarTab(Id){
     .map(res => res.json())
     .subscribe(data => {
       if(data){
-        this.usuarioProfissional = data;
-        if(this.usuarioProfissional == data){
+        this.usuarioProfissional[0] = data;
+        if(this.usuarioProfissional[0] == data){
           this.getUsuarioProfissional();
         }
         console.log(data);

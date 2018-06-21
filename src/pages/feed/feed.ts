@@ -16,7 +16,7 @@ import { PopoverController } from 'ionic-angular';
 import { PopoverTopComponent } from '../../components/popover-top/popover-top';
 import { PopoverOptsAnunciosComponent } from '../../components/popover-opts-anuncios/popover-opts-anuncios';
 import { PopoverNotificacoesComponent } from '../../components/popover-notificacoes/popover-notificacoes';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import $ from 'jquery';
 /**
@@ -68,9 +68,10 @@ export class FeedPage {
   userEmail: any;
   public local: any = "proximidade";
   public range: any;
+  public nome_usuario: any;
+  public foto_usuario: any;
   public notificacoes_qts: any;
-
-  constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, public sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
+   constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
     this.http = http;
     this.start = "";
     this.destination = "";
@@ -79,6 +80,7 @@ export class FeedPage {
     }
     this.storage.get('meuid')
     .then( res =>{
+      this.getUserInfo(res);
         console.log(res);
         this.userId = res;
       } 
@@ -101,7 +103,35 @@ export class FeedPage {
         this.userEmail = res;
       } 
     );
-    
+  }
+  getBackground(image) {
+    return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+  }
+  
+  getSrc(link) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(link);
+  }
+
+  getUserInfo(user) {
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      id_usuario: user
+    }
+
+    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      this.usuario = data['usuario'];
+      this.nome_usuario = this.usuario.nome;
+      this.foto_usuario = this.usuario.user_image;
+    });
+
   }
 
   openBrowser(url){
@@ -169,11 +199,11 @@ export class FeedPage {
 
   denunciarPost(post) {
     if(post.id_anuncio == this.userId) {
-      this.showAlert("OPA!","Você não pode denunciar o proprio anuncio!","OK");
+      this.showAlert("OPA!","Você não pode denunciar o proprio Post!","OK");
     } else {
       let confirm = this.alertCtrl.create({
-        title: 'Você Realmente Deseja Denunciar Este Anuncio?',
-        message: 'Caso você denuncie este anuncio ele desaparecerá permanentemente do seu feed!',
+        title: 'Você realmente deseja denunciar este Post?',
+        message: 'Caso você denuncie este Post ele desaparecerá permanentemente do seu feed!',
         buttons: [
           {
             text: 'Cancelar',
@@ -399,8 +429,8 @@ export class FeedPage {
 
   deleteAnuncio(post) {
     let confirm = this.alertCtrl.create({
-      title: 'Você realmente deseja deletar este post?',
-      message: 'Caso você delete este anuncio ele desaparecerá permanentemente!',
+      title: 'Você realmente deseja deletar este Post?',
+      message: 'Caso você delete este Post ele desaparecerá permanentemente!',
       buttons: [
         {
           text: 'Cancelar',
@@ -704,7 +734,7 @@ export class FeedPage {
         this.local_array5 = data2.results[4].name;
 
         let alert = this.alertCtrl.create();
-        alert.setTitle('Onde Você está?');
+        alert.setTitle('Onde você está?');
     
         alert.addInput({
           type: 'radio',

@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
 import { PopoverTopComponent } from '../../components/popover-top/popover-top';
 import { HtmlInfoWindow } from '@ionic-native/google-maps';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { FileChooser } from '@ionic-native/file-chooser';
 
 @Component({
@@ -61,6 +61,7 @@ export class AboutPage {
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
     private camera: Camera,
+    private _sanitizer: DomSanitizer,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
@@ -446,6 +447,10 @@ export class AboutPage {
       this.foto_usuario = this.usuario.user_image;
     });
 
+  }
+
+  private getSrc(link) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(link);
   }
   
   alterarTopNews(myEvent) {

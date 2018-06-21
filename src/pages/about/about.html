@@ -16,10 +16,10 @@
 
 <ion-content padding>
   <ion-item>
-      <ion-avatar item-start>
-        <img src="{{ foto_usuario }}">
-      </ion-avatar>
-      <h2>{{ nome_usuario }}</h2>
+    <ion-avatar item-start *ngIf="foto_usuario">
+      <img [src]="getSrc(foto_usuario)">
+    </ion-avatar>
+    <h2>{{ nome_usuario }}</h2>
   </ion-item>
 
   <ion-item>
