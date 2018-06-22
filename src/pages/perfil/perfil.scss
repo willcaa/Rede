@@ -37,7 +37,7 @@ page-perfil {
   .imagem_fundo {
     width: 120px;
     height: 120px;
-    margin-left: calc(50% - 60px);
+    margin-left: 60px !important;
     border-radius: 100%;
     mask-image: url("../assets/imgs/perfil_mask.png");
     -webkit-mask-image: url("../assets/imgs/perfil_mask.png");
@@ -275,4 +275,16 @@ page-perfil {
   }
 
   
+  .botao-editar-nome{
+    left: -10px;
+    bottom: -25px;
+    border-radius: 100%;
+    width: 36px;
+    z-index: 10000000;
+    background-color: rgba (70, 140, 120, 0.8);
+  }
+  .altera-nome{
+    background-color: #fff;
+    width: 100px;
+  }
 }

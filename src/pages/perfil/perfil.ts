@@ -37,8 +37,9 @@ export class PerfilPage {
   public perfil_imagem: any;
   public perfil_nome: any;
   public index_anuncio: any;
+  public alteraNome: boolean = false;
   usuarioProfissional: any;
-  pageId: any;
+  pageId: any = 'pessoal';
   enviandoSeguir: boolean;
   public imageURI: any;
   imageFileName: any;
@@ -66,6 +67,7 @@ alterarTab(Id){
   }
 
   ionViewDidLoad() {
+    this.alteraNome = false;
     this.checkSeguir(this.perfilId, this.userId);
     this.getStats();
     this.carregarPerfil();
@@ -405,6 +407,7 @@ alterarTab(Id){
             'https://bluedropsproducts.com/app/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
             this.setImage();
+            this.navCtrl.push(PerfilPage);
           }, (err) => {
             console.log(err);
           });
@@ -430,6 +433,7 @@ alterarTab(Id){
       if(data){
         this.usuarioProfissional = data;
         console.log(data);
+
       }
     });
   }
@@ -470,5 +474,31 @@ alterarTab(Id){
 
   updatePerfilProfissional(){
     this.alterarTab('profissional_o');
+  }
+  alterarNome(){
+    this.alteraNome = true;
+  }
+  setNovoNome(nome){
+    let headers = new Headers();
+      headers.append('Access-Control-Allow-Origin', '*');
+      headers.append('Accept', 'application/json');
+      headers.append('content-type', 'application/json');
+
+      let body = {
+        nome: nome,
+        nomeanterior: this.perfil_nome,
+        id: this.userId
+      }
+
+      let link = 'https://bluedropsproducts.com/app/ferramentas/setNovoNome';
+
+      this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        this.usuario = data;
+        console.log(data);
+        this.perfil_nome = this.usuario.nome;
+        this.alteraNome = false;
+      });
   }
 }

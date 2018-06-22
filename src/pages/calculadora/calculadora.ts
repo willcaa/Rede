@@ -36,7 +36,7 @@ export class CalculadoraPage {
   nInsumoValor: any;
   nAjudanteDesc: any;
   nAjudanteValor: any;
-  pageId: any = 'calcHoras';
+  pageId: any;
   custosFixos: any = [];
   custosFixosSalvos: any = [];
   custosInsumos: any = [];
@@ -44,26 +44,37 @@ export class CalculadoraPage {
   precoSugerido: number;
   data = [];
   dataget: any;
+  gMensaisSalvo: any;
+  hTrabalhadasSalvo: any;
+  totalHorasSalvo: any;
+  custosFixosSalvo: any = [];
+  custosHoraSalvo: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
-    this.storage.get('user')
+    this.storage.get('usuario')
       .then( res =>{
-            if(res){
-              this.data = res;
-              this.gMensais = res[0];
-              this.hTrabalhadas = res[1];
-              this.totalHoras = res[2];
-              this.custosFixosSalvos = res[5];
-              this.custosHora = res[6];
-            }
+          console.log(res);
+          if(res != null){
+            this.gMensaisSalvo = res[0].ganhosMensais;
+            this.hTrabalhadasSalvo = res[1].horasTrabalhadas;
+            this.totalHorasSalvo = res[2].totalHoras;
+            this.custosFixosSalvo = res[3].custosFixos;
+            this.custosHoraSalvo = res[4].custosHora;
+          }
+          
         } 
       );
-    
 
   }
 
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad CalculadoraPage');
+    if(this.totalHorasSalvo || this.custosHoraSalvo){
+      this.alterarTab('horas_o');
+    }
+    else{
+      this.alterarTab('calcHoras')
+    }
   }
   
   sumGanhos(){
@@ -173,8 +184,8 @@ export class CalculadoraPage {
     console.log(this.pageId);
   }
   public salvarHoras(){
-    this.data.push(this.gMensais, this.hTrabalhadas, this.totalHoras, this.nCustoDesc, this.nCustoValor, this.custosFixos, this.custosHora);
-    this.storage.set('user', this.data);
+    this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora});
+    this.storage.set('usuario', this.data);
     console.log(this.data);
   }
   
