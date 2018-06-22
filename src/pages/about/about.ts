@@ -58,6 +58,7 @@ export class AboutPage {
   flag_upload = true;
   flag_play = true;
   aImages: any;
+  arrayImages: any = [];
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
     private camera: Camera,
@@ -93,6 +94,19 @@ export class AboutPage {
     console.log(this.youtubeSaneado);
   }
 
+  public checkLink(div) {
+    'use strict';
+    var siteURL = 'http://cdevroe.com',
+        entries = document.querySelectorAll(div),
+        i;
+    
+    if ( entries.length > 0 ) {
+      for (i = 0; i < entries.length; i = i + 1) {
+        entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1" title="Encontre mais publicações com #$1">#$1</a>');
+      }
+    }
+    
+  };
   checkIn() {
     //this.presentLoadingDefault();
     this.options = {
@@ -150,6 +164,20 @@ export class AboutPage {
         this.loading.present();
       }
       
+      // getImages(){
+      //   JFileChooser chooser = new JFileChooser();
+    
+      //   // Possibilita a seleção de vários arquivos
+      //   chooser.setMultiSelectionEnabled(true);
+        
+      //   // Apresenta a caixa de diálogo
+      //   chooser.showOpenDialog(frame);
+        
+      //   // Retorna os arquivos selecionados. Este método retorna vazio se
+      //   // o modo de múltipla seleção de arquivos não estiver ativada.
+      //   File[] files = chooser.getSelectedFiles();  
+      // }
+
       getImage() {
         const options: CameraOptions = {
           quality: 100,
@@ -157,12 +185,15 @@ export class AboutPage {
           sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
           mediaType: this.camera.MediaType.PICTURE,
           correctOrientation: true,
-          targetWidth: 1600,
-          targetHeight: 1600
+          targetWidth: 1200,
+          targetHeight: 800
         }
       
+
+
         this.camera.getPicture(options).then((imageData) => {
           this.imageURI = imageData;
+          this.arrayImages.push(imageData);
           this.uploadFile(imageData);
         }, (err) => {
           console.log(err);

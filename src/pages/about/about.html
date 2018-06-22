@@ -81,7 +81,7 @@
 
   </ion-item>
   <ion-item>
-      <ion-textarea [(ngModel)]="texto" rows="4" placeholder="O que gostaria de informar?"></ion-textarea>
+      <ion-textarea [(ngModel)]="texto" (ngModelChange)="checkLink('#textoPost')" rows="4" placeholder="O que gostaria de informar?" id="textoPost"></ion-textarea>
   </ion-item>
   <ion-list style="margin-top: 50px;">
     <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getImage(); setPostType(1);">

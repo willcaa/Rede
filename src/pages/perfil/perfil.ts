@@ -371,8 +371,8 @@ alterarTab(Id){
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       correctOrientation: true,
-      targetWidth: 1600,
-      targetHeight: 1600
+      targetWidth: 400,
+      targetHeight: 400
     }
   
     this.camera.getPicture(options).then((imageData) => {
@@ -404,7 +404,7 @@ alterarTab(Id){
       }
       fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
           .then((data) => {
-            'https://bluedropsproducts.com/app/uploads/' + this.imageFileName;
+            this.perfil_imagem = 'https://bluedropsproducts.com/app/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
             this.setImage();
             this.navCtrl.push(PerfilPage);
