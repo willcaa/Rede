@@ -94,19 +94,6 @@ export class AboutPage {
     console.log(this.youtubeSaneado);
   }
 
-  public checkLink(div) {
-    'use strict';
-    var siteURL = 'http://cdevroe.com',
-        entries = document.querySelectorAll(div),
-        i;
-    
-    if ( entries.length > 0 ) {
-      for (i = 0; i < entries.length; i = i + 1) {
-        entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1" title="Encontre mais publicações com #$1">#$1</a>');
-      }
-    }
-    
-  };
   checkIn() {
     //this.presentLoadingDefault();
     this.options = {
@@ -197,7 +184,7 @@ export class AboutPage {
           this.uploadFile(imageData);
         }, (err) => {
           console.log(err);
-          this.presentToast(err);
+          // this.presentToast(err);
         });
       }
       
@@ -236,7 +223,7 @@ export class AboutPage {
           this.flag_upload = true;
           this.showToast('middle', 'Video is uploaded Successfully!'+ this.videoId);
           }, (err) => {
-          // error
+          // this.loading.dismiss();
           });
           }
           presentLoading() {
@@ -284,8 +271,12 @@ export class AboutPage {
           this.estado = data.results[0].address_components[5].short_name;
           this.pais = data.results[0].address_components[6].long_name;
           this.sendPost(lat, long);
-        });
+        }, (err) => {
+          this.loadLocation(lat, long),
+          this.loading.dismiss();
+          });
       }
+
       pushPage() {
         this.navCtrl.push('FeedPage');
       }
@@ -341,11 +332,16 @@ export class AboutPage {
             console.log(data+" Uploaded Successfully");
           }, (err) => {
             console.log(err);
-            this.presentToast(err);
+            this.presentToast('Tente novamente');
+            this.loading.dismiss();
           });
         } 
       }
       
+      getBackground(image) {
+        return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+      }
+
       uploadFileVideo(fileToUp){
         this.presentToast(fileToUp);
         if(fileToUp != null) {
@@ -410,10 +406,12 @@ export class AboutPage {
 
         }, (err: PositionError) => {
           console.log("error : " + err.message);
+          this.loading.dismiss();
+          this.getUserPosition();
         });
         
       }
-      verifyLink
+      
 
   sendPost(lat, long) {
     //this.presentToast(this.pais);
@@ -455,7 +453,10 @@ export class AboutPage {
         this.loading.dismiss();
         console.log(data.data);
       
-      });
+      }, (err) => {
+          this.sendPost(lat, long),
+          this.loading.dismiss();
+          });
   }
 
   getUserInfo() {

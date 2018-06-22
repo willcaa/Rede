@@ -134,6 +134,24 @@ export class FeedPage {
 
   }
 
+  public checkLink() {
+    setTimeout(function() {
+  
+      'use strict';
+      var siteURL = '',
+          entries = document.querySelectorAll('ion-card-content.card-content > p'),
+          i;
+      
+      if ( entries.length > 0 ) {
+        for (i = 0; i < entries.length; i = i + 1) {
+          entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1">#$1</a>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g,'<h5 (click)="openBrowser(http$1)">http$1</h5>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g,'<a (click)="openBrowser(www$1)">www$1</a>');
+        }
+      }
+    }, 1000);
+    
+  };
   openBrowser(url){
     console.log(url);
     const browser = this.iab.create(url);
@@ -638,9 +656,10 @@ export class FeedPage {
             console.log(element.distance);
             this.feed.push(element);
           });
-        
+          
           console.log(this.feed);
           console.log(this.index_feed);
+          this.checkLink();
           if(infiniteScroll) {
             infiniteScroll.complete();
           }
@@ -652,6 +671,7 @@ export class FeedPage {
           } else {
             if(this.feed != data.data) {
               this.feed = data.data;
+              this.checkLink();
             }
             if(infiniteScroll) {
               infiniteScroll.complete();
@@ -882,6 +902,7 @@ export class FeedPage {
   ionViewDidLoad() {
     this.index_feed = 0;
     this.getUserPosition();
+
   }
 
 

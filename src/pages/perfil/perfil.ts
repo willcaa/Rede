@@ -10,6 +10,7 @@ import { CommentsPage } from '../comments/comments';
 import { StatsPage } from '../stats/stats';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 /**
  * Generated class for the PerfilPage page.
@@ -50,6 +51,7 @@ export class PerfilPage {
     private _sanitizer: DomSanitizer, 
     public navParams: NavParams, 
     public http: Http, 
+    private iab: InAppBrowser,
     private storage: Storage,
     public camera: Camera,
     public transfer: FileTransfer ) {
@@ -130,7 +132,10 @@ alterarTab(Id){
         //this.perfil_nome = this.anuncios[0]['nome'];
         //this.perfil_imagem = this.anuncios[0]['user_image'];
         this.usuario_imagem = this.usuario['user_image'];
-      });
+        this.checkLink();
+      }, (err) => {
+        this.carregarPerfil();
+        });
   }
 
   goStats(which) {
@@ -238,6 +243,24 @@ alterarTab(Id){
   getImage(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
+
+  // public checkLink() {
+  //   setTimeout(function() {
+  
+  //     'use strict';
+  //     var siteURL = '',
+  //         entries = document.querySelectorAll('ion-card-content.card-content > p'),
+  //         i;
+      
+  //     if ( entries.length > 0 ) {
+  //       for (i = 0; i < entries.length; i = i + 1) {
+  //         entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1">#$1</a>');
+  //         entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g,'<a href="http$1">http$1</a>');
+  //         entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g,'<a href="www$1">www$1</a>');
+  //       }
+  //     }
+  //   }, 1000);
+  // };
   
   deleteAnuncio(post) {
     let confirm = this.alertCtrl.create({
@@ -361,8 +384,31 @@ alterarTab(Id){
     });
   }
 
+  public checkLink() {
+    setTimeout(function() {
+  
+      'use strict';
+      var siteURL = '',
+          entries = document.querySelectorAll('ion-card-content.card-content > p'),
+          i;
+      
+      if ( entries.length > 0 ) {
+        for (i = 0; i < entries.length; i = i + 1) {
+          entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1">#$1</a>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g,'<h5 (click)="openBrowser(http$1)">http$1</h5>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g,'<h5 (click)="openBrowser(www$1)">www$1</h5>');
+        }
+      }
+    }, 1000);
+    
+  };
   getSrc(link) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(link);
+  }
+
+  openBrowser(url){
+    console.log(url);
+    const browser = this.iab.create(url);
   }
 
   alterarImagemPerfil(){

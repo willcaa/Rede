@@ -26,18 +26,19 @@
     <p>{{ checkin }}</p>
           <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="postType == 1">
               <ion-row>
-                <ion-col *ngFor="let imagem of imagesNames">
-                  <ion-list>
-                    <ion-item>
-                      <button ion-buttom item-left clear (click)="excluiImgArray(imagem.img_name)">
-                        <ion-icon color="" name="md-close-circle" isActive="true" item-start></ion-icon>
-                      </button>
-                      <img style="max-height: 230px; width: 100%; min-width: 50%;" src="{{ imagem.img_name }}">
+                  <ion-col *ngFor="let imagem of imagesNames" style="min-width: 50%">
+                    <ion-item *ngIf="imagesNames.length > 1"  [style.background-image]="getBackground(imagem)" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem)">
+                        <button ion-buttom item-left clear style="background: transparent;border: none;font-size:  30px;position: absolute;left: 84%;top: 0px;" (click)="excluiImgArray(imagem)">
+                          <ion-icon name="md-close-circle"></ion-icon>
+                        </button>
                     </ion-item>
-                  </ion-list>
-                  <!-- <img *ngIf="imagesNames.length <= 1" style="height: auto; width: 100%; min-width: 50%;" src="{{ imagem.img_name }}"> -->
-                </ion-col>
-              </ion-row>
+                    <ion-item *ngIf="imagesNames.length <= 1" [style.background-image]="getBackground(imagem)" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem)">
+                        <button ion-buttom item-left clear style="background: transparent;border: none;font-size:  30px;position: absolute;left: 84%;top: 0px;" (click)="excluiImgArray(imagem)">
+                          <ion-icon name="md-close-circle"></ion-icon>
+                        </button>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
             </div>
     
     <div *ngIf='postType == 2'>
