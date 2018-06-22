@@ -12,7 +12,7 @@ import { FerramentasPage } from '../pages/ferramentas/ferramentas';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any;
+  rootPage = RegisterPage;
 
   constructor(platform: Platform, statusBar: StatusBar, screen: ScreenOrientation, storage: Storage) {
     platform.ready().then(() => {
@@ -23,7 +23,7 @@ export class MyApp {
       // screen.lock(screen.ORIENTATIONS.PORTRAIT);
       storage.get('meuid').then((val) => {
         if(val) {
-          this.rootPage = FeedPage;
+          this.rootPage = RegisterPage;
         } else {
           this.rootPage = RegisterPage;
         } 

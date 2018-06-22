@@ -1,37 +1,47 @@
-<!--
-  Generated template for the RegisterPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   
 </ion-header>
 
 
 <ion-content padding>
-  <!-- <div *ngIf="isLoggedIn; else facebookLogin">
-    <h2>Hi, {{users.name}} ({{users.email}})</h2>
-    <p>
-      Gender: {{users.gender}}
-    </p>
-    <p>
-      <img src="{{users.picture.data.url}}" width="100" alt="{{users.name}}" />
-    </p>
-    <p>
-      <button ion-button icon-right (click)="cadastrar(users.email, users.name, users.picture.data.url)">
-        Finalizar Registro
-      </button>
-      <button ion-button icon-right (click)="logout()">
-        Logout
-      </button>
-    </p>
-  </div> -->
-  <!-- <ng-template #facebookLogin> -->
-    <img class="logo-login" src="assets/imgs/logo-inicial.png">
-    <img class="button-facebook" src="assets/imgs/facebook_entrar.png" (click)="login()">
+    <div class="pagetabs" id="login" *ngIf="pageId == 'login'">
+    <img class="logo-login" src="assets/imgs/logo-inicial.png"><br><br>
+    <button ion-button class="botao-login" (click)="alterarTab('login-email')">Login com email</button>
+    <button ion-button icon-end class="botao-login-facebook">Login com Facebook<ion-icon name="logo-facebook"></ion-icon></button>
     <a class="button-temp" (click)="cadastrar('will-kg@hotmail.com', 'Willian Alves', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1693735790677705&height=9999&width=9999&ext=1529701261&hash=AeRIRYJswlmuF2Ye')">
       Teste Registro
     </a>
-  <!-- </ng-template> -->
+    </div>
+
+    <div class="pagetabs" id="login-email" *ngIf="pageId == 'login-email'">
+      <img class="logo-login" src="assets/imgs/logo-inicial.png"><br><br>
+      <ion-label color="danger" *ngIf="loginInvalido == true">Email ou senha incorreto(s)!</ion-label>
+      <ion-item>
+        <ion-input type="text" placeholder="Email" style="text-align: left;"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="12345678" style="text-align: left;"></ion-input>
+      </ion-item>
+      <button ion-button (click)="loginEmail()">Login</button>
+      <button ion-button style="background-color: transparent;" (click)="alterarTab('cadastro')">Fazer cadastro</button>
+    </div>
+
+    <div class="pagetabs" id="cadastro"  *ngIf="pageId == 'cadastro'">
+      <ion-item>
+        <ion-input type="text" placeholder="Digite seu nome" style="text-align: left;" [(ngModel)]="nome"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Insira o seu e-mail" style="text-align: left;" [(ngModel)]="email" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="Digite sua senha" style="text-align: left;" [(ngModel)]="pw"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder="Digite sua senha novamente" style="text-align: left;" [(ngModel)]="pw2"></ion-input>
+      </ion-item>
+
+      <button ion-button *ngIf="pw != null && pw == pw2" (click)="cadastrar(nome, email, pw)">Cadastrar</button>
+    </div>
+
 </ion-content>

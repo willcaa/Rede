@@ -49,6 +49,7 @@ export class CalculadoraPage {
   totalHorasSalvo: any;
   custosFixosSalvo: any = [];
   custosHoraSalvo: any;
+  todos = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
     this.storage.get('usuario')
       .then( res =>{
@@ -75,6 +76,7 @@ export class CalculadoraPage {
     else{
       this.alterarTab('calcHoras')
     }
+    
   }
   
   sumGanhos(){
@@ -153,14 +155,18 @@ export class CalculadoraPage {
   }
 
   gerarRelatorio(){
-    if(this.calcular()){
-
+    if(this.gMensais &&  this.hTrabalhadas && this.custosFixos && this.totalCustos && this.custosHora && this.custosInsumos && this.totalInsumos && this.custosAjudantes && this.totalAjudantes && this.hExecucao && this.imposto && this.lucro){
+      this.todos = true;
+    }
+    if(this.calcular() && this.todos == true){
       this.alterarTab('relatGerado');
     }
+    console.log(this.todos);
+    
     
   }
   calcular(){
- 
+  
     this.precoSugerido = Math.trunc(this.horasVal());
     let precoSug = Math.trunc(this.horasVal());
     this.totalHorasVal = Math.trunc(this.totalHoras * this.hExecucao);
@@ -173,10 +179,12 @@ export class CalculadoraPage {
   horasVal(){
     let custoH;
     custoH = Math.trunc(((this.totalAjudantes + this.totalInsumos)/this.hExecucao) + this.custosHora);
-    if((((this.totalHoras* this.hExecucao)-(custoH * this.hExecucao))-((this.totalHoras* this.hExecucao)*(this.imposto / 100))) > ((custoH * this.hExecucao)*((1/(this.imposto / 100))+(((custoH * this.hExecucao)*((1/(this.lucro / 100)))))))){
+    console.log(custoH);
+    
+    if((((this.totalHoras* this.hExecucao)-(custoH * this.hExecucao))-((this.totalHoras* this.hExecucao)*(this.imposto / 100))) > ((custoH * this.hExecucao)+((this.totalHoras* this.hExecucao)*(this.imposto / 100))+((this.totalHoras* this.hExecucao)*(this.lucro / 100)))){
       return this.totalHoras * this.hExecucao;
     } else {
-      return ((custoH * this.hExecucao)*((1/(this.imposto / 100))+(((custoH * this.hExecucao)*((1/(this.lucro / 100)))))));
+      return ((custoH * this.hExecucao)+((this.totalHoras* this.hExecucao)*(this.imposto / 100))+((this.totalHoras* this.hExecucao)*(this.lucro / 100)));
     }
   }
   alterarTab(tabId){

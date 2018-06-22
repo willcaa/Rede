@@ -238,6 +238,13 @@ page-perfil {
     color: #37c5e9 !important;
   
   }
+  .botao-publicacoes{
+    width: 50%;
+    height: 70px !important;
+    font-size: 2.2rem !important;
+    color: #37c5e9 !important;
+  
+  }
   
   .pagetabs{
     text-align: center !important;
@@ -269,6 +276,11 @@ page-perfil {
     margin-top: 2px;
   }
   #profissional_m{
+    background: aliceblue;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #pessoal{
     background: aliceblue;
     padding-left: 10px;
     padding-right: 10px;

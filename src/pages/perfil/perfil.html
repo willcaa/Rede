@@ -11,6 +11,7 @@
     <ion-title>Perfil</ion-title>
     <ion-buttons end>
     <button ion-button icon-only *ngIf="perfilId == userId && pageId == 'profissional_m'" (click)="updatePerfilProfissional()" ><ion-icon name="settings"></ion-icon></button>
+    <button ion-button icon-only *ngIf="perfilId == userId && pageId == 'pessoal'" (click)="updatePerfilPessoal()" ><ion-icon name="settings"></ion-icon></button>
     <!-- <button ion-button icon-only (click)="goPerfil()">
         <img class="imageUserFeed" src="assets/imgs/user_round.png">
       </button> -->
@@ -32,7 +33,8 @@
 
           <div class="button-like">
             <span class="bola"></span>
-            <button *ngIf="seguindo" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)"></button>
+            <button *ngIf="perfilId == userId" ion-button small class="botao-seguindo"></button>
+            <button *ngIf="seguindo && perfilId != userId" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)">Seguindo</button>
             <button *ngIf="!seguindo" ion-button small class="botao-seguir" (click)="seguir(perfilId, userId)">Seguir</button>
           </div>
           <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)">
@@ -54,12 +56,16 @@
           <ion-icon name="cog"></ion-icon>
           Profissional
         </ion-segment-button>
-        <ion-segment-button class="botao-pessoal" (click)="alterarTab('pessoal')">
+        <ion-segment-button class="botao-publicacoes" (click)="alterarTab('publicacoes')">
+            <ion-icon name="paper"></ion-icon>
+              Publicações
+          </ion-segment-button>
+        <ion-segment-button class="botao-pessoal" (click)="getUsuarioPessoal()">
           <ion-icon name="contact"></ion-icon>
-            Pessoal
+          Pessoal
         </ion-segment-button>
       </ion-segment>
-      <div id="pessoal" class="pagetabs" *ngIf="pageId == 'pessoal'">
+      <div id="publicacoes" class="pagetabs" *ngIf="pageId == 'publicacoes'">
         <ion-item  style="height: 50px; color: teal; background: gold;font-size: 15px;">
           <ion-row>
             <ion-col style="text-align: center">
@@ -150,9 +156,90 @@
 
       </ion-row>
     </ion-card>
-
   </div>
 
+  <div id="pessoal" class="pagetabs" *ngIf="pageId == 'pessoal'">
+      <br> <h5>Informações pessoais</h5><br>
+      <ion-list *ngIf="pageId == 'pessoal'">
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 60px;border-radius: 10px;">
+          <ion-label color="primary" style="margin-top: 6px;" stacked>Nome completo:</ion-label>
+          <div item-content class="itemContent">{{ usuarioPessoal['nome'] }}</div>
+          <ion-icon *ngIf="habCheck != 1" name="ios-contact" item-end></ion-icon> 
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" style="margin-top: 6px;" stacked>Idade:</ion-label>
+            <div item-content class="itemContent">{{ usuarioPessoal['idade'] }}</div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-calendar" item-end></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" style="margin-top: 6px;" stacked>Endereço:</ion-label>
+            <div item-content class="itemContent">{{ usuarioPessoal['endereco'] }}</div>
+            <ion-icon *ngIf="habCheck != 1" name="ios-home" item-end></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 60px;border-radius: 10px;">
+              <ion-label color="primary" style="margin-top: 6px;" stacked>Telefone:</ion-label>
+              <div item-content class="itemContent">{{ usuarioPessoal['telefone'] }}</div>
+              <ion-icon *ngIf="habCheck != 1" name="ios-call" item-end></ion-icon>
+        </ion-item>
+       </ion-list>
+  </div>
+
+  <div id="pessoal_n" class="pagetabs" *ngIf="pageId == 'pessoal_n'">
+    <br> <h5>Informações pessoais</h5><br>
+     <ion-list>
+       <ion-item>
+         <ion-label color="primary" >Nome completo</ion-label>
+         <ion-input type="text" placeholder="Insira o nome completo" [(ngModel)]="nomeCompleto" ></ion-input>
+       </ion-item>
+       <ion-item>
+         <ion-label color="primary">Idade</ion-label>
+         <ion-input type="number" placeholder="Idade" [(ngModel)]="idade"></ion-input>
+       </ion-item>
+       <ion-item>
+         <ion-label color="primary">Endereço</ion-label>
+         <ion-input type="text" placeholder="Ex: Bairro, rua, nº, complemento" [(ngModel)]="endereco"></ion-input>
+       </ion-item>
+       <ion-item>
+         <ion-label color="primary">Telefone</ion-label>
+         <ion-input type="number" placeholder="(XX) xxxxx-xxxx" [(ngModel)]="tel"></ion-input>
+       </ion-item>
+      </ion-list>
+      <button ion-button icon-end class="btnCadastrar" color="primary"(click)="setUsuarioPessoal(nomeCompleto, idade, endereco, tel)">
+        Salvar dados
+        <ion-icon name="md-add" item-end ></ion-icon>
+      </button>
+  </div>
+  <div id="pessoal_o" class="pagetabs" *ngIf="pageId == 'pessoal_o'">
+      <br> <h5>Informações pessoais</h5><br>
+       <ion-list>
+         <ion-item>
+           <ion-label color="primary" >Nome completo</ion-label>
+           <ion-input type="text" placeholder="{{ usuarioPessoal['nome'] }}" [(ngModel)]="nomeCompleto" ></ion-input>
+         </ion-item>
+         <ion-item>
+           <ion-label color="primary">Idade</ion-label>
+           <ion-input type="number" placeholder="{{ usuarioPessoal['idade'] }}" [(ngModel)]="idade"></ion-input>
+         </ion-item>
+         <ion-item>
+           <ion-label color="primary">Endereço</ion-label>
+           <ion-input type="text" placeholder="{{ usuarioPessoal['endereco'] }}" [(ngModel)]="endereco"></ion-input>
+         </ion-item>
+         <ion-item>
+           <ion-label color="primary">Telefone</ion-label>
+           <ion-input type="number" placeholder="{{ usuarioPessoal['telefone'] }}" [(ngModel)]="tel"></ion-input>
+         </ion-item>
+        </ion-list>
+        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="updateUsuarioPessoal(nomeCompleto, idade, endereco, tel)">
+          Salvar dados
+          <ion-icon name="md-add" item-end ></ion-icon>
+        </button>
+    </div>
 
     <div id="profissional_n" class="pagetabs" *ngIf="pageId == 'profissional_n'">
        <br> <h5>Informações do profissional</h5><br>

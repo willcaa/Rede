@@ -4,6 +4,7 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Facebook } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { FeedPage } from '../feed/feed';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -17,13 +18,16 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  loginInvalido = false;
   isLoggedIn:boolean = false;
   users: any;
   destination: string;
   start: string;
   data:any = {};
   loginId: number;
+  pageId:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage) {
+    this.pageId="login";
     this.http = http;
     this.start = "";
     this.destination = "";
@@ -38,8 +42,13 @@ export class RegisterPage {
     })
     .catch(e => console.log(e));
   }
+  alterarTab(Id){
+    this.pageId = Id;
+    console.log(this.pageId);
+  }
 
-  cadastrar(email, nome, imagem) {
+
+  cadastrar(email, nome, pw) {
   
     this.storage.get('meuid').then((val) => {
       console.log('Id', val);
@@ -47,7 +56,7 @@ export class RegisterPage {
     });
     if(this.loginId) {
       this.navCtrl.push('FeedPage');
-      console.log("logado");
+      console.log(" logado");
     } else {
       let headerx = new Headers();
       headerx.append('Access-Control-Allow-Origin', '*');
@@ -56,7 +65,8 @@ export class RegisterPage {
       var body = {
         email: email,
         nome: nome,
-        imagem: imagem
+        pw: pw,
+        imagem: 'none'
       }
       var link = 'https://bluedropsproducts.com/app/usuarios/cadastrar';
   
@@ -99,6 +109,32 @@ export class RegisterPage {
         }
       })
       .catch(e => console.log('Error logging into Facebook', e));
+  }
+
+  loginEmail(email, pw){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      email: email,
+      pw: pw
+    }
+
+    let link = 'https://bluedropsproducts.com/app/usuarios/loginEmail';
+    
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        if(data != false){
+          this.setStorage(data);
+          this.navCtrl.push('FeedPage')
+        }
+        else{
+          this.loginInvalido = true;
+        }
+      });
   }
 
   logout() {

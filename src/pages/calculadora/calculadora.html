@@ -199,6 +199,7 @@
         </ion-item>
         <!-- <h4>Preço Sugerido para o serviço: </h4>
           <h3>R${{precoSugerido}},00</h3> -->
+        <ion-label color="danger" style="text-align: center;" *ngIf="todos == false">POR FAVOR PREENCHA TODOS OS CAMPOS!</ion-label>
        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="gerarRelatorio()">
         Gerar Relatório        
         <ion-icon name="md-archive" item-end ></ion-icon>
