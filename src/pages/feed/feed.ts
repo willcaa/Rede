@@ -875,7 +875,7 @@ export class FeedPage {
   }
 
   goFerramentas(){
-    this.navCtrl.push(FerramentasPage);
+    this.navCtrl.push(FerramentasPage,{userId: this.userId});
   }
 
 

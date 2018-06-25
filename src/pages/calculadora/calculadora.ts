@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Http, Headers, RequestOptions } from '@angular/http';
 /**
  * Generated class for the CalculadoraPage page.
  *
@@ -50,21 +51,9 @@ export class CalculadoraPage {
   custosFixosSalvo: any = [];
   custosHoraSalvo: any;
   todos = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
-    this.storage.get('usuario')
-      .then( res =>{
-          console.log(res);
-          if(res != null){
-            this.gMensaisSalvo = res[0].ganhosMensais;
-            this.hTrabalhadasSalvo = res[1].horasTrabalhadas;
-            this.totalHorasSalvo = res[2].totalHoras;
-            this.custosFixosSalvo = res[3].custosFixos;
-            this.custosHoraSalvo = res[4].custosHora;
-          }
-          
-        } 
-      );
-
+  userId: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public http: Http) {
+    this.userId = this.navParams.get("userId");
   }
 
   
@@ -192,9 +181,36 @@ export class CalculadoraPage {
     console.log(this.pageId);
   }
   public salvarHoras(){
-    this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora});
-    this.storage.set('usuario', this.data);
-    console.log(this.data);
-  }
-  
+    console.log(this.totalCustos);
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      horasTrabalhadas: this.hTrabalhadas,
+      ganhosMensais: this.gMensais,
+      totalHoras: this.totalHoras,
+      custosFixos: this.totalCustos,
+      custosHora: this.custosHora,
+      userId: this.userId
+    }
+
+    var link = 'https://bluedropsproducts.com/app/ferramentas/setHoras';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        console.log(data);
+        if(data){
+          this.hTrabalhadasSalvo = data.horas_trabalhadas;
+          this.gMensaisSalvo = data.ganhos_mensais;
+          this.totalHorasSalvo = data.total_horas;
+          this.custosFixosSalvos = data.custos_fixos_val;
+          this.custosHoraSalvo = data.custos_hora;
+          this.alterarTab('horas_o');
+        } 
+      });
+    }
 }
