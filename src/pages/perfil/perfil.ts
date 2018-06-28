@@ -11,7 +11,7 @@ import { StatsPage } from '../stats/stats';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-
+import { BrMaskerModule } from 'brmasker-ionic-3';
 /**
  * Generated class for the PerfilPage page.
  *
@@ -40,7 +40,8 @@ export class PerfilPage {
   public index_anuncio: any;
   public alteraNome: boolean = false;
   usuarioProfissional: any;
-  pageId: any = 'pessoal';
+  usuarioPessoal: any;
+  pageId: any = 'publicacoes';
   enviandoSeguir: boolean;
   public imageURI: any;
   imageFileName: any;
@@ -70,6 +71,7 @@ alterarTab(Id){
 
   ionViewDidLoad() {
     this.alteraNome = false;
+    this.usuarioPessoal = null;
     this.checkSeguir(this.perfilId, this.userId);
     this.getStats();
     this.carregarPerfil();
@@ -120,23 +122,26 @@ alterarTab(Id){
       id_usuario: this.userId,
       id_perfil: this.perfilId
     }
-
+    console.log('l');
+    
     let link = 'https://bluedropsproducts.com/app/usuarios/perfil';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        this.anuncios = data['anuncios'].data;
-        console.log(data['anuncios']);
-        this.usuario = data['usuario'];
-        //this.perfil_nome = this.anuncios[0]['nome'];
+    .map(res => res.json())
+    .subscribe(data => {
+      this.anuncios = data['anuncios'].data;
+      console.log(data['anuncios'].data);
+      this.usuario = data['usuario'];
+      //this.perfil_nome = this.anuncios[0]['nome'];
         //this.perfil_imagem = this.anuncios[0]['user_image'];
         this.usuario_imagem = this.usuario['user_image'];
         this.checkLink();
       }, (err) => {
-        this.carregarPerfil();
-        });
-  }
+        // this.carregarPerfil();
+      });
+    }
+    
+
 
   goStats(which) {
       this.navCtrl.push(StatsPage, {
@@ -321,8 +326,8 @@ alterarTab(Id){
     })
   }
 
-  setUsuarioProfissional(nome, tipo, doc, xp, esp, sub, formacao, subesp){
-  
+  setUsuarioProfissional(nome, tipo, doc, xp, esp1, sub1, esp2, sub2, formacao, subesp){
+  console.log(nome, tipo, doc, xp, esp1, sub1, esp2, sub2, formacao, subesp);
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -333,8 +338,10 @@ alterarTab(Id){
       tipo: tipo,
       doc: doc,
       xp: xp,
-      esp: esp,
-      sub: sub,
+      esp1: esp1,
+      sub1: sub1,
+      esp2: esp2,
+      sub2: sub2,
       subesp: subesp,
       formacao: formacao,
       id: this.userId
@@ -362,7 +369,7 @@ alterarTab(Id){
     headers.append('content-type', 'application/json');
 
     let body = {
-      id: this.userId
+      id: this.perfilId
     }
     console.log(this.userId);
     let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioProfissional';
@@ -453,7 +460,7 @@ alterarTab(Id){
             this.perfil_imagem = 'https://bluedropsproducts.com/app/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
             this.setImage();
-            this.navCtrl.push(PerfilPage);
+
           }, (err) => {
             console.log(err);
           });
@@ -477,14 +484,13 @@ alterarTab(Id){
     .map(res => res.json())
     .subscribe(data => {
       if(data){
-        this.usuarioProfissional = data;
         console.log(data);
 
       }
     });
   }
 
-  updateUsuarioProfissional(nome, tipo, doc, xp, esp, sub, formacao, subesp){
+  updateUsuarioProfissional(nome, tipo, doc, xp, esp1, sub1, esp2, sub2, formacao, subesp){
   
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -496,8 +502,10 @@ alterarTab(Id){
       tipo: tipo,
       doc: doc,
       xp: xp,
-      esp: esp,
-      sub: sub,
+      esp1: esp1,
+      sub1: sub1,
+      esp2: esp2,
+      sub2: sub2,
       subesp: subesp,
       formacao: formacao,
       id: this.userId
@@ -547,4 +555,98 @@ alterarTab(Id){
         this.alteraNome = false;
       });
   }
+
+  setUsuarioPessoal(nome, idade, endereco, tel){
+  
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      nome: nome,
+      idade: idade,
+      endereco: endereco,
+      tel: tel,
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/setUsuarioPessoal';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.usuarioPessoal =[];
+        this.usuarioPessoal[0] = data;
+        if(this.usuarioPessoal[0] == data){
+          this.getUsuarioPessoal();
+        }
+        console.log(data);
+      }
+    });
+  }
+
+  public getUsuarioPessoal(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      id: this.perfilId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioPessoal';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.usuarioPessoal = data[0];
+        console.log(this.usuarioPessoal);
+        if(data.length != 0 && data.length){
+          this.alterarTab("pessoal");
+          return data;
+        }
+        else{
+          this.alterarTab("pessoal_n");
+        }
+      }
+    });
+  }
+  updatePerfilPessoal(){
+    this.alterarTab('pessoal_o');
+  }
+
+  updateUsuarioPessoal(nome, idade, endereco, tel){
+  
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      nome: nome,
+      idade: idade,
+      endereco: endereco,
+      tel: tel,
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuarioPessoal';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        this.usuarioPessoal = data;
+        if(this.usuarioPessoal == data){
+          this.getUsuarioPessoal();
+        }
+        console.log(data);
+      }
+    });
+  }
+  
 }

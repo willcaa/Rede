@@ -22,7 +22,7 @@
 
 
 <ion-content padding>
-  <button ion-button *ngFor="let item of marca" name=" {{item.name}} " style="background-image: url( {{item.img}})" (click) = "goList(item.id)">
+  <button ion-button *ngFor="let item of marca" name=" {{item.name}} " [style.background-image]="getBackground(item.img)" (click) = "goList(item.id)">
     
   </button>
 

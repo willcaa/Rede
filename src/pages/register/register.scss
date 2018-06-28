@@ -12,11 +12,15 @@ page-register {
         background-clip: border-box;
         background-attachment: fixed;
     }
-    .button-facebook {
-        right: 0;
-        height: 18vw;
-        bottom: calc(50% - 9vw);
-        position: absolute;
+    .item-md {
+        color: #fff;
+        background-color: transparent;
+    }
+    .itemContent {
+        padding-right: 40px;
+    }
+    .botao-login-facebook {
+        background-color: #2454a9;
     }
     .button-temp {
         right: 5%;
@@ -40,5 +44,8 @@ page-register {
     }
     .scroll-content{
         text-align: -webkit-center;
+    }
+    .button-md{
+        border-radius: 14px;
     }
 }

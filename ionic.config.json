@@ -7,8 +7,8 @@
   },
   "proxies": [
     {
-        "path": "/*",
-        "proxyUrl": "https://maps.googleapis.com"
+        "path": "*",
+        "proxyUrl": "http://13.58.158.77"
     }
   ]
 }

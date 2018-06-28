@@ -11,6 +11,7 @@
     <ion-title>Perfil</ion-title>
     <ion-buttons end>
     <button ion-button icon-only *ngIf="perfilId == userId && pageId == 'profissional_m'" (click)="updatePerfilProfissional()" ><ion-icon name="settings"></ion-icon></button>
+    <button ion-button icon-only *ngIf="perfilId == userId && pageId == 'pessoal'" (click)="updatePerfilPessoal()" ><ion-icon name="settings"></ion-icon></button>
     <!-- <button ion-button icon-only (click)="goPerfil()">
         <img class="imageUserFeed" src="assets/imgs/user_round.png">
       </button> -->
@@ -32,7 +33,8 @@
 
           <div class="button-like">
             <span class="bola"></span>
-            <button *ngIf="seguindo" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)"></button>
+            <button *ngIf="perfilId == userId" ion-button small class="botao-seguindo"></button>
+            <button *ngIf="seguindo && perfilId != userId" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)">Seguindo</button>
             <button *ngIf="!seguindo" ion-button small class="botao-seguir" (click)="seguir(perfilId, userId)">Seguir</button>
           </div>
           <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)">
@@ -54,105 +56,191 @@
           <ion-icon name="cog"></ion-icon>
           Profissional
         </ion-segment-button>
-        <ion-segment-button class="botao-pessoal" (click)="alterarTab('pessoal')">
+        <ion-segment-button class="botao-publicacoes" (click)="alterarTab('publicacoes')">
+            <ion-icon name="md-images"></ion-icon>
+              Publicações
+          </ion-segment-button>
+        <ion-segment-button class="botao-pessoal" (click)="getUsuarioPessoal()">
           <ion-icon name="contact"></ion-icon>
-            Pessoal
+          Pessoal
         </ion-segment-button>
       </ion-segment>
-      <div id="pessoal" class="pagetabs" *ngIf="pageId == 'pessoal'">
-        <ion-item  style="height: 50px; color: teal; background: gold;font-size: 15px;">
-          <ion-row>
-            <ion-col style="text-align: center">
-              {{ stat_anuncios }}<br>
-              Publicações
-            </ion-col>
-            <ion-col style="text-align: center" (click)="goStats('Seguidores')">
-              {{ stat_seguidores }}<br>
-              Seguidores
-            </ion-col>
-            <ion-col style="text-align: center" (click)="goStats('Seguindo')">
-              {{ stat_seguindo }}<br>
-              Seguindo
-            </ion-col>
-          </ion-row>
-        </ion-item>
-    <ion-card *ngFor="let item of anuncios">
-      <ion-item>
-        <ion-avatar item-start>
-          <img [src]="getSrc(item.user_image)">
-        </ion-avatar>
-        <P style="white-space: initial; max-width: 80%;">
-            <b>{{ item.nome }}</b>
-            <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin"></ion-icon> {{ item.local }}</b></span>
-          </P>
-        <p>{{ item.atras }}</p>
-      </ion-item>
-      <ion-card-content>
-        <p>{{ item.texto }}</p>
-      </ion-card-content>
-      <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 1">
-          <ion-row>
-            <ion-col *ngFor="let imagem of item.imagem" style="min-width: 50%">
-              <ion-item *ngIf="item.hasImage == true && item.imagem.length > 1"  [style.background-image]="getBackground(imagem.img_name)" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
-              <ion-item *ngIf="item.hasImage == true && item.imagem.length <= 1" [style.background-image]="getBackground(imagem.img_name)" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
-            </ion-col>
-          </ion-row>
-        </div>
-    
-        <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 3">
-          <div  *ngIf='item.link'>
-            <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
-              <h5 (click)="openBrowser(item.link)">
-            {{ item.link }}</h5>
-          </div>
-        </div>
-        
-        <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 4">
-          <div  *ngIf='item.youtube'>
-            <iframe [src]='getSrc(item.youtube)' width="100%"  style="min-height: 200px;" height="auto" frameborder="0"></iframe>
-            <h5 (click)="openBrowser(item.link)">
-              {{ item.link }}</h5>
-          </div>
-        </div>
-      <ion-row>
-
-        <ion-col col-5 *ngIf="userId == item.id">
-          <a class="texto-excluir" *ngIf="userId == item.id" (click)="deleteAnuncio(item)">Excluir</a>
-        </ion-col>
-
-        <ion-col col-5 *ngIf="userId != item.id">
-          <button class="btn-star">
-            <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
-          </button>
-          <button class="btn-star">
-            <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
-          </button>
-          <button class="btn-star">
-            <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
-          </button>
-          <button class="btn-star">
-            <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
-          </button>
-          <button class="btn-star">
-            <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
-          </button>
-          <ion-item class="item-post-range">
-            <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
+      <div id="publicacoes" class="pagetabs" *ngIf="pageId == 'publicacoes'">
+          <ion-item  style="height: 50px; color: teal; background: gold;font-size: 15px;">
+            <ion-row>
+              <ion-col style="text-align: center">
+                {{ stat_anuncios }}<br>
+                Publicações
+              </ion-col>
+              <ion-col style="text-align: center" (click)="goStats('Seguidores')">
+                {{ stat_seguidores }}<br>
+                Seguidores
+              </ion-col>
+              <ion-col style="text-align: center" (click)="goStats('Seguindo')">
+                {{ stat_seguindo }}<br>
+                Seguindo
+              </ion-col>
+            </ion-row>
           </ion-item>
+      <ion-card *ngFor="let item of anuncios">
+        <ion-item>
+          <ion-avatar item-start>
+            <img [src]="getSrc(item.user_image)">
+          </ion-avatar>
+          <P style="white-space: initial; max-width: 80%;">
+              <b>{{ item.nome }}</b>
+              <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin"></ion-icon> {{ item.local }}</b></span>
+            </P>
+          <p>{{ item.atras }}</p>
+        </ion-item>
+        <ion-card-content>
+          <p>{{ item.texto }}</p>
+        </ion-card-content>
+        <div style="overflow: hidden; max-height: 700px;" class="img_card" *ngIf="item.tipo == 1">
+            <ion-row>
+              <ion-col *ngFor="let imagem of item.imagem" style="min-width: 50%">
+                <ion-item *ngIf="item.hasImage == true && item.imagem.length > 1"  [style.background-image]="getBackground(imagem.img_name)" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+                <ion-item *ngIf="item.hasImage == true && item.imagem.length <= 1" [style.background-image]="getBackground(imagem.img_name)" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+      
+          <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 3">
+            <div  *ngIf='item.link'>
+              <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
+                <h5 (click)="openBrowser(item.link)">
+              {{ item.link }}</h5>
+            </div>
+          </div>
+          
+          <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 4">
+            <div  *ngIf='item.youtube'>
+              <iframe [src]='getSrc(item.youtube)' width="100%"  style="min-height: 200px;" height="auto" frameborder="0"></iframe>
+              <h5 (click)="openBrowser(item.link)">
+                {{ item.link }}</h5>
+            </div>
+          </div>
+        <ion-row>
+  
+          <ion-col col-5 *ngIf="userId == item.id">
+            <a class="texto-excluir" *ngIf="userId == item.id" (click)="deleteAnuncio(item)">Excluir</a>
+          </ion-col>
+  
+          <ion-col col-5 *ngIf="userId != item.id">
+            <button class="btn-star">
+              <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+            </button>
+            <button class="btn-star">
+              <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+            </button>
+            <button class="btn-star">
+              <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+            </button>
+            <button class="btn-star">
+              <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+            </button>
+            <button class="btn-star">
+              <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+            </button>
+            <ion-item class="item-post-range">
+              <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
+            </ion-item>
+  
+          </ion-col>
+          <ion-col col-7 style="border-left: 1px solid #7f7f7f; margin: 3px 0;">
+            <button style="padding: 0; float: left;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
+              <ion-icon name="text"></ion-icon>
+              Comentários
+            </button>
+          </ion-col>
+  
+        </ion-row>
+      </ion-card>
+  
+    </div>
 
-        </ion-col>
-        <ion-col col-7 style="border-left: 1px solid #7f7f7f; margin: 3px 0;">
-          <button style="padding: 0; float: left;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            Comentários
-          </button>
-        </ion-col>
-
-      </ion-row>
-    </ion-card>
-
+  <div id="pessoal" class="pagetabs" *ngIf="pageId == 'pessoal'">
+      <br> <h5>Informações pessoais</h5><br>
+      <ion-list *ngIf="pageId == 'pessoal'">
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 60px;border-radius: 10px;">
+          <ion-label color="primary" style="margin-top: 6px;" stacked>Nome completo:</ion-label>
+          <div item-content class="itemContent">{{ usuarioPessoal['nome'] }}</div>
+          <ion-icon  name="ios-contact" item-end></ion-icon> 
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" style="margin-top: 6px;" stacked>Idade:</ion-label>
+            <div item-content class="itemContent">{{ usuarioPessoal['idade'] }}</div>
+            <ion-icon  name="ios-calendar" item-end></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 100px;border-radius: 10px;">
+            <ion-label color="primary" style="margin-top: 6px;" stacked>Endereço:</ion-label>
+            <div item-content class="itemContent">{{ usuarioPessoal['endereco'] }}</div>
+            <ion-icon  name="ios-home" item-end></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngIf="usuarioPessoal != null" style="height: 60px;border-radius: 10px;">
+              <ion-label color="primary" style="margin-top: 6px;" stacked>Telefone:</ion-label>
+              <div item-content class="itemContent">{{ usuarioPessoal['telefone'] }}</div>
+              <ion-icon  name="ios-call" item-end></ion-icon>
+        </ion-item>
+       </ion-list>
   </div>
 
+  <div id="pessoal_n" class="pagetabs" *ngIf="pageId == 'pessoal_n'">
+    <br> <h5>Informações pessoais</h5><br>
+     <ion-list>
+       <ion-item>
+         <ion-label color="primary" >Nome completo</ion-label>
+         <ion-input type="text" placeholder="Insira o nome completo" [(ngModel)]="nomeCompleto" ></ion-input>
+       </ion-item>
+       <ion-item>
+         <ion-label color="primary">Idade</ion-label>
+         <ion-input type="number" placeholder="Idade" [(ngModel)]="idade"></ion-input>
+       </ion-item>
+       <ion-item>
+         <ion-label color="primary">Endereço</ion-label>
+         <ion-input type="text" placeholder="Ex: Bairro, rua, nº, complemento" [(ngModel)]="endereco"></ion-input>
+       </ion-item>
+       <ion-item>
+         <ion-label color="primary">Telefone</ion-label>
+         <ion-input type="number" placeholder="(XX) xxxxx-xxxx" [(ngModel)]="tel"></ion-input>
+       </ion-item>
+      </ion-list>
+      <button ion-button icon-end class="btnCadastrar" color="primary"(click)="setUsuarioPessoal(nomeCompleto, idade, endereco, tel)">
+        Salvar dados
+        <ion-icon name="md-add" item-end ></ion-icon>
+      </button>
+  </div>
+  <div id="pessoal_o" class="pagetabs" *ngIf="pageId == 'pessoal_o'">
+      <br> <h5>Informações pessoais</h5><br>
+       <ion-list>
+         <ion-item>
+           <ion-label color="primary" >Nome completo</ion-label>
+           <ion-input type="text" placeholder="{{ usuarioPessoal['nome'] }}" [(ngModel)]="nomeCompleto" ></ion-input>
+         </ion-item>
+         <ion-item>
+           <ion-label color="primary">Idade</ion-label>
+           <ion-input type="number" placeholder="{{ usuarioPessoal['idade'] }}" [(ngModel)]="idade"></ion-input>
+         </ion-item>
+         <ion-item>
+           <ion-label color="primary">Endereço</ion-label>
+           <ion-input type="text" placeholder="{{ usuarioPessoal['endereco'] }}" [(ngModel)]="endereco"></ion-input>
+         </ion-item>
+         <ion-item>
+           <ion-label color="primary">Telefone</ion-label>
+           <ion-input type="number" placeholder="{{ usuarioPessoal['telefone'] }}" [(ngModel)]="tel"></ion-input>
+         </ion-item>
+        </ion-list>
+        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="updateUsuarioPessoal(nomeCompleto, idade, endereco, tel)">
+          Salvar dados
+          <ion-icon name="md-add" item-end ></ion-icon>
+        </button>
+    </div>
 
     <div id="profissional_n" class="pagetabs" *ngIf="pageId == 'profissional_n'">
        <br> <h5>Informações do profissional</h5><br>
@@ -196,8 +284,8 @@
         </ion-list>
         <ion-list>
             <ion-item>
-              <ion-label>Especialidade</ion-label>
-              <ion-select [(ngModel)]="especialidade">
+              <ion-label>Especialidade 1</ion-label>
+              <ion-select [(ngModel)]="especialidade1">
                 <ion-option value="Climatização">Climatização</ion-option>
                 <ion-option value="Linha Branca">Linha Branca</ion-option>
                 <ion-option value="Refrigeração Comercial">Refrigeração Comercial</ion-option>
@@ -206,24 +294,56 @@
         </ion-list>
         <ion-list>
             <ion-item>
-              <ion-label>Subespecialidade</ion-label>
-              <ion-select [(ngModel)]="subespecialidade">
-                <ion-option value="Mini Split" *ngIf="especialidade == 'Climatização'">Mini Split</ion-option>
-                <ion-option value="Comercial" *ngIf="especialidade == 'Climatização'">Comercial</ion-option>
-                <ion-option value="VRF" *ngIf="especialidade == 'Climatização'">VRF</ion-option>
-                <ion-option value="outros" *ngIf="especialidade == 'Climatização'">Outros Especificar</ion-option>
+              <ion-label>Subespecialidade 1</ion-label>
+              <ion-select [(ngModel)]="subespecialidade1">
+                <ion-option value="Mini Split" *ngIf="especialidade1 == 'Climatização'">Mini Split</ion-option>
+                <ion-option value="Comercial" *ngIf="especialidade1 == 'Climatização'">Comercial</ion-option>
+                <ion-option value="VRF" *ngIf="especialidade1 == 'Climatização'">VRF</ion-option>
+                <ion-option value="outros" *ngIf="especialidade1 == 'Climatização'">Outros Especificar</ion-option>
                 
-                <ion-option value="Cozinha" *ngIf="especialidade == 'Linha Branca'">Cozinha</ion-option>
-                <ion-option value="Lavanderia" *ngIf="especialidade == 'Linha Branca'">Lavanderia</ion-option>
-                <ion-option value="Mini Split" *ngIf="especialidade == 'Linha Branca'">Mini Split</ion-option>
-                <ion-option value="outros" *ngIf="especialidade == 'Linha Branca'">Outros Especificar</ion-option>
+                <ion-option value="Cozinha" *ngIf="especialidade1 == 'Linha Branca'">Cozinha</ion-option>
+                <ion-option value="Lavanderia" *ngIf="especialidade1 == 'Linha Branca'">Lavanderia</ion-option>
+                <ion-option value="Mini Split" *ngIf="especialidade1 == 'Linha Branca'">Mini Split</ion-option>
+                <ion-option value="outros" *ngIf="especialidade1 == 'Linha Branca'">Outros Especificar</ion-option>
 
-                <ion-option value="Câmara fria" *ngIf="especialidade == 'Refrigeração Comercial'">Câmara Fria</ion-option>
-                <ion-option value="Frio Alimentar" *ngIf="especialidade == 'Refrigeração Comercial'">Frio Alimentar</ion-option>
-                <ion-option value="Máquinas" *ngIf="especialidade == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
-                <ion-option value="outros" *ngIf="especialidade == 'Refrigeração Comercial'">Outros Especificar</ion-option>
+                <ion-option value="Câmara fria" *ngIf="especialidade1 == 'Refrigeração Comercial'">Câmara Fria</ion-option>
+                <ion-option value="Frio Alimentar" *ngIf="especialidade1 == 'Refrigeração Comercial'">Frio Alimentar</ion-option>
+                <ion-option value="Máquinas" *ngIf="especialidade1 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
+                <ion-option value="outros" *ngIf="especialidade1 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
               </ion-select>
-              <ion-input type="text" [(ngModel)]="sub" *ngIf="subespecialidade == 'outros'" placeholder="Outros..."></ion-input>
+              <ion-input type="text" [(ngModel)]="sub1" *ngIf="subespecialidade1 == 'outros'" placeholder="Outros..."></ion-input>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-item>
+              <ion-label>Especialidade 2</ion-label>
+              <ion-select [(ngModel)]="especialidade2">
+                <ion-option value="Climatização">Climatização</ion-option>
+                <ion-option value="Linha Branca">Linha Branca</ion-option>
+                <ion-option value="Refrigeração Comercial">Refrigeração Comercial</ion-option>
+              </ion-select>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-item>
+              <ion-label>Subespecialidade 2</ion-label>
+              <ion-select [(ngModel)]="subespecialidade2">
+                <ion-option value="Mini Split" *ngIf="especialidade2 == 'Climatização'">Mini Split</ion-option>
+                <ion-option value="Comercial" *ngIf="especialidade2 == 'Climatização'">Comercial</ion-option>
+                <ion-option value="VRF" *ngIf="especialidade2 == 'Climatização'">VRF</ion-option>
+                <ion-option value="outros" *ngIf="especialidade2 == 'Climatização'">Outros Especificar</ion-option>
+                
+                <ion-option value="Cozinha" *ngIf="especialidade2 == 'Linha Branca'">Cozinha</ion-option>
+                <ion-option value="Lavanderia" *ngIf="especialidade2 == 'Linha Branca'">Lavanderia</ion-option>
+                <ion-option value="Mini Split" *ngIf="especialidade2 == 'Linha Branca'">Mini Split</ion-option>
+                <ion-option value="outros" *ngIf="especialidade2 == 'Linha Branca'">Outros Especificar</ion-option>
+
+                <ion-option value="Câmara fria" *ngIf="especialidade2 == 'Refrigeração Comercial'">Câmara Fria</ion-option>
+                <ion-option value="Frio Alimentar" *ngIf="especialidade2 == 'Refrigeração Comercial'">Frio Alimentar</ion-option>
+                <ion-option value="Máquinas" *ngIf="especialidade2 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
+                <ion-option value="outros" *ngIf="especialidade2 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
+              </ion-select>
+              <ion-input type="text" [(ngModel)]="sub2" *ngIf="subespecialidade2 == 'outros'" placeholder="Outros..."></ion-input>
             </ion-item>
         </ion-list>
 
@@ -243,7 +363,7 @@
           </ion-item>
         </ion-list>
 
-         <button ion-button icon-end class="btnCadastrar" color="primary"(click)="setUsuarioProfissional(nome_empresa, tipoPessoa, doc, experiencia, especialidade, subespecialidade, formacao, sub)">
+         <button ion-button icon-end class="btnCadastrar" color="primary"(click)="setUsuarioProfissional(nome_empresa, tipoPessoa, doc, experiencia, especialidade1, subespecialidade1, especialidade2, subespecialidade2, formacao, sub)">
           Salvar Dados          
           <ion-icon name="md-add" item-end ></ion-icon> 
         </button>
@@ -259,7 +379,7 @@
             <div item-content class="itemContent">
               {{ usuarioProfissional[0].nome_empresa }}
             </div>
-            <ion-icon *ngIf="habCheck != 1" name="ios-contact" item-end></ion-icon>
+            <ion-icon  name="ios-contact" item-end></ion-icon>
             
           </ion-item>
         </ion-list>
@@ -270,7 +390,7 @@
             <div item-content class="itemContent">
               {{ usuarioProfissional[0].formacao }}
             </div>
-            <ion-icon *ngIf="habCheck != 1" name="ios-school" item-end></ion-icon>
+            <ion-icon  name="ios-school" item-end></ion-icon>
           </ion-item>
         </ion-list>
         
@@ -280,44 +400,62 @@
             <div item-content class="itemContent">
               {{ usuarioProfissional[0].experiencia }}
             </div>
-            <ion-icon *ngIf="habCheck != 1" name="ios-briefcase" item-end></ion-icon>
+            <ion-icon  name="ios-briefcase" item-end></ion-icon>
           </ion-item>
         </ion-list>
         
-        <ion-list *ngIf="usuarioProfissional[0].cpf">
+        <ion-list *ngIf="usuarioProfissional[0].cpf && usuarioProfissional[0].tipo == 1">
           <ion-item style="height: 60px;border-radius: 10px;">
             <ion-label color="primary" stacked>CPF:</ion-label>
             <div item-content class="itemContent">
               {{ usuarioProfissional[0].cpf }}
             </div>
-            <ion-icon *ngIf="habCheck != 1" name="ios-clipboard" item-end></ion-icon>
+            <ion-icon  name="ios-clipboard" item-end></ion-icon>
           </ion-item>
         </ion-list>
-        <ion-list *ngIf="usuarioProfissional[0].cnpj">
+        <ion-list *ngIf="usuarioProfissional[0].cnpj && usuarioProfissional[0].tipo == 2">
           <ion-item style="height: 60px;border-radius: 10px;">
             <ion-label color="primary" stacked>CNPJ:</ion-label>
             <div item-content class="itemContent">
               {{ usuarioProfissional[0].cnpj }}
             </div>
-            <ion-icon *ngIf="habCheck != 1" name="ios-contact" item-end></ion-icon>
+            <ion-icon  name="ios-contact" item-end></ion-icon>
           </ion-item>
         </ion-list>
         <ion-list>
           <ion-item style="height: 60px;border-radius: 10px;">
-            <ion-label color="primary" stacked>Especialidade: </ion-label>
+            <ion-label color="primary" stacked>Especialidade 1: </ion-label>
             <div item-content class="itemContent">
-              {{ usuarioProfissional[0].especialidade }}
+              {{ usuarioProfissional[0].especialidade1 }}
             </div>
-            <ion-icon *ngIf="habCheck != 1" name="ios-construct" item-end></ion-icon>
+            <ion-icon  name="ios-construct" item-end></ion-icon>
           </ion-item>
         </ion-list>
         <ion-list>
           <ion-item style="height: 60px;border-radius: 10px;">
-            <ion-label color="primary" stacked>Subespecialidade: </ion-label>
+            <ion-label color="primary" stacked>Subespecialidade 1: </ion-label>
             <div item-content class="itemContent">
-              {{ usuarioProfissional[0].subespecialidade }}
+              {{ usuarioProfissional[0].subespecialidade1 }}
             </div>
-            <ion-icon *ngIf="habCheck != 1" name="ios-hammer" item-end></ion-icon>
+            <ion-icon  name="ios-hammer" item-end></ion-icon>
+                </ion-item>
+          </ion-list>
+        <ion-list *ngIf=" usuarioProfissional[0].especialidade2">
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>Especialidade: 2</ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].especialidade2 }}
+            </div>
+            <ion-icon  name="ios-construct" item-end></ion-icon>
+          </ion-item>
+        </ion-list>
+        <ion-list *ngIf="usuarioProfissional[0].subespecialidade2">
+          <ion-item style="height: 60px;border-radius: 10px;">
+            <ion-label color="primary" stacked>Subespecialidade: 2</ion-label>
+            <div item-content class="itemContent">
+              {{ usuarioProfissional[0].subespecialidade2 }}
+            </div>
+            <ion-icon  name="ios-hammer" item-end></ion-icon>
                 </ion-item>
           </ion-list>
     </div>
@@ -361,38 +499,71 @@
              </ion-select>
            </ion-item>
        </ion-list>
-       <ion-list>
-           <ion-item>
-             <ion-label>Especialidade</ion-label>
-             <ion-select [(ngModel)]="especialidade">
-               <ion-option value="Climatização">Climatização</ion-option>
-               <ion-option value="Linha Branca">Linha Branca</ion-option>
-               <ion-option value="Refrigeração Comercial">Refrigeração Comercial</ion-option>
-             </ion-select>
-           </ion-item>
-       </ion-list>
-       <ion-list>
-           <ion-item>
-             <ion-label>Subespecialidade</ion-label>
-             <ion-select [(ngModel)]="subespecialidade">
-               <ion-option value="Mini Split" *ngIf="especialidade == 'Climatização'">Mini Split</ion-option>
-               <ion-option value="Comercial" *ngIf="especialidade == 'Climatização'">Comercial</ion-option>
-               <ion-option value="VRF" *ngIf="especialidade == 'Climatização'">VRF</ion-option>
-               <ion-option value="outros" *ngIf="especialidade == 'Climatização'">Outros Especificar</ion-option>
-               
-               <ion-option value="Cozinha" *ngIf="especialidade == 'Linha Branca'">Cozinha</ion-option>
-               <ion-option value="Lavanderia" *ngIf="especialidade == 'Linha Branca'">Lavanderia</ion-option>
-               <ion-option value="Mini Split" *ngIf="especialidade == 'Linha Branca'">Mini Split</ion-option>
-               <ion-option value="outros" *ngIf="especialidade == 'Linha Branca'">Outros Especificar</ion-option>
+      
+      <ion-list>
+          <ion-item>
+            <ion-label>Especialidade 1</ion-label>
+            <ion-select [(ngModel)]="especialidade1">
+              <ion-option value="Climatização">Climatização</ion-option>
+              <ion-option value="Linha Branca">Linha Branca</ion-option>
+              <ion-option value="Refrigeração Comercial">Refrigeração Comercial</ion-option>
+            </ion-select>
+          </ion-item>
+      </ion-list>
+      <ion-list>
+          <ion-item>
+            <ion-label>Subespecialidade 1</ion-label>
+            <ion-select [(ngModel)]="subespecialidade1">
+              <ion-option value="Mini Split" *ngIf="especialidade1 == 'Climatização'">Mini Split</ion-option>
+              <ion-option value="Comercial" *ngIf="especialidade1 == 'Climatização'">Comercial</ion-option>
+              <ion-option value="VRF" *ngIf="especialidade1 == 'Climatização'">VRF</ion-option>
+              <ion-option value="outros" *ngIf="especialidade1 == 'Climatização'">Outros Especificar</ion-option>
+              
+              <ion-option value="Cozinha" *ngIf="especialidade1 == 'Linha Branca'">Cozinha</ion-option>
+              <ion-option value="Lavanderia" *ngIf="especialidade1 == 'Linha Branca'">Lavanderia</ion-option>
+              <ion-option value="Mini Split" *ngIf="especialidade1 == 'Linha Branca'">Mini Split</ion-option>
+              <ion-option value="outros" *ngIf="especialidade1 == 'Linha Branca'">Outros Especificar</ion-option>
 
-               <ion-option value="Câmara fria" *ngIf="especialidade == 'Refrigeração Comercial'">Câmara Fria</ion-option>
-               <ion-option value="Frio Alimentar" *ngIf="especialidade == 'Refrigeração Comercial'">Frio Alimentar</ion-option>
-               <ion-option value="Máquinas" *ngIf="especialidade == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
-               <ion-option value="outros" *ngIf="especialidade == 'Refrigeração Comercial'">Outros Especificar</ion-option>
-             </ion-select>
-             <ion-input type="text" [(ngModel)]="sub" *ngIf="subespecialidade == 'outros'" placeholder="Outros..."></ion-input>
-           </ion-item>
-       </ion-list>
+              <ion-option value="Câmara fria" *ngIf="especialidade1 == 'Refrigeração Comercial'">Câmara Fria</ion-option>
+              <ion-option value="Frio Alimentar" *ngIf="especialidade1 == 'Refrigeração Comercial'">Frio Alimentar</ion-option>
+              <ion-option value="Máquinas" *ngIf="especialidade1 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
+              <ion-option value="outros" *ngIf="especialidade1 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
+            </ion-select>
+            <ion-input type="text" [(ngModel)]="sub1" *ngIf="subespecialidade1 == 'outros'" placeholder="Outros..."></ion-input>
+          </ion-item>
+      </ion-list>
+      <ion-list>
+          <ion-item>
+            <ion-label>Especialidade 2</ion-label>
+            <ion-select [(ngModel)]="especialidade2">
+              <ion-option value="Climatização">Climatização</ion-option>
+              <ion-option value="Linha Branca">Linha Branca</ion-option>
+              <ion-option value="Refrigeração Comercial">Refrigeração Comercial</ion-option>
+            </ion-select>
+          </ion-item>
+      </ion-list>
+      <ion-list>
+          <ion-item>
+            <ion-label>Subespecialidade 2</ion-label>
+            <ion-select [(ngModel)]="subespecialidade2">
+              <ion-option value="Mini Split" *ngIf="especialidade2 == 'Climatização'">Mini Split</ion-option>
+              <ion-option value="Comercial" *ngIf="especialidade2 == 'Climatização'">Comercial</ion-option>
+              <ion-option value="VRF" *ngIf="especialidade2 == 'Climatização'">VRF</ion-option>
+              <ion-option value="outros" *ngIf="especialidade2 == 'Climatização'">Outros Especificar</ion-option>
+              
+              <ion-option value="Cozinha" *ngIf="especialidade2 == 'Linha Branca'">Cozinha</ion-option>
+              <ion-option value="Lavanderia" *ngIf="especialidade2 == 'Linha Branca'">Lavanderia</ion-option>
+              <ion-option value="Mini Split" *ngIf="especialidade2 == 'Linha Branca'">Mini Split</ion-option>
+              <ion-option value="outros" *ngIf="especialidade2 == 'Linha Branca'">Outros Especificar</ion-option>
+
+              <ion-option value="Câmara fria" *ngIf="especialidade2 == 'Refrigeração Comercial'">Câmara Fria</ion-option>
+              <ion-option value="Frio Alimentar" *ngIf="especialidade2 == 'Refrigeração Comercial'">Frio Alimentar</ion-option>
+              <ion-option value="Máquinas" *ngIf="especialidade2 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
+              <ion-option value="outros" *ngIf="especialidade2 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
+            </ion-select>
+            <ion-input type="text" [(ngModel)]="sub2" *ngIf="subespecialidade2 == 'outros'" placeholder="Outros..."></ion-input>
+          </ion-item>
+      </ion-list>
 
        <ion-list>
          <ion-item>
@@ -410,7 +581,7 @@
          </ion-item>
        </ion-list>
 
-        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="updateUsuarioProfissional(nome_empresa, tipoPessoa, doc, experiencia, especialidade, subespecialidade, formacao, sub)">
+        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="updateUsuarioProfissional(nome_empresa, tipoPessoa, doc, experiencia, especialidade1, subespecialidade1, especialidade2, subespecialidade2, formacao, sub)">
          Salvar Dados          
          <ion-icon name="md-add" item-end ></ion-icon> 
        </button>

@@ -8,7 +8,7 @@ import { CommentsPage } from '../comments/comments';
 import { PerfilPage } from '../perfil/perfil';
 import { MapPage } from '../map/map';
 import { FerramentasPage } from '../ferramentas/ferramentas';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { LaunchNavigator, LaunchNavigatorOptions, AppSelectionOptions, RememberChoiceOptions} from '@ionic-native/launch-navigator';
 import { Storage } from '@ionic/storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { AlertController } from 'ionic-angular';
@@ -72,6 +72,29 @@ export class FeedPage {
   public foto_usuario: any;
   public notificacoes_qts: any;
    constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
+    if(navParams.get("slide")){
+      this.local = navParams.get("slide");
+      switch(navParams.get("slide")) {
+        case "proximidade":
+          this.range = 0;
+          break;
+        case "amigos":
+          this.range = 200;
+          break;
+        case "bairro":
+          this.range = 400;
+          break;
+        case "cidade":
+          this.range = 600;
+          break;
+        case "estado":
+          this.range = 800;
+          break;
+        case "pais":
+          this.range = 1000;
+          break;
+      }
+    }
     this.http = http;
     this.start = "";
     this.destination = "";
@@ -145,7 +168,7 @@ export class FeedPage {
       if ( entries.length > 0 ) {
         for (i = 0; i < entries.length; i = i + 1) {
           entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1">#$1</a>');
-          entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g,'<h5 (click)="openBrowser(http$1)">http$1</h5>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g,'<a (click)="openBrowser(http$1)">http$1</a>');
           entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g,'<a (click)="openBrowser(www$1)">www$1</a>');
         }
       }
@@ -378,19 +401,15 @@ export class FeedPage {
           break;
         case 400:
           this.local = "bairro";
-          this.topOrNews = "Top";
           break;
         case 600:
           this.local = "cidade";
-          this.topOrNews = "Top";
           break;
         case 800:
           this.local = "estado";
-          this.topOrNews = "Top";
           break;
         case 1000:
           this.local = "pais";
-          this.topOrNews = "Top";
           break;
       }
     } else {
@@ -489,7 +508,10 @@ export class FeedPage {
   navigate(lat, lng){
     this.destination = lat + "," + lng;
     let options: LaunchNavigatorOptions = {
-      start: this.start
+      start: this.start,
+      appSelection:{
+        rememberChoice: {enabled: false}
+      }
     };
     
     this.launchNavigator.navigate(this.destination, options)
@@ -583,7 +605,7 @@ export class FeedPage {
     });
   }
 
-  loadFeed(lat, long, infiniteScroll) {
+  loadFeed(lat, long, infiniteScroll, hach: any = null) {
 
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -625,7 +647,8 @@ export class FeedPage {
       publico: 1,
       lat: lat,
       long: long,
-      tipo: tipo
+      tipo: tipo,
+      hach: hach
     }
     var link = 'https://bluedropsproducts.com/app/anuncios/puxarTodos';
 
@@ -683,7 +706,7 @@ export class FeedPage {
   }
 
   goImage() {
-    this.navCtrl.push(AboutPage);
+    this.navCtrl.push(AboutPage, {slide: this.local});
   }
 
   goPerfil(id_perfil = this.userId) {

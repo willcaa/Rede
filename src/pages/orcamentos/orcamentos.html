@@ -64,7 +64,7 @@
   </div>
   <div id="clientes"  class="pagetabs" *ngIf="pageId == 'clientes'">
     <h4>Meus Clientes</h4>
-    <ion-item *ngFor = "let item of clientes" style="height: 100px;" (click)="getCliente(item.id, fab)">
+    <ion-item *ngFor = "let item of clientes" style="height: 100px;"  (press)="showCheck(); openFab(fab);" (click)="getCliente(item.id, fab)">
         <ion-label id="{{item.id}}" color="primary" stacked>{{item.full_name}}</ion-label>
         <div item-content class="itemContent">
           Tel: {{item.phone}}<br>

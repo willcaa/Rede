@@ -131,6 +131,12 @@ export class OrcamentosPage {
     }
   }
 
+  openFab(fab){
+    if(fab){
+      this.openFab(fab);
+    }
+  }
+
   selectChecked(e: any, a:any) {
     console.log(e.value);
     if(e.value){

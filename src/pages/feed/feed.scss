@@ -256,5 +256,8 @@ page-feed {
   .item-range-range{
     height: 12px;
   }
-  
+  .card-md h3, .card-md h4, .card-md h5, .card-md h6{
+    text-align: center;
+    padding: 20px 10px;
+  }
 }

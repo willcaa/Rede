@@ -123,7 +123,7 @@
       </ion-row>
     </div>
 
-    <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 3">
+    <div style="overflow: hidden; max-height: 700px;" class="img_card" *ngIf="item.tipo == 3">
       <div  *ngIf='item.link'>
         <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
           <h5 (click)="openBrowser(item.link)">
@@ -134,8 +134,6 @@
     <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 4">
       <div  *ngIf='item.youtube'>
         <iframe [src]='getSrc(item.youtube)' width="100%"  style="min-height: 200px;" height="auto" frameborder="0"></iframe>
-        <h5 (click)="openBrowser(item.link)">
-          {{ item.link }}</h5>
       </div>
     </div>
 

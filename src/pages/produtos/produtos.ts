@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ListaPage } from '../lista/lista';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 
 
@@ -14,10 +15,12 @@ export class ProdutosPage {
   public marca: any;
   public marcaId: any;
   public produtos: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private _sanitizer: DomSanitizer) {
     this.marcaId = this.navParams.get("marcaId");
   }
-
+  getBackground(image) {
+    return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProdutosPage');
     this.getProdutos();

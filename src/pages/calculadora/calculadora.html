@@ -33,37 +33,40 @@
 
 
 <ion-content padding>
-    <div class="pagetabs" id="horas_o" *ngIf="pageId == horas_o">
-        <button ion-button (click)="alterarTab(calcHoras)">
-          Nova Tabela
-        </button>
-        <h4>Hora de Trabalho</h4>
-          <ion-list>
-            <ion-item>
-              <ion-label color="primary" stacked>Ganhos Mensais</ion-label>
-              {{gMensaisSalvo}}
+  <div class="pagetabs" id="horas_o" *ngIf="pageId == 'horas_o'">
+    <button ion-button (click)="alterarTab('calcHoras')">
+      Nova Tabela
+    </button>
+    <h4>Hora de Trabalho</h4>
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary">Ganhos Mensais</ion-label>
+          <div item-content class="itemContent"> R${{gMensaisSalvo}},00</div>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Horas Trabalhadas</ion-label>
+          <div item-content class="itemContent"> R${{hTrabalhadasSalvo}},00</div>
+        </ion-item>
+      </ion-list>
+        <h5>Ganhos por hora: R${{totalHorasSalvo}},00</h5>
+        <br>
+      <h4>Custos Fixos</h4>
+      <ion-list *ngIf="custosFixos">
+        <ion-item *ngFor="let item of custosFixosSalvo;let i = index" id="s_{{item.i}}" style="height: 50px;" >  
+              <ion-label color="primary">{{item.desc}}</ion-label>
+              <div item-content class="itemContent"> R$ {{item.val}},00</div>
+        </ion-item>
+    </ion-list>
+        <ion-list>
+            <ion-item>  
+              <ion-label color="primary">Total</ion-label>
+              <div item-content class="itemContent"> R${{custosFixosSalvoTotal}},00</div>
             </ion-item>
-            <ion-item>
-              <ion-label color="primary" stacked>Horas Trabalhadas</ion-label>
-              {{hTrabalhadasSalvo}}
-            </ion-item>
-          </ion-list>
-            <h5>Ganhos por hora: R${{totalHorasSalvo}},00</h5>
-            <br>
-          <h4>Custos Fixos</h4>
-            <ion-list *ngIf="custosFixosSalvo">
-                <ion-item *ngFor="let item of custosFixos;let i = index" id="s_{{item.i}}" style="height: 50px;" >  
-                    <div item-content style="width: 100%;">
-                      <div style="position: relative; float: left; width: 50%;">{{item.desc}} </div>
-                      <div style="position: relative; float: right; width: 50%;"> R$ {{item.val}},00</div>
-                    </div>
-                </ion-item>
-            </ion-list>
-            <br>
-            <h5>Total: R${{totalCustosSalvo}},00</h5>
-            <h3 *ngIf="custosHoraSalvo && custosHoraSalvo != 'undefined'">Custos por hora: R${{custosHoraSalvo}},00</h3>
-  
-      </div>
+        </ion-list>
+        <br>
+        <h5 *ngIf="custosHoraSalvo && custosHoraSalvo != 'undefined'">Custos por hora: R${{custosHoraSalvo}},00</h5>
+
+  </div>
     <div class="pagetabs" id="calcHoras" *ngIf="pageId == 'calcHoras'">
       
         <h4>Hora de Trabalho</h4>
@@ -199,6 +202,7 @@
         </ion-item>
         <!-- <h4>Preço Sugerido para o serviço: </h4>
           <h3>R${{precoSugerido}},00</h3> -->
+        <ion-label color="danger" style="text-align: center;" *ngIf="mensagem">POR FAVOR PREENCHA TODOS OS CAMPOS!</ion-label>
        <button ion-button icon-end class="btnCadastrar" color="primary"(click)="gerarRelatorio()">
         Gerar Relatório        
         <ion-icon name="md-archive" item-end ></ion-icon>
@@ -249,35 +253,30 @@
         <h5>Dados do serviço:</h5>
         <br>
         <ion-item style="height: 75px;">
-            <ion-label >Horas</ion-label>
-            <div item-content class="itemContent">
-               {{hExecucao}} horas
-            </div>
-          </ion-item>
+          <ion-label >Horas</ion-label>
+          <div item-content class="itemContent">
+            {{hExecucao}} horas
+          </div>
+        </ion-item>
         <ion-item style="height: 75px;">
-            <ion-label >Preço sugerido</ion-label>
-            <div item-content class="itemContent">
-               Valor: R${{precoSugerido}},00
-            </div>
-          </ion-item>
+          <ion-label >Custos Totais:</ion-label>
+          <div item-content class="itemContent">
+            Valor: R${{custoTotalFinal}},00
+          </div>
+        </ion-item>
         <ion-item style="height: 75px;">
-            <ion-label >Imposto à pagar</ion-label>
-            <div item-content class="itemContent">
-               Valor: R${{totalImposto}},00
-            </div>
-          </ion-item>
+          <ion-label >Imposto à pagar</ion-label>
+          <div item-content class="itemContent">
+            Valor: R${{totalImposto}},00
+          </div>
+        </ion-item>
         <ion-item style="height: 75px;">
-            <ion-label >Lucro estipulado</ion-label>
-            <div item-content class="itemContent">
-               Valor: R${{totalLucro}},00
-            </div>
-          </ion-item>
-        <ion-item style="height: 75px;">
-            <ion-label >Capital Acumulado</ion-label>
-            <div item-content class="itemContent">
-               Valor: R${{totalCapital}},00
-            </div>
-          </ion-item>
+          <ion-label >Lucro estipulado</ion-label>
+          <div item-content class="itemContent">
+            Valor: R${{totalLucro}},00
+          </div>
+        </ion-item>
+        <h3>Preço sugerido: R${{precoSugerido}},00</h3>
       </div>
 
 </ion-content>

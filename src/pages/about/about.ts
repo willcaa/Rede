@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController, PopoverController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, PopoverController } from 'ionic-angular';
 import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -11,13 +11,17 @@ import { PopoverTopComponent } from '../../components/popover-top/popover-top';
 import { HtmlInfoWindow } from '@ionic-native/google-maps';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { FileChooser } from '@ionic-native/file-chooser';
-
+import { File } from '@ionic-native/file';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { AngularFireDatabase } from 'angularfire2/database';
+declare var window: any;
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html'
 })
 export class AboutPage {
-
+  
+  public Fbref: any;
   public local_array: any;
   public bairro: string;
   public cidade: string;
@@ -39,6 +43,7 @@ export class AboutPage {
   texto:string = "";
   public imageURI:any = [];
   imageFileName:any;
+  videosNames:any;
   imageFileNameVideo:any;
   fileUrl:any;
   imageUriVideo:any;
@@ -58,11 +63,20 @@ export class AboutPage {
   flag_upload = true;
   flag_play = true;
   aImages: any;
-  arrayImages: any = [];
+  images: any = [];
+  image1: any = null;
+  image2: any = null;
+  image3: any = null;
+  image4: any = null;
+  image5: any = null;
+  image6: any = null;
+  localBack: any;
+  videos:any;
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
     private camera: Camera,
     private _sanitizer: DomSanitizer,
+    private imagePicker: ImagePicker,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
@@ -70,9 +84,12 @@ export class AboutPage {
     public fileChooser: FileChooser,
     public sanitizer: DomSanitizer,
     private storage: Storage,
+    private file: File,
     public popoverCtrl: PopoverController,
+    public navParams: NavParams,
     private geolocation: Geolocation) {
-      
+      this.localBack = this.navParams.get("slide");
+
   }
 
   cahngeYoutube(){
@@ -151,26 +168,34 @@ export class AboutPage {
         this.loading.present();
       }
       
-      // getImages(){
-      //   JFileChooser chooser = new JFileChooser();
-    
-      //   // Possibilita a seleção de vários arquivos
-      //   chooser.setMultiSelectionEnabled(true);
-        
-      //   // Apresenta a caixa de diálogo
-      //   chooser.showOpenDialog(frame);
-        
-      //   // Retorna os arquivos selecionados. Este método retorna vazio se
-      //   // o modo de múltipla seleção de arquivos não estiver ativada.
-      //   File[] files = chooser.getSelectedFiles();  
-      // }
+      getImages(){
+        let options = {
+          maximumImagesCount: 5,
+          width: 800,
+          height: 800,
+          quality: 75,
+        }
+      
+        this.imagePicker.getPictures(options).then( results =>{
+          console.log(results);
+          this.images = [];
+          this.image1 = results[0];
+          this.image2 = results[1];
+          this.image3 = results[2];
+          this.image4 = results[3];
+          this.image5 = results[4];
+          for(let i=0; i < results.length;i++){
+            this.images.push(results[i]);
+          };
+        });
+      }
 
-      getImage() {
+      getVideo() {
         const options: CameraOptions = {
-          quality: 100,
+          quality: 50,
           destinationType: this.camera.DestinationType.FILE_URI,
-          sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-          mediaType: this.camera.MediaType.PICTURE,
+          sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+          mediaType: this.camera.MediaType.VIDEO,
           correctOrientation: true,
           targetWidth: 1200,
           targetHeight: 800
@@ -178,90 +203,60 @@ export class AboutPage {
       
 
 
-        this.camera.getPicture(options).then((imageData) => {
-          this.imageURI = imageData;
-          this.arrayImages.push(imageData);
-          this.uploadFile(imageData);
+        this.camera.getPicture(options).then((videoData) => {
+          this.imageURI = videoData;
+          
         }, (err) => {
           console.log(err);
-          // this.presentToast(err);
+          this.presentToast(err);
         });
       }
-      
-      private setPostType(type){
-        this.postType = type;
-        console.log(this.postType)
-      }
-
-      getVideo() {
-        this.fileChooser.open()
-        .then(uri => {
-        this.videoId = uri;
-        this.flag_play = false;
-        this.flag_upload = false;
-        this.uploadVideo();
-        })
-        .catch(e => 
-          console.log(e));
-        }
-
-        uploadVideo() {
-          
-          const fileTransfer: FileTransferObject = this.transfer.create();
-          let options1: FileUploadOptions = {
-            fileKey: 'video_upload_file',
-            fileName: this.videoId,
-            headers: {},
-            mimeType: 'multipart/form-data',
-            params: { },
-            chunkedMode: false
-          }
-          this.presentLoading();
-          fileTransfer.upload(this.videoId, encodeURI('https://bluedropsproducts.com/upload.php'), options1)
-          .then((data) => {
-          this.loader.dismissAll();
-          this.flag_upload = true;
-          this.showToast('middle', 'Video is uploaded Successfully!'+ this.videoId);
-          }, (err) => {
-          // this.loading.dismiss();
-          });
-          }
-          presentLoading() {
-          this.loader = this.loadingCtrl.create({
-          content: "Uploading…"
-          });
-          this.loader.present();
-          }
-          showToast(position: string, message: string) {
-          let toast = this.toastCtrl.create({
-          message: message,
-          duration: 3000,
-          position: position
-          });
-          toast.present(toast);
-          }
+ 
 
 
+
+     
+
+     
       // getVideo() {
-      //   const options: CameraOptions = {
-      //     quality: 100,
-      //     destinationType: this.camera.DestinationType.FILE_URI,
-      //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      //     mediaType: this.camera.MediaType.VIDEO,
-      //     correctOrientation: true,
-      //     targetWidth: 1600,
-      //     targetHeight: 1600
-      //   }
-      
-      //   this.camera.getPicture(options).then((imageData) => {
-      //     this.imageUriVideo = imageData;
-      //     this.presentToast(imageData);
-      //     this.uploadFileVideo(imageData);
+      // this.fileChooser.open().then((videoData) => {
+          
+      //   alert(videoData);
+
+      //     this.file.resolveLocalFilesystemUrl(videoData).then((newUrl) => {
+      //       let dirPath = newUrl.nativeURL;
+      //       let dirPathSegments = dirPath.split('/');
+      //       dirPathSegments.pop();
+      //       dirPath = dirPathSegments.join('/');
+      //       this.file.readAsArrayBuffer(dirPath, newUrl.name).then(async (buffer) => {
+      //         alert(buffer+', '+newUrl.name);
+      //         await this.uploadVideo(buffer, newUrl.name);
+      //       })
+      //     })
       //   }, (err) => {
       //     console.log(err);
       //     this.presentToast(err);
       //   });
       // }
+
+      // async uploadVideo(buffer, name){
+      //   alert('aqui');
+      //   let blob = new Blob([buffer], {type: 'image/jpeg'});
+      //   let storage = firebase.storage();
+      //   storage.ref('videos/' + name).put(blob).then((d)=>{
+      //     this.presentToast('done');
+      //     alert(d);
+      //   }).catch((error)=>{
+      //     this.presentToast(error);
+
+      //   })
+      // }
+
+      private setPostType(type){
+        this.postType = type;
+        console.log(this.postType)
+      }
+
       loadLocation(lat, long) {
         let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
         this.http.get(url).map(res => res.json()).subscribe(data => {
@@ -272,7 +267,7 @@ export class AboutPage {
           this.pais = data.results[0].address_components[6].long_name;
           this.sendPost(lat, long);
         }, (err) => {
-          this.loadLocation(lat, long),
+          this.getUserPosition(),
           this.loading.dismiss();
           });
       }
@@ -280,22 +275,29 @@ export class AboutPage {
       pushPage() {
         this.navCtrl.push('FeedPage');
       }
+
       getPicture() {
         const options: CameraOptions = {
-          quality: 100,
+          quality: 70,
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.CAMERA,
           correctOrientation: true,
-          targetWidth: 1600,
-          targetHeight: 1600
+          targetWidth: 800,
+          targetHeight: 800
         }
       
         this.camera.getPicture(options).then((imageData) => {
-          this.imageURI = imageData;
-          let path = imageData;
-          let new_path = path.substring(path.indexOf('s'));
-          this.localFileName = new_path;
-          this.uploadFile(imageData);
+          this.images = [];
+          this.image1 = imageData;
+          this.image2 = null;
+          this.image3 = null;
+          this.image4 = null;
+          this.image5 = null;
+          this.images.push(imageData);
+          // let path = imageData;
+          // let new_path = path.substring(path.indexOf('s'));
+          // this.localFileName = new_path;
+          // this.uploadFile(imageData);
     
         }, (err) => {
           console.log(err);
@@ -304,6 +306,41 @@ export class AboutPage {
       }
 
 
+      uploadFileVideo(fileToUp){
+        if(fileToUp != null) {
+          this.presentLoadingCarregando();
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          
+          let formattedDate = new Date();
+          let d = formattedDate.getDate();
+          let m = formattedDate.getMonth();
+          m += 1;  // JavaScript months are 0-11
+          let y = formattedDate.getFullYear();
+          let random = Math.floor(Math.random() * 1000000) + 100000;
+          let random2 = Math.floor(Math.random() * 1000000) + 100000;
+          this.imageFileNameVideo = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".mp4";
+          let options: FileUploadOptions = {
+            fileKey: 'video_upload_file',
+            fileName: this.imageFileNameVideo,
+            chunkedMode: false,
+            mimeType: "multipart/form-data",
+            params: { },
+            headers: {}
+          }
+          
+          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/uploadv.php'), options)
+          .then((data) => {
+            this.videosNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileNameVideo);
+            this.loading.dismiss();
+            console.log(data+" Uploaded Successfully");
+            // this.presentToast('Aqui');
+          }, (err) => {
+            console.log(err);
+            this.presentToast('Tente novamente');
+            this.loading.dismiss();
+          });
+        } 
+      }
       uploadFile(fileToUp){
         if(fileToUp != null) {
           this.presentLoadingCarregando();
@@ -337,14 +374,10 @@ export class AboutPage {
           });
         } 
       }
-      
-      getBackground(image) {
-        return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
-      }
 
-      uploadFileVideo(fileToUp){
-        this.presentToast(fileToUp);
-        if(fileToUp != null) {
+      uploadImage1(){
+        this.presentLoadingCarregando();
+        if(this.image1 != null) {
           const fileTransfer: FileTransferObject = this.transfer.create();
           
           let formattedDate = new Date();
@@ -354,26 +387,201 @@ export class AboutPage {
           let y = formattedDate.getFullYear();
           let random = Math.floor(Math.random() * 1000000) + 100000;
           let random2 = Math.floor(Math.random() * 1000000) + 100000;
-          this.imageFileNameVideo = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".mp4";
+          this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
           let options: FileUploadOptions = {
             fileKey: 'imagem',
-            fileName: this.imageFileNameVideo,
+            fileName: this.imageFileName,
             chunkedMode: false,
             mimeType: "multipart/form-data",
             headers: {}
           }
           
-          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image1, encodeURI('https://bluedropsproducts.com/upload.php'), options)
           .then((data) => {
-            this.imageFileNameVideo = 'https://bluedropsproducts.com/app/uploads/' + this.imageFileNameVideo;
+            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
-            this.presentToast(data);
+            if(this.image2 && this.image2 != null){
+              this.uploadImage2();
+            } else{
+              this.getUserPosition();
+              this.loading.dismiss();
+            }
           }, (err) => {
             console.log(err);
-            this.presentToast(err);
+            this.presentToast('Tente novamente');
+            this.loading.dismiss();
           });
-        } 
+        } else {
+          this.getUserPosition();
+          this.loading.dismiss();
+        }
       }
+      uploadImage2(){
+        if(this.image2 != null) {
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          
+          let formattedDate = new Date();
+          let d = formattedDate.getDate();
+          let m = formattedDate.getMonth();
+          m += 1;  // JavaScript months are 0-11
+          let y = formattedDate.getFullYear();
+          let random = Math.floor(Math.random() * 1000000) + 100000;
+          let random2 = Math.floor(Math.random() * 1000000) + 100000;
+          this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+          let options: FileUploadOptions = {
+            fileKey: 'imagem',
+            fileName: this.imageFileName,
+            chunkedMode: false,
+            mimeType: "multipart/form-data",
+            headers: {}
+          }
+          
+          fileTransfer.upload(this.image2, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          .then((data) => {
+            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            console.log(data+" Uploaded Successfully");
+            if(this.image3 && this.image3 != null){
+              this.uploadImage3();
+            } else{
+              this.getUserPosition();
+              this.loading.dismiss();
+            }
+          }, (err) => {
+            console.log(err);
+            this.presentToast('Tente novamente');
+            this.loading.dismiss();
+          });
+        } else {
+          this.getUserPosition();
+          this.loading.dismiss();
+          // this.presentToast('up2');
+        }
+      }
+      uploadImage3(){
+        if(this.image3 != null) {
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          
+          let formattedDate = new Date();
+          let d = formattedDate.getDate();
+          let m = formattedDate.getMonth();
+          m += 1;  // JavaScript months are 0-11
+          let y = formattedDate.getFullYear();
+          let random = Math.floor(Math.random() * 1000000) + 100000;
+          let random2 = Math.floor(Math.random() * 1000000) + 100000;
+          this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+          let options: FileUploadOptions = {
+            fileKey: 'imagem',
+            fileName: this.imageFileName,
+            chunkedMode: false,
+            mimeType: "multipart/form-data",
+            headers: {}
+          }
+          
+          fileTransfer.upload(this.image3, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          .then((data) => {
+            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            console.log(data+" Uploaded Successfully");
+            if(this.image4 && this.image4 != null){
+              this.uploadImage4();
+            } else{
+              this.getUserPosition();
+              this.loading.dismiss();
+            }
+          }, (err) => {
+            console.log(err);
+            this.presentToast('Tente novamente');
+            this.loading.dismiss();
+          });
+        }  else {
+          this.getUserPosition();
+          this.loading.dismiss();
+        }
+      }
+      uploadImage4(){
+        if(this.image4 != null) {
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          
+          let formattedDate = new Date();
+          let d = formattedDate.getDate();
+          let m = formattedDate.getMonth();
+          m += 1;  // JavaScript months are 0-11
+          let y = formattedDate.getFullYear();
+          let random = Math.floor(Math.random() * 1000000) + 100000;
+          let random2 = Math.floor(Math.random() * 1000000) + 100000;
+          this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+          let options: FileUploadOptions = {
+            fileKey: 'imagem',
+            fileName: this.imageFileName,
+            chunkedMode: false,
+            mimeType: "multipart/form-data",
+            headers: {}
+          }
+          
+          fileTransfer.upload(this.image4, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          .then((data) => {
+            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            console.log(data+" Uploaded Successfully");
+            if(this.image5 && this.image5 != null){
+              this.uploadImage5();
+            } else{
+              this.getUserPosition();
+              this.loading.dismiss();
+            }
+          }, (err) => {
+            console.log(err);
+            this.presentToast('Tente novamente');
+            this.loading.dismiss();
+          });
+        }  else {
+          this.getUserPosition();
+          this.loading.dismiss();
+        }
+      }
+      uploadImage5(){
+        if(this.image5 != null) {
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          
+          let formattedDate = new Date();
+          let d = formattedDate.getDate();
+          let m = formattedDate.getMonth();
+          m += 1;  // JavaScript months are 0-11
+          let y = formattedDate.getFullYear();
+          let random = Math.floor(Math.random() * 1000000) + 100000;
+          let random2 = Math.floor(Math.random() * 1000000) + 100000;
+          this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+          let options: FileUploadOptions = {
+            fileKey: 'imagem',
+            fileName: this.imageFileName,
+            chunkedMode: false,
+            mimeType: "multipart/form-data",
+            headers: {}
+          }
+          
+          fileTransfer.upload(this.image5, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          .then((data) => {
+            if(this.image6 && this.image6 != null){
+              console.log();
+            } else{
+              this.getUserPosition();
+              this.loading.dismiss();
+            }
+            console.log(data+" Uploaded Successfully");
+          }, (err) => {
+            console.log(err);
+            this.presentToast('Tente novamente');
+            this.loading.dismiss();
+          });
+        }  else {
+          this.getUserPosition();
+          this.loading.dismiss();
+        }
+      }
+      
+      getBackground(image) {
+        return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+      }
+
+ 
     
 
       presentToast(msg, time = 8000) {
@@ -391,19 +599,21 @@ export class AboutPage {
       }
 
       getUserPosition() {
+        if(this.loading){
+          this.loading.dismiss();
+        }
         this.presentLoadingDefault();
-        this.navCtrl.push('FeedPage', { id: this.userId});
         this.publicando = true;
         this.options = {
           enableHighAccuracy: true
         };
-    
+        
         this.geolocation.getCurrentPosition(this.options).then((pos: Geoposition) => {
-    
+          
           this.currentPos = pos;
           //this.presentToast(pos.coords.latitude + ", ", pos.coords.longitude);
           this.loadLocation(pos.coords.latitude, pos.coords.longitude);
-
+          
         }, (err: PositionError) => {
           console.log("error : " + err.message);
           this.loading.dismiss();
@@ -412,49 +622,50 @@ export class AboutPage {
         
       }
       
-
-  sendPost(lat, long) {
-    //this.presentToast(this.pais);
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Accept', 'application/json');
-    headers.append('content-type', 'application/json');
-    if (!this.imageFileName) {
-      this.imageFileName = "none";
-    }
- 
-
-    let body = {
-      imagem: this.imagesNames,
-      texto: this.texto,
-      tipo: this.postType,
-      lat: lat,
-      long: long,
-      bairro: this.bairro,
-      cidade: this.cidade,
-      estado: this.estado,
-      pais: this.pais,
-      usuario: this.userId,
-      link: this.linkPost,
-      youtubeA: this.youtubeSaneado,
-      local: this.checkin
-    }
-
-    var link = 'https://bluedropsproducts.com/app/anuncios/criarRefri';
-    //this.presentToast("antes");
-    this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        //this.presentToast("depois");
-        this.publicando = false;
-        this.imagesNames = '';
-        //this.presentToast(data.data);
-        this.navCtrl.push('FeedPage', { id: this.userId});
-        this.loading.dismiss();
+      
+      sendPost(lat, long) {
+        // this.presentToast(this.pais);
+        let headers = new Headers();
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Accept', 'application/json');
+        headers.append('content-type', 'application/json');
+        if (!this.imageFileName) {
+          this.imageFileName = "none";
+        }
+        
+        
+        let body = {
+          imagem: this.imagesNames,
+          texto: this.texto,
+          tipo: this.postType,
+          lat: lat,
+          long: long,
+          bairro: this.bairro,
+          cidade: this.cidade,
+          estado: this.estado,
+          pais: this.pais,
+          usuario: this.userId,
+          link: this.linkPost,
+          youtubeA: this.youtubeSaneado,
+          local: this.checkin
+        }
+        
+        var link = 'https://bluedropsproducts.com/app/anuncios/criarRefri';
+        // this.presentToast("antes");
+        this.http.post(link, JSON.stringify(body), { headers: headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          // this.presentToast("depois");
+          this.publicando = false;
+          this.imagesNames = '';
+          //this.presentToast(data.data);
+          this.loading.dismiss().then( results =>{
+            this.navCtrl.push('FeedPage', { id: this.userId, slide: this.localBack});
+          });
         console.log(data.data);
       
       }, (err) => {
-          this.sendPost(lat, long),
+          this.getUserPosition(),
           this.loading.dismiss();
           });
   }

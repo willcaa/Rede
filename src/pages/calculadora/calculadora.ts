@@ -48,35 +48,44 @@ export class CalculadoraPage {
   hTrabalhadasSalvo: any;
   totalHorasSalvo: any;
   custosFixosSalvo: any = [];
+  custosFixosSalvoTotal: any;
+  custoTotalFinal: any;
   custosHoraSalvo: any;
+  todos = false;
+  mensagem = false;
+  dadosSalvos: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
-    this.storage.get('usuario')
-      .then( res =>{
-          console.log(res);
-          if(res != null){
-            this.gMensaisSalvo = res[0].ganhosMensais;
-            this.hTrabalhadasSalvo = res[1].horasTrabalhadas;
-            this.totalHorasSalvo = res[2].totalHoras;
-            this.custosFixosSalvo = res[3].custosFixos;
-            this.custosHoraSalvo = res[4].custosHora;
-          }
-          
-        } 
-      );
 
+     this.dadosSalvos = this.storage.get('usuario')
+        .then( res =>{
+            console.log(res);
+            if(res != null){
+              this.gMensaisSalvo = res[0].ganhosMensais;
+              this.hTrabalhadasSalvo = res[1].horasTrabalhadas;
+              this.totalHorasSalvo = res[2].totalHoras;
+              this.custosFixosSalvo = res[3].custosFixos;
+              this.custosHoraSalvo = res[4].custosHora;
+              let p = 0;
+              res[3].custosFixos.forEach(element => {
+                p = p + parseInt(element.val);
+              });
+              this.custosFixosSalvoTotal = p;
+              this.alterarTab('horas_o');
+              return res;
+            } else {
+              this.alterarTab('calcHoras');
+
+            }
+            
+          } 
+        );
   }
 
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad CalculadoraPage');
-    if(this.totalHorasSalvo || this.custosHoraSalvo){
-      this.alterarTab('horas_o');
-    }
-    else{
-      this.alterarTab('calcHoras')
-    }
   }
-  
+
   sumGanhos(){
     if(this.gMensais && this.hTrabalhadas){
       this.totalHoras = Math.trunc(this.gMensais / this.hTrabalhadas);
@@ -153,39 +162,53 @@ export class CalculadoraPage {
   }
 
   gerarRelatorio(){
-    if(this.calcular()){
-
+    if(this.gMensaisSalvo &&  this.hTrabalhadasSalvo && this.custosFixosSalvo && this.custosFixosSalvoTotal && this.custosHoraSalvo && this.hExecucao && this.imposto && this.lucro){
+      this.todos = true;
+      this.mensagem = false;
+    } else {
+      this.mensagem = true;
+    }
+    if(this.calcular() && this.todos == true){
       this.alterarTab('relatGerado');
     }
+    console.log(this.todos);
+    
     
   }
   calcular(){
- 
-    this.precoSugerido = Math.trunc(this.horasVal());
-    let precoSug = Math.trunc(this.horasVal());
-    this.totalHorasVal = Math.trunc(this.totalHoras * this.hExecucao);
-    this.totalImposto = Math.trunc((this.imposto / 100) * precoSug);
-    this.totalLucro = Math.trunc((this.lucro / 100) * precoSug);
-    this.totalCapital = Math.trunc(precoSug - this.totalImposto - this.totalLucro);
-    console.log(precoSug, this.totalHorasVal, this.totalLucro);
+    let custoH;
+    custoH = Math.trunc((this.totalAjudantes + this.totalInsumos)/this.hExecucao);
+    this.custoTotalFinal = (custoH + parseInt(this.custosHoraSalvo)) * this.hExecucao;
+    let iL = 100 - (parseInt(this.imposto) + parseInt(this.lucro));
+    console.log(iL);
+    this.precoSugerido = Math.trunc((this.custoTotalFinal*100)/iL);
+    this.totalHorasVal = Math.trunc(this.totalHorasSalvo * this.hExecucao);
+    this.totalImposto = Math.trunc((this.imposto / 100) * this.precoSugerido);
+    this.totalLucro = Math.trunc((this.lucro / 100) * this.precoSugerido);
+    this.totalCapital = Math.trunc(this.precoSugerido - this.totalImposto - this.totalLucro);
+    console.log(this.precoSugerido, this.totalHorasVal, this.totalLucro);
     return true;
   }
-  horasVal(){
-    let custoH;
-    custoH = Math.trunc(((this.totalAjudantes + this.totalInsumos)/this.hExecucao) + this.custosHora);
-    if((((this.totalHoras* this.hExecucao)-(custoH * this.hExecucao))-((this.totalHoras* this.hExecucao)*(this.imposto / 100))) > ((custoH * this.hExecucao)*((1/(this.imposto / 100))+(((custoH * this.hExecucao)*((1/(this.lucro / 100)))))))){
-      return this.totalHoras * this.hExecucao;
-    } else {
-      return ((custoH * this.hExecucao)*((1/(this.imposto / 100))+(((custoH * this.hExecucao)*((1/(this.lucro / 100)))))));
-    }
-  }
+
   alterarTab(tabId){
     this.pageId = tabId;
     console.log(this.pageId);
+    console.log(this.gMensaisSalvo);
   }
   public salvarHoras(){
     this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora});
     this.storage.set('usuario', this.data);
+    this.gMensaisSalvo = this.gMensais;
+    this.hTrabalhadasSalvo = this.hTrabalhadas;
+    this.totalHorasSalvo = this.totalHoras;
+    this.custosFixosSalvo = this.custosFixos;
+    let p = 0;
+    this.custosFixos.forEach(element => {
+      p = p + parseInt(element.val);
+    });
+    this.custosFixosSalvoTotal = p;
+    this.custosHoraSalvo = this.custosHora;
+    this.alterarTab('horas_o');
     console.log(this.data);
   }
   

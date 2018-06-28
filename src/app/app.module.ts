@@ -1,3 +1,7 @@
+import { AngularFireModule, FirebaseApp } from 'angularfire2';
+import { AngularFireStorageModule, AngularFireStorage } from 'angularFire2/storage';
+import { AngularFireDatabaseModule, AngularFireDatabase  } from 'angularfire2/database';
+import firebase from 'firebase';
 declare var globalLat: any;
 declare var globalLng: any;
 import { HttpModule } from '@angular/http';
@@ -10,7 +14,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { IonicStorageModule } from '@ionic/storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-
+import { ImagePicker } from '@ionic-native/image-picker';
 
 import { AboutPage } from '../pages/about/about';
 import { CommentsPage } from '../pages/comments/comments';
@@ -23,7 +27,7 @@ import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register';
 import { OrcamentosPage } from '../pages/orcamentos/orcamentos';
 import { CalculadoraPage } from '../pages/calculadora/calculadora';
-
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { FeedPageModule } from '../pages/feed/feed.module';
@@ -46,6 +50,16 @@ import { ProdutosPage } from '../pages/produtos/produtos';
 import { ListaPage } from '../pages/lista/lista';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { UploadsProvider } from '../providers/uploads/uploads';
+
+var config = {
+  apiKey: "AIzaSyDSm9-mf313F665PuNQiP4khMPpv6Hraac",
+  authDomain: "refriplay-193b6.firebaseapp.com",
+  databaseURL: "https://refriplay-193b6.firebaseio.com",
+  projectId: "refriplay-193b6",
+  storageBucket: "refriplay-193b6.appspot.com",
+  messagingSenderId: "794076739257"
+};
 
 @NgModule({
   declarations: [
@@ -74,7 +88,12 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
   ],
   
   imports: [
+    AngularFireModule, 
+    AngularFireModule.initializeApp(config),
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
     BrowserModule,
+    BrMaskerModule,
     IonicModule.forRoot(MyApp, {
       backButtonIcon: 'ios-arrow-back',
     }),
@@ -109,7 +128,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
   ],
   providers: [
     StatusBar,
+    ImagePicker,
     Geolocation,
+    AngularFireStorage,
     GoogleMaps,
     InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -123,7 +144,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     PhotoViewer,
     FileChooser,
     LocatonsProvider,
-    ScreenOrientation
+    ScreenOrientation,
+    UploadsProvider
   ]
 })
 export class AppModule {}
