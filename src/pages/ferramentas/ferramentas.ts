@@ -10,9 +10,12 @@ import { CalculadoraPage } from '../calculadora/calculadora';
   selector: 'page-ferramentas',
   templateUrl: 'ferramentas.html',
 })
+
 export class FerramentasPage {
+  userId: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.userId = this.navParams.get("userId");
   }
 
   goErrorCode(){
@@ -24,7 +27,7 @@ export class FerramentasPage {
   }
  
   goCalculadoraPage(){
-    this.navCtrl.push(CalculadoraPage);
+    this.navCtrl.push(CalculadoraPage,{userId: this.userId});
   }
 
   ionViewDidLoad() {
