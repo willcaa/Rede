@@ -121,14 +121,27 @@ export class OrcamentosPage {
     if(fab){
       this.closeFab(fab);
     }
-    this.lastPageId = this.pageId;
-    this.pageId = tabId;
-    console.log(this.lastPageId, this.pageId);
+    if(tabId == 'orcamentos_p' || tabId == 'orcamentos_c' || tabId == 'orcamentos_a'){
+      this.getOrcamentos();
+    }
+    if(tabId == 'servicos'){
+      this.getServicos();
+    }
+    if(tabId == 'produtos'){
+      this.getProdutos();
+    }
+    if(tabId == 'clientes'){
+      this.getClientes();
+    }
     if(tabId == 'orcamentos' || tabId == 'orcamentos_p' || tabId == 'orcamentos_c'|| tabId == 'orcamentos_a'){
       this.fabBottom = '75px';
     } else {
       this.fabBottom = '10px';
     }
+    this.lastPageId = this.pageId;
+    this.pageId = tabId;
+    console.log(this.lastPageId, this.pageId);
+    
   }
 
   openFab(fab){
@@ -297,10 +310,11 @@ export class OrcamentosPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
-      if(data){
+      
         this.clientes = data;
+        this.getClientes();
         console.log(data);
-      }
+      
     });
   }
 
@@ -321,10 +335,11 @@ export class OrcamentosPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
-      if(data){
+      
         this.clientes = data;
+        this.getProdutos();
         console.log(data);
-      }
+      
     });
   }
 
@@ -358,11 +373,11 @@ export class OrcamentosPage {
             this.http.post(link, JSON.stringify(body), { headers: headers })
             .map(res => res.json())
             .subscribe(data => {
-              if(data){
-                this.clientes = data;
-                console.log(data);
-                this.alterarTab('orcamentos_c', fab);
-              }
+              
+              this.clientes = data;
+              console.log(data);
+              this.alterarTab('orcamentos_c', fab);
+              
             });
           }
         }
@@ -389,10 +404,11 @@ export class OrcamentosPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
-      if(data){
+     
         this.clientes = data;
+        this.getServicos();
         console.log(data);
-      }
+      
     });
   }
 
@@ -908,6 +924,7 @@ export class OrcamentosPage {
       if(data){
         console.log(data);
         this.orcamentoSelecionado = "";
+        
         this.alterarTab('orcamentos', fab);
       }
     });

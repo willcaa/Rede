@@ -23,7 +23,7 @@
   <ion-toolbar class="buttons_header">
 
     <ion-segment [(ngModel)]="local" color="primary" item-end>
-      <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('orcamentos', fab)">
+      <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('orcamentos', fab)" (click)="getOrcamentos(); loadTotalOrcamentos();">
         <p style="margin-top: 2px;">Orçamentos</p>
       </ion-segment-button>
       <ion-segment-button value="clientes" (ionSelect)="alterarTab('clientes', fab)" (click) = "getClientes()">
@@ -42,7 +42,7 @@
   <div id="orcamentos" class="pagetabs" *ngIf="pageId == 'orcamentos'">
     <h4>Meus Orçamentos</h4>
     <ion-list>
-      <ion-item style="color: cornflowerblue;" (click)="alterarTab('orcamentos_p', fab); getOrcamentos();">
+      <ion-item style="color: cornflowerblue;" (click)="alterarTab('orcamentos_p', fab); getOrcamentos()">
         <ion-icon name="md-clock" item-start></ion-icon>
         PENDENTES
         <ion-badge name="rose" item-end>{{ qtyOrcP }}</ion-badge>

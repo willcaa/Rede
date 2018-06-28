@@ -149,6 +149,44 @@
       </ion-list>
       <br>
       <h5>Custo Insumos: R${{totalInsumos}},00</h5>
+<!--**********************************************************************************************-->
+
+
+    <h4>Custos Indiretos</h4>
+      <ion-list>
+      <br>
+      <span>Novo Custo</span>
+        <ion-item>
+          <ion-label color="primary" stacked>Descrição</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="nCustoIndDesc" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Valor</ion-label>
+          <ion-input type="number" placeholder="R$" [(ngModel)]="nCustoIndValor" ></ion-input>
+        </ion-item>
+        <br>
+        <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addIndiretos()">
+            Adicionar custo          
+            <ion-icon name="md-add" item-end ></ion-icon> 
+          </button>
+      </ion-list>
+      <ion-list *ngIf="custosIndiretos">
+          <ion-item *ngFor="let item of custosIndiretos;let i = index" id="s_{{item.i}}" style="height: 50px;" >  
+              <div item-content style="width: 100%;">
+                <div style="position: relative; float: left; width: 50%;">{{item.desc}} </div>
+                <div style="position: relative; float: right; width: 50%;"> R$ {{item.val}},00</div>
+              </div>
+              <button ion-buttom item-end icon-right (click) = "remIndiretos(item)" style="background: #aaa0">
+                  <ion-icon name="md-trash"></ion-icon>
+                </button>
+          </ion-item>
+      </ion-list>
+      <br>
+      <h5>Custos Indiretos: R${{totalIndiretos}},00</h5>
+
+
+<!--**************************************************************************************************-->
+      
       <h4>Ajudantes</h4>
       <ion-list>
         <br>
@@ -277,6 +315,8 @@
           </div>
         </ion-item>
         <h3>Preço sugerido: R${{precoSugerido}},00</h3>
+
+        <button ion-button id="gerarPdf" (click)="makePdf()">Gerar PDF</button>
       </div>
 
 </ion-content>
