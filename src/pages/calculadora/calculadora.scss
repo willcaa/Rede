@@ -28,11 +28,19 @@ page-calculadora {
       border-bottom: solid 1px;
     }
     
-  //   .itemContent{
-  //     text-align: left;
-  //     position: absolute;
-  //     top: 40px;
-  //     left: 25px;
-  //     line-height: 20px;
-  // }
+   .calcBtns{
+    background-color: red;
+    width: 50%;
+    height: 45px !important;
+    font-size: 2.2rem !important;
+    color: #fff !important;
+    flex-direction: column !important;
+  }
+  .segment-md-primary .segment-button.activated, .segment-md-primary .segment-button.segment-activated{
+    border-color: #fff;
+    border-bottom: none;
+  }
+  .button-md{
+    border-radius: 15px;
+  }
 }

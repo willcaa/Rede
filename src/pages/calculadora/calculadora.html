@@ -18,23 +18,22 @@
       </ion-buttons>
   
     </ion-navbar>
-    <ion-toolbar class="buttons_header">
-
         <ion-segment [(ngModel)]="local" color="primary" item-end>
-          <ion-segment-button value="orcamentos" (ionSelect)="alterarTab('calcHoras');">
-            <p style="margin-top: 2px;">Horas</p>
+          <ion-segment-button class="calcBtns" value="orcamentos" style="background-color: red;border-top:  none;border-right: solid 1px #fff;"(ionSelect)="alterarTab('calcHoras');">
+            <ion-icon name="md-clock"></ion-icon> 
+            Horas
           </ion-segment-button>
-          <ion-segment-button icon-left value="clientes" (ionSelect)="alterarTab('calcPrecos')">
-            <p style="margin-top: 2px;">Preços</p>
+          <ion-segment-button class="calcBtns" value="clientes" style="background-color: green;border-top:  none;" (ionSelect)="alterarTab('calcPrecos');">
+            <ion-icon name="logo-usd"></ion-icon> 
+            Preços
           </ion-segment-button>
         </ion-segment>
-      </ion-toolbar>
   </ion-header>
 
 
 <ion-content padding>
   <div class="pagetabs" id="horas_o" *ngIf="pageId == 'horas_o'">
-    <button ion-button (click)="alterarTab('calcHoras')">
+    <button ion-button color="secondary" (click)="alterarTab('calcHoras')">
       Nova Tabela
     </button>
     <h4>Hora de Trabalho</h4>
@@ -65,6 +64,8 @@
         </ion-list>
         <br>
         <h5 *ngIf="custosHoraSalvo && custosHoraSalvo != 'undefined'">Custos por hora: R${{custosHoraSalvo}},00</h5>
+        <br>
+        <h3 *ngIf="totalHoraCustoForaSalvo && totalHoraCustoForaSalvo != 'undefined'">Valor líquido da hora: R${{totalHoraCustoForaSalvo}},00</h3>
 
   </div>
     <div class="pagetabs" id="calcHoras" *ngIf="pageId == 'calcHoras'">
@@ -95,7 +96,7 @@
             <ion-input type="number" placeholder="R$" [(ngModel)]="nCustoValor" ></ion-input>
           </ion-item>
           <br>
-          <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addFixos()">
+          <button ion-button icon-end class="btnCadastrar" color="secondary" (click)="addFixos()">
               Adicionar Custo          
               <ion-icon name="md-add" item-end ></ion-icon> 
             </button>
@@ -113,8 +114,10 @@
           </ion-list>
           <br>
           <h5>Total: R${{totalCustos}},00</h5>
-          <h3 *ngIf="custosHora && custosHora != 'undefined'">Custos por hora: R${{custosHora}},00</h3>
-          <button ion-button icon-end class="btnSalvar" color = "primary" (click)="salvarHoras()">Salvar</button>
+          <h5 *ngIf="custosHora && custosHora != 'undefined'">Custos por hora: R${{custosHora}},00</h5>
+          <br>
+          <h3 *ngIf="totalHoraCustoFora && totalHoraCustoFora != 'undefined'">Valor líquido da hora: R${{totalHoraCustoFora}},00</h3>
+          <button ion-button icon-end class="btnSalvar" color = "red" (click)="salvarHoras()">Salvar</button>
     </div>
     
     <div class="pagetabs" id="calcPrecos" *ngIf="pageId == 'calcPrecos'">
@@ -131,7 +134,7 @@
           <ion-input type="number" placeholder="R$" [(ngModel)]="nInsumoValor" ></ion-input>
         </ion-item>
         <br>
-        <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addInsumos()">
+        <button ion-button icon-end class="btnCadastrar" color="secondary" (click)="addInsumos()">
             Adicionar Insumo          
             <ion-icon name="md-add" item-end ></ion-icon> 
           </button>
@@ -165,7 +168,7 @@
           <ion-input type="number" placeholder="R$" [(ngModel)]="nCustoIndValor" ></ion-input>
         </ion-item>
         <br>
-        <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addIndiretos()">
+        <button ion-button icon-end class="btnCadastrar" color="secondary" (click)="addIndiretos()">
             Adicionar custo          
             <ion-icon name="md-add" item-end ></ion-icon> 
           </button>
@@ -200,7 +203,7 @@
           <ion-input type="number" placeholder="R$" [(ngModel)]="nAjudanteValor" ></ion-input>
         </ion-item>
         <br>
-        <button ion-button icon-end class="btnCadastrar" color="primary" (click)="addAjudantes()">
+        <button ion-button icon-end class="btnCadastrar" color="secondary" (click)="addAjudantes()">
             Adicionar Ajudante          
             <ion-icon name="md-add" item-end ></ion-icon> 
           </button>
@@ -241,7 +244,7 @@
         <!-- <h4>Preço Sugerido para o serviço: </h4>
           <h3>R${{precoSugerido}},00</h3> -->
         <ion-label color="danger" style="text-align: center;" *ngIf="mensagem">POR FAVOR PREENCHA TODOS OS CAMPOS!</ion-label>
-       <button ion-button icon-end class="btnCadastrar" color="primary"(click)="gerarRelatorio()">
+       <button ion-button icon-end class="btnCadastrar" color="red"(click)="gerarRelatorio()">
         Gerar Relatório        
         <ion-icon name="md-archive" item-end ></ion-icon>
       </button>
@@ -250,23 +253,41 @@
         <h4>Relatório de preços</h4>
         <br>
         <div *ngIf="custosInsumos">
-        <h5>Insumos:</h5>
-        <br>
-        <ion-list>
-          <ion-item style="height: 75px;"  *ngFor="let item of custosInsumos;let i = index" id="s_{{item.id}}">
-              <ion-label >{{item.desc}}</ion-label>
+          <h5>Insumos:</h5>
+          <br>
+          <ion-list>
+            <ion-item style="height: 75px;"  *ngFor="let item of custosInsumos;let i = index" id="s_{{item.id}}">
+                <ion-label >{{item.desc}}</ion-label>
+                <div item-content class="itemContent">
+                  Valor: R${{item.val}},00
+                </div>
+              </ion-item>
+              <ion-item style="height: 75px;" >
+              <ion-label >Total:</ion-label>
               <div item-content class="itemContent">
-                 Valor: R${{item.val}},00
+                Valor: R${{totalInsumos}},00
               </div>
             </ion-item>
-            <ion-item style="height: 75px;" >
-            <ion-label >Total:</ion-label>
-            <div item-content class="itemContent">
-              Valor: R${{totalInsumos}},00
-            </div>
-          </ion-item>
-        </ion-list>
-
+          </ion-list>
+        </div>
+        <br>
+        <div *ngIf="custosInsumos">
+          <h5>Custos Indiretos:</h5>
+          <br>
+          <ion-list>
+            <ion-item style="height: 75px;"  *ngFor="let item of custosIndiretos;let i = index" id="s_{{item.id}}">
+                <ion-label >{{item.desc}}</ion-label>
+                <div item-content class="itemContent">
+                  Valor: R${{item.val}},00
+                </div>
+              </ion-item>
+              <ion-item style="height: 75px;" >
+              <ion-label >Total:</ion-label>
+              <div item-content class="itemContent">
+                Valor: R${{totalInsumos}},00
+              </div>
+            </ion-item>
+          </ion-list>
         </div>
         <br>
         <div *ngIf="custosAjudantes">
@@ -287,6 +308,27 @@
               </ion-item>
             </ion-list>
         </div>
+        <br>
+        <h5>Dados da Hora:</h5>
+        <br>
+        <ion-item style="height: 75px;">
+          <ion-label >Ganhos por hora</ion-label>
+          <div item-content class="itemContent">
+            R${{totalHorasSalvo}},00
+          </div>
+        </ion-item>
+        <ion-item style="height: 75px;">
+          <ion-label >Custos por hora</ion-label>
+          <div item-content class="itemContent">
+            R${{custosHoraSalvo}},00
+          </div>
+        </ion-item>
+        <ion-item style="height: 75px;">
+          <ion-label >Valor líquido da hora</ion-label>
+          <div item-content class="itemContent">
+            R${{totalHoraCustoForaSalvo}},00
+          </div>
+        </ion-item>
         <br>
         <h5>Dados do serviço:</h5>
         <br>

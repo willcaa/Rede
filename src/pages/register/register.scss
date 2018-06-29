@@ -4,7 +4,7 @@ page-register {
     }
     .content-md {
         background-color: #fff;
-        background-image: linear-gradient(45deg, rgba(55, 197, 233, 1) 0%, rgba(73, 125, 190, 1) 100%);
+        background-image: url("../assets/imgs/back-login.gif");
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -13,7 +13,7 @@ page-register {
         background-attachment: fixed;
     }
     .item-md {
-        color: #fff;
+        color: #333;
         background-color: transparent;
     }
     .itemContent {

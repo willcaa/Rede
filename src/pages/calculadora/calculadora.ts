@@ -57,6 +57,8 @@ export class CalculadoraPage {
   todos = false;
   mensagem = false;
   dadosSalvos: any;
+  totalHoraCustoFora: any;
+  totalHoraCustoForaSalvo: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public file: File, public toastCtrl: ToastController) {
 
      this.dadosSalvos = this.storage.get('usuario')
@@ -68,6 +70,7 @@ export class CalculadoraPage {
               this.totalHorasSalvo = res[2].totalHoras;
               this.custosFixosSalvo = res[3].custosFixos;
               this.custosHoraSalvo = res[4].custosHora;
+              this.totalHoraCustoForaSalvo = res[4].totalHoraCustoFora;
               let p = 0;
               res[3].custosFixos.forEach(element => {
                 p = p + parseInt(element.val);
@@ -92,6 +95,9 @@ export class CalculadoraPage {
   sumGanhos(){
     if(this.gMensais && this.hTrabalhadas){
       this.totalHoras = Math.trunc(this.gMensais / this.hTrabalhadas);
+      if(this.totalHoras && this.totalCustos){
+        this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+      }
     }
   }
 
@@ -107,6 +113,9 @@ export class CalculadoraPage {
       this.nCustoDesc = "";
       this.nCustoValor = '';
       this.custosHora = Math.trunc(this.totalCustos / this.hTrabalhadas);
+      if(this.totalHoras && this.totalCustos){
+        this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+      }
     }
   }
   remFixos(id){
@@ -117,6 +126,9 @@ export class CalculadoraPage {
       this.totalCustos = this.totalCustos - parseInt(id.val);
       this.custosHora = Math.trunc(this.totalCustos / this.hTrabalhadas);      
       console.log(this.custosFixos, this.totalCustos);
+      if(this.totalHoras && this.totalCustos){
+        this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+      }
     }
   }
 
@@ -205,7 +217,7 @@ export class CalculadoraPage {
   }
   calcular(){
     let custoH;
-    custoH = Math.trunc((this.totalAjudantes + this.totalInsumos)/this.hExecucao);
+    custoH = Math.trunc((this.totalAjudantes + this.totalInsumos + this.totalIndiretos)/this.hExecucao);
     this.custoTotalFinal = (custoH + parseInt(this.custosHoraSalvo)) * this.hExecucao;
     let iL = 100 - (parseInt(this.imposto) + parseInt(this.lucro));
     console.log(iL);
@@ -224,12 +236,16 @@ export class CalculadoraPage {
     console.log(this.gMensaisSalvo);
   }
   public salvarHoras(){
-    this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora});
+    this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora}, {"totalHoraCustoFora": this.totalHoraCustoFora});
     this.storage.set('usuario', this.data);
     this.gMensaisSalvo = this.gMensais;
     this.hTrabalhadasSalvo = this.hTrabalhadas;
     this.totalHorasSalvo = this.totalHoras;
     this.custosFixosSalvo = this.custosFixos;
+    this.totalHoraCustoForaSalvo = this.totalHoraCustoFora;
+    if(this.totalHoras && this.totalCustos){
+      this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+    }
     let p = 0;
     this.custosFixos.forEach(element => {
       p = p + parseInt(element.val);
