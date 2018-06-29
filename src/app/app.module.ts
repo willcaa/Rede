@@ -15,7 +15,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ImagePicker } from '@ionic-native/image-picker';
-
+import { FileOpener } from '@ionic-native/file-opener';
 import { AboutPage } from '../pages/about/about';
 import { CommentsPage } from '../pages/comments/comments';
 import { CheckinPage } from '../pages/checkin/checkin'
@@ -129,6 +129,7 @@ var config = {
   providers: [
     StatusBar,
     ImagePicker,
+    FileOpener,
     Geolocation,
     AngularFireStorage,
     GoogleMaps,

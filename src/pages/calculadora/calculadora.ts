@@ -81,7 +81,6 @@ export class CalculadoraPage {
               return res;
             } else {
               this.alterarTab('calcHoras');
-
             }
             
           } 
@@ -369,7 +368,7 @@ export class CalculadoraPage {
   }
 
   openFile(arq){
-    this.fileOpener.open(this.file.dataDirectory, 'application/pdf').then(() => console.log('File is opened')).catch(e => console.log('Error opening file', e));
+    this.fileOpener.open(this.file.dataDirectory + arq, 'application/pdf').then(() => console.log('File is opened')).catch(e => console.log('Error opening file', e));
   }
 
 }
