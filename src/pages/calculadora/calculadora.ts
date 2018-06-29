@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import * as pdfmake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { FileOpener } from '@ionic-native/file-opener';
 
 import { File } from '@ionic-native/file';
 
@@ -59,7 +60,7 @@ export class CalculadoraPage {
   dadosSalvos: any;
   totalHoraCustoFora: any;
   totalHoraCustoForaSalvo: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public file: File, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public file: File, public toastCtrl: ToastController, private fileOpener: FileOpener) {
 
      this.dadosSalvos = this.storage.get('usuario')
         .then( res =>{
@@ -281,6 +282,17 @@ export class CalculadoraPage {
           ],
           
         },
+        {text: 'Relatório de preços\n', style:'maintitle'},
+        {text: 'Insumos:\n', style: 'title'},
+        {text: ['Total: ', this.totalInsumos, ',00\n'], style: 'content'},
+        {text: 'Custos Indiretos:\n', style:'title'},
+        {text: ['Total: ', this.totalIndiretos, ',00\n'], style: 'content'},
+        {text: 'Ajudantes:\n', style: 'title'},
+        {text: ['Total: ', this.totalAjudantes, ',00\n'], style: 'content'},
+        {text: 'Dados da Hora:\n', style: 'title'},
+        {text: ['Ganhos por hora: ', this.totalHorasSalvo, ',00\n'], style: 'content'},
+        {text: ['Custos por hora: ', this.custosHoraSalvo, ',00\n'], style: 'content'},
+        {text: ['Total: ', this.totalHoraCustoForaSalvo, ',00\n'], style: 'content'},
         {text: 'Dados do serviço:\n', style:'title'},
         {text: ['Horas: ', this.hExecucao, ' horas\n'], style:'content'},
         {text: ['Custos totais: R$', this.custoTotalFinal, ',00\n'], style: 'content'},
@@ -309,6 +321,11 @@ export class CalculadoraPage {
           fontSize: 16,
           alignment: 'right',
         },
+        maintitle: {
+          bold: true,
+          alignment: 'center',
+          fontSize: 22,
+        },
         title:{
           bold: true,
           alignment: 'center',
@@ -327,7 +344,7 @@ export class CalculadoraPage {
       pageOrientation: 'portrait'
     };
 
-    pdfmake.createPdf(docDefinition).open();
+    // pdfmake.createPdf(docDefinition).open(); teste browser
     pdfmake.createPdf(docDefinition).getBuffer(function (buffer){
       let utf8 = new Uint8Array(buffer);
       let binaryArray = utf8.buffer;
@@ -338,7 +355,7 @@ export class CalculadoraPage {
   saveToDevice(data: any, savefile: any){
     let self = this;
 
-    self.file.writeFile(self.file.externalDataDirectory, savefile, data, {replace: false});
+    self.file.writeFile(self.file.dataDirectory, savefile, data, {replace: false});
 
     const toast = self.toastCtrl.create({
       message: 'Arquivo salvo no dispositivo',
@@ -348,7 +365,11 @@ export class CalculadoraPage {
     });
 
     toast.present();
+    this.openFile('/relatorio-refiplay.pdf');
   }
 
+  openFile(arq){
+    this.fileOpener.open(this.file.dataDirectory, 'application/pdf').then(() => console.log('File is opened')).catch(e => console.log('Error opening file', e));
+  }
 
 }

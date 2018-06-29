@@ -6,10 +6,13 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button *ngIf="!publicando && postType != 1" (click)="getUserPosition()">
+      <button ion-button *ngIf="!publicando && postType != 1 && postType != 2" (click)="getUserPosition()">
         PUBLICAR
       </button>
       <button ion-button *ngIf="!publicando && postType == 1" (click)="uploadImage1()">
+        PUBLICAR
+      </button>
+      <button ion-button *ngIf="!publicando && postType == 2" (click)="uploadVideo()">
         PUBLICAR
       </button>
     </ion-buttons>
@@ -92,10 +95,10 @@
       <ion-icon color="secondary" name="images" isActive="true" item-start></ion-icon>
         Imagens
     </ion-item>
-    <!-- <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="addFile(); setPostType();">
+    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getVideo(); setPostType(2);">
       <ion-icon color="primary" name="ios-videocam" isActive="true" item-start></ion-icon>
         Video
-    </ion-item> -->
+    </ion-item> 
     <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="setPostType(3);">
       <ion-icon color="yellow" name="ios-link" isActive="true" item-start></ion-icon>
         Link

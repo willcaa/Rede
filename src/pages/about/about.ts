@@ -59,6 +59,7 @@ export class AboutPage {
   linkYoutube: any;
   youtubeSaneado: any;
   loader: any;
+  video: any;
   videoId: any;
   flag_upload = true;
   flag_play = true;
@@ -204,8 +205,10 @@ export class AboutPage {
 
 
         this.camera.getPicture(options).then((videoData) => {
-          this.imageURI = videoData;
-          
+          this.video = videoData;
+          let path = videoData;
+          let new_path = path.substring(path.indexOf('s'));
+          this.localFileName = new_path;
         }, (err) => {
           console.log(err);
           this.presentToast(err);
@@ -320,20 +323,23 @@ export class AboutPage {
           let random2 = Math.floor(Math.random() * 1000000) + 100000;
           this.imageFileNameVideo = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".mp4";
           let options: FileUploadOptions = {
-            fileKey: 'video_upload_file',
+            fileKey: 'imagem',
             fileName: this.imageFileNameVideo,
             chunkedMode: false,
             mimeType: "multipart/form-data",
             params: { },
             headers: {}
           }
-          
-          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/uploadv.php'), options)
+          if(this.video != null){
+            fileToUp = this.video;
+          }
+          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
           .then((data) => {
             this.videosNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileNameVideo);
             this.loading.dismiss();
             console.log(data+" Uploaded Successfully");
-            // this.presentToast('Aqui');
+            this.getUserPosition();
+            this.loading.dismiss();
           }, (err) => {
             console.log(err);
             this.presentToast('Tente novamente');
@@ -364,7 +370,7 @@ export class AboutPage {
           
           fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/videos' + this.imageFileName);
             this.loading.dismiss();
             console.log(data+" Uploaded Successfully");
           }, (err) => {
