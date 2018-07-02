@@ -49,6 +49,8 @@ export class OrcamentosPage {
   userId: any;
   userImagem: any;
   userEmail: any;
+  usuarioProfissional: any;
+  usuarioPessoal: any;
   orcamentoView: any;
   qtyOrcP: any;
   qtyOrcA: any;
@@ -83,6 +85,21 @@ export class OrcamentosPage {
   servVal: any;
   servQty: any;
   cucumber: boolean;
+  orcamentosProdutos = [];
+
+  orcamentosServicos0: any;
+  orcamentosServicos1: any;
+  orcamentosServicos2: any;
+  orcamentosServicos3: any;
+  orcamentosServicos4: any;
+  orcamentosServicos5: any;
+  orcamentosServicos6: any;
+  orcamentosServicos7: any;
+  orcamentosServicos8: any;
+  orcamentosServicos9: any;
+  orcamentosServicos10: any;
+
+
   constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public http: Http, public alertCtrl: AlertController, private fileOpener: FileOpener, private fileChooser: FileChooser, private filePath: FilePath,  private transfer: FileTransfer, public file: File) {
     this.storage.get('meuid')
       .then( res =>{
@@ -122,9 +139,103 @@ export class OrcamentosPage {
     );
     return returnData;
   }
+  getAll(){
+    this.getUsuarioPessoal();
+    this.getUsuarioProfissional();
+    for (let i = 0; i <= 9; i++) {
+      if(this.orcamentoView.orcamentoProdutos[i]){
+        this.orcamentosProdutos[i] = this.orcamentoView.orcamentoProdutos[i];
+        
+      }
+      else{
+        
+        this.orcamentosProdutos[i]['name'];
+        this.orcamentosProdutos[i]['price'] = ' ';
+        this.orcamentosProdutos[i]['qty'] = ' ';
+        
+        
+      }
+      
+      
+    }
+
+    for(let i = 0; i < this.orcamentoView.orcamentoServicos.length; i++){
+      if(i == 0 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos0 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos0.description = ' ';
+      }
+      if(i == 1 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos1 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos1 = '';
+      }
+      if(i == 2 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos2 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos2 = '';
+      }
+      if(i == 3 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos3 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos3 = '';
+      }
+      if(i == 4 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos4 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos4 = '';
+      }
+      if(i == 5 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos5 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos5 = '';
+      }
+      if(i == 6 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos6 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos6 = '';
+      }
+      if(i == 7 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos7 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos7 = '';
+      }
+      if(i == 8 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos8 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos8 = '';
+      }
+      if(i == 9 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos9 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos9 = '';
+      }
+      if(i == 10 && this.orcamentoView.orcamentoServicos[i]){
+        this.orcamentosServicos10 = this.orcamentoView.orcamentoServicos[i];
+      }
+      else{
+        this.orcamentosServicos10 = '';
+      }
+
+    }
+    console.log(this.orcamentosProdutos);
+    
+  }
 
   makePdf(){
-
+    console.log(this.orcamentoView);
+    console.log(this.usuarioPessoal);
+    console.log(this.usuarioProfissional);
     let self = this;
 
     pdfmake.vfs = pdfFonts.pdfMake.vfs;
@@ -139,25 +250,50 @@ export class OrcamentosPage {
             },
             
             [
-              {text: 'RefriPlay', style: 'header'},
-              {text: ['Técnico: ', this.userName], style: 'sub_header'},
-              {text: ['Email: ', this.userEmail], style: 'header'}
-              
+              {text: [this.usuarioProfissional.nome_empresa,' - ', this.userName, '\n'], style: 'header_title'},
+              {text:['CNPJ: ',this.usuarioProfissional.cnpj, '\n'], style: 'header'},
+              {text: ['Email: ', this.userEmail], style: 'header'},
+              {text:['Endereço: ', this.usuarioPessoal.endereco, '\n'], style:'header'}
             ]
           ],
           
         },
-        {text: 'Orçamento\n\n\n', style:'maintitle'},
-        {text: 'Materiais e Produtos:\n', style: 'title'},
-        {text: ['Total: ', this.totalMateriais, ',00\n'], style: 'content'},
-        {text: 'Custos Indiretos:\n', style:'title'},
-        {text: ['Total: ', this.totalServicos, ',00\n'], style: 'content'},
-        {text: 'Descrição serviços:\n', style: 'title'},
-        {text: [ this.orcamentoView.orcamento.description, '\n'], style: 'content'},
-        {text: 'Forma de pagamento:\n', style: 'title'},
-        {text: [ this.orcamentoView.orcamento.payment_details, '\n\n'], style: 'content'},
-       
-        {text: ['Valor Total: R$', this.total, ',00\n'], style: 'title'}
+        {text:'\n\n'},
+        {text:'_______________________________________________________________________________________________\n', style:'bar'},
+        
+        {text:['Cliente: ', this.orcamentoView.orcamento.full_name, '\n'], style:'content_title'},
+        {text:['CPF: ', this.orcamentoView.orcamento.cpf, '\n'], style:'content'},
+        {text:['Telefone: ', this.orcamentoView.orcamento.phone, '\n'], style:'content'},
+        {text:['Email: ', this.orcamentoView.orcamento.email, '\n'], style:'content'},
+        {text:['Endereço: ', this.orcamentoView.orcamento.address, '\n\n'], style:'content'},
+        [
+
+          {text:['NUMERO DA ORDEM DE SERVIÇO #', this.orcamentoView.orcamento.id, '                                                                                                        \n'], style:'nmr_title'},
+          {text:'Data de emissão:                                                                                                                                               \n', style:'nmr'}
+        ],
+
+        {text:'Materiais e Produtos\n', style: 'title'},
+        
+        {
+          style:'table1',
+          table:{
+            body:[
+              ['Descrição', 'Qtd', 'Valor'],
+              [this.orcamentosProdutos[0].name, this.orcamentosProdutos[0].qty, [this.orcamentosProdutos[0].price, ',00']],
+              // [this.orcamentosProdutos[1]['name'], this.orcamentosProdutos[1]['qty'], [this.orcamentosProdutos[1]['price'], ',00']],
+              // [this.orcamentosProdutos[2]['name'], this.orcamentosProdutos[2]['qty'], [this.orcamentosProdutos[2]['price'], ',00']],
+              // [this.orcamentosProdutos[3]['name'], this.orcamentosProdutos[3]['qty'], [this.orcamentosProdutos[3]['price'], ',00']],
+              // [this.orcamentosProdutos[4]['name'], this.orcamentosProdutos[4]['qty'], [this.orcamentosProdutos[4]['price'], ',00']],
+              // [this.orcamentosProdutos[5]['name'], this.orcamentosProdutos[5]['qty'], [this.orcamentosProdutos[5]['price'], ',00']],
+              // [this.orcamentosProdutos[6]['name'], this.orcamentosProdutos[6]['qty'], [this.orcamentosProdutos[6]['price'], ',00']],
+              // [this.orcamentosProdutos[7]['name'], this.orcamentosProdutos[7]['qty'], [this.orcamentosProdutos[7]['price'], ',00']],
+              // [this.orcamentosProdutos[8]['name'], this.orcamentosProdutos[8]['qty'], [this.orcamentosProdutos[8]['price'], ',00']],
+              // [this.orcamentosProdutos[9]['name'], this.orcamentosProdutos[9]['qty'], [this.orcamentosProdutos[9]['price'], ',00']],
+
+            ]
+          }
+        }
+        
       ],
 
       images: {
@@ -165,49 +301,60 @@ export class OrcamentosPage {
       },
 
       styles: {
+        header_title:{
+          margin: [0, 0, 15, 0],
+          bold: true,
+          fontSize: 12,
+          alignment: 'right',
+        },
         header: {
-          bold: true,
-          fontSize: 20,
+          margin: [0, 0, 15, 0],
+          bold: false,
+          fontSize: 10,
           alignment: 'right',
         },
-
-        sub_header:{
-          fontSize: 18,
-          alignment:'right',
-        },
-
-        url: {
-          fontSize: 16,
-          alignment: 'right',
-        },
-        maintitle: {
+        content_title:{
           bold: true,
-          alignment: 'center',
-          fontSize: 22,
-        },
-        title:{
-          bold: true,
-          alignment: 'center',
-          fontSize: 18,
-        },
-        content:{
           alignment: 'left',
           margin: [0, 15, 0 , 0],
-          width: '50%',
-          fontSize: 14,
-        }
+          fontSize: 12,
+        },
+        content:{
+          margin: [0, 15, 0, 0],
+          bold: false,
+          alignment: 'left',
+          fontSize: 10,
+        },
+        bar:{
+          color:'lightgrey',
+        },
+        nmr_title:{
+          bold: true,
+          fontSize: '12',
+          background: 'lightgrey',
+          margin: [0, 17, 0, 0],
+        },
+        nmr:{
+          background: 'lightgrey'
+        },
+        title: {
+          bold: true,
+          fontSize: 13,
+          margin: [0, 15, 0 , 0]
+        },
       },
       
       pageSize: 'A4',
 
       pageOrientation: 'portrait'
     };
-
+    pdfmake.createPdf(docDefinition).open();
+    
     pdfmake.createPdf(docDefinition).getBuffer(function (buffer){
       let utf8 = new Uint8Array(buffer);
       let binaryArray = utf8.buffer;
       self.saveToDevice(binaryArray, "orcamento-refriplay.pdf");
-    })
+     })
   }
   
   saveToDevice(data: any, savefile: any){
@@ -962,6 +1109,8 @@ export class OrcamentosPage {
             });
             this.orcamentoView = data;
             this.alterarTab('orcamento_v', fab);
+            this.getAll();
+
             console.log(this.orcamentoView);
             this.orcamentoSelecionado = id;
         
@@ -1082,5 +1231,48 @@ export class OrcamentosPage {
     
   }
 
+  public getUsuarioProfissional(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
 
+    let body = {
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioProfissional';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        
+        console.log(data);
+        this.usuarioProfissional = data[0];
+      }
+    });
+  }
+
+  public getUsuarioPessoal(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      id: this.userId
+    }
+    console.log(this.userId);
+    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioPessoal';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        console.log(data);
+        this.usuarioPessoal = data[0];
+      }
+    });
+  }
 }
