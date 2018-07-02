@@ -47,13 +47,14 @@
                 </ion-row>
           </div>
     
-    <div *ngIf='postType == 2'>
+    <div *ngIf='postType == 2 && videoId'>
       <div style="width: 100%;height: auto;">
-        <video src="{{ image }}" alt="" width="100%" height="100%"></video>
+          <video width="100%" height="auto" controls autoplay>
+            <source src="{{ videoId }}" type="video/mp4">
+          </video>
       </div>
     </div>
     <div *ngIf='postType == 3'>
-
         <div  *ngIf='linkPost'>
             <div>  
                 <div style="width: 100px; float: left;">  

@@ -46,6 +46,7 @@
     "com-sarriaroman-photoviewer": "^1.1.17",
     "cordova": "8.0.0",
     "cordova-android": "7.0.0",
+    "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-browser": "5.0.3",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-advanced-http": "^1.11.1",
@@ -53,6 +54,7 @@
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-dialogs": "^2.0.1",
+    "cordova-plugin-document-viewer": "^0.9.10",
     "cordova-plugin-facebook4": "^2.1.0",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-file-opener2": "^2.0.19",
@@ -132,7 +134,11 @@
       "cordova-plugin-telerik-imagepicker": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "library"
       },
-      "cordova-plugin-file-opener2": {}
+      "cordova-plugin-file-opener2": {},
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "27.+"
+      },
+      "cordova-plugin-document-viewer": {}
     },
     "platforms": [
       "browser",

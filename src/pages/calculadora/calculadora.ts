@@ -4,9 +4,12 @@ import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import * as pdfmake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { FileChooser } from '@ionic-native/file-chooser';
 import { FileOpener } from '@ionic-native/file-opener';
-
+import { FilePath } from '@ionic-native/file-path';
+import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { isTrueProperty } from 'ionic-angular/util/util';
 
 @IonicPage()
 @Component({
@@ -23,6 +26,7 @@ export class CalculadoraPage {
   hExecucao: any;
   imposto: any;
   lucro: any;
+  imageFileName: any;
   totalHoras: any;
   totalCustos: number = 0;
   totalInsumos: number = 0;
@@ -42,7 +46,6 @@ export class CalculadoraPage {
   totalIndiretos: number = 0;
   pageId: any;
   custosFixos: any = [];
-  custosFixosSalvos: any = [];
   custosInsumos: any = [];
   custosAjudantes: any = [];
   precoSugerido: number;
@@ -52,7 +55,7 @@ export class CalculadoraPage {
   hTrabalhadasSalvo: any;
   totalHorasSalvo: any;
   custosFixosSalvo: any = [];
-  custosFixosSalvoTotal: any;
+  custosFixosSalvoTotal: any = 0;
   custoTotalFinal: any;
   custosHoraSalvo: any;
   todos = false;
@@ -60,7 +63,11 @@ export class CalculadoraPage {
   dadosSalvos: any;
   totalHoraCustoFora: any;
   totalHoraCustoForaSalvo: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public file: File, public toastCtrl: ToastController, private fileOpener: FileOpener) {
+  loader: any;
+  videoId: any;
+  flag_upload = true;
+  flag_play = true;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public file: File, public toastCtrl: ToastController, private fileOpener: FileOpener, private fileChooser: FileChooser, private filePath: FilePath,  private transfer: FileTransfer ) {
 
      this.dadosSalvos = this.storage.get('usuario')
         .then( res =>{
@@ -69,14 +76,14 @@ export class CalculadoraPage {
               this.gMensaisSalvo = res[0].ganhosMensais;
               this.hTrabalhadasSalvo = res[1].horasTrabalhadas;
               this.totalHorasSalvo = res[2].totalHoras;
-              this.custosFixosSalvo = res[3].custosFixos;
               this.custosHoraSalvo = res[4].custosHora;
-              this.totalHoraCustoForaSalvo = res[4].totalHoraCustoFora;
+              this.totalHoraCustoForaSalvo = res[5].totalHoraCustoFora;
               let p = 0;
               res[3].custosFixos.forEach(element => {
+                this.custosFixosSalvo.push(element);
                 p = p + parseInt(element.val);
               });
-              this.custosFixosSalvoTotal = p;
+                this.custosFixosSalvoTotal = p; 
               this.alterarTab('horas_o');
               return res;
             } else {
@@ -95,8 +102,8 @@ export class CalculadoraPage {
   sumGanhos(){
     if(this.gMensais && this.hTrabalhadas){
       this.totalHoras = Math.trunc(this.gMensais / this.hTrabalhadas);
-      if(this.totalHoras && this.totalCustos){
-        this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+      if(this.totalHoras && this.custosHora){
+        this.totalHoraCustoFora = this.totalHoras + this.custosHora;
       }
     }
   }
@@ -113,8 +120,8 @@ export class CalculadoraPage {
       this.nCustoDesc = "";
       this.nCustoValor = '';
       this.custosHora = Math.trunc(this.totalCustos / this.hTrabalhadas);
-      if(this.totalHoras && this.totalCustos){
-        this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+      if(this.totalHoras && this.custosHora){
+        this.totalHoraCustoFora = this.totalHoras + this.custosHora;
       }
     }
   }
@@ -126,8 +133,8 @@ export class CalculadoraPage {
       this.totalCustos = this.totalCustos - parseInt(id.val);
       this.custosHora = Math.trunc(this.totalCustos / this.hTrabalhadas);      
       console.log(this.custosFixos, this.totalCustos);
-      if(this.totalHoras && this.totalCustos){
-        this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+      if(this.totalHoras && this.custosHora){
+        this.totalHoraCustoFora = this.totalHoras + this.custosHora;
       }
     }
   }
@@ -243,8 +250,8 @@ export class CalculadoraPage {
     this.totalHorasSalvo = this.totalHoras;
     this.custosFixosSalvo = this.custosFixos;
     this.totalHoraCustoForaSalvo = this.totalHoraCustoFora;
-    if(this.totalHoras && this.totalCustos){
-      this.totalHoraCustoFora = this.totalHoras - this.totalCustos;
+    if(this.totalHoras && this.custosHora){
+      this.totalHoraCustoFora = this.totalHoras + this.custosHora;
     }
     let p = 0;
     this.custosFixos.forEach(element => {
@@ -273,15 +280,14 @@ export class CalculadoraPage {
             
             [
               {text: 'RefriPlay', style: 'header'},
-              {text: 'Relatório de Custos', style: 'sub_header'},
-              {text: 'Site: http://refriplay2.ad4pixels.com.br\n\n\n\n', style: 'url'},
+              {text: 'Relatório de Preços', style: 'sub_header'},
               {text:'', style: 'header'}
               
             ]
           ],
           
         },
-        {text: 'Relatório de preços\n', style:'maintitle'},
+        {text: 'Relatório de Preços\n\n\n', style:'maintitle'},
         {text: 'Insumos:\n', style: 'title'},
         {text: ['Total: ', this.totalInsumos, ',00\n'], style: 'content'},
         {text: 'Custos Indiretos:\n', style:'title'},
@@ -297,7 +303,7 @@ export class CalculadoraPage {
         {text: ['Custos totais: R$', this.custoTotalFinal, ',00\n'], style: 'content'},
         {text: ['Imposto a pagar: R$', this.totalImposto, ',00\n'], style: 'content'},
         {text: ['Lucro estipulado: R$', this.totalLucro, ',00\n'], style: 'content'},
-        {text: ['Preço sugerido: R$', this.precoSugerido, ',00\n'], style: 'content'}
+        {text: ['Preço sugerido: R$', this.precoSugerido, ',00\n'], style: 'title'}
       ],
 
       images: {
@@ -353,22 +359,52 @@ export class CalculadoraPage {
   
   saveToDevice(data: any, savefile: any){
     let self = this;
-
-    self.file.writeFile(self.file.dataDirectory, savefile, data, {replace: false});
-
-    const toast = self.toastCtrl.create({
-      message: 'Arquivo salvo no dispositivo',
-
-      duration: 3000,
-      position: 'top',
-    });
-
-    toast.present();
-    this.openFile('/relatorio-refiplay.pdf');
+    let resolvedFilePath = "/storage/emulated/0/relatorio-refiplay2.pdf";
+    self.file.writeFile(self.file.externalRootDirectory, savefile, data, {replace: true}).then(file=>
+      this.fileOpener.open(self.file.externalRootDirectory + savefile, 'application/pdf').then(file2 => {
+      }).catch(err => {
+        alert(JSON.stringify(err));
+      })
+    );
   }
 
-  openFile(arq){
-    this.fileOpener.open(this.file.dataDirectory + arq, 'application/pdf').then(() => console.log('File is opened')).catch(e => console.log('Error opening file', e));
+  getVideo() {
+    this.fileChooser.open()
+    .then(uri => {
+    this.videoId = uri;
+    this.flag_play = false;
+    this.flag_upload = false;
+    })
+    .catch(e => console.log(e));
   }
+
+  uploadVideo() {
+        const fileTransfer: FileTransferObject = this.transfer.create();
+        
+        let formattedDate = new Date();
+        let d = formattedDate.getDate();
+        let m = formattedDate.getMonth();
+        m += 1;  // JavaScript months are 0-11
+        let y = formattedDate.getFullYear();
+        let random = Math.floor(Math.random() * 1000000) + 100000;
+        let random2 = Math.floor(Math.random() * 1000000) + 100000;
+        this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+        let options: FileUploadOptions = {
+          fileKey: 'imagem',
+          fileName: this.imageFileName,
+          chunkedMode: false,
+          mimeType: "video/mp4",
+          headers: {}
+        }
+        
+        fileTransfer.upload(this.videoId, encodeURI('http://13.58.158.77/upload.php'), options)
+        .then((data) => {
+          console.log(data+" Uploaded Successfully");
+      
+        }, (err) => {
+          console.log(err);
+        });
+      }
+
 
 }

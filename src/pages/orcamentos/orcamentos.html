@@ -576,8 +576,13 @@
                 </div>
             </ion-item>
       </ion-list>
+      <br>
       <ion-list>
         <h5>Total: R${{total}},00</h5>
+        <br>
+      </ion-list>
+      <ion-list>
+          <button ion-button id="gerarPdf" (click)="makePdf()">Gerar PDF</button>
       </ion-list>
   </div>
 </ion-content>

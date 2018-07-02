@@ -43,6 +43,7 @@ export class AboutPage {
   texto:string = "";
   public imageURI:any = [];
   imageFileName:any;
+  videoFileName:any;
   videosNames:any;
   imageFileNameVideo:any;
   fileUrl:any;
@@ -168,6 +169,13 @@ export class AboutPage {
       
         this.loading.present();
       }
+      presentLoadingCarregandoVideo() {
+        this.loading = this.loadingCtrl.create({
+          content: 'Carregando Vídeo...'
+        });
+      
+        this.loading.present();
+      }
       
       getImages(){
         let options = {
@@ -201,14 +209,8 @@ export class AboutPage {
           targetWidth: 1200,
           targetHeight: 800
         }
-      
-
-
         this.camera.getPicture(options).then((videoData) => {
-          this.video = videoData;
-          let path = videoData;
-          let new_path = path.substring(path.indexOf('s'));
-          this.localFileName = new_path;
+          this.videoId = videoData;
         }, (err) => {
           console.log(err);
           this.presentToast(err);
@@ -307,79 +309,36 @@ export class AboutPage {
           this.presentToast(err);
         });
       }
-
-
-      uploadFileVideo(fileToUp){
-        if(fileToUp != null) {
-          this.presentLoadingCarregando();
-          const fileTransfer: FileTransferObject = this.transfer.create();
-          
-          let formattedDate = new Date();
-          let d = formattedDate.getDate();
-          let m = formattedDate.getMonth();
-          m += 1;  // JavaScript months are 0-11
-          let y = formattedDate.getFullYear();
-          let random = Math.floor(Math.random() * 1000000) + 100000;
-          let random2 = Math.floor(Math.random() * 1000000) + 100000;
-          this.imageFileNameVideo = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".mp4";
-          let options: FileUploadOptions = {
-            fileKey: 'imagem',
-            fileName: this.imageFileNameVideo,
-            chunkedMode: false,
-            mimeType: "multipart/form-data",
-            params: { },
-            headers: {}
+    
+        uploadVideo() {
+          this.presentLoadingCarregandoVideo()
+            const fileTransfer: FileTransferObject = this.transfer.create();
+            
+            let formattedDate = new Date();
+            let d = formattedDate.getDate();
+            let m = formattedDate.getMonth();
+            m += 1;  // JavaScript months are 0-11
+            let y = formattedDate.getFullYear();
+            let random = Math.floor(Math.random() * 1000000) + 100000;
+            let random2 = Math.floor(Math.random() * 1000000) + 100000;
+            this.videoFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".mp4";
+            let options: FileUploadOptions = {
+              fileKey: 'imagem',
+              fileName: this.videoFileName,
+              chunkedMode: false,
+              mimeType: "video/mp4",
+              headers: {}
+            }
+            
+            fileTransfer.upload(this.videoId, encodeURI('http://13.58.158.77/upload.php'), options)
+            .then((data) => {
+              console.log(data+" Uploaded Successfully");
+              this.getUserPosition();
+              this.loading.dismiss();
+            }, (err) => {
+              console.log(err);
+            });
           }
-          if(this.video != null){
-            fileToUp = this.video;
-          }
-          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
-          .then((data) => {
-            this.videosNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileNameVideo);
-            this.loading.dismiss();
-            console.log(data+" Uploaded Successfully");
-            this.getUserPosition();
-            this.loading.dismiss();
-          }, (err) => {
-            console.log(err);
-            this.presentToast('Tente novamente');
-            this.loading.dismiss();
-          });
-        } 
-      }
-      uploadFile(fileToUp){
-        if(fileToUp != null) {
-          this.presentLoadingCarregando();
-          const fileTransfer: FileTransferObject = this.transfer.create();
-          
-          let formattedDate = new Date();
-          let d = formattedDate.getDate();
-          let m = formattedDate.getMonth();
-          m += 1;  // JavaScript months are 0-11
-          let y = formattedDate.getFullYear();
-          let random = Math.floor(Math.random() * 1000000) + 100000;
-          let random2 = Math.floor(Math.random() * 1000000) + 100000;
-          this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
-          let options: FileUploadOptions = {
-            fileKey: 'imagem',
-            fileName: this.imageFileName,
-            chunkedMode: false,
-            mimeType: "multipart/form-data",
-            headers: {}
-          }
-          
-          fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
-          .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/videos' + this.imageFileName);
-            this.loading.dismiss();
-            console.log(data+" Uploaded Successfully");
-          }, (err) => {
-            console.log(err);
-            this.presentToast('Tente novamente');
-            this.loading.dismiss();
-          });
-        } 
-      }
 
       uploadImage1(){
         this.presentLoadingCarregando();
@@ -653,6 +612,7 @@ export class AboutPage {
           usuario: this.userId,
           link: this.linkPost,
           youtubeA: this.youtubeSaneado,
+          video: this.videoFileName,
           local: this.checkin
         }
         

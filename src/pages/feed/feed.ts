@@ -169,7 +169,7 @@ export class FeedPage {
         for (i = 0; i < entries.length; i = i + 1) {
           entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1">#$1</a>');
           entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g,'<a (click)="openBrowser(http$1)">http$1</a>');
-          entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g,'<a (click)="openBrowser(www$1)">www$1</a>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g,'<a (click)="openBrowser(http://www$1)">www$1</a>');
         }
       }
     }, 1000);

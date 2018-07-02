@@ -104,7 +104,13 @@
               </ion-col>
             </ion-row>
           </div>
-      
+          <div *ngIf='item.tipo == 2 && item.video'>
+              <div style="width: 100%;height: auto;">
+                  <video width="100%" height="auto" controls autoplay>
+                    <source src="http://13.58.158.77/app/uploads/{{ item.video }}" type="video/mp4">
+                  </video>
+              </div>
+            </div>
           <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 3">
             <div  *ngIf='item.link'>
               <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->

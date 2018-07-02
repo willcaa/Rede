@@ -10,12 +10,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler, Popover } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { FilePath } from '@ionic-native/file-path';
 import { IonicStorageModule } from '@ionic/storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { FileChooser } from '@ionic-native/file-chooser';
 import { FileOpener } from '@ionic-native/file-opener';
+import { FilePath } from '@ionic-native/file-path';
+
 import { AboutPage } from '../pages/about/about';
 import { CommentsPage } from '../pages/comments/comments';
 import { CheckinPage } from '../pages/checkin/checkin'
@@ -27,10 +29,12 @@ import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register';
 import { OrcamentosPage } from '../pages/orcamentos/orcamentos';
 import { CalculadoraPage } from '../pages/calculadora/calculadora';
-import { BrMaskerModule } from 'brmasker-ionic-3';
+import { FeedPageModule } from '../pages/feed/feed.module';
+import { StatsPage } from '../pages/stats/stats';
+import { CodigoDeErroPage } from '../pages/codigo-de-erro/codigo-de-erro';
+import { FerramentasPage } from '../pages/ferramentas/ferramentas';
 
 import { StatusBar } from '@ionic-native/status-bar';
-import { FeedPageModule } from '../pages/feed/feed.module';
 import { Geolocation } from '@ionic-native/geolocation';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
@@ -42,13 +46,9 @@ import { PopoverDenunciarComponent } from '../components/popover-denunciar/popov
 import { PopoverTopComponent } from '../components/popover-top/popover-top';
 import { PopoverOptsAnunciosComponent } from '../components/popover-opts-anuncios/popover-opts-anuncios';
 import { PopoverNotificacoesComponent } from '../components/popover-notificacoes/popover-notificacoes';
-import { StatsPage } from '../pages/stats/stats';
-import { CodigoDeErroPage } from '../pages/codigo-de-erro/codigo-de-erro';
-import { FerramentasPage } from '../pages/ferramentas/ferramentas';
 import { MarcasArCondicionadoPage } from '../pages/marcas-ar-condicionado/marcas-ar-condicionado';
 import { ProdutosPage } from '../pages/produtos/produtos';
 import { ListaPage } from '../pages/lista/lista';
-import { FileChooser } from '@ionic-native/file-chooser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { UploadsProvider } from '../providers/uploads/uploads';
 
@@ -88,12 +88,10 @@ var config = {
   ],
   
   imports: [
-    AngularFireModule, 
     AngularFireModule.initializeApp(config),
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     BrowserModule,
-    BrMaskerModule,
     IonicModule.forRoot(MyApp, {
       backButtonIcon: 'ios-arrow-back',
     }),
