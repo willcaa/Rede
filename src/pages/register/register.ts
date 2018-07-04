@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, LoadingController, NavController, ToastController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, ToastController, NavParams, Content, AlertController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Facebook } from '@ionic-native/facebook';
@@ -26,7 +26,7 @@ export class RegisterPage {
   data:any = {};
   loginId: number;
   pageId:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage, private alertCtrl: AlertController) {
     this.pageId="login";
     this.http = http;
     this.start = "";
@@ -159,4 +159,45 @@ export class RegisterPage {
     // this.cadastrar();
   }
 
+  novaSenha(email){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      email: email,
+    }
+
+    let link = 'https://bluedropsproducts.com/app/usuarios/esqueciSenha';
+    
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        if(data != false){
+          this.presentAlert();
+          this.alterarTab('login');
+        }
+        else{
+          this.presentAlertErro();
+          this.alterarTab('login')
+        }
+      });
+  }
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Senha gerada com sucesso!',
+      subTitle: 'Sua senha foi gerada com sucesso e enviada para o seu email.',
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
+  presentAlertErro() {
+    let alert = this.alertCtrl.create({
+      title: 'Erro!',
+      subTitle: 'O email inserido não está cadastrado ou não existe!',
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
 }
