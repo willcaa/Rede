@@ -126,7 +126,7 @@ export class RegisterPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
-        if(data != false){
+        if( data && data != null ){
           this.setStorage(data);
           this.navCtrl.push('FeedPage')
         }

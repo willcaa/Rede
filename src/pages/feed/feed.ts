@@ -611,7 +611,7 @@ export class FeedPage {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
-    headers.append('Access-Control-Expose-Headers', "true"); 
+    // headers.append('Access-Control-Expose-Headers', "true"); 
     this.userId = parseInt(this.userId);
     console.log(this.userId, this.userImagem);
     let tipo:number;
@@ -650,7 +650,7 @@ export class FeedPage {
       tipo: tipo,
       hach: hach
     }
-    var link = 'https://bluedropsproducts.com/app/anuncios/puxarTodos';
+    var link = 'http://ec2-13-58-158-77.us-east-2.compute.amazonaws.com/anuncios/puxarTodos';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

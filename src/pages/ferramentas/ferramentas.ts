@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CodigoDeErroPage } from '../codigo-de-erro/codigo-de-erro';
 import { OrcamentosPage } from '../orcamentos/orcamentos';
 import { CalculadoraPage } from '../calculadora/calculadora';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 @IonicPage()
@@ -14,7 +15,7 @@ import { CalculadoraPage } from '../calculadora/calculadora';
 export class FerramentasPage {
   userId: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private iab: InAppBrowser) {
     this.userId = this.navParams.get("userId");
   }
 
@@ -32,6 +33,11 @@ export class FerramentasPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FerramentasPage');
+  }
+
+  openBrowser(url){
+    console.log(url);
+    const browser = this.iab.create(url);
   }
 
 }
