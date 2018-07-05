@@ -108,6 +108,7 @@ export class OrcamentosPage {
   orcamentosServicos8: any = [];
   orcamentosServicos9: any = [];
   orcamentosServicos10: any = [];
+  usuarioEndereco: any = [];
 
 
   constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public http: Http, public alertCtrl: AlertController, private fileOpener: FileOpener, private fileChooser: FileChooser, private filePath: FilePath, private transfer: FileTransfer, public file: File) {
@@ -151,232 +152,6 @@ export class OrcamentosPage {
   }
   getAll() {
     this.getUsuarioPessoal();
-    this.getUsuarioProfissional();
-
-    if (this.orcamentoView.orcamentoProdutos[0]) {
-      this.orcamentosProdutos0 = this.orcamentoView.orcamentoProdutos[0];
-      this.orcamentosProdutos0.price = this.orcamentosProdutos0.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos0['name'];
-      this.orcamentosProdutos0['price'] = ' ';
-      this.orcamentosProdutos0['qty'] = ' ';
-    }
-    if (this.orcamentoView.orcamentoProdutos[1]) {
-      this.orcamentosProdutos1 = this.orcamentoView.orcamentoProdutos[1];
-      this.orcamentosProdutos1.price = this.orcamentosProdutos1.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos1.name = ' ';
-      this.orcamentosProdutos1.price = ' ';
-      this.orcamentosProdutos1.qty = ' ';
-      console.log('1');
-    }
-    if (this.orcamentoView.orcamentoProdutos[2]) {
-      this.orcamentosProdutos2 = this.orcamentoView.orcamentoProdutos[2];
-      this.orcamentosProdutos2.price = this.orcamentosProdutos2.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos2.name = ' ';
-      this.orcamentosProdutos2.price = ' ';
-      this.orcamentosProdutos2.qty = ' ';
-      console.log('2');
-    }
-    if (this.orcamentoView.orcamentoProdutos[3]) {
-      this.orcamentosProdutos3 = this.orcamentoView.orcamentoProdutos[3];
-      this.orcamentosProdutos3.price = this.orcamentosProdutos3.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos3.name = ' ';
-      this.orcamentosProdutos3.price = ' ';
-      this.orcamentosProdutos3.qty = ' ';
-      console.log('3');
-    }
-    if (this.orcamentoView.orcamentoProdutos[4]) {
-      this.orcamentosProdutos4 = this.orcamentoView.orcamentoProdutos[4];
-      this.orcamentosProdutos4.price = this.orcamentosProdutos4.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos4.name = ' ';
-      this.orcamentosProdutos4.price = ' ';
-      this.orcamentosProdutos4.qty = ' ';
-      console.log('4');
-    }
-    if (this.orcamentoView.orcamentoProdutos[5]) {
-      this.orcamentosProdutos5 = this.orcamentoView.orcamentoProdutos[5];
-      this.orcamentosProdutos5.price = this.orcamentosProdutos5.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos5.name = ' ';
-      this.orcamentosProdutos5.price = ' ';
-      this.orcamentosProdutos5.qty = ' ';
-      console.log('5');
-    }
-    if (this.orcamentoView.orcamentoProdutos[6]) {
-      this.orcamentosProdutos6 = this.orcamentoView.orcamentoProdutos[6];
-      this.orcamentosProdutos6.price = this.orcamentosProdutos6.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos6.name = ' ';
-      this.orcamentosProdutos6.price = ' ';
-      this.orcamentosProdutos6.qty = ' ';
-      console.log('6');
-    }
-    if (this.orcamentoView.orcamentoProdutos[7]) {
-      this.orcamentosProdutos7 = this.orcamentoView.orcamentoProdutos[7];
-      this.orcamentosProdutos7.price = this.orcamentosProdutos7.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos7.name = ' ';
-      this.orcamentosProdutos7.price = ' ';
-      this.orcamentosProdutos7.qty = ' ';
-      console.log('7');
-    }
-    if (this.orcamentoView.orcamentoProdutos[8]) {
-      this.orcamentosProdutos8 = this.orcamentoView.orcamentoProdutos[8];
-      this.orcamentosProdutos8.price = this.orcamentosProdutos8.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos8.name = ' ';
-      this.orcamentosProdutos8.price = ' ';
-      this.orcamentosProdutos8.qty = ' ';
-      console.log('8');
-    }
-    if (this.orcamentoView.orcamentoProdutos[9]) {
-      this.orcamentosProdutos9 = this.orcamentoView.orcamentoProdutos[9];
-      this.orcamentosProdutos9.price = this.orcamentosProdutos9.price + ',00';
-    }
-    else {
-      this.orcamentosProdutos9.name = ' ';
-      this.orcamentosProdutos9.price = ' ';
-      this.orcamentosProdutos9.qty = ' ';
-      console.log('9');
-    }
-    //---------------------------------------------------------------------------------------------------------------
-
-
-    if (this.orcamentoView.orcamentoServicos[0]) {
-      this.orcamentosServicos0 = this.orcamentoView.orcamentoServicos[0];
-      this.orcamentosServicos0.price = this.orcamentosServicos0.price + ',00';
-    }
-    else {
-      this.orcamentosServicos0.name = ' ';
-      this.orcamentosServicos0.price = ' ';
-      this.orcamentosServicos0.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[1]) {
-      this.orcamentosServicos1 = this.orcamentoView.orcamentoServicos[1];
-      this.orcamentosServicos1.price = this.orcamentosServicos1.price + ',00';
-    }
-    else {
-      this.orcamentosServicos1.name = ' ';
-      this.orcamentosServicos1.price = ' ';
-      this.orcamentosServicos1.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[2]) {
-      this.orcamentosServicos2 = this.orcamentoView.orcamentoServicos[2];
-      this.orcamentosServicos2.price = this.orcamentosServicos2.price + ',00';
-    }
-    else {
-      this.orcamentosServicos2.name = ' ';
-      this.orcamentosServicos2.price = ' ';
-      this.orcamentosServicos2.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[3]) {
-      this.orcamentosServicos3 = this.orcamentoView.orcamentoServicos[3];
-      this.orcamentosServicos3.price = this.orcamentosServicos3.price + ',00';
-    }
-    else {
-      this.orcamentosServicos3.name = ' ';
-      this.orcamentosServicos3.price = ' ';
-      this.orcamentosServicos3.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[4]) {
-      this.orcamentosServicos4 = this.orcamentoView.orcamentoServicos[4];
-      this.orcamentosServicos4.price = this.orcamentosServicos4.price + ',00';
-    }
-    else {
-      this.orcamentosServicos4.name = ' ';
-      this.orcamentosServicos4.price = ' ';
-      this.orcamentosServicos4.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[5]) {
-      this.orcamentosServicos5 = this.orcamentoView.orcamentoServicos[5];
-      this.orcamentosServicos5.price = this.orcamentosServicos5.price + ',00';
-    }
-    else {
-      this.orcamentosServicos5.name = ' ';
-      this.orcamentosServicos5.price = ' ';
-      this.orcamentosServicos5.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[6]) {
-      this.orcamentosServicos6 = this.orcamentoView.orcamentoServicos[6];
-      this.orcamentosServicos6.price = this.orcamentosServicos6.price + ',00';
-    }
-    else {
-      this.orcamentosServicos6.name = ' ';
-      this.orcamentosServicos6.price = ' ';
-      this.orcamentosServicos6.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[6]) {
-      this.orcamentosServicos6 = this.orcamentoView.orcamentoServicos[6];
-      this.orcamentosServicos6.price = this.orcamentosServicos6.price + ',00';
-    }
-    else {
-      this.orcamentosServicos6.name = ' ';
-      this.orcamentosServicos6.price = ' ';
-      this.orcamentosServicos6.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[7]) {
-      this.orcamentosServicos7 = this.orcamentoView.orcamentoServicos[7];
-      this.orcamentosServicos7.price = this.orcamentosServicos7.price + ',00';
-    }
-    else {
-      this.orcamentosServicos7.name = ' ';
-      this.orcamentosServicos7.price = ' ';
-      this.orcamentosServicos7.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[8]) {
-      this.orcamentosServicos8 = this.orcamentoView.orcamentoServicos[8];
-      this.orcamentosServicos8.price = this.orcamentosServicos0.price + ',00';
-    }
-    else {
-      this.orcamentosServicos8.name = ' ';
-      this.orcamentosServicos8.price = ' ';
-      this.orcamentosServicos8.qty = ' ';
-      console.log('a');
-    }
-
-    if (this.orcamentoView.orcamentoServicos[9]) {
-      this.orcamentosServicos9 = this.orcamentoView.orcamentoServicos[9];
-      this.orcamentosServicos9.price = this.orcamentosServicos0.price + ',00';
-    }
-    else {
-      this.orcamentosServicos9.name = ' ';
-      this.orcamentosServicos9.price = ' ';
-      this.orcamentosServicos9.qty = ' ';
-      console.log('a');
-    }
-
-
   }
 
   makePdf() {
@@ -395,10 +170,8 @@ export class OrcamentosPage {
             {
               image: 'img'
             },
-
             [
-              { text: [this.usuarioProfissional.nome_empresa, ' - ', this.userName, '\n'], style: 'header_title' },
-              { text: ['CNPJ: ', this.usuarioProfissional.cnpj, '\n'], style: 'header' },
+              { text: [this.userName, '\n'], style: 'header_title' },
               { text: ['Email: ', this.userEmail], style: 'header' },
               { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
             ]
@@ -651,7 +424,7 @@ export class OrcamentosPage {
     this.lastPageId = this.pageId;
     this.pageId = tabId;
     console.log(this.lastPageId, this.pageId);
-
+    this.habCheck = 0;
   }
 
   openFab(fab) {
@@ -690,6 +463,14 @@ export class OrcamentosPage {
     }
   }
   showCheck() {
+    if (this.habCheck == 1) {
+      
+      this.habCheck = 0;
+    } else {
+      this.habCheck = 1;
+    }
+  }
+  showCheck1(fab) {
     if (this.habCheck == 1) {
       this.habCheck = 0;
     } else {
@@ -1507,6 +1288,237 @@ export class OrcamentosPage {
 
           console.log(data);
           this.usuarioProfissional = data[0];
+          if (this.orcamentoView.orcamentoProdutos[0]) {
+            this.orcamentosProdutos0 = this.orcamentoView.orcamentoProdutos[0];
+            this.orcamentosProdutos0.price = this.orcamentosProdutos0.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos0['name'];
+            this.orcamentosProdutos0['price'] = ' ';
+            this.orcamentosProdutos0['qty'] = ' ';
+          }
+          if (this.orcamentoView.orcamentoProdutos[1]) {
+            this.orcamentosProdutos1 = this.orcamentoView.orcamentoProdutos[1];
+            this.orcamentosProdutos1.price = this.orcamentosProdutos1.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos1.name = ' ';
+            this.orcamentosProdutos1.price = ' ';
+            this.orcamentosProdutos1.qty = ' ';
+            console.log('1');
+          }
+          if (this.orcamentoView.orcamentoProdutos[2]) {
+            this.orcamentosProdutos2 = this.orcamentoView.orcamentoProdutos[2];
+            this.orcamentosProdutos2.price = this.orcamentosProdutos2.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos2.name = ' ';
+            this.orcamentosProdutos2.price = ' ';
+            this.orcamentosProdutos2.qty = ' ';
+            console.log('2');
+          }
+          if (this.orcamentoView.orcamentoProdutos[3]) {
+            this.orcamentosProdutos3 = this.orcamentoView.orcamentoProdutos[3];
+            this.orcamentosProdutos3.price = this.orcamentosProdutos3.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos3.name = ' ';
+            this.orcamentosProdutos3.price = ' ';
+            this.orcamentosProdutos3.qty = ' ';
+            console.log('3');
+          }
+          if (this.orcamentoView.orcamentoProdutos[4]) {
+            this.orcamentosProdutos4 = this.orcamentoView.orcamentoProdutos[4];
+            this.orcamentosProdutos4.price = this.orcamentosProdutos4.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos4.name = ' ';
+            this.orcamentosProdutos4.price = ' ';
+            this.orcamentosProdutos4.qty = ' ';
+            console.log('4');
+          }
+          if (this.orcamentoView.orcamentoProdutos[5]) {
+            this.orcamentosProdutos5 = this.orcamentoView.orcamentoProdutos[5];
+            this.orcamentosProdutos5.price = this.orcamentosProdutos5.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos5.name = ' ';
+            this.orcamentosProdutos5.price = ' ';
+            this.orcamentosProdutos5.qty = ' ';
+            console.log('5');
+          }
+          if (this.orcamentoView.orcamentoProdutos[6]) {
+            this.orcamentosProdutos6 = this.orcamentoView.orcamentoProdutos[6];
+            this.orcamentosProdutos6.price = this.orcamentosProdutos6.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos6.name = ' ';
+            this.orcamentosProdutos6.price = ' ';
+            this.orcamentosProdutos6.qty = ' ';
+            console.log('6');
+          }
+          if (this.orcamentoView.orcamentoProdutos[7]) {
+            this.orcamentosProdutos7 = this.orcamentoView.orcamentoProdutos[7];
+            this.orcamentosProdutos7.price = this.orcamentosProdutos7.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos7.name = ' ';
+            this.orcamentosProdutos7.price = ' ';
+            this.orcamentosProdutos7.qty = ' ';
+            console.log('7');
+          }
+          if (this.orcamentoView.orcamentoProdutos[8]) {
+            this.orcamentosProdutos8 = this.orcamentoView.orcamentoProdutos[8];
+            this.orcamentosProdutos8.price = this.orcamentosProdutos8.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos8.name = ' ';
+            this.orcamentosProdutos8.price = ' ';
+            this.orcamentosProdutos8.qty = ' ';
+            console.log('8');
+          }
+          if (this.orcamentoView.orcamentoProdutos[9]) {
+            this.orcamentosProdutos9 = this.orcamentoView.orcamentoProdutos[9];
+            this.orcamentosProdutos9.price = this.orcamentosProdutos9.price + ',00';
+          }
+          else {
+            this.orcamentosProdutos9.name = ' ';
+            this.orcamentosProdutos9.price = ' ';
+            this.orcamentosProdutos9.qty = ' ';
+            console.log('9');
+          }
+          //---------------------------------------------------------------------------------------------------------------
+      
+      
+          if (this.orcamentoView.orcamentoServicos[0]) {
+            this.orcamentosServicos0 = this.orcamentoView.orcamentoServicos[0];
+            this.orcamentosServicos0.price = this.orcamentosServicos0.price + ',00';
+          }
+          else {
+            this.orcamentosServicos0.name = ' ';
+            this.orcamentosServicos0.price = ' ';
+            this.orcamentosServicos0.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[1]) {
+            this.orcamentosServicos1 = this.orcamentoView.orcamentoServicos[1];
+            this.orcamentosServicos1.price = this.orcamentosServicos1.price + ',00';
+          }
+          else {
+            this.orcamentosServicos1.name = ' ';
+            this.orcamentosServicos1.price = ' ';
+            this.orcamentosServicos1.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[2]) {
+            this.orcamentosServicos2 = this.orcamentoView.orcamentoServicos[2];
+            this.orcamentosServicos2.price = this.orcamentosServicos2.price + ',00';
+          }
+          else {
+            this.orcamentosServicos2.name = ' ';
+            this.orcamentosServicos2.price = ' ';
+            this.orcamentosServicos2.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[3]) {
+            this.orcamentosServicos3 = this.orcamentoView.orcamentoServicos[3];
+            this.orcamentosServicos3.price = this.orcamentosServicos3.price + ',00';
+          }
+          else {
+            this.orcamentosServicos3.name = ' ';
+            this.orcamentosServicos3.price = ' ';
+            this.orcamentosServicos3.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[4]) {
+            this.orcamentosServicos4 = this.orcamentoView.orcamentoServicos[4];
+            this.orcamentosServicos4.price = this.orcamentosServicos4.price + ',00';
+          }
+          else {
+            this.orcamentosServicos4.name = ' ';
+            this.orcamentosServicos4.price = ' ';
+            this.orcamentosServicos4.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[5]) {
+            this.orcamentosServicos5 = this.orcamentoView.orcamentoServicos[5];
+            this.orcamentosServicos5.price = this.orcamentosServicos5.price + ',00';
+          }
+          else {
+            this.orcamentosServicos5.name = ' ';
+            this.orcamentosServicos5.price = ' ';
+            this.orcamentosServicos5.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[6]) {
+            this.orcamentosServicos6 = this.orcamentoView.orcamentoServicos[6];
+            this.orcamentosServicos6.price = this.orcamentosServicos6.price + ',00';
+          }
+          else {
+            this.orcamentosServicos6.name = ' ';
+            this.orcamentosServicos6.price = ' ';
+            this.orcamentosServicos6.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[6]) {
+            this.orcamentosServicos6 = this.orcamentoView.orcamentoServicos[6];
+            this.orcamentosServicos6.price = this.orcamentosServicos6.price + ',00';
+          }
+          else {
+            this.orcamentosServicos6.name = ' ';
+            this.orcamentosServicos6.price = ' ';
+            this.orcamentosServicos6.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[7]) {
+            this.orcamentosServicos7 = this.orcamentoView.orcamentoServicos[7];
+            this.orcamentosServicos7.price = this.orcamentosServicos7.price + ',00';
+          }
+          else {
+            this.orcamentosServicos7.name = ' ';
+            this.orcamentosServicos7.price = ' ';
+            this.orcamentosServicos7.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[8]) {
+            this.orcamentosServicos8 = this.orcamentoView.orcamentoServicos[8];
+            this.orcamentosServicos8.price = this.orcamentosServicos0.price + ',00';
+          }
+          else {
+            this.orcamentosServicos8.name = ' ';
+            this.orcamentosServicos8.price = ' ';
+            this.orcamentosServicos8.qty = ' ';
+            console.log('a');
+          }
+      
+          if (this.orcamentoView.orcamentoServicos[9]) {
+            this.orcamentosServicos9 = this.orcamentoView.orcamentoServicos[9];
+            this.orcamentosServicos9.price = this.orcamentosServicos0.price + ',00';
+          }
+          else {
+            this.orcamentosServicos9.name = ' ';
+            this.orcamentosServicos9.price = ' ';
+            this.orcamentosServicos9.qty = ' ';
+            console.log('a');
+          }
+          
+          
+          if (this.usuarioPessoal.endereco) {
+            this.usuarioEndereco = this.usuarioPessoal.endereco;
+          }
+          else {
+            this.usuarioEndereco = ' ';
+          }
+      
         }
       });
   }
@@ -1529,6 +1541,7 @@ export class OrcamentosPage {
         if (data) {
           console.log(data);
           this.usuarioPessoal = data[0];
+          this.getUsuarioProfissional();
         }
       });
   }

@@ -64,7 +64,7 @@
   </div>
   <div id="clientes"  class="pagetabs" *ngIf="pageId == 'clientes'">
     <h4>Meus Clientes</h4>
-    <ion-item *ngFor = "let item of clientes" style="height: 100px;"  (press)="showCheck(); openFab(fab);" (click)="getCliente(item.id, fab)">
+    <ion-item *ngFor = "let item of clientes" style="height: 100px;"  (press)="showCheck1(fab);" (click)="getCliente(item.id, fab)">
         <ion-label id="{{item.id}}" color="primary" stacked>{{item.full_name}}</ion-label>
         <div item-content class="itemContent">
           Tel: {{item.phone}}<br>
@@ -204,7 +204,7 @@
 
   <div id="produtos"  class="pagetabs" *ngIf="pageId == 'produtos'">
       <h4>Meus Produtos</h4>
-      <ion-item *ngFor = "let item of produtos" style="height: 100px;" (click)="getProduto(item.id, fab)">
+      <ion-item *ngFor = "let item of produtos" style="height: 100px;" (press)="showCheck1(fab);" (click)="getProduto(item.id, fab)">
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Unidade: {{item.un}}<br>
@@ -287,7 +287,7 @@
 
   <div id="servicos"  class="pagetabs" *ngIf="pageId == 'servicos'">
       <h4>Meus Serviços</h4>
-      <ion-item *ngFor = "let item of servicos" style="height: 80px;" (click)="getServico(item.id, fab)">
+      <ion-item *ngFor = "let item of servicos" style="height: 80px;" (press)="showCheck1(fab);" (click)="getServico(item.id, fab)">
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Valor: R$ {{item.price}},00
@@ -360,7 +360,7 @@
 
   <div id="orcamentos_p"  class="pagetabs" *ngIf="pageId == 'orcamentos_p'">
       <h4>Orçamentos Pendentes</h4>
-      <ion-item *ngFor = "let item of orcamentos_p" style="height: 100px;" (click)="getOrcamento(item.id, fab)">
+      <ion-item *ngFor = "let item of orcamentos_p" style="height: 100px;" (press)="showCheck1(fab);" (click)="getOrcamento(item.id, fab)">
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
@@ -373,7 +373,7 @@
 
   <div id="orcamentos_c" class="pagetabs" *ngIf="pageId == 'orcamentos_c'">
       <h4>Orçamentos Cancelados</h4>
-      <ion-item *ngFor = "let item of orcamentos_c" style="height: 100px;" (click)="getOrcamento(item.id, fab)">
+      <ion-item *ngFor = "let item of orcamentos_c" style="height: 100px;" (press)="showCheck1(fab);" (click)="getOrcamento(item.id, fab)">
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
@@ -385,7 +385,7 @@
   </div>
   <div id="orcamentos_a" class="pagetabs" *ngIf="pageId == 'orcamentos_a'">
       <h4>Orçamentos Aprovados</h4>
-      <ion-item *ngFor = "let item of orcamentos_a" style="height: 100px;" (click)="getOrcamento(item.id, fab)">
+      <ion-item *ngFor = "let item of orcamentos_a" style="height: 100px;" (press)="showCheck1(fab);" (click)="getOrcamento(item.id, fab)">
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
@@ -613,7 +613,19 @@
       </div>
     </button>
   </ion-toolbar>
-  <ion-fab *ngIf="pageId != 'clientes_o' && pageId != 'produtos_o' && pageId != 'servicos_o'" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
+  <ion-fab *ngIf="pageId == 'orcamentos' || pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="alterarTab('orcamentos_n', fab); clearTotal();" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
+  <ion-fab *ngIf="pageId == 'clientes' || pageId == 'clientes_n'" (click)="alterarTab('clientes_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
+  <ion-fab *ngIf="pageId == 'produtos' || pageId == 'produtos_n'" (click)="alterarTab('produtos_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
+  <ion-fab *ngIf="pageId == 'servicos' || pageId == 'servicos_n'" (click)="alterarTab('servicos_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
+  <div  *ngIf="habCheck == 1">
+    <ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos' || pageId == 'orcamentos_c'" (click)="deleteChecked(pageId, fab)" #fab2 right bottom [ngStyle]="{'bottom': fabBottom}">
+        <button ion-fab color="primary"><ion-icon name="md-trash"></ion-icon></button></ion-fab>
+  </div>
+  <!-- <ion-fab *ngIf="pageId != 'clientes_o' && pageId != 'produtos_o' && pageId != 'servicos_o'" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
       <button ion-fab color="primary"><ion-icon name="arrow-dropleft"></ion-icon></button>
       <ion-fab-list side="left">
         <button  ion-fab *ngIf="pageId == 'orcamentos' || pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="alterarTab('orcamentos_n', fab); clearTotal();"><ion-icon name="md-add"></ion-icon></button>
@@ -622,10 +634,9 @@
         <button ion-fab *ngIf="pageId == 'servicos' || pageId == 'servicos_n'" (click)="alterarTab('servicos_n', fab)"><ion-icon name="md-add"></ion-icon></button>
         <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos' || pageId == 'orcamentos_c'" (click)="showCheck()"><ion-icon name="md-checkmark"></ion-icon></button>
         <button ion-fab *ngIf="pageId == 'orcamento_v'" (click)="aprovaOrcamento()"><ion-icon name="md-thumbs-up"></ion-icon></button>
-        <!-- <button ion-fab *ngIf="pageId != 'pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="aprovaOrcamentos()"><ion-icon name="md-thumbs-up"></ion-icon></button> -->
         <button ion-fab *ngIf="pageId == 'orcamento_v'" (click)="cancelaOrcamento()"><ion-icon name="md-trash"></ion-icon></button>
         <button ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos' || pageId == 'orcamentos_c'" (click)="deleteChecked(pageId, fab)"><ion-icon name="md-trash"></ion-icon></button>
       </ion-fab-list>
-    </ion-fab>
+    </ion-fab> -->
 </ion-footer>
 
