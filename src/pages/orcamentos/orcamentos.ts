@@ -110,6 +110,11 @@ export class OrcamentosPage {
   orcamentosServicos10: any = [];
   usuarioEndereco: any = [];
 
+  clienteFullName: any;
+  clienteEmailOrcamento: any;
+  clientePhone: any;
+  clienteAddress: any;
+
 
   constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public http: Http, public alertCtrl: AlertController, private fileOpener: FileOpener, private fileChooser: FileChooser, private filePath: FilePath, private transfer: FileTransfer, public file: File) {
     this.storage.get('meuid')
@@ -181,11 +186,10 @@ export class OrcamentosPage {
         { text: '\n\n' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
 
-        { text: ['Cliente: ', this.orcamentoView.orcamento.full_name, '\n'], style: 'content_title' },
-        { text: ['CPF: ', this.orcamentoView.orcamento.cpf, '\n'], style: 'content' },
-        { text: ['Telefone: ', this.orcamentoView.orcamento.phone, '\n'], style: 'content' },
-        { text: ['Email: ', this.orcamentoView.orcamento.email, '\n'], style: 'content' },
-        { text: ['Endereço: ', this.orcamentoView.orcamento.address, '\n\n'], style: 'content' },
+        { text: ['Cliente: ', this.clienteFullName, '\n'], style: 'content_title' },
+        { text: ['Telefone: ', this.clientePhone, '\n'], style: 'content' },
+        { text: ['Email: ', this.clienteEmailOrcamento, '\n'], style: 'content' },
+        { text: ['Endereço: ', this.clienteAddress, '\n\n'], style: 'content' },
         [
 
           { text: ['NUMERO DA ORDEM DE SERVIÇO #', this.orcamentoView.orcamento.id, '                                                                                                        \n'], style: 'nmr_title' },
@@ -252,7 +256,7 @@ export class OrcamentosPage {
         { text: 'Subtotal da Mão de Obra', style: 'subtotal' },
         { text: ['R$', this.totalServicos, ',00\n'], style: 'numbr' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
-        { text: ['VALOR TOTAL                                                                                                                              R$', this.total, ',00\n'], style: 'nmr_title' },
+        { text: ['VALOR TOTAL                                                                                                                       R$', this.total, ',00\n'], style: 'nmr_title' },
         { text: 'DESCRIÇÃO DO SERVIÇO', style: 'descricao' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
         { text: [this.orcamentoView.orcamento.description, '\n\n'], style: 'desc' },
@@ -1517,6 +1521,35 @@ export class OrcamentosPage {
           }
           else {
             this.usuarioEndereco = ' ';
+          }
+          
+          if(this.orcamentoView.orcamento.full_name){
+            this.clienteFullName = this.orcamentoView.orcamento.full_name;
+
+          }
+          else{
+            this.clienteFullName = ' ';
+          }
+
+          if(this.orcamentoView.orcamento.email){
+            this.clienteEmailOrcamento = this.orcamentoView.orcamento.email;
+          }
+          else{
+            this.clienteEmailOrcamento = ' ';
+          }
+          
+          if(this.orcamentoView.orcamento.phone){
+            this.clientePhone = this.orcamentoView.orcamento.phone;
+          }
+          else{
+            this.clientePhone = ' ';
+          }
+
+          if(this.orcamentoView.orcamento.address){
+            this.clienteAddress = this.orcamentoView.orcamento.address;
+          }
+          else{
+            this.clienteAddress = ' ';
           }
       
         }
