@@ -4,7 +4,7 @@ import { CodigoDeErroPage } from '../codigo-de-erro/codigo-de-erro';
 import { OrcamentosPage } from '../orcamentos/orcamentos';
 import { CalculadoraPage } from '../calculadora/calculadora';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-
+import { Http, Headers } from '@angular/http';
 
 @IonicPage()
 @Component({
@@ -14,9 +14,13 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 export class FerramentasPage {
   userId: any;
+  email: any;
+  nome: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private iab: InAppBrowser) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private iab: InAppBrowser, public http: Http) {
     this.userId = this.navParams.get("userId");
+    this.email = this.navParams.get("email");
+    this.nome = this.navParams.get("nome");
   }
 
   goErrorCode(){
@@ -33,6 +37,29 @@ export class FerramentasPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FerramentasPage');
+
+  }
+  getSeguroToken(){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      email: this.email,
+      nome: this.nome
+    }
+    
+    let link = 'https://bluedropsproducts.com/app/usuarios/getSeguroToken';
+    
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+        if(data){}
+        
+      }, (err) => {
+        
+      });
   }
 
   openBrowser(url){
