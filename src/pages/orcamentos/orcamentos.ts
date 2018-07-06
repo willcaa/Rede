@@ -598,7 +598,8 @@ export class OrcamentosPage {
       else
         console.log("Nao há serviços a serem removidos!");
     }
-    else if (pageId == 'orcamentos_c') {
+    else if (pageId == 'orcamentos_c || orcamentos_a || orcamentos_p') {
+      
       if (this.idToRemove != null) {
         console.log(this.idToRemove)
         this.deleteOrcamentoCancelado(this.idToRemove, fab);
@@ -606,6 +607,7 @@ export class OrcamentosPage {
       else
         console.log("Nao há orçamentos a serem removidos");
     }
+    
   }
 
   public deleteCliente(id) {
