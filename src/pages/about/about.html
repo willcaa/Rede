@@ -56,21 +56,12 @@
     </div>
     <div *ngIf='postType == 3'>
         <div  *ngIf='linkPost'>
-            <div>  
-                <div style="width: 100px; float: left;">  
-                 <img id="icon" style="width: 90px;" />     
-                </div>  
-                <div>  
-                 <h2 id="title"></h2>  
-                 <span id="description"></span>  
-                </div>  
-                <div> <h6 id="site"></h6></div>  
-               </div>  
-            <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(linkPost)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
+               
+            <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(linkPost)' width="100%" height="350px"  scrolling="NO" frameborder="0"></iframe>
           </div>
       <div style="width: 100%;height: auto;">
-          <ion-item>
-        <ion-input  [(ngModel)]="linkPost" type="text"  (change)="cahngeLink();" placeholder="Insira o link" ></ion-input>
+          <ion-item style="padding-left: 0px;">
+        <ion-input  [(ngModel)]="linkPost" type="text"  (ngModelChange)="cahngeLink();" placeholder="Insira o link" ></ion-input>
       </ion-item>
       </div>
     </div>

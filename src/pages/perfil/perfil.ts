@@ -7,6 +7,7 @@ import { PopoverController } from 'ionic-angular';
 import { PopoverDenunciarComponent } from '../../components/popover-denunciar/popover-denunciar';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { CommentsPage } from '../comments/comments';
+import { RegisterPage } from '../register/register';
 import { StatsPage } from '../stats/stats';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
@@ -321,7 +322,10 @@ alterarTab(Id){
     popover.present({ ev: myEvent });
     popover.onDidDismiss(popoverData => {
       if(popoverData) {
-
+        if(popoverData == 'logout'){
+          console.log(popoverData);
+          this.navCtrl.push(RegisterPage, {});
+        }
       }
     })
   }

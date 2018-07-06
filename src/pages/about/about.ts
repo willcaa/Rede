@@ -109,8 +109,14 @@ export class AboutPage {
   }
   
   cahngeLink(){
-    this.linkPost = this.linkPost;
-    console.log(this.youtubeSaneado);
+    var res = this.linkPost.split(":");
+    if(res[0] == 'http' || res[0] == 'https') {
+      this.linkPost = this.linkPost;
+      console.log(this.linkPost);
+    } else {
+      this.linkPost = 'http://' + this.linkPost;
+      console.log(this.linkPost);
+    }
   }
 
   checkIn() {

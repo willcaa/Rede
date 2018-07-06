@@ -57,9 +57,19 @@ export class OrcamentosPage {
   qtyOrcA: any;
   qtyOrcC: any;
   public clienteId: any;
+  public nome_cliente: any;
+  public email_cliente: any;
+  public doc: any;
+  public tel: any;
+  public address: any;
+  public tipoPessoa: any;
   public produtoId: any;
   public servicoId: any;
   orcamentos_p: any;
+  nome_produto: any;
+  quantidade_produto: any;
+  valor_produto: any;
+  unidade_produto: any;
   orcamentos_a: any;
   orcamentos_c: any;
   orcamentoSelecionado: any;
@@ -85,6 +95,9 @@ export class OrcamentosPage {
   servDesc: any;
   servVal: any;
   servQty: any;
+  descricao: any;
+  quantidade_serv: any;
+  valor_serv: any;
   cucumber: boolean;
   orcamentosProdutos0: any = [];
   orcamentosProdutos1: any = [];
@@ -404,6 +417,7 @@ export class OrcamentosPage {
   public return(res) {
     return res;
   }
+  
   alterarTab(tabId, fab) {
     if (fab) {
       this.closeFab(fab);
@@ -513,6 +527,12 @@ export class OrcamentosPage {
             this.clienteDocumento = doc;
             this.clienteTelefone = tel;
             this.clienteEndereco = address;
+            this.nome_cliente = '';
+            this.email_cliente = '';
+            this.doc = '';
+            this.tel = '';
+            this.address = '';
+            this.tipoPessoa = '';
             if (this.lastPageId == 'orcamentos_n') {
               this.alterarTab('orcamentos_n', fab);
             } else {
@@ -739,6 +759,10 @@ export class OrcamentosPage {
             this.productVal = valor_produto;
             this.productUni = unidade_produto;
             this.productId = data.id;
+            this.nome_produto = '';
+            this.quantidade_produto = '';
+            this.valor_produto = '';
+            this.unidade_produto = '';
             if (this.lastPageId == 'orcamentos_n') {
               this.alterarTab('orcamentos_n', fab);
             } else {
@@ -803,6 +827,9 @@ export class OrcamentosPage {
             this.servDesc = descricao;
             this.servQty = quantidade_serv;
             this.servVal = valor_serv;
+            this.descricao = '';
+            this.quantidade_serv = '';
+            this.valor_serv = '';
             if (this.lastPageId == 'orcamentos_n') {
               this.alterarTab('orcamentos_n', fab);
             } else {
@@ -1211,7 +1238,7 @@ export class OrcamentosPage {
     headers.append('Access-Control-Expose-Headers', "true");
 
     let body = {
-      id: this.orcamentoSelecionado
+      id: this.idToRemove
     }
 
     var link = 'https://bluedropsproducts.com/app/ferramentas/cancelaOrcamento';

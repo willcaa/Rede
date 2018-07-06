@@ -71,7 +71,7 @@ export class FeedPage {
   public nome_usuario: any;
   public foto_usuario: any;
   public notificacoes_qts: any;
-   constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
+   constructor(public platform: Platform, public sanitizer: DomSanitizer, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
     if(navParams.get("slide")){
       this.local = navParams.get("slide");
       switch(navParams.get("slide")) {
@@ -127,11 +127,11 @@ export class FeedPage {
       } 
     );
   }
-  getBackground(image) {
+  public getBackground(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
   
-  getSrc(link) {
+  private getSrc(link) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(link);
   }
 

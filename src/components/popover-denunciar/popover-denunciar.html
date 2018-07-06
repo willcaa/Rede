@@ -1,4 +1,12 @@
-<ion-list>
+<ion-list *ngIf="perfilId == userId">
+  <ion-item (click)="logout()">
+    Sair
+  </ion-item>
+  <ion-item (click)="sair(3)">
+    Cancelar
+  </ion-item>
+</ion-list>
+<ion-list *ngIf="perfilId != userId">
   <ion-item (click)="sair(1)">
     Denunciar Usuário
   </ion-item>

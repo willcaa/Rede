@@ -613,17 +613,31 @@
       </div>
     </button>
   </ion-toolbar>
+  <ion-fab  *ngIf="lastPageId" (click)="alterarTab(lastPageId, fab); clearTotal();" #fab3 left bottom [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="darkBlue"><ion-icon name="arrow-dropleft"></ion-icon></button>
+  </ion-fab>
   <ion-fab *ngIf="pageId == 'orcamentos' || pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="alterarTab('orcamentos_n', fab); clearTotal();" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
-      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button>
+  </ion-fab>
   <ion-fab *ngIf="pageId == 'clientes' || pageId == 'clientes_n'" (click)="alterarTab('clientes_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
-      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
-  <ion-fab *ngIf="pageId == 'produtos' || pageId == 'produtos_n'" (click)="alterarTab('produtos_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
-      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
-  <ion-fab *ngIf="pageId == 'servicos' || pageId == 'servicos_n'" (click)="alterarTab('servicos_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
-      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button></ion-fab>
-  <div  *ngIf="habCheck == 1">
-    <ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos' || pageId == 'orcamentos_c'" (click)="deleteChecked(pageId, fab)" #fab2 right bottom [ngStyle]="{'bottom': fabBottom}">
-        <button ion-fab color="primary"><ion-icon name="md-trash"></ion-icon></button></ion-fab>
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button>
+    </ion-fab>
+    <ion-fab *ngIf="pageId == 'produtos' || pageId == 'produtos_n'" (click)="alterarTab('produtos_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button>
+    </ion-fab>
+    <ion-fab *ngIf="pageId == 'servicos' || pageId == 'servicos_n'" (click)="alterarTab('servicos_n', fab)" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="primary"><ion-icon name="md-add"></ion-icon></button>
+    </ion-fab>
+    <div  *ngIf="habCheck == 1">
+      <ion-fab *ngIf="pageId == 'clientes' || pageId == 'produtos' || pageId == 'servicos' || pageId == 'orcamentos_c' || pageId == 'orcamentos_a' || pageId == 'orcamentos_p'" (click)="deleteChecked(pageId, fab)" #fab2 right bottom style="margin-right: 75px;" [ngStyle]="{'bottom': fabBottom}">
+        <button ion-fab color="primary"><ion-icon name="md-trash"></ion-icon></button>
+      </ion-fab>
+      <ion-fab *ngIf="pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="aprovaOrcamento();" #fab right bottom style="margin-right: 140px;" [ngStyle]="{'bottom': fabBottom}">
+        <button ion-fab color="primary"><ion-icon name="md-thumbs-up"></ion-icon></button>
+      </ion-fab>
+  <ion-fab *ngIf="pageId == 'orcamentos_p' || pageId == 'orcamentos_c'|| pageId == 'orcamentos_a'" (click)="cancelaOrcamento();" #fab right bottom style="margin-right: 205px;" [ngStyle]="{'bottom': fabBottom}">
+      <button ion-fab color="primary"><ion-icon name="md-thumbs-down"></ion-icon></button>
+  </ion-fab>
   </div>
   <!-- <ion-fab *ngIf="pageId != 'clientes_o' && pageId != 'produtos_o' && pageId != 'servicos_o'" #fab right bottom [ngStyle]="{'bottom': fabBottom}">
       <button ion-fab color="primary"><ion-icon name="arrow-dropleft"></ion-icon></button>

@@ -26,5 +26,9 @@ export class PopoverDenunciarComponent {
       this.viewCtrl.dismiss("cancelar");
     }
   }
+  
+  logout(){
+    this.viewCtrl.dismiss("logout");
+  }
 
 }
