@@ -4,9 +4,8 @@ import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { FeedPage } from '../pages/feed/feed';
 import { RegisterPage } from '../pages/register/register';
-import { OrcamentosPage } from '../pages/orcamentos/orcamentos';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { FerramentasPage } from '../pages/ferramentas/ferramentas';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +22,7 @@ export class MyApp {
       // screen.lock(screen.ORIENTATIONS.PORTRAIT);
       storage.get('meuid').then((val) => {
         if(val) {
-          this.rootPage = FeedPage;
+          this.rootPage = RegisterPage;
         } else {
           this.rootPage = RegisterPage;
         } 

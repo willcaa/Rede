@@ -1,76 +1,51 @@
 
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-title style="color: white">
-      Login
-    </ion-title>
-  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
     <div class="pagetabs" id="login">
     <img class="logo-login" src="assets/imgs/logo-inicial.png"><br><br>
-    <div class="pagetabs" id="login-email" *ngIf="pageId == 'login'">
+    <p class="texto">Rede.Live</p>
+    <div class="pagetabs" id="botoes" *ngIf="pageId == 'botoes'">
+      <img class="button-facebook" src="assets/imgs/facebook_entrar.png" (click)="login()">
+      <img class="button-email" src="assets/imgs/email_entrar.png" (click)="alterarTab('email')">
+      <img class="button-cadastro" src="assets/imgs/cadastro_entrar.png" (click)="alterarTab('cadastro')">
+    </div>
+    
+    
+
+    <div class="pagetabs" id="email" *ngIf="pageId == 'email'">
       <ion-list>
-        <ion-label color="danger" *ngIf="loginInvalido == true">Email ou senha incorreto(s)!</ion-label>
         <ion-item>
-          <ion-input type="text"  [(ngModel)]="email" placeholder="Email" style="text-align: left;"></ion-input>
+          <ion-input placeholder="Nome completo" [(ngModel)]="nomeCompleto" style="border-color: black;">
+          </ion-input>
         </ion-item>
         <ion-item>
-          <ion-input type="password" [(ngModel)]="senha" placeholder="Senha" style="text-align: left;"></ion-input>
+          <ion-input placeholder="E-mail" [(ngModel)]="email"></ion-input>
         </ion-item>
-        <button ion-button icon-end class="botao-esqueci-senha" (click)= "alterarTab('esqueciSenha')" style="background-color: transparent; color: grey; box-shadow: none; font-size: 100%; margin-right: 15%;">
-          Esqueci a senha
-          <ion-icon name="esqueci_senha">
-          </ion-icon>
-        </button>
-        <button ion-button style="background-color: transparent; color:#5e82bf; box-shadow: none; font-size: 100%" (click)="alterarTab('cadastro')">Cadastre-se</button>
-        <br>
-        <br>
-        <button ion-button  style="background:linear-gradient(to left, #5f7cbb, #62c1e7); width: 100%;" (click)="loginEmail(email, senha)">Login</button>
+        <ion-item>
+          <ion-input placeholder="@NOME DE USUARIO" [(ngModel)]="userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Senha" [(ngModel)]="senha"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked style="color: black;">
+            Confirmar senha:
+          </ion-label>
+          <ion-input placeholder="Senha" [(ngModel)]="senha2"></ion-input>
+        </ion-item>
       </ion-list>
-       
-      
-    </div>
-    <div class="pagetabs" id="cadastro"  *ngIf="pageId == 'cadastro'">
-      <ion-item>
-        <ion-input type="text" placeholder="Digite seu nome" style="text-align: left;" [(ngModel)]="nome"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="text" placeholder="Insira o seu e-mail" style="text-align: left;" [(ngModel)]="email" ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="password" placeholder="Digite sua senha" style="text-align: left;" [(ngModel)]="pw"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="password" placeholder="Digite sua senha novamente" style="text-align: left;" [(ngModel)]="pw2"></ion-input>
-      </ion-item>
-      <br>
-      <br>
-      <button ion-button style="background-color:#62c1e7;" *ngIf="pw != null && pw == pw2" (click)="cadastrar(nome, email, pw)">Cadastrar</button>
-        <button ion-button color="#5f7cbb" (click)="alterarTab('login')">
-            Voltar
-          </button>
+
     </div>
       
-    <!-- <a class="button-temp" (click)="cadastrar('will-kg@hotmail.com', 'Willian Alves', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1693735790677705&height=9999&width=9999&ext=1529701261&hash=AeRIRYJswlmuF2Ye')">
+    <div class="pagetabs" id="cadastro" *ngIf="pageId == 'cadastro'">
+
+    </div>
+    <a class="button-temp" (click)="cadastrar('will-kg@hotmail.com', 'Willian Alves', 'https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/11813515_950106465040645_4723295867195234113_n.jpg?oh=')">
       Teste Registro
-    </a> -->
-
-    <div class="pagetabs" id="esqueciSenha" *ngIf="pageId == 'esqueciSenha'">
-
-      <h5 style="color: grey">Digite seu email e uma novas senha será gerada automaticamente!</h5>
-      <ion-item>
-        <ion-input type="text" placeholder="Insira o seu e-mail" style="text-align: left;" [(ngModel)]="email" ></ion-input>
-      </ion-item>
-      <ion-list>
-        <button ion-button style="background-color: #62c1e7" *ngIf="email != null" (click)="novaSenha(email)">Nova Senha</button>
-        <button ion-button color="#5f7cbb" (click)="alterarTab('login')">
-          Voltar
-        </button>
-      </ion-list>
-    </div>
+    </a>
 
     </div>
 

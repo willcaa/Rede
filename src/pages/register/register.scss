@@ -1,9 +1,10 @@
 page-register {
     .toolbar-md-dark .toolbar-background-md {
-        background: linear-gradient(left, rgba(55, 197, 233, 1) 0%, rgba(73, 125, 190, 1) 100%);
+        background: linear-gradient(to right, #73395c , #0a2386);
     }
     .content-md {
-        background-color: #f7f7f7;
+        background-color: #fff;
+        background-image: url("../assets/imgs/fundo_login.jpg");
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -11,14 +12,24 @@ page-register {
         background-clip: border-box;
         background-attachment: fixed;
     }
-    .item-md {
-        color: #333;
-        background-color: transparent;
+    .button-facebook {
+        right: 0;
+        height: 18vw;
+        bottom: calc(50% - 9vw);
+        position: absolute;
     }
-    .itemContent {
-        padding-right: 40px;
+    .button-email {
+        right: 0;
+        height: 18vw;
+        bottom: calc(50% - 30vw);
+        position: absolute;
     }
-   
+    .button-cadastro {
+        right: 0;
+        height: 18vw;
+        bottom: calc(50% - 50vw);
+        position: absolute;
+    }
     .button-temp {
         right: 5%;
         bottom: 5%;
@@ -27,8 +38,10 @@ page-register {
         font-size: 20px;
     }
     .logo-login {
-        margin-top: 25%;
-        width: 50%;
+        right: calc(50% - 12.5%);
+        bottom: 75%;
+        width: 25%;
+        position: absolute;
     }
     .texto {
         text-align: center;
@@ -39,10 +52,9 @@ page-register {
         bottom: 68%;
         right: calc(50% - 20vw);
     }
-    .scroll-content{
-        text-align: -webkit-center;
-    }
-    .button-md{
-        border-radius: 10px;
-    }
+    .pagetabs{
+        text-align: center !important;
+        color: cornflowerblue;
+        margin-top: 25%;
+      }
 }

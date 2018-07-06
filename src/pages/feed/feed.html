@@ -10,13 +10,9 @@
   <ion-toolbar color="dark">
     
     <ion-title>
-      <img class="imageLogoFeed" src="assets/imgs/logo.png">
     </ion-title>
 
     <ion-buttons end>
-      <button id="ferramentas-button" ion-button clear (click)="goFerramentas()">
-        <ion-icon name="construct"></ion-icon>
-      </button> 
       <button id="notification-button" ion-button clear (click)="notificacoes($event)">
         <ion-icon name="notifications">
           <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>

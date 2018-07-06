@@ -27,7 +27,7 @@ export class RegisterPage {
   loginId: number;
   pageId:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage, private alertCtrl: AlertController) {
-    this.pageId="login";
+    this.pageId="botoes";
     this.http = http;
     this.start = "";
     this.destination = "";

@@ -27,12 +27,8 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register';
-import { OrcamentosPage } from '../pages/orcamentos/orcamentos';
-import { CalculadoraPage } from '../pages/calculadora/calculadora';
 import { FeedPageModule } from '../pages/feed/feed.module';
 import { StatsPage } from '../pages/stats/stats';
-import { CodigoDeErroPage } from '../pages/codigo-de-erro/codigo-de-erro';
-import { FerramentasPage } from '../pages/ferramentas/ferramentas';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -46,8 +42,6 @@ import { PopoverDenunciarComponent } from '../components/popover-denunciar/popov
 import { PopoverTopComponent } from '../components/popover-top/popover-top';
 import { PopoverOptsAnunciosComponent } from '../components/popover-opts-anuncios/popover-opts-anuncios';
 import { PopoverNotificacoesComponent } from '../components/popover-notificacoes/popover-notificacoes';
-import { MarcasArCondicionadoPage } from '../pages/marcas-ar-condicionado/marcas-ar-condicionado';
-import { ProdutosPage } from '../pages/produtos/produtos';
 import { ListaPage } from '../pages/lista/lista';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { UploadsProvider } from '../providers/uploads/uploads';
@@ -78,12 +72,6 @@ var config = {
     PopoverTopComponent,
     PopoverOptsAnunciosComponent,
     PopoverNotificacoesComponent,
-    OrcamentosPage,
-    CodigoDeErroPage,
-    FerramentasPage,
-    MarcasArCondicionadoPage,
-    ProdutosPage,
-    CalculadoraPage,
     ListaPage
   ],
   
@@ -116,12 +104,6 @@ var config = {
     PopoverTopComponent,
     PopoverOptsAnunciosComponent,
     PopoverNotificacoesComponent,
-    OrcamentosPage,
-    CodigoDeErroPage,
-    FerramentasPage,
-    MarcasArCondicionadoPage,
-    ProdutosPage,
-    CalculadoraPage,
     ListaPage
   ],
   providers: [
