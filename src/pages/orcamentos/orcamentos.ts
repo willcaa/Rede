@@ -206,24 +206,23 @@ export class OrcamentosPage {
           columns: [
             {
               image: 'logo',
-              width: '100',
-              height: '100',
+              maxWidth: 100,
+              maxHeight: 50,
             },
             [
               { text: [this.userName, '\n'], style: 'header_title' },
-              // { text: ['Email: ', this.userEmail], style: 'header' },
-              // { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
+              { text: ['Email: ', this.userEmail], style: 'header' },
+              { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
             ]
           ],
 
         },
-        { text: '\n' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
 
         { text: ['Cliente: ', this.clienteFullName], style: 'content_title' },
         { text: ['Telefone: ', this.clientePhone], style: 'content' },
         { text: ['Email: ', this.clienteEmailOrcamento], style: 'content' },
-        { text: ['Endereço: ', this.clienteAddress, '\n'], style: 'content' },
+        { text: ['Endereço: ', this.clienteAddress], style: 'content' },
         [
 
           { text: ['NUMERO DA ORDEM DE SERVIÇO #', this.orcamentoView.orcamento.id, '                                                                                                        \n'], style: 'nmr_title' },
@@ -260,7 +259,7 @@ export class OrcamentosPage {
         { text: ['R$', this.totalMateriais, ',00\n'], style: 'numbr' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
 
-        { text: 'Mão de e Serviços\n', style: 'title', pageBreak: 'before' },
+        { text: 'Mão de e Serviços\n', style: 'title',},
 
         {
           style: 'table1',
@@ -296,35 +295,31 @@ export class OrcamentosPage {
         { text: [this.orcamentoView.orcamento.description, '\n\n'], style: 'desc' },
         { text: 'Formas de pagamento\n\n\n', style: 'pagmnt' },
         { text: this.orcamentoView.orcamento.payment_details, style: 'pagmento' },
-        {
-          columns: [
-            [
-              { text: 'Orçamento gerado por\n', style: 'a' },        
-              {
-                image: 'img1',
-                width: '100',
-                alignment: 'center'
-              }
-            ],
-            [
-              { text: 'Patrocinado por\n', style: 'a' },
-              {
-                image: 'img2',
-                width: '100',
-                alignment: 'center'
-              }   
-            ]
-          ]
-
-        }
-
         
+          
+            [{ text: 'Orçamento gerado por\n', style: 'a' },
+            
+            // { text: 'Patrocinado por\n', style: 'a' },
+            {
+              image: 'img',
+              width: 50,
+              alignment: 'left'
+              
+            },
+            { text: 'Patrocinado por\n', style: 'b' },
+            {
+              image: 'img2',
+              width: 50,
+              alignment:'left'
+            }]
+           
+          
         
       ],
 
       images: {
         logo: this.logo64,
-        img1: imageUrl,
+        img: imageUrl,
         img2: img2Url
       },
 
@@ -386,7 +381,7 @@ export class OrcamentosPage {
         },
         descricao: {
           bold: true,
-          fontSize: 20,
+          fontSize: 10,
           margin: [0, 15, 0, 0]
         },
         desc: {
@@ -407,19 +402,15 @@ export class OrcamentosPage {
         a: {
           fontSize: 10,
           color: 'lightgrey',
-          margin: [0, 20, 0, 0],
-          alignment: 'center'
+          alignment: 'left',
+          margin: [0, 0 , 0, 3]
         },
-
         b: {
           fontSize: 10,
           color: 'lightgrey',
-          margin: [0, 0, 20, 0],
-          alignment: 'center'
-        }
-
-
-
+          alignment: 'left',
+          margin: [0, 3, 0, 3]
+        },
       },
 
       pageSize: 'A4',
@@ -1199,14 +1190,14 @@ export class OrcamentosPage {
         this.total = 0;
         if (data) {
           data.orcamentoProdutos.forEach(element => {
-            this.total = this.total + (element.price * element.qty);
-            this.totalMateriais = this.totalMateriais + element.price;
+            this.total = this.total + (parseInt(element.price) * parseInt(element.qty));
+            this.totalMateriais = parseInt(this.totalMateriais) + parseInt(element.price);
             console.log(element.price, this.total);
 
           });
           data.orcamentoServicos.forEach(element => {
-            this.total = this.total + (element.price * element.qty);
-            this.totalServicos = this.totalServicos + element.price;
+            this.total = this.total + (parseInt(element.price) * parseInt(element.qty));
+            this.totalServicos =parseInt(this.totalServicos) + parseInt(element.price);
             console.log(element.price, this.total);
           });
           this.orcamentoView = data;
