@@ -364,7 +364,7 @@
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
-            Valor: R$ {{item.price}},00
+            Email: {{item.email}}
           </div>
           <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
@@ -377,7 +377,7 @@
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
-            Valor: R$ {{item.price}},00
+            Email: {{item.email}}
           </div>
           <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
@@ -389,7 +389,7 @@
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
-            Valor: R$ {{item.price}},00
+            Email: {{item.email}}
           </div>
           <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>

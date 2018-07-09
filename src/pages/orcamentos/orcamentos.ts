@@ -638,6 +638,7 @@ export class OrcamentosPage {
       else
         console.log("Nao há orçamentos a serem removidos");
     }
+    
   }
 
   public deleteCliente(id) {
