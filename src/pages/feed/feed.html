@@ -78,8 +78,11 @@
   <ion-toolbar id="sendbar" color="light" style="height: 45px; min-height: 0px;" (click)="goImage()">
     <ion-item>
       <p>O que gostaria de informar ?</p>
-     <ion-avatar item-start *ngIf="getSrc(foto_usuario)">
+     <ion-avatar item-start *ngIf="foto_usuario && foto_usuario != 'none'">
         <img [src]="getSrc(foto_usuario)">
+      </ion-avatar>
+     <ion-avatar item-start *ngIf="!foto_usuario || foto_usuario == 'none'">
+        <img src="assets/imgs/user.png">
       </ion-avatar>
     </ion-item>
     <ion-buttons end>
@@ -98,9 +101,12 @@
   </ion-refresher>
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
     <ion-item>
-      <ion-avatar item-start *ngIf="getSrc(item.user_image)">
-        <img  [src]="getSrc(item.user_image)" (click)="goPerfil(item.id)">
-      </ion-avatar>
+        <ion-avatar item-start *ngIf="item.user_image && item.user_image != 'none'">
+            <img  [src]="getSrc(item.user_image)" (click)="goPerfil(item.id)">
+          </ion-avatar>
+         <ion-avatar item-start *ngIf="!item.user_image || item.user_image == 'none'">
+            <img  src="assets/imgs/user.png" (click)="goPerfil(item.id)">
+          </ion-avatar>
       <P style="white-space: initial; max-width: 80%;">
         <b>{{ item.nome }}</b>
         <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin"></ion-icon> {{ item.local }}</b></span>
@@ -134,8 +140,8 @@
 
     <div style="overflow: hidden; max-height: 700px;" class="img_card" *ngIf="item.tipo == 3">
       <div  *ngIf='item.link'>
-        <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl('http://'+item.link)" width="100%" height="350px" scrolling="NO" frameborder="0"></iframe>
-          <h5 (click)="openBrowser('http://'+item.link)">
+        <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(item.link)" width="100%" height="350px" scrolling="NO" frameborder="0"></iframe>
+          <h5 (click)="openBrowser(item.link)">
         {{ item.link }}</h5>
       </div>
     </div>

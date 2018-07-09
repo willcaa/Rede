@@ -69,7 +69,6 @@
       <div  *ngIf='youtubeSaneado'>
         <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(youtubeSaneado)' width="100%" height="auto" frameborder="0"></iframe>
       </div>
-      <p>{{youtubeSaneado}}</p>
       <div style="width: 100%;height: auto;">
         <ion-item>
           <ion-input  [(ngModel)]="linkYoutube" type="text"  (change)="cahngeYoutube()" placeholder="Insira o link do Youtube" ></ion-input>
@@ -80,7 +79,7 @@
 
   </ion-item>
   <ion-item>
-      <ion-textarea [(ngModel)]="texto" (ngModelChange)="checkLink('#textoPost')" rows="4" placeholder="O que gostaria de informar?" id="textoPost"></ion-textarea>
+      <ion-textarea [(ngModel)]="texto" rows="4" placeholder="O que gostaria de informar?" id="textoPost"></ion-textarea>
   </ion-item>
   <ion-list style="margin-top: 50px;">
     <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getImages(); setPostType(1);">

@@ -4,9 +4,9 @@
       <ion-avatar item-start (click)="goPerfil(item.id_notificando)">
         <img src="{{ item.user_image }}">
       </ion-avatar>
-      <h2>{{ item.nome }}</h2>
-      <p *ngIf="item.tipo_notificacao == 'comentario'">Comentou em seu <b (click)="goPost(item.id_anuncio)">post</b>.</p>
-      <p *ngIf="item.tipo_notificacao == 'seguidor'">Começou a seguir você.</p>
+      <h2 (click)="goPerfil(item.id_notificando)">{{ item.nome }}</h2>
+      <p *ngIf="item.tipo_notificacao == 'comentario'" (click)="goPost(item.id_anuncio)">Comentou em seu <b>post</b>.</p>
+      <p *ngIf="item.tipo_notificacao == 'seguidor'" (click)="goPerfil(item.id_notificando)">Começou a seguir você.</p>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -12,7 +12,9 @@ import { StatsPage } from '../stats/stats';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { BrMaskerModule } from 'brmasker-ionic-3';
+import { Base64 } from '@ionic-native/base64';
+import { ImagePicker } from '@ionic-native/image-picker';
+
 /**
  * Generated class for the PerfilPage page.
  *
@@ -42,16 +44,21 @@ export class PerfilPage {
   public alteraNome: boolean = false;
   usuarioProfissional: any;
   usuarioPessoal: any;
+  iageLogo: any;
   pageId: any = 'publicacoes';
   enviandoSeguir: boolean;
   public imageURI: any;
   imageFileName: any;
+  logo: any;
+  logo64: any;
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
     public photoViewer: PhotoViewer, 
     public popoverCtrl: PopoverController, 
     private _sanitizer: DomSanitizer, 
     public navParams: NavParams, 
+    private imagePicker: ImagePicker,
+    private base64: Base64,
     public http: Http, 
     private iab: InAppBrowser,
     private storage: Storage,
@@ -63,11 +70,35 @@ export class PerfilPage {
     this.perfil_imagem = this.navParams.get("image");
     this.perfil_nome = this.navParams.get("nome");
     this.enviandoSeguir = false;
+    this.storage.get('logo')
+    .then( res =>{
+        console.log(res);
+        this.logo = res;
+      } 
+    );
+    this.storage.get('logo64')
+    .then( res =>{
+        console.log(res);
+        this.logo64 = res;
+      } 
+    );
   }
   
 alterarTab(Id){
     this.pageId = Id;
     console.log(this.pageId);
+    this.storage.get('logo')
+    .then( res =>{
+        console.log(res);
+        this.logo = res;
+      } 
+    );
+    this.storage.get('logo64')
+    .then( res =>{
+        console.log(res);
+        this.logo64 = res;
+      } 
+    );
   }
 
   ionViewDidLoad() {
@@ -86,6 +117,12 @@ alterarTab(Id){
       refresher.complete();
     }, 2000);
   }
+
+private save(key: string, data: string) {
+  this.storage.set(key, data).then(result=>{
+    return result;
+  });
+}
 
   comments(postId) {
     this.navCtrl.push(CommentsPage, {
@@ -311,6 +348,23 @@ alterarTab(Id){
   // loadMore(infiniteScroll = null) {
   //   this.index_anuncio = this.index_anuncio + 1;
   // }
+  getLogo() {
+    let options = {
+      maximumImagesCount: 1
+    };
+    this.imagePicker.getPictures(options).then((results) => {
+      for (var i = 0; i < results.length; i++) {
+        this.logo = results[i];
+        this.base64.encodeFile(results[i]).then((base64File: string) => {
+          this.logo64 = base64File;
+          this.save('logo', results[i]);
+          this.save('logo64', base64File);
+        }, (err) => {
+          console.log(err);
+        });
+      }
+    }, (err) => { });
+  }
 
   showAlert(title, text, button) {
     let alert = this.alertCtrl.create({ title: title, subTitle: text, buttons: [button] });

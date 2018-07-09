@@ -122,6 +122,7 @@
     </plugin>
     <plugin name="cordova-plugin-document-viewer" spec="^0.9.10" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
+    <plugin name="com-badrit-base64" spec="^0.2.0" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.0.0" />
 </widget>

@@ -11,6 +11,8 @@ import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { text } from '@angular/core/src/render3/instructions';
+import { Base64 } from '@ionic-native/base64';
+
 /**
  * Generated class for the OrcamentosPage page.
  *
@@ -127,9 +129,9 @@ export class OrcamentosPage {
   clienteEmailOrcamento: any;
   clientePhone: any;
   clienteAddress: any;
-
-
-  constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public http: Http, public alertCtrl: AlertController, private fileOpener: FileOpener, private fileChooser: FileChooser, private filePath: FilePath, private transfer: FileTransfer, public file: File) {
+  logo: any;
+  logo64: any;
+  constructor(public navCtrl: NavController, private base64: Base64, private storage: Storage, public navParams: NavParams, public http: Http, public alertCtrl: AlertController, private fileOpener: FileOpener, private fileChooser: FileChooser, private filePath: FilePath, private transfer: FileTransfer, public file: File) {
     this.storage.get('meuid')
       .then(res => {
         console.log(res);
@@ -149,12 +151,29 @@ export class OrcamentosPage {
         this.userImagem = res;
       }
       );
+    this.storage.get('logo')
+    .then( res =>{
+        console.log(res);
+        this.logo = res;
+      } 
+    );
+    this.storage.get('logo64')
+    .then( res =>{
+        console.log(res);
+        if(res){
+          this.logo64 = res;
+        } else {
+          this.logo64 = 'data:image/jpeg;base64,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'
+        }
+      } 
+    );
     this.storage.get('email')
       .then(res => {
         console.log(res);
         this.userEmail = res;
       }
       );
+
     this.fabBottom = '75px';
   }
 
@@ -186,23 +205,25 @@ export class OrcamentosPage {
         {
           columns: [
             {
-              image: 'img'
+              image: 'logo',
+              width: '100',
+              height: '100',
             },
             [
               { text: [this.userName, '\n'], style: 'header_title' },
-              { text: ['Email: ', this.userEmail], style: 'header' },
-              { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
+              // { text: ['Email: ', this.userEmail], style: 'header' },
+              // { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
             ]
           ],
 
         },
-        { text: '\n\n' },
+        { text: '\n' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
 
-        { text: ['Cliente: ', this.clienteFullName, '\n'], style: 'content_title' },
-        { text: ['Telefone: ', this.clientePhone, '\n'], style: 'content' },
-        { text: ['Email: ', this.clienteEmailOrcamento, '\n'], style: 'content' },
-        { text: ['Endereço: ', this.clienteAddress, '\n\n'], style: 'content' },
+        { text: ['Cliente: ', this.clienteFullName], style: 'content_title' },
+        { text: ['Telefone: ', this.clientePhone], style: 'content' },
+        { text: ['Email: ', this.clienteEmailOrcamento], style: 'content' },
+        { text: ['Endereço: ', this.clienteAddress, '\n'], style: 'content' },
         [
 
           { text: ['NUMERO DA ORDEM DE SERVIÇO #', this.orcamentoView.orcamento.id, '                                                                                                        \n'], style: 'nmr_title' },
@@ -223,11 +244,11 @@ export class OrcamentosPage {
               [this.orcamentosProdutos2.name, this.orcamentosProdutos2.qty, this.orcamentosProdutos2.price],
               [this.orcamentosProdutos3.name, this.orcamentosProdutos3.qty, this.orcamentosProdutos3.price],
               [this.orcamentosProdutos4.name, this.orcamentosProdutos4.qty, this.orcamentosProdutos4.price],
-              [this.orcamentosProdutos5.name, this.orcamentosProdutos5.qty, this.orcamentosProdutos5.price],
-              [this.orcamentosProdutos6.name, this.orcamentosProdutos6.qty, this.orcamentosProdutos6.price],
-              [this.orcamentosProdutos7.name, this.orcamentosProdutos7.qty, this.orcamentosProdutos7.price],
-              [this.orcamentosProdutos8.name, this.orcamentosProdutos8.qty, this.orcamentosProdutos8.price],
-              [this.orcamentosProdutos9.name, this.orcamentosProdutos9.qty, this.orcamentosProdutos9.price],
+              // [this.orcamentosProdutos5.name, this.orcamentosProdutos5.qty, this.orcamentosProdutos5.price],
+              // [this.orcamentosProdutos6.name, this.orcamentosProdutos6.qty, this.orcamentosProdutos6.price],
+              // [this.orcamentosProdutos7.name, this.orcamentosProdutos7.qty, this.orcamentosProdutos7.price],
+              // [this.orcamentosProdutos8.name, this.orcamentosProdutos8.qty, this.orcamentosProdutos8.price],
+              // [this.orcamentosProdutos9.name, this.orcamentosProdutos9.qty, this.orcamentosProdutos9.price],
 
             ]
           },
@@ -253,11 +274,11 @@ export class OrcamentosPage {
               [this.orcamentosServicos2.name, this.orcamentosServicos2.qty, this.orcamentosServicos2.price],
               [this.orcamentosServicos3.name, this.orcamentosServicos3.qty, this.orcamentosServicos3.price],
               [this.orcamentosServicos4.name, this.orcamentosServicos4.qty, this.orcamentosServicos4.price],
-              [this.orcamentosServicos5.name, this.orcamentosServicos5.qty, this.orcamentosServicos5.price],
-              [this.orcamentosServicos6.name, this.orcamentosServicos6.qty, this.orcamentosServicos6.price],
-              [this.orcamentosServicos7.name, this.orcamentosServicos7.qty, this.orcamentosServicos7.price],
-              [this.orcamentosServicos8.name, this.orcamentosServicos8.qty, this.orcamentosServicos8.price],
-              [this.orcamentosServicos9.name, this.orcamentosServicos9.qty, this.orcamentosServicos9.price],
+              // [this.orcamentosServicos5.name, this.orcamentosServicos5.qty, this.orcamentosServicos5.price],
+              // [this.orcamentosServicos6.name, this.orcamentosServicos6.qty, this.orcamentosServicos6.price],
+              // [this.orcamentosServicos7.name, this.orcamentosServicos7.qty, this.orcamentosServicos7.price],
+              // [this.orcamentosServicos8.name, this.orcamentosServicos8.qty, this.orcamentosServicos8.price],
+              // [this.orcamentosServicos9.name, this.orcamentosServicos9.qty, this.orcamentosServicos9.price],
 
             ]
           },
@@ -275,26 +296,36 @@ export class OrcamentosPage {
         { text: [this.orcamentoView.orcamento.description, '\n\n'], style: 'desc' },
         { text: 'Formas de pagamento\n\n\n', style: 'pagmnt' },
         { text: this.orcamentoView.orcamento.payment_details, style: 'pagmento' },
+        {
+          columns: [
+            [
+              { text: 'Orçamento gerado por\n', style: 'a' },        
+              {
+                image: 'img1',
+                width: '100',
+                alignment: 'center'
+              }
+            ],
+            [
+              { text: 'Patrocinado por\n', style: 'a' },
+              {
+                image: 'img2',
+                width: '100',
+                alignment: 'center'
+              }   
+            ]
+          ]
 
-        { text: '\n\n\n\nOrçamento gerado por\n', style: 'a' },        
-        {
-          image: 'img',
-          width: '100',
-          alignment: 'center',
-        },
-        { text: 'Patrocinado por\n', style: 'a' },
-        {
-          image: 'img2',
-          width: '100',
-          alignment: 'center',
         }
 
+        
         
       ],
 
       images: {
-        img: imageUrl,
-        img2: img2Url,
+        logo: this.logo64,
+        img1: imageUrl,
+        img2: img2Url
       },
 
       styles: {
@@ -302,25 +333,25 @@ export class OrcamentosPage {
           margin: [0, 0, 15, 0],
           bold: true,
           fontSize: 12,
-          alignment: 'right',
+          alignment: 'right'
         },
         header: {
           margin: [0, 0, 15, 0],
           bold: false,
           fontSize: 10,
-          alignment: 'right',
+          alignment: 'right'
         },
         content_title: {
           bold: true,
           alignment: 'left',
           margin: [0, 15, 0, 0],
-          fontSize: 12,
+          fontSize: 12
         },
         content: {
-          margin: [0, 15, 0, 0],
+          margin: [0, 0, 0, 0],
           bold: false,
           alignment: 'left',
-          fontSize: 10,
+          fontSize: 10
         },
         bar: {
           color: 'lightgrey',
@@ -329,7 +360,7 @@ export class OrcamentosPage {
           bold: true,
           fontSize: '12',
           background: 'lightgrey',
-          margin: [0, 17, 0, 0],
+          margin: [0, 17, 0, 0]
         },
         nmr: {
           background: 'lightgrey'
@@ -385,7 +416,7 @@ export class OrcamentosPage {
           color: 'lightgrey',
           margin: [0, 0, 20, 0],
           alignment: 'center'
-        },
+        }
 
 
 
@@ -395,15 +426,16 @@ export class OrcamentosPage {
 
       pageOrientation: 'portrait'
     };
-    // pdfmake.createPdf(docDefinition).open();
+    pdfmake.createPdf(docDefinition).open();
 
     pdfmake.createPdf(docDefinition).getBuffer(function (buffer) {
       let utf8 = new Uint8Array(buffer);
       let binaryArray = utf8.buffer;
       self.saveToDevice(binaryArray, "orcamento-refriplay.pdf");
-    })
+    });
   }
 
+  
   saveToDevice(data: any, savefile: any) {
     let self = this;
     self.file.writeFile(self.file.externalRootDirectory, savefile, data, { replace: true }).then(file =>
@@ -598,7 +630,7 @@ export class OrcamentosPage {
       else
         console.log("Nao há serviços a serem removidos!");
     }
-    else if (pageId == 'orcamentos_c') {
+    else if (pageId == 'orcamentos_c' || pageId == 'orcamentos_p' || pageId == 'orcamentos_a' ) {
       if (this.idToRemove != null) {
         console.log(this.idToRemove)
         this.deleteOrcamentoCancelado(this.idToRemove, fab);

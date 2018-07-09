@@ -69,7 +69,7 @@ export class FeedPage {
   public local: any = "proximidade";
   public range: any;
   public nome_usuario: any;
-  public foto_usuario: any;
+  public foto_usuario: any = 'assets/imgs/user.png';
   public notificacoes_qts: any;
    constructor(public platform: Platform, public sanitizer: DomSanitizer, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
     if(navParams.get("slide")){

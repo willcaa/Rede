@@ -96,8 +96,17 @@ export class AboutPage {
 
   cahngeYoutube(){
     let link;
-    link = this.linkYoutube.split('=')
-    this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[1] + "?rel=1&amp;controls=1&amp;showinfo=0'";
+    link = this.linkYoutube.split('=');
+    console.log(this.linkYoutube);
+    console.log(link);
+    if(link[1] && link[1] != undefined){
+      this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[1] + "?rel=1&amp;controls=1&amp;showinfo=0'";
+    } else {
+      link = this.linkYoutube.split('/');
+      this.youtubeSaneado = "https://www.youtube-nocookie.com/embed/" + link[3] + "?rel=1&amp;controls=1&amp;showinfo=0'";
+      console.log(this.linkYoutube);
+      console.log(link);
+    }
     console.log(this.youtubeSaneado);
   }
 

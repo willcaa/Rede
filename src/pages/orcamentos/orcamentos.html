@@ -503,6 +503,9 @@
   </div>
   <div id="orcamento_v" class="pagetabs" *ngIf="pageId == 'orcamento_v'">
       <h5>Informações Pessoais</h5>
+      <br *ngIf="logo">
+      <img *ngIf="logo" src="{{logo}}" alt="" width="100%" height="auto">
+      <br *ngIf="logo">
       <ion-list>
         <ion-item style="height: 100px;">
           <ion-label color="primary" stacked>Técnico:</ion-label>
@@ -531,7 +534,7 @@
                 <ion-label color="primary" stacked>Produto:</ion-label>
                 <div item-content class="itemContent">
                     {{item.name}}<br>
-                    Preço por unidade: R$ {{item.price}},00 
+                    Preço por unidade: R$ {{item.price}}
                   </div>
               </ion-item>
               <ion-item style="height: 75px;">
@@ -549,7 +552,7 @@
                   <ion-label color="primary" stacked>Serviço:</ion-label>
                   <div item-content class="itemContent">
                       {{item.name}}<br>
-                      Preço por unidade: R$ {{item.price}},00 
+                      Preço por unidade: R$ {{item.price}}
                     </div>
                 </ion-item>
                 <ion-item style="height: 75px;">

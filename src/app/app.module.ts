@@ -34,6 +34,7 @@ import { StatsPage } from '../pages/stats/stats';
 import { CodigoDeErroPage } from '../pages/codigo-de-erro/codigo-de-erro';
 import { FerramentasPage } from '../pages/ferramentas/ferramentas';
 
+import { Base64 } from '@ionic-native/base64';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Geolocation } from '@ionic-native/geolocation';
 import { File } from '@ionic-native/file';
@@ -126,6 +127,7 @@ var config = {
   ],
   providers: [
     StatusBar,
+    Base64,
     ImagePicker,
     FileOpener,
     Geolocation,
