@@ -36,12 +36,38 @@
           </ion-label>
           <ion-input placeholder="Senha" [(ngModel)]="senha2"></ion-input>
         </ion-item>
+        <ion-item>
+          <button ion-button name="cadastrar" style="width: 100%; height: 100%; height: 35px;" *ngIf="senha == senha2 && senha && senha2" (click)="cadastrar(nomeCompleto, email, userName, senha)">
+            Cadastrar
+          </button>
+        </ion-item>
+        <button ion-button icon-start name="back" (click)="alterarTab('botoes')">
+          <ion-icon name="arrow-back"></ion-icon>
+          Voltar
+        </button> 
       </ion-list>
 
     </div>
       
     <div class="pagetabs" id="cadastro" *ngIf="pageId == 'cadastro'">
-
+      <ion-list>
+        <ion-item>
+          <ion-input placeholder="@NOME DE USUARIO" type="text" [(ngModel)]="nomeUsuario"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Senha" type="password" [(ngModel)]="senha"></ion-input>
+        </ion-item>
+        <ion-item>
+          <button ion-button name="entrar" (click)="loginEmail(email, senha)" style="width: 100%; height: 35px;">Entrar</button>
+        </ion-item>
+        <ion-item style="align-content: center">
+          <ion-label stacked style="align-content: center; height: 35px;;">Esqueceu seus dados de login? Obtenha ajuda para <br> entrar.</ion-label>
+          <br>
+          <br>
+          <br>
+          <ion-label stacked>Não tem uma conta? Cadastre-se</ion-label>
+        </ion-item>
+      </ion-list>
     </div>
     <a class="button-temp" (click)="cadastrar('will-kg@hotmail.com', 'Willian Alves', 'https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/11813515_950106465040645_4723295867195234113_n.jpg?oh=')">
       Teste Registro

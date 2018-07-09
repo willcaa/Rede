@@ -48,37 +48,35 @@ export class RegisterPage {
   }
 
 
-  cadastrar(email, nome, pw) {
+  cadastrar(nomeCompleto, email, nome, pw) {
   
-    this.storage.get('meuid').then((val) => {
-      console.log('Id', val);
-      this.loginId = val;
-    });
-    if(this.loginId) {
-      this.navCtrl.push('FeedPage');
-      console.log(" logado");
-    } else {
       let headerx = new Headers();
       headerx.append('Access-Control-Allow-Origin', '*');
       headerx.append('Accept', 'application/json');
       headerx.append('content-type', 'application/json');
       var body = {
+        nomeCompleto: nomeCompleto,
         email: email,
         nome: nome,
         pw: pw,
         imagem: 'none'
       }
       var link = 'https://bluedropsproducts.com/app/usuarios/cadastrar';
-  
       this.http.post(link, body, { headers: headerx })
         .map(res => res.json())
         .subscribe(data => {
           if ( data ) {
-            this.setStorage(data);
-          };
+            let alert = this.alertCtrl.create({
+              title: 'Cadastro realizado com sucesso!',
+              subTitle: 'Agora voce ja pode entrar com seu email.',
+              buttons: ['Ok']
+            });
+            alert.present();
+            this.alterarTab('botoes');
+          }
           console.log(data);
         });
-    }
+    
   }
 
   setStorage(data) {
@@ -110,14 +108,14 @@ export class RegisterPage {
       .catch(e => console.log('Error logging into Facebook', e));
   }
 
-  loginEmail(email, pw){
+  loginEmail(user, pw){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
 
     let body = {
-      email: email,
+      user: user,
       pw: pw
     }
 
@@ -146,7 +144,7 @@ export class RegisterPage {
     this.fb.api("/"+userid+"/?fields=picture.width(9999).height(9999),id,email,name,gender",["public_profile"])
       .then(res => {
         this.users = res;
-        this.cadastrar(this.users.email, this.users.name, this.users.picture.data.url);
+        this.cadastrar(this.users.name ,this.users.email, this.users.name, this.users.picture.data.url);
       })
       .catch(e => {
         console.log(e);
