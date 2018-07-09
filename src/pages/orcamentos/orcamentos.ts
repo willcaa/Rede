@@ -206,13 +206,13 @@ export class OrcamentosPage {
           columns: [
             {
               image: 'logo',
-              width: '100',
-              height: '100',
+              maxWidth: 100,
+              maxHeight: 50,
             },
             [
               { text: [this.userName, '\n'], style: 'header_title' },
-              // { text: ['Email: ', this.userEmail], style: 'header' },
-              // { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
+              { text: ['Email: ', this.userEmail], style: 'header' },
+              { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
             ]
           ],
 
@@ -257,7 +257,7 @@ export class OrcamentosPage {
 
         { text: '---------------------------------------------------------------------------------------------------------------------------------------------------\n', style: 'bar' },
         { text: 'Subtotal dos produtos', style: 'subtotal' },
-        { text: ['R$', this.totalMateriais, ',00\n'], style: 'numbr' },
+        // { text: ['R$', this.totalMateriais, ',00\n'], style: 'numbr' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
 
         { text: 'Mão de e Serviços\n', style: 'title', pageBreak: 'before' },
@@ -288,7 +288,7 @@ export class OrcamentosPage {
 
         { text: '---------------------------------------------------------------------------------------------------------------------------------------------------\n', style: 'bar' },
         { text: 'Subtotal da Mão de Obra', style: 'subtotal' },
-        { text: ['R$', this.totalServicos, ',00\n'], style: 'numbr' },
+        // { text: ['R$', this.totalServicos, ',00\n'], style: 'numbr' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
         { text: ['VALOR TOTAL                                                                                                                       R$', this.total, ',00\n'], style: 'nmr_title' },
         { text: 'DESCRIÇÃO DO SERVIÇO', style: 'descricao' },
@@ -302,7 +302,7 @@ export class OrcamentosPage {
               { text: 'Orçamento gerado por\n', style: 'a' },        
               {
                 image: 'img1',
-                width: '100',
+                width: 100,
                 alignment: 'center'
               }
             ],
@@ -310,7 +310,7 @@ export class OrcamentosPage {
               { text: 'Patrocinado por\n', style: 'a' },
               {
                 image: 'img2',
-                width: '100',
+                width: 100,
                 alignment: 'center'
               }   
             ]
