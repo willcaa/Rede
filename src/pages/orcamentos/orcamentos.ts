@@ -295,31 +295,6 @@ export class OrcamentosPage {
         { text: [this.orcamentoView.orcamento.description, '\n\n'], style: 'desc' },
         { text: 'Formas de pagamento\n\n\n', style: 'pagmnt' },
         { text: this.orcamentoView.orcamento.payment_details, style: 'pagmento' },
-<<<<<<< HEAD
-        {
-          columns: [
-            [
-              { text: 'Orçamento gerado por\n', style: 'a' },        
-              {
-                image: 'img1',
-                width: 100,
-                alignment: 'center'
-              }
-            ],
-            [
-              { text: 'Patrocinado por\n', style: 'a' },
-              {
-                image: 'img2',
-                width: 100,
-                alignment: 'center'
-              }   
-            ]
-          ]
-
-        }
-
-=======
->>>>>>> 533fd3cf54c470da9c8a0d78f88ac0e893333283
         
           
             [{ text: 'Orçamento gerado por\n', style: 'a' },
@@ -442,7 +417,7 @@ export class OrcamentosPage {
 
       pageOrientation: 'portrait'
     };
-    pdfmake.createPdf(docDefinition).open();
+    // pdfmake.createPdf(docDefinition).open();
 
     pdfmake.createPdf(docDefinition).getBuffer(function (buffer) {
       let utf8 = new Uint8Array(buffer);
@@ -563,7 +538,7 @@ export class OrcamentosPage {
         tipo_documento: tipo,
         id: this.userId
       }
-      var link = 'https://bluedropsproducts.com/app/ferramentas/setCliente';
+      var link = 'https://refriplaybusiness.com.br/ferramentas/setCliente';
 
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -607,7 +582,7 @@ export class OrcamentosPage {
       id: this.userId
     }
     console.log(this.userId);
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getClientes';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getClientes';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -668,7 +643,7 @@ export class OrcamentosPage {
       id: id
     }
     console.log(id);
-    var link = 'https://bluedropsproducts.com/app/ferramentas/removeCliente';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/removeCliente';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -693,7 +668,7 @@ export class OrcamentosPage {
       id: id
     }
     console.log(id);
-    var link = 'https://bluedropsproducts.com/app/ferramentas/removeProduto';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/removeProduto';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -731,7 +706,7 @@ export class OrcamentosPage {
               id: id
             }
             console.log(id);
-            var link = 'https://bluedropsproducts.com/app/ferramentas/removeOrcamentoCancelado';
+            var link = 'https://refriplaybusiness.com.br/ferramentas/removeOrcamentoCancelado';
 
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -762,7 +737,7 @@ export class OrcamentosPage {
       id: id
     }
     console.log(id);
-    var link = 'https://bluedropsproducts.com/app/ferramentas/removeServico';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/removeServico';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -795,7 +770,7 @@ export class OrcamentosPage {
         userId: this.userId
       }
 
-      var link = 'https://bluedropsproducts.com/app/ferramentas/setProduto';
+      var link = 'https://refriplaybusiness.com.br/ferramentas/setProduto';
 
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -838,7 +813,7 @@ export class OrcamentosPage {
       id: this.userId
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getProdutos';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getProdutos';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -866,7 +841,7 @@ export class OrcamentosPage {
         userId: this.userId
       }
 
-      var link = 'https://bluedropsproducts.com/app/ferramentas/setServico';
+      var link = 'https://refriplaybusiness.com.br/ferramentas/setServico';
 
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -905,7 +880,7 @@ export class OrcamentosPage {
       id: this.userId
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getServicos';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getServicos';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -930,7 +905,7 @@ export class OrcamentosPage {
       id: id
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getCliente';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getCliente';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -956,7 +931,7 @@ export class OrcamentosPage {
       id: id
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getCliente';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getCliente';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -984,7 +959,7 @@ export class OrcamentosPage {
       tipo_documento: tipo,
       id: this.clienteId
     }
-    var link = 'https://bluedropsproducts.com/app/ferramentas/updateCliente';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/updateCliente';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1009,7 +984,7 @@ export class OrcamentosPage {
       id: id
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getProduto';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getProduto';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -1036,7 +1011,7 @@ export class OrcamentosPage {
       unidade: unidade_produto,
       id: this.produtoId
     }
-    var link = 'https://bluedropsproducts.com/app/ferramentas/updateProduto';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/updateProduto';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1061,7 +1036,7 @@ export class OrcamentosPage {
       id: id
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getServico';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getServico';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -1089,7 +1064,7 @@ export class OrcamentosPage {
       quantidade: quantidade_serv,
       id: this.servicoId
     }
-    var link = 'https://bluedropsproducts.com/app/ferramentas/updateServico';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/updateServico';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1141,7 +1116,7 @@ export class OrcamentosPage {
       pagina: this.pageId
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getOrcamentos';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getOrcamentos';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1177,7 +1152,7 @@ export class OrcamentosPage {
       id: this.userId,
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/loadTotalOrcamentos';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/loadTotalOrcamentos';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1206,7 +1181,7 @@ export class OrcamentosPage {
       id: id
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getOrcamento';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getOrcamento';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1264,7 +1239,7 @@ export class OrcamentosPage {
       id: this.orcamentoSelecionado
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/aprovaOrcamento';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/aprovaOrcamento';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1290,7 +1265,7 @@ export class OrcamentosPage {
       id: this.idToRemove
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/cancelaOrcamento';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/cancelaOrcamento';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1333,7 +1308,7 @@ export class OrcamentosPage {
       services: this.dadosServico
     }
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/setBudget';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/setBudget';
 
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
@@ -1359,7 +1334,7 @@ export class OrcamentosPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioProfissional';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/getUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -1642,7 +1617,7 @@ export class OrcamentosPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioPessoal';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/getUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

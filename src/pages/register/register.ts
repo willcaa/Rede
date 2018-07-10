@@ -68,15 +68,15 @@ export class RegisterPage {
         pw: pw,
         imagem: 'none'
       }
-      var link = 'https://bluedropsproducts.com/app/usuarios/cadastrar';
+      var link = 'https://refriplaybusiness.com.br/usuarios/cadastrar';
   
       this.http.post(link, body, { headers: headerx })
         .map(res => res.json())
-        .subscribe(data => {
-          if ( data ) {
-            this.setStorage(data);
+        .subscribe(_data => {
+          if ( _data ) {
+            var data = JSON.parse(_data);
+            this.loginEmail(data.email, data.senha);
           };
-          console.log(data);
         });
     }
   }
@@ -86,14 +86,16 @@ export class RegisterPage {
     this.save('email', data.email);
     this.save('imagem', data.user_image);
     this.save('meuid', data.id);
-    this.goFeed(data);
   }
-  private save(key: string, data: string) {
+  private async save(key: string, data: string) {
     return this.storage.set(key, data);
   }
   goFeed(data) {
     this.navCtrl.push('FeedPage',{
-      data: data
+      nome: data.nome,
+      email: data.email,
+      imagem: data.user_image,
+      meuid: data.id
     });
   }
 
@@ -121,14 +123,14 @@ export class RegisterPage {
       pw: pw
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/loginEmail';
+    let link = 'https://refriplaybusiness.com.br/usuarios/loginEmail';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
         if( data && data != null ){
           this.setStorage(data);
-          this.navCtrl.push('FeedPage')
+          this.navCtrl.push('FeedPage');
         }
         else{
           this.loginInvalido = true;
@@ -169,7 +171,7 @@ export class RegisterPage {
       email: email,
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/esqueciSenha';
+    let link = 'https://refriplaybusiness.com.br/usuarios/esqueciSenha';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

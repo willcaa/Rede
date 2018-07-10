@@ -8,7 +8,7 @@
   "proxies": [
     {
         "path": "*",
-        "proxyUrl": "http://13.58.158.77"
+        "proxyUrl": "https://refriplaybusiness.com.br"
     }
   ]
 }

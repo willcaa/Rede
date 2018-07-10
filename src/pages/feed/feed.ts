@@ -63,6 +63,7 @@ export class FeedPage {
   loginId: number;
   userId: any;
   userImagem: any;
+  dataIni: any;
   userName: any;
   usuario: any;
   userEmail: any;
@@ -101,31 +102,57 @@ export class FeedPage {
     for (let i = 1; i <= 50; i++) {
       this.items.push({ "number": i });
     }
-    this.storage.get('meuid')
-    .then( res =>{
-      this.getUserInfo(res);
-        console.log(res);
-        this.userId = res;
-      } 
-    );
-    this.storage.get('nome')
-    .then( res =>{
+
+    if(navParams.get("meuid")){
+      this.userId = navParams.get("meuid");
+    } else {
+      this.storage.get('meuid')
+      .then( res =>{
+        this.getUserInfo(res);
+          console.log(res);
+          this.userId = res;
+        } 
+      );
+
+    }
+
+    if(navParams.get("nome")){
+      this.userName = navParams.get("nome");
+    } else {
+      this.storage.get('nome')
+      .then( res =>{
         console.log(res);
         this.userName = res;
       } 
     );
-    this.storage.get('imagem')
-    .then( res =>{
+      
+    }
+    
+    if(navParams.get("imagem")){
+      this.userImagem = navParams.get("imagem");
+    } else {
+      this.storage.get('imagem')
+      .then( res =>{
         console.log(res);
-        this.userImagem = res;
-      } 
-    );
-    this.storage.get('email')
-    .then( res =>{
-        console.log(res);
-        this.userEmail = res;
-      } 
-    );
+          this.userImagem = res;
+        } 
+      );
+      
+    }
+    
+    if(navParams.get("email")){
+      this.userEmail = navParams.get("email");
+    } else {
+      this.storage.get('email')
+      .then( res =>{
+          console.log(res);
+          this.userEmail = res;
+        } 
+      );
+    }
+      
+      
+      
   }
   public getBackground(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
@@ -145,11 +172,12 @@ export class FeedPage {
       id_usuario: user
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+    let link = 'https://refriplaybusiness.com.br/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
+      console.log(data);
       this.usuario = data['usuario'];
       this.nome_usuario = this.usuario.nome;
       this.foto_usuario = this.usuario.user_image;
@@ -207,7 +235,7 @@ export class FeedPage {
       id_usuario: this.userId,
     }
 
-    var link = 'https://bluedropsproducts.com/app/usuarios/notificacoes_qtd';
+    var link = 'https://refriplaybusiness.com.br/usuarios/notificacoes_qtd';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -229,7 +257,7 @@ export class FeedPage {
       n_estrelas: stars
     }
 
-    var link = 'https://bluedropsproducts.com/app/anuncios/stars';
+    var link = 'https://refriplaybusiness.com.br/anuncios/stars';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -269,7 +297,7 @@ export class FeedPage {
                 id_usuario: this.userId,
                 id_anuncio: post.id_anuncio
               }
-              var link = 'https://bluedropsproducts.com/app/post/denunciar';
+              var link = 'https://refriplaybusiness.com.br/post/denunciar';
 
               this.http.post(link, JSON.stringify(body), { headers: headers })
               .map(res => res.json())
@@ -316,7 +344,7 @@ export class FeedPage {
           id_usuario: this.userId,
           id_anuncio: post.id
         }
-        var link = 'https://bluedropsproducts.com/app/anuncios/denunciarAnuncio';
+        var link = 'https://refriplaybusiness.com.br/anuncios/denunciarAnuncio';
 
         this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -352,7 +380,7 @@ export class FeedPage {
       let body = {
         id_usuario: this.userId,
       }
-      var link = 'https://bluedropsproducts.com/app/usuarios/limparNotificacoes';
+      var link = 'https://refriplaybusiness.com.br/usuarios/limparNotificacoes';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -379,7 +407,7 @@ export class FeedPage {
     let body = {
       id_usuario: this.userId
     }
-    var link = 'https://bluedropsproducts.com/app/anuncios/seguidores';
+    var link = 'https://refriplaybusiness.com.br/anuncios/seguidores';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -490,7 +518,7 @@ export class FeedPage {
               id_anuncio: post.id_anuncio,
             }
 
-            let link = 'https://bluedropsproducts.com/app/anuncios/deletar';
+            let link = 'https://refriplaybusiness.com.br/anuncios/deletar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
             .map(res => res.json())
@@ -554,7 +582,7 @@ export class FeedPage {
         anuncio: postId,
         liker: this.userId
       }
-      var link = 'https://bluedropsproducts.com/app/likes/top';
+      var link = 'https://refriplaybusiness.com.br/likes/top';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -583,7 +611,7 @@ export class FeedPage {
     //   anuncio: postId,
     //   liker: this.userId
     // }
-    // var link = 'https://bluedropsproducts.com/app/likes/top';
+    // var link = 'https://refriplaybusiness.com.br/likes/top';
     // this.http.post(link, JSON.stringify(body), { headers: headers })
     //   // .map(res => res.json())
     //   .subscribe(data => {
@@ -866,7 +894,7 @@ export class FeedPage {
       tipo: tipo,
       usuario: this.userId
     }
-    var link = 'https://bluedropsproducts.com/app/anuncios/criar';
+    var link = 'https://refriplaybusiness.com.br/anuncios/criar';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -902,7 +930,7 @@ export class FeedPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+    let link = 'https://refriplaybusiness.com.br/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

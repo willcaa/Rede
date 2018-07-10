@@ -49,7 +49,7 @@
     
     <div *ngIf='postType == 2 && videoId'>
       <div style="width: 100%;height: auto;">
-          <video width="100%" height="auto" controls autoplay>
+          <video width="100%" height="auto" [autoplay]="true" [muted]="true" controls>
             <source src="{{ videoId }}" type="video/mp4">
           </video>
       </div>

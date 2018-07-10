@@ -33,7 +33,7 @@ export class MarcasArCondicionadoPage {
 
     let body = {}
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getMarcas';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getMarcas';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

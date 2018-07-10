@@ -345,7 +345,7 @@ export class AboutPage {
               headers: {}
             }
             
-            fileTransfer.upload(this.videoId, encodeURI('http://13.58.158.77/upload.php'), options)
+            fileTransfer.upload(this.videoId, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
             .then((data) => {
               console.log(data+" Uploaded Successfully");
               this.getUserPosition();
@@ -376,9 +376,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image1, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image1, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://refriplaybusiness.com.br/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image2 && this.image2 != null){
               this.uploadImage2();
@@ -416,9 +416,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image2, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image2, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://refriplaybusiness.com.br/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image3 && this.image3 != null){
               this.uploadImage3();
@@ -457,9 +457,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image3, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image3, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://refriplaybusiness.com.br/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image4 && this.image4 != null){
               this.uploadImage4();
@@ -497,9 +497,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image4, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image4, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://refriplaybusiness.com.br/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image5 && this.image5 != null){
               this.uploadImage5();
@@ -537,7 +537,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image5, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image5, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
           .then((data) => {
             if(this.image6 && this.image6 != null){
               console.log();
@@ -597,7 +597,8 @@ export class AboutPage {
         }, (err: PositionError) => {
           console.log("error : " + err.message);
           this.loading.dismiss();
-          this.getUserPosition();
+          alert(err.message);
+          // this.getUserPosition();
         });
         
       }
@@ -631,7 +632,7 @@ export class AboutPage {
           local: this.checkin
         }
         
-        var link = 'https://bluedropsproducts.com/app/anuncios/criarRefri';
+        var link = 'https://refriplaybusiness.com.br/anuncios/criarRefri';
         // this.presentToast("antes");
         this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -639,14 +640,14 @@ export class AboutPage {
           // this.presentToast("depois");
           this.publicando = false;
           this.imagesNames = '';
-          //this.presentToast(data.data);
           this.loading.dismiss().then( results =>{
             this.navCtrl.push('FeedPage', { id: this.userId, slide: this.localBack});
           });
-        console.log(data.data);
-      
-      }, (err) => {
-          this.getUserPosition(),
+          console.log(data.data);
+          
+        }, (err) => {
+          alert(err);
+          // this.getUserPosition(),
           this.loading.dismiss();
           });
   }
@@ -661,7 +662,7 @@ export class AboutPage {
       id_usuario: this.userId
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+    let link = 'https://refriplaybusiness.com.br/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

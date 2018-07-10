@@ -137,7 +137,7 @@ private save(key: string, data: string) {
      //   anuncio: postId,
      //   liker: this.userId
      // }
-     // var link = 'https://bluedropsproducts.com/app/likes/top';
+     // var link = 'https://refriplaybusiness.com.br/likes/top';
  
      // this.http.post(link, JSON.stringify(body), { headers: headers })
      //   // .map(res => res.json())
@@ -162,7 +162,7 @@ private save(key: string, data: string) {
     }
     console.log('l');
     
-    let link = 'https://bluedropsproducts.com/app/usuarios/perfil';
+    let link = 'https://refriplaybusiness.com.br/usuarios/perfil';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -198,7 +198,7 @@ private save(key: string, data: string) {
         id_usuario: this.perfilId
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/getStats';
+      let link = 'https://refriplaybusiness.com.br/usuarios/getStats';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -224,7 +224,7 @@ private save(key: string, data: string) {
         id_usuario: id_usuario
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/DeixarSeguir';
+      let link = 'https://refriplaybusiness.com.br/usuarios/DeixarSeguir';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -244,7 +244,7 @@ private save(key: string, data: string) {
         id_usuario: id_usuario
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/seguir';
+      let link = 'https://refriplaybusiness.com.br/usuarios/seguir';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -269,7 +269,7 @@ private save(key: string, data: string) {
         id_usuario: id_usuario
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/checkSeguidor';
+      let link = 'https://refriplaybusiness.com.br/usuarios/checkSeguidor';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -280,7 +280,7 @@ private save(key: string, data: string) {
   }
 
   ampliarImagem(imagem, texto = "") {
-    this.photoViewer.show('https://bluedropsproducts.com/app/uploads/'+imagem,texto,{share:true});
+    this.photoViewer.show('https://refriplaybusiness.com.br/uploads/'+imagem,texto,{share:true});
   }
 
   getImage(image) {
@@ -331,7 +331,7 @@ private save(key: string, data: string) {
               id_anuncio: post.id_anuncio,
             }
 
-            let link = 'https://bluedropsproducts.com/app/anuncios/deletar';
+            let link = 'https://refriplaybusiness.com.br/anuncios/deletar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
             .map(res => res.json())
@@ -405,7 +405,7 @@ private save(key: string, data: string) {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/setUsuarioProfissional';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/setUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -430,7 +430,7 @@ private save(key: string, data: string) {
       id: this.perfilId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioProfissional';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/getUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -513,9 +513,9 @@ private save(key: string, data: string) {
         mimeType: "multipart/form-data",
         headers: {}
       }
-      fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+      fileTransfer.upload(fileToUp, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
           .then((data) => {
-            this.perfil_imagem = 'https://bluedropsproducts.com/app/uploads/' + this.imageFileName;
+            this.perfil_imagem = 'https://refriplaybusiness.com.br/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
             this.setImage();
 
@@ -532,11 +532,11 @@ private save(key: string, data: string) {
     headers.append('content-type', 'application/json');
 
     let body = {
-      image: 'https://bluedropsproducts.com/app/uploads/' + this.imageFileName,
+      image: 'https://refriplaybusiness.com.br/uploads/' + this.imageFileName,
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/setNewImage';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/setNewImage';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -569,7 +569,7 @@ private save(key: string, data: string) {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuarioProfissional';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/updateUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -602,7 +602,7 @@ private save(key: string, data: string) {
         id: this.userId
       }
 
-      let link = 'https://bluedropsproducts.com/app/ferramentas/setNovoNome';
+      let link = 'https://refriplaybusiness.com.br/ferramentas/setNovoNome';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -629,7 +629,7 @@ private save(key: string, data: string) {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/setUsuarioPessoal';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/setUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -655,7 +655,7 @@ private save(key: string, data: string) {
       id: this.perfilId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioPessoal';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/getUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -692,7 +692,7 @@ private save(key: string, data: string) {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuarioPessoal';
+    let link = 'https://refriplaybusiness.com.br/ferramentas/updateUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

@@ -397,7 +397,7 @@ export class CalculadoraPage {
           headers: {}
         }
         
-        fileTransfer.upload(this.videoId, encodeURI('http://13.58.158.77/upload.php'), options)
+        fileTransfer.upload(this.videoId, encodeURI('https://refriplaybusiness.com.br/upload.php'), options)
         .then((data) => {
           console.log(data+" Uploaded Successfully");
       

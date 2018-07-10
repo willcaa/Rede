@@ -50,7 +50,7 @@ export class FerramentasPage {
       nome: this.nome
     }
     
-    let link = 'https://bluedropsproducts.com/app/usuarios/getSeguroToken';
+    let link = 'https://refriplaybusiness.com.br/usuarios/getSeguroToken';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

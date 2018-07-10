@@ -34,7 +34,7 @@ export class ProdutosPage {
 
     let body = {marcaId: this.marcaId}
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getMarca';
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getMarca';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
