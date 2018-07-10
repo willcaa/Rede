@@ -26,6 +26,7 @@ export class RegisterPage {
   data:any = {};
   loginId: number;
   pageId:any;
+  user: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage, private alertCtrl: AlertController) {
     this.pageId="botoes";
     this.http = http;
@@ -49,7 +50,7 @@ export class RegisterPage {
 
 
   cadastrar(nomeCompleto, email, nome, pw) {
-  
+      console.log(nomeCompleto, email, nome, pw);
       let headerx = new Headers();
       headerx.append('Access-Control-Allow-Origin', '*');
       headerx.append('Accept', 'application/json');
@@ -65,7 +66,7 @@ export class RegisterPage {
       this.http.post(link, body, { headers: headerx })
         .map(res => res.json())
         .subscribe(data => {
-          if ( data ) {
+          if (data) {
             let alert = this.alertCtrl.create({
               title: 'Cadastro realizado com sucesso!',
               subTitle: 'Agora voce ja pode entrar com seu email.',
@@ -126,7 +127,9 @@ export class RegisterPage {
       .subscribe(data => {
         if( data && data != null ){
           this.setStorage(data);
-          this.navCtrl.push('FeedPage')
+          this.user = data;
+          this.navCtrl.push('FeedPage', {user: this.user});
+
         }
         else{
           this.loginInvalido = true;
