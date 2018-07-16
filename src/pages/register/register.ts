@@ -25,7 +25,15 @@ export class RegisterPage {
   start: string;
   data:any = {};
   loginId: number;
+  cNome:any;
+  cEmail:any;
+  cPw:any;
+  cPw2:any;
   pageId:any;
+  email:any;
+  senha:any;
+  eEmail:any;
+  msgCadastro:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage, private alertCtrl: AlertController) {
     this.pageId="login";
     this.http = http;
@@ -54,10 +62,6 @@ export class RegisterPage {
       console.log('Id', val);
       this.loginId = val;
     });
-    if(this.loginId) {
-      this.navCtrl.push('FeedPage');
-      console.log(" logado");
-    } else {
       let headerx = new Headers();
       headerx.append('Access-Control-Allow-Origin', '*');
       headerx.append('Accept', 'application/json');
@@ -72,24 +76,65 @@ export class RegisterPage {
   
       this.http.post(link, body, { headers: headerx })
         .map(res => res.json())
-        .subscribe(_data => {
-          if ( _data ) {
-            var data = JSON.parse(_data);
+        .subscribe(data => {
+          if ( data.email && data.senha ) {
+            this.cNome = '';
+            this.cEmail = '';
+            this.cPw = '';
+            this.cPw2 = '';
             this.loginEmail(data.email, data.senha);
-          };
+          } else {
+            this.msgCadastro = data;
+          }
         });
-    }
+    
   }
 
-  setStorage(data) {
-    this.save('nome', data.nome);
-    this.save('email', data.email);
-    this.save('imagem', data.user_image);
-    this.save('meuid', data.id);
+  cadastrarFacebook(email, nome, imagem) {
+    var senha = 'facebookGeral';
+      let headerx = new Headers();
+      headerx.append('Access-Control-Allow-Origin', '*');
+      headerx.append('Accept', 'application/json');
+      headerx.append('content-type', 'application/json');
+      var body = {
+        email: email,
+        nome: nome,
+        pw: senha,
+        imagem: imagem
+      }
+      var link = 'https://refriplaybusiness.com.br/usuarios/cadastrarFace';
+  
+      this.http.post(link, body, { headers: headerx })
+        .map(res => res.json())
+        .subscribe(data => {
+          // alert(JSON.stringify(data));
+          if ( data.email ) {
+            this.cNome = '';
+            this.cEmail = '';
+            this.cPw = '';
+            this.cPw2 = '';
+            this.loginEmail(data.email, senha);
+          };
+        });
+    
   }
+
+  public setStorage(data) {
+    this.save('nome', data.nome).then(data1=>{
+      this.save('email', data.email).then(data2=>{
+        this.save('imagem', data.user_image).then(data3=>{
+          this.save('meuid', data.id).then(data4=>{
+            this.navCtrl.push('FeedPage');
+          });
+        });
+      });
+    });
+  }
+
   private async save(key: string, data: string) {
     return this.storage.set(key, data);
   }
+
   goFeed(data) {
     this.navCtrl.push('FeedPage',{
       nome: data.nome,
@@ -101,15 +146,15 @@ export class RegisterPage {
 
   login() {
     this.fb.login(['public_profile', 'user_friends', 'email'])
-      .then(res => {
-        if(res.status === "connected") {
-          this.isLoggedIn = true;
-          this.getUserDetail(res.authResponse.userID);
-        } else {
-          this.isLoggedIn = false;
-        }
-      })
-      .catch(e => console.log('Error logging into Facebook', e));
+    .then(res => {
+      if(res.status === "connected") {
+        this.isLoggedIn = true;
+        this.getUserDetail(res.authResponse.userID);
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log('Error logging into Facebook', e));
   }
 
   loginEmail(email, pw){
@@ -130,7 +175,6 @@ export class RegisterPage {
       .subscribe(data => {
         if( data && data != null ){
           this.setStorage(data);
-          this.navCtrl.push('FeedPage');
         }
         else{
           this.loginInvalido = true;
@@ -148,7 +192,7 @@ export class RegisterPage {
     this.fb.api("/"+userid+"/?fields=picture.width(9999).height(9999),id,email,name,gender",["public_profile"])
       .then(res => {
         this.users = res;
-        this.cadastrar(this.users.email, this.users.name, this.users.picture.data.url);
+        this.cadastrarFacebook(this.users.email, this.users.name, this.users.picture.data.url);
       })
       .catch(e => {
         console.log(e);

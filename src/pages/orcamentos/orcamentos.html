@@ -364,7 +364,7 @@
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
-            Email: {{item.email}}
+            Valor: R$ {{item.valor}},00
           </div>
           <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
@@ -377,7 +377,7 @@
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
-            Email: {{item.email}}
+            Valor: R$ {{item.valor}},00
           </div>
           <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
@@ -389,7 +389,7 @@
           <ion-label color="primary" stacked>{{item.name}}</ion-label>
           <div item-content class="itemContent">
             Cliente: {{ item.full_name }}<br>
-            Email: {{item.email}}
+            Valor: R$ {{item.valor}},00
           </div>
           <ion-checkbox  *ngIf="habCheck == 1" id="{{item.id}}" name="{{item.id}}" [(ngModel)]="item.value" (ionChange)="selectChecked($event, item.id)" item-end></ion-checkbox>
         <ion-icon *ngIf="habCheck != 1" name="md-play" item-end></ion-icon>
@@ -409,7 +409,7 @@
         </ion-item>
       </ion-list>
       <h5>Informações do Cliente</h5>
-      <ion-list  *ngIf="!clienteNome">
+      <ion-list>
         <ion-item (click) = "alterarTab('clientes_o', fab); getClientes();">
           <ion-label color="primary">Selecionar Cliente</ion-label>
           <ion-icon name="md-play" item-end></ion-icon>
@@ -498,7 +498,7 @@
         <ion-item>
           <ion-label color="danger" style="text-align: center;">{{ budgetMsg }}</ion-label>
         </ion-item>
-        <button ion-button  style="width: 100%;" (click)="setOrcamento(description, payment)">Salvar orçamento</button>
+        <button ion-button  style="width: 100%;" (click)="setOrcamento(description, payment, fab)">Salvar orçamento</button>
       </ion-list>
   </div>
   <div id="orcamento_v" class="pagetabs" *ngIf="pageId == 'orcamento_v'">

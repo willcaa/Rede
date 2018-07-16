@@ -128,6 +128,12 @@
         </ion-col>
       </ion-row>
     </div>
+   
+    <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 5">
+      <ion-row>
+          <ion-item  [style.background-image]="getBackground(item.imagem)" style="background-size: cover; background-position-y: center; height: auto; width: 100%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+      </ion-row>
+    </div>
 
     <div *ngIf='item.tipo == 2 && item.video'>
       <div style="width: 100%;height: auto;">

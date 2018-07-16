@@ -378,6 +378,7 @@ private save(key: string, data: string) {
       if(popoverData) {
         if(popoverData == 'logout'){
           console.log(popoverData);
+          this.storage.clear();
           this.navCtrl.push(RegisterPage, {});
         }
       }

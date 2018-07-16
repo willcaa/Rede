@@ -12,6 +12,7 @@
     <allow-navigation href="http://192.168.15.2:8101" />
     <allow-navigation href="http://192.168.15.2:8102" />
     <allow-navigation href="http://192.168.0.12:8104" />
+    <allow-navigation href="http://localhost:8100" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -104,12 +105,7 @@
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <plugin name="cordova-plugin-screen-orientation" spec="~3.0.1" />
-    <plugin name="cordova-plugin-facebook4" spec="^2.0.1">
-        <variable name="APP_ID" value="1505918069504571" />
-        <variable name="APP_NAME" value="Redelive" />
-    </plugin>
     <plugin name="cordova-plugin-media-capture" spec="^3.0.2" />
-    <allow-navigation href="http://localhost:8100" />
     <plugin name="cordova-plugin-filechooser" spec="^1.0.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
@@ -123,6 +119,12 @@
     <plugin name="cordova-plugin-document-viewer" spec="^0.9.10" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="com-badrit-base64" spec="^0.2.0" />
+    <plugin name="cordova-plugin-facebook4" spec="^2.2.0">
+        <variable name="APP_ID" value="179971856199149" />
+        <variable name="APP_NAME" value="Refriplay" />
+        <variable name="ANDROID_SDK_VERSION" value="4.+" />
+    </plugin>
+    <plugin name="onesignal-cordova-plugin" spec="^2.4.1" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.0.0" />
 </widget>

@@ -212,7 +212,7 @@ export class OrcamentosPage {
             [
               { text: [this.userName, '\n'], style: 'header_title' },
               { text: ['Email: ', this.userEmail], style: 'header' },
-              { text: ['Endereço: ', this.usuarioPessoal.endereco, '\n'], style: 'header' }
+              { text: ['Endereço: ', this.usuarioEndereco, '\n'], style: 'header' }
             ]
           ],
 
@@ -254,9 +254,9 @@ export class OrcamentosPage {
           layout: 'noBorders'
         },
 
-        { text: '---------------------------------------------------------------------------------------------------------------------------------------------------\n', style: 'bar' },
+        { text: '_______________________________________________________________________________________________\n', style: 'bar' },
         { text: 'Subtotal dos produtos', style: 'subtotal' },
-        // { text: ['R$', this.totalMateriais, ',00\n'], style: 'numbr' },
+        { text: ['R$', this.totalMateriais, ',00\n'], style: 'numbr' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
 
         { text: 'Mão de e Serviços\n', style: 'title',},
@@ -285,32 +285,30 @@ export class OrcamentosPage {
 
         },
 
-        { text: '---------------------------------------------------------------------------------------------------------------------------------------------------\n', style: 'bar' },
+        { text: '_______________________________________________________________________________________________\n', style: 'bar' },
         { text: 'Subtotal da Mão de Obra', style: 'subtotal' },
-        // { text: ['R$', this.totalServicos, ',00\n'], style: 'numbr' },
+        { text: ['R$', this.totalServicos, ',00\n'], style: 'numbr' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
         { text: ['VALOR TOTAL                                                                                                                       R$', this.total, ',00\n'], style: 'nmr_title' },
         { text: 'DESCRIÇÃO DO SERVIÇO', style: 'descricao' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
         { text: [this.orcamentoView.orcamento.description, '\n\n'], style: 'desc' },
-        { text: 'Formas de pagamento\n\n\n', style: 'pagmnt' },
+        { text: 'Formas de pagamento\n', style: 'pagmnt' },
         { text: this.orcamentoView.orcamento.payment_details, style: 'pagmento' },
         
           
             [{ text: 'Orçamento gerado por\n', style: 'a' },
-            
-            // { text: 'Patrocinado por\n', style: 'a' },
             {
               image: 'img',
               width: 50,
-              alignment: 'left'
+              alignment: 'center'
               
             },
             { text: 'Patrocinado por\n', style: 'b' },
             {
               image: 'img2',
               width: 50,
-              alignment:'left'
+              alignment:'center'
             }]
            
           
@@ -353,7 +351,7 @@ export class OrcamentosPage {
         },
         nmr_title: {
           bold: true,
-          fontSize: '12',
+          fontSize: 12,
           background: 'lightgrey',
           margin: [0, 17, 0, 0]
         },
@@ -402,13 +400,13 @@ export class OrcamentosPage {
         a: {
           fontSize: 10,
           color: 'lightgrey',
-          alignment: 'left',
+          alignment: 'center',
           margin: [0, 0 , 0, 3]
         },
         b: {
           fontSize: 10,
           color: 'lightgrey',
-          alignment: 'left',
+          alignment: 'center',
           margin: [0, 3, 0, 3]
         },
       },
@@ -417,7 +415,7 @@ export class OrcamentosPage {
 
       pageOrientation: 'portrait'
     };
-    // pdfmake.createPdf(docDefinition).open();
+      // pdfmake.createPdf(docDefinition).open();
 
     pdfmake.createPdf(docDefinition).getBuffer(function (buffer) {
       let utf8 = new Uint8Array(buffer);
@@ -623,11 +621,12 @@ export class OrcamentosPage {
     }
     else if (pageId == 'orcamentos_c' || pageId == 'orcamentos_p' || pageId == 'orcamentos_a' ) {
       if (this.idToRemove != null) {
-        console.log(this.idToRemove)
+        console.log(this.idToRemove);
         this.deleteOrcamentoCancelado(this.idToRemove, fab);
       }
-      else
+      else{
         console.log("Nao há orçamentos a serem removidos");
+      }
     }
     
   }
@@ -1234,9 +1233,9 @@ export class OrcamentosPage {
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
     headers.append('Access-Control-Expose-Headers', "true");
-
+  
     let body = {
-      id: this.orcamentoSelecionado
+      id: this.idToRemove
     }
 
     var link = 'https://refriplaybusiness.com.br/ferramentas/aprovaOrcamento';
@@ -1249,7 +1248,8 @@ export class OrcamentosPage {
         if (data) {
           console.log(data);
           this.orcamentoSelecionado = "";
-          this.alterarTab('orcamentos_a', fab);
+          this.loadTotalOrcamentos();
+          this.alterarTab('orcamentos', fab);
         }
       });
   }
@@ -1275,7 +1275,7 @@ export class OrcamentosPage {
         if (data) {
           console.log(data);
           this.orcamentoSelecionado = "";
-
+          this.loadTotalOrcamentos();
           this.alterarTab('orcamentos', fab);
         }
       });
@@ -1298,7 +1298,7 @@ export class OrcamentosPage {
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
     headers.append('Access-Control-Expose-Headers', "true");
-
+    console.log(descricao);
     let body = {
       description: descricao,
       payment: pagamento,
@@ -1317,6 +1317,7 @@ export class OrcamentosPage {
         if (data) {
           this.orcamento = data;
           console.log(data);
+          this.loadTotalOrcamentos();
           this.alterarTab('orcamentos', fab);
         }
       });

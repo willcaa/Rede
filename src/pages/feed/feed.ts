@@ -67,8 +67,8 @@ export class FeedPage {
   userName: any;
   usuario: any;
   userEmail: any;
-  public local: any = "proximidade";
-  public range: any;
+  public local: any = "pais";
+  public range: any = 1000;
   public nome_usuario: any;
   public foto_usuario: any = 'assets/imgs/user.png';
   public notificacoes_qts: any;

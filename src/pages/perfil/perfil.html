@@ -250,7 +250,9 @@
 
     <div id="profissional_n" class="pagetabs" *ngIf="pageId == 'profissional_n'">
       <br> <h5>Informações do profissional</h5><br>
+      <br>
       <img *ngIf="logo" src="{{logo}}" alt="" width="100%" height="auto">
+      <p>Formato indicado para logo: 200x100px</p>
       <button *ngIf="!logo" ion-button icon-end color="darkBlue" (click)="getLogo()">
         Escolher Logo          
         <ion-icon name="md-image" item-end ></ion-icon> 
@@ -259,6 +261,7 @@
         Trocar Logo          
         <ion-icon name="md-image" item-end ></ion-icon> 
       </button>
+      <br>
       <br>
       <ion-list>
         <ion-item>
@@ -327,6 +330,8 @@
                 <ion-option value="Máquinas" *ngIf="especialidade1 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
                 <ion-option value="outros" *ngIf="especialidade1 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
               </ion-select>
+            </ion-item>
+            <ion-item>
               <ion-input type="text" [(ngModel)]="sub1" *ngIf="subespecialidade1 == 'outros'" placeholder="Outros..."></ion-input>
             </ion-item>
         </ion-list>
@@ -359,8 +364,10 @@
                 <ion-option value="Máquinas" *ngIf="especialidade2 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
                 <ion-option value="outros" *ngIf="especialidade2 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
               </ion-select>
-              <ion-input type="text" [(ngModel)]="sub2" *ngIf="subespecialidade2 == 'outros'" placeholder="Outros..."></ion-input>
             </ion-item>
+            <ion-item>
+              <ion-input type="text" [(ngModel)]="sub2" *ngIf="subespecialidade2 == 'outros'" placeholder="Outros..."></ion-input>
+            </ion-item>           
         </ion-list>
 
         <ion-list>
@@ -555,6 +562,8 @@
               <ion-option value="Máquinas" *ngIf="especialidade1 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
               <ion-option value="outros" *ngIf="especialidade1 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
             </ion-select>
+          </ion-item>
+          <ion-item>
             <ion-input type="text" [(ngModel)]="sub1" *ngIf="subespecialidade1 == 'outros'" placeholder="Outros..."></ion-input>
           </ion-item>
       </ion-list>
@@ -587,6 +596,8 @@
               <ion-option value="Máquinas" *ngIf="especialidade2 == 'Refrigeração Comercial'">Máquinas e Equipamentos</ion-option>
               <ion-option value="outros" *ngIf="especialidade2 == 'Refrigeração Comercial'">Outros Especificar</ion-option>
             </ion-select>
+          </ion-item>
+          <ion-item>
             <ion-input type="text" [(ngModel)]="sub2" *ngIf="subespecialidade2 == 'outros'" placeholder="Outros..."></ion-input>
           </ion-item>
       </ion-list>
