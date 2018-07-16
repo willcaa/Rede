@@ -20,9 +20,20 @@ export class CommentsPage {
   public comments: any;
   public post: any;
   public id_usuario: any;
+  public commentId: any;
+  public tabId = "comentarios";
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private storage: Storage) {
+    this.tabId = "comentarios";
   }
 
+  alterarTab(pageId){
+    this.tabId = pageId;
+  }
+
+  getId(id){
+    this.commentId = id;
+  }
+  
   carregarComentarios(){
     this.post = this.navParams.get("anuncio");
 
@@ -117,6 +128,29 @@ export class CommentsPage {
     });
     this.carregarComentarios();
     console.log('ionViewDidLoad CommentsPage');
+  }
+
+  responder(resposta){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      resposta: resposta,
+      userId: this.id_usuario,
+      commentId: this.commentId
+    }
+    var link = 'https://refriplaybusiness.com.br/comments/responder';
+    console.log(resposta, this.id_usuario, this.commentId);
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        if(data) {
+          console.log(data);
+        }
+    });
   }
 
 }

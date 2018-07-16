@@ -13,25 +13,47 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let item of comments">
+  <div class="pagetabs" id="comentarios" *ngIf="tabId == 'comentarios'">
+    <ion-card *ngFor="let item of comments">
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{ item.user_image }}">
+        </ion-avatar>
+        <h2>{{ item.nome }}</h2>
+        <p>{{ item.minutos }} minutos atrás</p>
+        <button class="botao-trash" (click)="deletarComentario( item )"*ngIf=" item.id_usuario == id_usuario" ion-button icon-only clear small>
+          <ion-icon color="danger" name="trash"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-card-content>
+        <p>{{ item.texto }}</p>
+      </ion-card-content>
+      <ion-row>
+        <ion-col>
+        <button ion-button name="responder" style="box-shadow: none; background-color: transparent; color: rgba(73, 125, 190, 1);" (click)="alterarTab('responder'); getId(item.id)">Responder</button>
+        </ion-col>
+        <ion-col style="align-content: center">
+        <ion-label>xrespotas</ion-label>
+      </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+
+
+  <div class="pagetabs" id="responder" *ngIf="tabId == 'responder'">
     <ion-item>
-      <ion-avatar item-start>
-        <img src="{{ item.user_image }}">
-      </ion-avatar>
-      <h2>{{ item.nome }}</h2>
-      <p>{{ item.minutos }} minutos atrás</p>
-      <button class="botao-trash" (click)="deletarComentario( item )"*ngIf=" item.id_usuario == id_usuario" ion-button icon-only clear small>
-        <ion-icon color="danger" name="trash"></ion-icon>
-      </button>
+      <ion-input placeholder="Responder..." type="text" [(ngModel)]="resposta"> 
+      </ion-input>
     </ion-item>
-    <ion-card-content>
-      <p>{{ item.texto }}</p>
-    </ion-card-content>
-  </ion-card>
+    <ion-item>
+      <button ion-button style="background-color: transparent; box-shadow: none; color: rgba(55, 197, 233, 1)" (click)="alterarTab('comentarios')">Cancelar</button>
+      <button ion-button style="background-color: transparent; box-shadow: none; color: rgba(73, 125, 190, 1)" (click)="responder(resposta)">Enviar</button>
+    </ion-item>
+  </div>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="tabId == 'comentarios'">
     <ion-item>
       <ion-input [(ngModel)]="texto" placeholder="O que gostaria de comentar?"></ion-input>
     </ion-item> 
