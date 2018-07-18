@@ -156,6 +156,7 @@
           <ion-col col-7 style="border-left: 1px solid #7f7f7f; margin: 3px 0;">
             <button style="padding: 0; float: left;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
               <ion-icon name="text"></ion-icon>
+              <ion-badge button-start *ngIf="item.comments > 0" style="background-color: transparent; color: rgb(255, 0, 0);padding: 0px 5px 0px 0px;"> {{item.comments}}</ion-badge>
               Comentários
             </button>
           </ion-col>

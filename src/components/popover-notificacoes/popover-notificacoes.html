@@ -6,6 +6,7 @@
       </ion-avatar>
       <h2 (click)="goPerfil(item.id_notificando)">{{ item.nome }}</h2>
       <p *ngIf="item.tipo_notificacao == 'comentario'" (click)="goPost(item.id_anuncio)">Comentou em seu <b>post</b>.</p>
+      <p *ngIf="item.tipo_notificacao == 'resposta'" (click)="goPost(item.id_anuncio)">respondeu seu <b>comentário.</b>.</p>
       <p *ngIf="item.tipo_notificacao == 'seguidor'" (click)="goPerfil(item.id_notificando)">Começou a seguir você.</p>
     </ion-item>
   </ion-list>

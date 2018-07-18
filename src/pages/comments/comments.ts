@@ -21,6 +21,9 @@ export class CommentsPage {
   public post: any;
   public id_usuario: any;
   public commentId: any;
+  public resposta: any;
+  public totalComments:number = 0;
+  public respostasView: any = {};
   public tabId = "comentarios";
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private storage: Storage) {
     this.tabId = "comentarios";
@@ -53,7 +56,39 @@ export class CommentsPage {
       .subscribe(data => {
         console.log(data);
         this.comments = data;
+        // this.somarComments();
     });
+  }
+  
+  somarComments(){
+    this.comments.forEach(element => {
+      console.log(element);
+      this.totalComments = this.totalComments + parseInt(element.respostas_qtd) + 1;
+    });
+
+    this.enviarSoma();
+  }
+
+  enviarSoma(){
+    let headers = new Headers();
+            headers.append('Access-Control-Allow-Origin', '*');
+            headers.append('Accept', 'application/json');
+            headers.append('content-type', 'application/json');
+
+            let body = {
+              total: this.totalComments,
+              anuncio: this.post
+            }
+
+            let link = 'https://refriplaybusiness.com.br/comments/somar';
+
+            this.http.post(link, JSON.stringify(body), { headers: headers })
+            .map(res => res.json())
+            .subscribe(data => {
+              if(data){
+                console.log(data);
+              }
+            });
   }
 
   deletarComentario( comment ) {
@@ -130,7 +165,7 @@ export class CommentsPage {
     console.log('ionViewDidLoad CommentsPage');
   }
 
-  responder(resposta){
+  responder(){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -138,17 +173,43 @@ export class CommentsPage {
     headers.append('Access-Control-Expose-Headers', "true");
 
     let body = {
-      resposta: resposta,
+      resposta: this.resposta,
       userId: this.id_usuario,
       commentId: this.commentId
     }
     var link = 'https://refriplaybusiness.com.br/comments/responder';
-    console.log(resposta, this.id_usuario, this.commentId);
+    console.log(this.resposta, this.id_usuario, this.commentId);
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
         if(data) {
           console.log(data);
+          this.resposta = '';
+          this.alterarTab('comentarios');
+          this.carregarComentarios();
+        }
+    });
+  }
+
+  public getRespostas(id){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id: id
+    }
+    var link = 'https://refriplaybusiness.com.br/comments/getRespostas';
+    console.log(this.resposta, this.id_usuario, this.commentId);
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        if(data) {
+          console.log(data);
+          this.respostasView = data;
+          this.alterarTab('respostasView');
         }
     });
   }

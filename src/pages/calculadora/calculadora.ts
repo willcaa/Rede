@@ -29,6 +29,7 @@ export class CalculadoraPage {
   imageFileName: any;
   totalHoras: any;
   totalCustos: number = 0;
+  totalCustosSalvo: number = 0;
   totalInsumos: number = 0;
   totalAjudantes: number = 0;
   custosHora: number = 0;
@@ -78,6 +79,7 @@ export class CalculadoraPage {
               this.totalHorasSalvo = res[2].totalHoras;
               this.custosHoraSalvo = res[4].custosHora;
               this.totalHoraCustoForaSalvo = res[5].totalHoraCustoFora;
+              this.totalCustosSalvo = res[6].totalCustos;
               let p = 0;
               res[3].custosFixos.forEach(element => {
                 this.custosFixosSalvo.push(element);
@@ -114,9 +116,9 @@ export class CalculadoraPage {
       custoN['desc'] = this.nCustoDesc;
       custoN['val'] = this.nCustoValor;
       console.log(custoN);
-
       this.custosFixos.push(custoN);
       this.totalCustos = this.totalCustos + parseInt(this.nCustoValor);
+      console.log(this.totalCustos);
       this.nCustoDesc = "";
       this.nCustoValor = '';
       this.custosHora = Math.trunc(this.totalCustos / this.hTrabalhadas);
@@ -243,13 +245,14 @@ export class CalculadoraPage {
     console.log(this.gMensaisSalvo);
   }
   public salvarHoras(){
-    this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora}, {"totalHoraCustoFora": this.totalHoraCustoFora});
+    this.data.push({"ganhosMensais": this.gMensais}, {"horasTrabalhadas": this.hTrabalhadas}, {"totalHoras": this.totalHoras}, {"custosFixos": this.custosFixos}, {"custosHora": this.custosHora}, {"totalHoraCustoFora": this.totalHoraCustoFora}, {"totalCustos": this.totalCustos});
     this.storage.set('usuario', this.data);
     this.gMensaisSalvo = this.gMensais;
     this.hTrabalhadasSalvo = this.hTrabalhadas;
     this.totalHorasSalvo = this.totalHoras;
     this.custosFixosSalvo = this.custosFixos;
     this.totalHoraCustoForaSalvo = this.totalHoraCustoFora;
+    this.totalCustosSalvo = this.totalCustos;
     if(this.totalHoras && this.custosHora){
       this.totalHoraCustoFora = this.totalHoras + this.custosHora;
     }

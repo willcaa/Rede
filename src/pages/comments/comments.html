@@ -33,7 +33,7 @@
         <button ion-button name="responder" style="box-shadow: none; background-color: transparent; color: rgba(73, 125, 190, 1);" (click)="alterarTab('responder'); getId(item.id)">Responder</button>
         </ion-col>
         <ion-col style="align-content: center">
-        <ion-label>xrespotas</ion-label>
+        <button ion-button style="box-shadow: none; background-color: transparent; color: skyblue;" (click)="getRespostas(item.id)">{{item.respostas_qtd}} respostas</button>
       </ion-col>
       </ion-row>
     </ion-card>
@@ -50,6 +50,26 @@
       <button ion-button style="background-color: transparent; box-shadow: none; color: rgba(73, 125, 190, 1)" (click)="responder(resposta)">Enviar</button>
     </ion-item>
   </div>
+
+  <div class="pagetabs" id="respostasView" *ngIf="tabId == 'respostasView'">
+    <ion-card *ngFor="let item of respostasView">
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{ item.user_image }}">
+        </ion-avatar>
+        <h2>{{ item.nome }}</h2>
+        <p>{{ item.minutos }} minutos atrás</p>
+        <button class="botao-trash" (click)="deletarComentario( item )"*ngIf=" item.id_usuario == id_usuario" ion-button icon-only clear small>
+          <ion-icon color="danger" name="trash"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-card-content>
+        <p>{{ item.texto }}</p>
+      </ion-card-content>
+    </ion-card>
+    <button ion-button style="background-color: transparent; box-shadow: none; color: rgba(55, 197, 233, 1)" (click)="alterarTab('comentarios')">Voltar</button>
+  </div>
+
 </ion-content>
 
 <ion-footer>

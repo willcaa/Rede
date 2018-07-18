@@ -234,7 +234,7 @@ export class OrcamentosPage {
         {
           style: 'table1',
           table: {
-            widths: [350, 100, 200],
+            widths: [250, 210, 200],
             body: [
 
               ['Descrição', 'Qtd', 'Valor'],
@@ -264,7 +264,7 @@ export class OrcamentosPage {
         {
           style: 'table1',
           table: {
-            widths: [350, 100, 200],
+            widths: [250, 210, 200],
             body: [
 
               ['Descrição', 'Qtd', 'Valor'],
@@ -289,7 +289,7 @@ export class OrcamentosPage {
         { text: 'Subtotal da Mão de Obra', style: 'subtotal' },
         { text: ['R$', this.totalServicos, ',00\n'], style: 'numbr' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
-        { text: ['VALOR TOTAL                                                                                                                       R$', this.total, ',00\n'], style: 'nmr_title' },
+        { text: ['VALOR TOTAL                                                                                                                                 R$', this.total, ',00\n'], style: 'nmr_title' },
         { text: 'DESCRIÇÃO DO SERVIÇO', style: 'descricao' },
         { text: '_______________________________________________________________________________________________\n', style: 'bar' },
         { text: [this.orcamentoView.orcamento.description, '\n\n'], style: 'desc' },
