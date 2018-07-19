@@ -58,12 +58,14 @@ export class CalculadoraPage {
   custosFixosSalvo: any = [];
   custosFixosSalvoTotal: any = 0;
   custoTotalFinal: any;
+  baseCalcPreco: any;
   custosHoraSalvo: any;
   todos = false;
   mensagem = false;
   dadosSalvos: any;
   totalHoraCustoFora: any;
   totalHoraCustoForaSalvo: any;
+  totalHoraCustoForaSalvoFinal: any;
   loader: any;
   videoId: any;
   flag_upload = true;
@@ -227,15 +229,17 @@ export class CalculadoraPage {
   calcular(){
     let custoH;
     custoH = Math.trunc((this.totalAjudantes + this.totalInsumos + this.totalIndiretos)/this.hExecucao);
-    this.custoTotalFinal = (custoH + parseInt(this.custosHoraSalvo)) * this.hExecucao;
+    this.custoTotalFinal = (custoH + parseInt(this.totalHoraCustoForaSalvo)) * this.hExecucao;
+   
+
     let iL = 100 - (parseInt(this.imposto) + parseInt(this.lucro));
     console.log(iL);
+    this.totalHoraCustoForaSalvoFinal = this.totalHoraCustoForaSalvo * this.hExecucao;
     this.precoSugerido = Math.trunc((this.custoTotalFinal*100)/iL);
     this.totalHorasVal = Math.trunc(this.totalHorasSalvo * this.hExecucao);
     this.totalImposto = Math.trunc((this.imposto / 100) * this.precoSugerido);
     this.totalLucro = Math.trunc((this.lucro / 100) * this.precoSugerido);
-    this.totalCapital = Math.trunc(this.precoSugerido - this.totalImposto - this.totalLucro);
-    console.log(this.precoSugerido, this.totalHorasVal, this.totalLucro);
+  
     return true;
   }
 
