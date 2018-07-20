@@ -1,8 +1,8 @@
-<?xml version='3.0' encoding='utf-8'?>
-<widget id="com.br.refriplay.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="3.0.0" id="com.br.refriplay.app" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Refriplay</name>
     <description />
-    <author email="hi@ionicframework" href="http://ionicframework.com/">WA Studio</author>
+    <author email="hi@ionicframework" href="http://wa-studio.com/">WA Studio</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />
