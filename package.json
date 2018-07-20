@@ -1,8 +1,8 @@
 {
-  "name": "redelive",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "com.br.refriplay.app",
+  "version": "3.0.0",
+  "author": "Willian Alves",
+  "homepage": "http://wa-studio.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
