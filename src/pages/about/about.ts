@@ -210,6 +210,7 @@ export class AboutPage {
           this.image5 = results[4];
           for(let i=0; i < results.length;i++){
             this.images.push(results[i]);
+            alert(results[i]);
           };
         });
       }
@@ -226,13 +227,20 @@ export class AboutPage {
         }
         this.camera.getPicture(options).then((videoData) => {
           this.videoId = videoData;
+          alert(this.videoId);
         }, (err) => {
           console.log(err);
           this.presentToast(err);
         });
       }
  
-
+  displayImg(img) {
+    if (img != null) {
+      console.log("Base64 Image: ",img);
+      var displayImage = this.sanitizer.bypassSecurityTrustUrl("data:Image/*;base64," + img);
+      return displayImage;
+    }
+  }
 
 
      
@@ -314,6 +322,7 @@ export class AboutPage {
           this.image4 = null;
           this.image5 = null;
           this.images.push(imageData);
+          alert(imageData);
           // let path = imageData;
           // let new_path = path.substring(path.indexOf('s'));
           // this.localFileName = new_path;
@@ -557,8 +566,8 @@ export class AboutPage {
         }
       }
       
-      getBackground(image) {
-        return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+      public getBackground(image) {
+        return this._sanitizer.bypassSecurityTrustStyle('url(${image})');
       }
 
  

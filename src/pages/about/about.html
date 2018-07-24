@@ -33,31 +33,32 @@
           <div style="overflow: hidden; max-height: 700px;" class="img_card" *ngIf="postType == 1">
             <ion-row>
                   <ion-col *ngFor="let imagem of images" style="min-width: 50%">
-                    <ion-item *ngIf="images.length > 1"  [style.background-image]="getBackground(imagem)" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem)">
+                    <!-- <ion-item *ngIf="images.length >= 1"  [src]="data:image/jpg;base64, {{imagem}}" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem)"> -->
+                    <img [src]="getBackground(imagem)" alt="" width="100%" height="auto" (click)="ampliarImagem(imagem)">
+                    <!-- <img *ngIf="images.length >= 1" [src]="_sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64' + imagem)" alt="" width="100%" height="auto" (click)="ampliarImagem(imagem)"> -->
                         <!-- <button ion-buttom item-left clear style="background: transparent;border: none;font-size:  30px;position: absolute;left: 84%;top: 0px;" (click)="excluiImgArray(imagem)">
                           <ion-icon name="md-close-circle"></ion-icon>
                         </button> -->
-                    </ion-item>
-                    <ion-item *ngIf="images.length <= 1" [style.background-image]="getBackground(imagem)" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem)">
-                        <!-- <button ion-buttom item-left clear style="background: transparent;border: none;font-size:  30px;position: absolute;left: 84%;top: 0px;" (click)="excluiImgArray(imagem)">
+                    <!-- </ion-item> -->
+                    <!-- <ion-item *ngIf="images.length <= 1" [src]="data:image/jpg;base64, {{imagem}}" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem)">
+                        <button ion-buttom item-left clear style="background: transparent;border: none;font-size:  30px;position: absolute;left: 84%;top: 0px;" (click)="excluiImgArray(imagem)">
                           <ion-icon name="md-close-circle"></ion-icon>
-                        </button> -->
-                    </ion-item>
+                        </button>
+                    </ion-item> -->
                   </ion-col>
                 </ion-row>
           </div>
     
     <div *ngIf='postType == 2 && videoId'>
       <div style="width: 100%;height: auto;">
-          <video width="100%" height="auto" [autoplay]="true" [muted]="true" controls>
-            <source src="{{ videoId }}" type="video/mp4">
+          <video width="100%" height="auto" [autoplay]="true" [muted]="true" controls src="{{ videoId }}">
           </video>
       </div>
     </div>
     <div *ngIf='postType == 3'>
         <div  *ngIf='linkPost'>
                
-            <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(linkPost)' width="100%" height="350px"  scrolling="NO" frameborder="0"></iframe>
+            <iframe [src]='_sanitizer.bypassSecurityTrustResourceUrl(linkPost)' width="100%" height="350px"  scrolling="NO" frameborder="0"></iframe>
           </div>
       <div style="width: 100%;height: auto;">
           <ion-item style="padding-left: 0px;">
@@ -67,7 +68,7 @@
     </div>
     <div *ngIf='postType == 4'>
       <div  *ngIf='youtubeSaneado'>
-        <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(youtubeSaneado)' width="100%" height="auto" frameborder="0"></iframe>
+        <iframe [src]='_sanitizer.bypassSecurityTrustResourceUrl(youtubeSaneado)' width="100%" height="auto" frameborder="0"></iframe>
       </div>
       <div style="width: 100%;height: auto;">
         <ion-item>
