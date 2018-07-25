@@ -34,7 +34,7 @@
             <ion-row>
                   <ion-col *ngFor="let imagem of images" style="min-width: 50%">
                     <!-- <ion-item *ngIf="images.length >= 1"  [src]="data:image/jpg;base64, {{imagem}}" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem)"> -->
-                    <img [src]="getBackground(imagem)" alt="" width="100%" height="auto" (click)="ampliarImagem(imagem)">
+                    <img *ngIf="images.length >= 1"[src]="displayImg(imagem)" alt="" width="100%" height="auto" (click)="ampliarImagem(imagem)">
                     <!-- <img *ngIf="images.length >= 1" [src]="_sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64' + imagem)" alt="" width="100%" height="auto" (click)="ampliarImagem(imagem)"> -->
                         <!-- <button ion-buttom item-left clear style="background: transparent;border: none;font-size:  30px;position: absolute;left: 84%;top: 0px;" (click)="excluiImgArray(imagem)">
                           <ion-icon name="md-close-circle"></ion-icon>
@@ -50,8 +50,11 @@
           </div>
     
     <div *ngIf='postType == 2 && videoId'>
+      <h5>Teste</h5>
       <div style="width: 100%;height: auto;">
-          <video width="100%" height="auto" [autoplay]="true" [muted]="true" controls src="{{ videoId }}">
+        <h5>teste</h5>
+          <video width="100%" [autoplay]="true" [muted]="true" controls>
+            <source src="'file:///' + {{videoId}}" type="video/mp4">
           </video>
       </div>
     </div>

@@ -14,6 +14,8 @@ import { FileChooser } from '@ionic-native/file-chooser';
 import { File } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Base64 } from '@ionic-native/base64';
+import { FilePath } from '@ionic-native/file-path';
 declare var window: any;
 @Component({
   selector: 'page-about',
@@ -89,7 +91,7 @@ export class AboutPage {
     private file: File,
     public popoverCtrl: PopoverController,
     public navParams: NavParams,
-    private geolocation: Geolocation) {
+    private geolocation: Geolocation, private filePath: FilePath) {
       this.localBack = this.navParams.get("slide");
 
   }
@@ -194,6 +196,7 @@ export class AboutPage {
       
       getImages(){
         let options = {
+          outputType: 1,
           maximumImagesCount: 5,
           width: 800,
           height: 800,
@@ -209,9 +212,10 @@ export class AboutPage {
           this.image4 = results[3];
           this.image5 = results[4];
           for(let i=0; i < results.length;i++){
-            this.images.push(results[i]);
-            alert(results[i]);
-          };
+            this.images.push("data:image/jpg;base64," + results[i]);
+            alert(results[i] + 'oi');
+          }
+          alert(215);
         });
       }
 
@@ -219,14 +223,23 @@ export class AboutPage {
         const options: CameraOptions = {
           quality: 50,
           destinationType: this.camera.DestinationType.FILE_URI,
-          sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+          sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
           mediaType: this.camera.MediaType.VIDEO,
           correctOrientation: true,
           targetWidth: 1200,
           targetHeight: 800
         }
         this.camera.getPicture(options).then((videoData) => {
-          this.videoId = videoData;
+          window.resolveLocalFilesystemURL("file://"+videoData, FE =>{
+            FE.file(file =>{
+              const FR = new FileReader();
+              FR.onloadend=((res: any) =>{
+                let AF = res.target.result
+
+              });
+              this.videoId = FR.readAsArrayBuffer(file);
+            })
+          })
           alert(this.videoId);
         }, (err) => {
           console.log(err);
@@ -236,9 +249,8 @@ export class AboutPage {
  
   displayImg(img) {
     if (img != null) {
-      console.log("Base64 Image: ",img);
-      var displayImage = this.sanitizer.bypassSecurityTrustUrl("data:Image/*;base64," + img);
-      return displayImage;
+      alert(img);
+      return this._sanitizer.bypassSecurityTrustUrl(img);
     }
   }
 
@@ -307,7 +319,7 @@ export class AboutPage {
       getPicture() {
         const options: CameraOptions = {
           quality: 70,
-          destinationType: this.camera.DestinationType.FILE_URI,
+          destinationType: this.camera.DestinationType.DATA_URL,
           sourceType: this.camera.PictureSourceType.CAMERA,
           correctOrientation: true,
           targetWidth: 800,
@@ -321,8 +333,8 @@ export class AboutPage {
           this.image3 = null;
           this.image4 = null;
           this.image5 = null;
-          this.images.push(imageData);
-          alert(imageData);
+          this.images.push("data:image/jpg;base64," + imageData);
+          alert(this.images);
           // let path = imageData;
           // let new_path = path.substring(path.indexOf('s'));
           // this.localFileName = new_path;
