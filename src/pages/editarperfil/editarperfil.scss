@@ -24,6 +24,20 @@ page-editarperfil {
     margin-bottom: 3px;
     width: 50px;
 }
+page-editarperfil .scroll-content{
+    background-color: #fff;
+}
+.label-md-primary, .item-input .label-md-primary, .item-select .label-md-primary, .item-datetime .label-md-primary{
+    color: #000;
+    font-size: 14px;
+    margin-top: 3px;
+}
+.perfil{
+    display: flex;
+    font-size: 18px;
+    margin-top: -36px;
+    margin-left: 52px;
+}
   button.zulinho{
     width: 245px;
     background-color: transparent;
@@ -119,7 +133,13 @@ page-editarperfil {
   .scroll-content,
   .card-md,
   .card-md .item-md {
-    background-color: #fafafa;
+    background-color: #fff;
+  }
+  .input-cover{
+    border-bottom: solid 1px;
+    border-bottom-color: #a7a7a7;
+    width: 330px;
+    margin-left: 10px;
   }
   @keyframes ampliar_btn {
     from {
