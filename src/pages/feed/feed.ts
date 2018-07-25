@@ -6,6 +6,7 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { AboutPage } from '../about/about';
 import { CommentsPage } from '../comments/comments';
 import { PerfilPage } from '../perfil/perfil';
+import { PreperfilPage } from '../preperfil/preperfil';
 import { MapPage } from '../map/map';
 import { LaunchNavigator, LaunchNavigatorOptions, AppSelectionOptions, RememberChoiceOptions} from '@ionic-native/launch-navigator';
 import { Storage } from '@ionic/storage';
@@ -574,6 +575,50 @@ export class FeedPage {
    this.navCtrl.push(CommentsPage, {
      anuncio: postId
     });
+    // let headers = new Headers();
+    // headers.append('Access-Control-Allow-Origin', '*');
+    // headers.append('Accept', 'application/json');
+    // headers.append('content-type', 'application/json');
+    // let body = {
+    //   anuncio: postId,
+    //   liker: this.userId
+    // }
+    // var link = 'https://bluedropsproducts.com/app/likes/top';
+    // this.http.post(link, JSON.stringify(body), { headers: headers })
+    //   // .map(res => res.json())
+    //   .subscribe(data => {
+    //     console.log(data);
+    //     // console.log(data.data);
+    //   });
+  }
+  coelho() {
+
+    const confirm = this.alertCtrl.create({
+      title: 'Compartilhar com seguidores?',
+      cssClass:'camelo',
+      message: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  
+  
+
+  //  this.navCtrl.push(CommentsPage, {
+  //    anuncio: postId
+  //   });
     // let headers = new Headers();
     // headers.append('Access-Control-Allow-Origin', '*');
     // headers.append('Accept', 'application/json');

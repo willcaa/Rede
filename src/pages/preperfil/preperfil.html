@@ -1,0 +1,154 @@
+<!--
+  Generated template for the PerfilPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+  
+  <ion-content padding class="pagetabs">
+    <div style="background: linear-gradient(#39477291, #005396); display: flex; width: 100%; height: 91%;">
+      <ion-refresher (ionRefresh)="doRefresh($event)">
+          <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
+          </ion-refresher-content>
+        </ion-refresher>
+      <div style="width: 100%; margin-top: 300px;">
+          <div>
+            <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
+              
+            </button>
+  
+            <div class="button-like">
+              
+              <button *ngIf="perfilId == userId" ion-button small class="botao-seguindo"></button>
+              <span class="bola"><img src="assets/imgs/local_round_blue2.png"></span>
+              <button *ngIf="seguindo && perfilId != userId" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)">Seguindo</button>
+              <button *ngIf="!seguindo" ion-button small class="botao-seguir" (click)="seguir(perfilId, userId)">Seguir</button>
+            </div>
+            <!-- <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)"> -->
+            
+            <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="alterarNome()"><ion-icon name="brush"></ion-icon></button> -->
+            <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="setNovoNome(novoNome);">OK</button>
+            <ion-list >
+              <h3 class="nome_usuario" *ngIf="alteraNome == false">{{ perfil_nome }}</h3>
+              <ion-item *ngIf="alteraNome == true" style="margin-top: -17px;">
+                <ion-input class="altera-nome" [(ngModel)]="novoNome" type="text" placeholder="{{perfil_nome}}" *ngIf="alteraNome == true"></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-list >
+              <h4 class="nome_usuario" *ngIf="alteraNome == false">@{{ perfil_nome }}</h4>
+              <ion-item *ngIf="alteraNome == true" style="margin-top: -17px;">
+                <!-- <ion-input class="altera-nome" [(ngModel)]="novoNome" type="text" placeholder="{{perfil_nome}}" *ngIf="alteraNome == true"></ion-input> -->
+              </ion-item>
+            </ion-list>
+              
+          </div>
+          </div>
+          
+        </div>
+        <ion-footer id="publicacoes" class="pagetabs" *ngIf="pageId == 'publicacoes'">
+            <ion-item  style="height: 60px; ">
+              <ion-row>
+                <ion-col style="text-align: center">
+                  {{ stat_anuncios }}<br>
+                  Post
+                </ion-col>
+                <ion-col style="text-align: center" (click)="goStats('Seguidores')">
+                  {{ stat_seguidores }}<br>
+                  Seguidores
+                </ion-col>
+                <ion-col style="text-align: center" (click)="goStats('Seguindo')">
+                  {{ stat_seguindo }}<br>
+                  Seguindo
+                </ion-col>
+              </ion-row>
+            </ion-item>
+        <ion-card *ngFor="let item of anuncios">
+          <ion-item>
+            <ion-avatar item-start>
+              <img [src]="getSrc(item.user_image)">
+            </ion-avatar>
+            <P style="white-space: initial; max-width: 80%;">
+                <b>{{ item.nome }}</b>
+                <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin"></ion-icon> {{ item.local }}</b></span>
+              </P>
+            <p>{{ item.atras }}</p>
+          </ion-item>
+          <ion-card-content>
+            <p>{{ item.texto }}</p>
+          </ion-card-content>
+          <div style="overflow: hidden; max-height: 700px;" class="img_card" *ngIf="item.tipo == 1">
+              <ion-row>
+                <ion-col *ngFor="let imagem of item.imagem" style="min-width: 50%">
+                  <ion-item *ngIf="item.hasImage == true && item.imagem.length > 1"  [style.background-image]="getBackground(imagem.img_name)" style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+                  <ion-item *ngIf="item.hasImage == true && item.imagem.length <= 1" [style.background-image]="getBackground(imagem.img_name)" style="height: 340px; background-size: cover; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div *ngIf='item.tipo == 2 && item.video'>
+                <div style="width: 100%;height: auto;">
+                    <video width="100%" height="auto" [autoplay]="isCurrent" muted="true" playsinline looped preload="auto">
+                      <source src="http://13.58.158.77/app/uploads/{{ item.video }}" type="video/mp4">
+                    </video>
+                </div>
+              </div>
+            <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 3">
+              <div  *ngIf='item.link'>
+                <!-- <iframe [src]='sanitizer.bypassSecurityTrustResourceUrl(item.link)' width="100%" height="auto" scrolling="NO" frameborder="0"></iframe> -->
+                  <h5 (click)="openBrowser(item.link)">
+                {{ item.link }}</h5>
+              </div>
+            </div>
+            
+            <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 4">
+              <div  *ngIf='item.youtube'>
+                <iframe [src]='getSrc(item.youtube)' width="100%"  style="min-height: 200px;" height="auto" frameborder="0"></iframe>
+                <h5 (click)="openBrowser(item.link)">
+                  {{ item.link }}</h5>
+              </div>
+            </div>
+          <ion-row>
+    
+            <ion-col col-5 *ngIf="userId == item.id">
+              <a class="texto-excluir" *ngIf="userId == item.id" (click)="deleteAnuncio(item)">Excluir</a>
+            </ion-col>
+    
+            <ion-col col-5 *ngIf="userId != item.id">
+              <button class="btn-star">
+                <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+              </button>
+              <button class="btn-star">
+                <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+              </button>
+              <button class="btn-star">
+                <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+              </button>
+              <button class="btn-star">
+                <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+              </button>
+              <button class="btn-star">
+                <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+              </button>
+              <ion-item class="item-post-range">
+                <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
+              </ion-item>
+    
+            </ion-col>
+            <ion-col col-7 style="border-left: 1px solid #7f7f7f; margin: 3px 0;">
+              <button style="padding: 0; float: left;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
+                <ion-icon name="text"></ion-icon>
+                Comentários
+              </button>
+            </ion-col>
+    
+          </ion-row>
+        </ion-card>
+    
+      </ion-footer> 
+       
+    <!-- <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content loadingText="Carregando...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll> -->
+  </ion-content>
+  

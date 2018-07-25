@@ -1,4 +1,9 @@
 page-feed {
+  .logofofa{
+    border: none;
+    box-shadow: none;
+    background: #488aff00;
+  }
   hr.vertical {
     background-color: #000;
     width: 1px;
@@ -8,6 +13,12 @@ page-feed {
     padding: 20px 0 19px 0;
   }
   // IMAGES //
+  page-feed .segment-button img{
+    width: 40%;
+    height: auto;
+    margin-top: 5px;
+    text-align: center;
+  }
   img.imageLogoFeed {
     height: 50px;
     margin: 0 0 -4px -12px
@@ -15,7 +26,45 @@ page-feed {
   img.imageUserFeed {
     height: 32px;
   }
-
+  img.imageUserPes{
+    height: 45px;
+  }
+  ion-icon{
+    display: inline-block;
+    font-size: 2.2em;
+  }
+  .alert-title{
+    font-size: 16px;
+    color: #00a2e8;
+    font-weight: 600;
+  }
+  .alert-md .alert-button{
+    text-align: right;
+    text-align: end;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: transparent;
+    margin: 0 59px -8px 18px;
+    padding: 10px;
+    background-color: #00a2e8;
+  }
+  .alert-md .alert-wrapper{
+    border-radius: 2px;
+    max-width: 200px;
+    background-color: #fafafa;
+    border: solid 2px;
+    border-color: #00a2e8;
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  }
+  .camelo .alert-wrapper{
+    font-size: 16px;
+    color: #00a2e8;
+    font-weight: 600;
+  }
   .buttons_header {
     min-height: 0px;
     height: 30px;

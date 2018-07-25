@@ -1,9 +1,37 @@
-page-perfil {
-  .toolbar-md-dark .toolbar-background-md {
+page-editarperfil {
+    .toolbar-md-dark .toolbar-background-md {
     background: linear-gradient(to right, #73395c, #0a2386);
   }
   .item-md.item-block .item-inner {
     border: 0;
+  }
+  .salva{
+    background-color: transparent;
+    color: #fff;
+    height: 48px;
+    width: 92px;
+    box-shadow: none;
+    border: none;
+    font-size: 21px;
+  }
+  page-editarperfil .janela{
+    width: 50px;
+    display: flex;
+    margin-bottom: 3px;
+}
+.janela{
+    display: flex;
+    margin-bottom: 3px;
+    width: 50px;
+}
+  button.zulinho{
+    width: 245px;
+    background-color: transparent;
+    border: solid 3px;
+    border-color: #00a2e8;
+    border-radius: 10px;
+    margin-top: 16px;
+    margin-left: 10px;
   }
   .texto-excluir {
     display: block;

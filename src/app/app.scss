@@ -21,6 +21,57 @@
     top: 50px!important;
     left: initial!important;
 }
+.camelo .alert-wrapper h2{
+    font-size: 16px;
+    color: #00a2e8;
+    font-weight: 600;
+  }
+.camelo .alert-message{
+    background-image: url(../assets/imgs/pessoas.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+    background-size: 50px;
+    font-size: 9px;
+  }
+.camelo .alert-head{
+    text-align: center;
+    padding: 0px 0px 0px;
+    margin-top: 6px;
+  }
+
+.camelo .alert-wrapper {
+    border: solid 2px;
+    border-color: #00a2e8;
+    border-radius: 5px;
+  }
+  .camelo .alert-wrapper .alert-button-group{
+    padding: 0px 0px 0px 0px;
+    width: 284px;
+  }
+  .camelo .alert-wrapper .alert-button-group .alert-button{
+    text-align: center;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 8px 0 0;
+    padding: 12px;
+    background-color: #00a2e8;
+    border-color: #00a2e8;
+    width: 135px;
+    margin-right: 7px;
+    height: 15px;
+  }
+  .camelo .alert-wrapper .alert-button-group .alert-button:hover{
+    background-color: #99d9ea;
+  }
+  .camelo .alert-wrapper .alert-button-group .alert-button .button-inner{
+    justify-content: center;
+    margin-top: 2px;
+  }
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
