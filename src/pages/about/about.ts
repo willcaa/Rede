@@ -4,6 +4,7 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers } from '@angular/http';
+import { HTTP } from '@ionic-native/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
@@ -14,6 +15,8 @@ import { FileChooser } from '@ionic-native/file-chooser';
 import { File } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Base64 } from '@ionic-native/base64';
+import { FilePath } from '@ionic-native/file-path';
 declare var window: any;
 @Component({
   selector: 'page-about',
@@ -77,19 +80,19 @@ export class AboutPage {
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
     private camera: Camera,
-    private _sanitizer: DomSanitizer,
+    public _sanitizer: DomSanitizer,
     private imagePicker: ImagePicker,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public http: Http, 
+    public httpIon: HTTP,
     public fileChooser: FileChooser,
-    public sanitizer: DomSanitizer,
     private storage: Storage,
     private file: File,
     public popoverCtrl: PopoverController,
     public navParams: NavParams,
-    private geolocation: Geolocation) {
+    private geolocation: Geolocation, private filePath: FilePath, public base64: Base64) {
       this.localBack = this.navParams.get("slide");
 
   }
@@ -129,17 +132,22 @@ export class AboutPage {
   }
 
   checkIn() {
+
+    
     //this.presentLoadingDefault();
     this.options = {
       enableHighAccuracy: true
     };
     
     this.geolocation.getCurrentPosition(this.options).then((pos: Geoposition) => {
-    
+
+      
           this.currentPos = pos;
           console.log(pos.coords.latitude, pos.coords.longitude);
+          this.httpIon.setHeader('', "Access-Control-Allow-Origin", '*');
+          this.httpIon.setHeader('', 'Accept', 'application/json');
+          this.httpIon.setHeader('', 'content-type', 'application/json');
           // this.getGeocode(pos.coords.latitude, pos.coords.longitude);
-    
           let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + pos.coords.latitude + "," + pos.coords.longitude + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
           this.http.get(url2).map(res => res.json()).subscribe(data2 => {
             let alert = this.alertCtrl.create();
@@ -162,6 +170,8 @@ export class AboutPage {
               }
             });
             alert.present();
+          }, (err: any) => {
+
           });
         }, (err: PositionError) => {
           alert(JSON.stringify(err));
@@ -191,9 +201,11 @@ export class AboutPage {
       
         this.loading.present();
       }
+      public imagesView: any = [];
       
       getImages(){
         let options = {
+          outputType: 0,
           maximumImagesCount: 5,
           width: 800,
           height: 800,
@@ -201,8 +213,8 @@ export class AboutPage {
         }
       
         this.imagePicker.getPictures(options).then( results =>{
-          console.log(results);
           this.images = [];
+          this.imagesView = [];
           this.image1 = results[0];
           this.image2 = results[1];
           this.image3 = results[2];
@@ -210,16 +222,19 @@ export class AboutPage {
           this.image5 = results[4];
           for(let i=0; i < results.length;i++){
             this.images.push(results[i]);
-          };
+           this.base64.encodeFile(results[i]).then((base64File: string) => {
+              this.imagesView.push(base64File);
+            })
+          }
         });
         alert(JSON.stringify(this.images));
       }
-
+      public videoView: string;
       getVideo() {
         const options: CameraOptions = {
           quality: 50,
           destinationType: this.camera.DestinationType.FILE_URI,
-          sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+          sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
           mediaType: this.camera.MediaType.VIDEO,
           correctOrientation: true,
           targetWidth: 1200,
@@ -227,14 +242,20 @@ export class AboutPage {
         }
         this.camera.getPicture(options).then((videoData) => {
           this.videoId = videoData;
-          alert(JSON.stringify(videoData));
+          this.base64.encodeFile(videoData).then((base64File: string) => {
+            this.videoView = base64File;
+          })
         }, (err) => {
           console.log(err);
           this.presentToast(err);
         });
       }
  
-
+  displayImg(img) {
+    if (img != null) {
+      return this._sanitizer.bypassSecurityTrustUrl(img);
+    }
+  }
 
 
      
@@ -310,12 +331,16 @@ export class AboutPage {
       
         this.camera.getPicture(options).then((imageData) => {
           this.images = [];
+          this.imagesView = [];
           this.image1 = imageData;
           this.image2 = null;
           this.image3 = null;
           this.image4 = null;
           this.image5 = null;
           this.images.push(imageData);
+          this.base64.encodeFile(imageData).then((base64File: string) => {
+            this.imagesView.push(base64File);
+          })
           // let path = imageData;
           // let new_path = path.substring(path.indexOf('s'));
           // this.localFileName = new_path;
@@ -559,12 +584,9 @@ export class AboutPage {
         }
       }
       
-      getBackground(image) {
-        return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+      public getBackground(img) {
+        return this._sanitizer.bypassSecurityTrustUrl(img);
       }
-
- 
-    
 
       presentToast(msg, time = 8000) {
         let toast = this.toastCtrl.create({
@@ -599,7 +621,6 @@ export class AboutPage {
         }, (err: PositionError) => {
           console.log("error : " + err.message);
           this.loading.dismiss();
-          alert(err.message);
           // this.getUserPosition();
         });
         
@@ -648,7 +669,7 @@ export class AboutPage {
           console.log(data.data);
           
         }, (err) => {
-          alert(err);
+          
           // this.getUserPosition(),
           this.loading.dismiss();
           });
