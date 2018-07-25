@@ -31,6 +31,7 @@
     "@ionic-native/file-transfer": "^4.7.0",
     "@ionic-native/geolocation": "^4.7.0",
     "@ionic-native/google-maps": "^4.7.0",
+    "@ionic-native/http": "^4.10.1",
     "@ionic-native/image-picker": "^4.9.0",
     "@ionic-native/in-app-browser": "^4.7.0",
     "@ionic-native/launch-navigator": "^4.7.0",

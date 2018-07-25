@@ -55,7 +55,7 @@ export class PerfilPage {
     public alertCtrl: AlertController,
     public photoViewer: PhotoViewer, 
     public popoverCtrl: PopoverController, 
-    private _sanitizer: DomSanitizer, 
+    public _sanitizer: DomSanitizer, 
     public navParams: NavParams, 
     private imagePicker: ImagePicker,
     private base64: Base64,
@@ -350,18 +350,15 @@ private save(key: string, data: string) {
   // }
   getLogo() {
     let options = {
+      outputType: 1,
       maximumImagesCount: 1
     };
     this.imagePicker.getPictures(options).then((results) => {
       for (var i = 0; i < results.length; i++) {
         this.logo = results[i];
-        this.base64.encodeFile(results[i]).then((base64File: string) => {
-          this.logo64 = base64File;
-          this.save('logo', results[i]);
-          this.save('logo64', base64File);
-        }, (err) => {
-          console.log(err);
-        });
+        this.logo64 = results[i];
+        this.save('logo', this.logo);
+        this.save('logo64', this.logo64);
       }
     }, (err) => { });
   }
