@@ -5,7 +5,6 @@ import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { FeedPage } from '../feed/feed';
 import { NavController } from 'ionic-angular';
-import { MapPage } from '../map/map';
 @Component({
   templateUrl: 'tabs.html'
 })

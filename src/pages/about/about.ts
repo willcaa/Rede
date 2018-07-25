@@ -142,10 +142,9 @@ export class AboutPage {
     
           let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + pos.coords.latitude + "," + pos.coords.longitude + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
           this.http.get(url2).map(res => res.json()).subscribe(data2 => {
-    
             let alert = this.alertCtrl.create();
             alert.setTitle('Onde Você está?');
-        
+            
             for(var i = 0; i < 20; i++) {
               alert.addInput({
                 type: 'radio',
@@ -154,7 +153,7 @@ export class AboutPage {
                 checked: false
               });
             }
-
+            
             alert.addButton('Cancel');
             alert.addButton({
               text: 'OK',
@@ -165,6 +164,7 @@ export class AboutPage {
             alert.present();
           });
         }, (err: PositionError) => {
+          alert(JSON.stringify(err));
           console.log("error : " + err.message);
         });    
       }
@@ -212,6 +212,7 @@ export class AboutPage {
             this.images.push(results[i]);
           };
         });
+        alert(JSON.stringify(this.images));
       }
 
       getVideo() {
@@ -226,6 +227,7 @@ export class AboutPage {
         }
         this.camera.getPicture(options).then((videoData) => {
           this.videoId = videoData;
+          alert(JSON.stringify(videoData));
         }, (err) => {
           console.log(err);
           this.presentToast(err);
