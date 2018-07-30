@@ -145,7 +145,7 @@ export class FeedPage {
       id_usuario: user
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -207,7 +207,7 @@ export class FeedPage {
       id_usuario: this.userId,
     }
 
-    var link = 'https://bluedropsproducts.com/app/usuarios/notificacoes_qtd';
+    var link = 'https://wa-studio.com/redelive/usuarios/notificacoes_qtd';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -229,7 +229,7 @@ export class FeedPage {
       n_estrelas: stars
     }
 
-    var link = 'https://bluedropsproducts.com/app/anuncios/stars';
+    var link = 'https://wa-studio.com/redelive/anuncios/stars';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -269,7 +269,7 @@ export class FeedPage {
                 id_usuario: this.userId,
                 id_anuncio: post.id_anuncio
               }
-              var link = 'https://bluedropsproducts.com/app/post/denunciar';
+              var link = 'https://wa-studio.com/redelive/post/denunciar';
 
               this.http.post(link, JSON.stringify(body), { headers: headers })
               .map(res => res.json())
@@ -316,7 +316,7 @@ export class FeedPage {
           id_usuario: this.userId,
           id_anuncio: post.id
         }
-        var link = 'https://bluedropsproducts.com/app/anuncios/denunciarAnuncio';
+        var link = 'https://wa-studio.com/redelive/anuncios/denunciarAnuncio';
 
         this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -352,7 +352,7 @@ export class FeedPage {
       let body = {
         id_usuario: this.userId,
       }
-      var link = 'https://bluedropsproducts.com/app/usuarios/limparNotificacoes';
+      var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -379,7 +379,7 @@ export class FeedPage {
     let body = {
       id_usuario: this.userId
     }
-    var link = 'https://bluedropsproducts.com/app/anuncios/seguidores';
+    var link = 'https://wa-studio.com/redelive/anuncios/seguidores';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -490,7 +490,7 @@ export class FeedPage {
               id_anuncio: post.id_anuncio,
             }
 
-            let link = 'https://bluedropsproducts.com/app/anuncios/deletar';
+            let link = 'https://wa-studio.com/redelive/anuncios/deletar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
             .map(res => res.json())
@@ -554,7 +554,7 @@ export class FeedPage {
         anuncio: postId,
         liker: this.userId
       }
-      var link = 'https://bluedropsproducts.com/app/likes/top';
+      var link = 'https://wa-studio.com/redelive/likes/top';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -583,7 +583,7 @@ export class FeedPage {
     //   anuncio: postId,
     //   liker: this.userId
     // }
-    // var link = 'https://bluedropsproducts.com/app/likes/top';
+    // var link = 'https://wa-studio.com/redelive/likes/top';
     // this.http.post(link, JSON.stringify(body), { headers: headers })
     //   // .map(res => res.json())
     //   .subscribe(data => {
@@ -627,7 +627,7 @@ export class FeedPage {
     //   anuncio: postId,
     //   liker: this.userId
     // }
-    // var link = 'https://bluedropsproducts.com/app/likes/top';
+    // var link = 'https://wa-studio.com/redelive/likes/top';
     // this.http.post(link, JSON.stringify(body), { headers: headers })
     //   // .map(res => res.json())
     //   .subscribe(data => {
@@ -694,7 +694,7 @@ export class FeedPage {
       tipo: tipo,
       hach: hach
     }
-    var link = 'https://bluedropsproducts.com/app/anuncios/puxarTodos';
+    var link = 'https://wa-studio.com/redelive/anuncios/puxarTodos';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -916,7 +916,7 @@ export class FeedPage {
       tipo: tipo,
       usuario: this.userId
     }
-    var link = 'https://bluedropsproducts.com/app/anuncios/criar';
+    var link = 'https://wa-studio.com/redelive/anuncios/criar';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -952,7 +952,7 @@ export class FeedPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfoPreperfil';
+    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfoPreperfil';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -973,7 +973,7 @@ export class FeedPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

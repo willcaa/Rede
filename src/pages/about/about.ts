@@ -361,9 +361,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image1, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image1, encodeURI('https://wa-studio.com/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image2 && this.image2 != null){
               this.uploadImage2();
@@ -401,9 +401,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image2, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image2, encodeURI('https://wa-studio.com/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image3 && this.image3 != null){
               this.uploadImage3();
@@ -442,9 +442,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image3, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image3, encodeURI('https://wa-studio.com/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image4 && this.image4 != null){
               this.uploadImage4();
@@ -482,9 +482,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image4, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image4, encodeURI('https://wa-studio.com/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://bluedropsproducts.com/app/uploads/' + this.imageFileName);
+            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image5 && this.image5 != null){
               this.uploadImage5();
@@ -522,7 +522,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image5, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+          fileTransfer.upload(this.image5, encodeURI('https://wa-studio.com/upload.php'), options)
           .then((data) => {
             if(this.image6 && this.image6 != null){
               console.log();
@@ -616,7 +616,7 @@ export class AboutPage {
           local: this.checkin
         }
         
-        var link = 'https://bluedropsproducts.com/app/anuncios/criarRefri';
+        var link = 'https://wa-studio.com/redelive/anuncios/criarRefri';
         // this.presentToast("antes");
         this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -646,7 +646,7 @@ export class AboutPage {
       id_usuario: this.userId
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

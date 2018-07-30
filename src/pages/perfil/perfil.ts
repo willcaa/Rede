@@ -89,7 +89,7 @@ export class PerfilPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfoEditarperfil';
+    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfoEditarperfil';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -131,7 +131,7 @@ export class PerfilPage {
      //   anuncio: postId,
      //   liker: this.userId
      // }
-     // var link = 'https://bluedropsproducts.com/app/likes/top';
+     // var link = 'https://wa-studio.com/redelive/likes/top';
  
      // this.http.post(link, JSON.stringify(body), { headers: headers })
      //   // .map(res => res.json())
@@ -156,7 +156,7 @@ export class PerfilPage {
     }
     console.log('l');
     
-    let link = 'https://bluedropsproducts.com/app/usuarios/perfil';
+    let link = 'https://wa-studio.com/redelive/usuarios/perfil';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -192,7 +192,7 @@ export class PerfilPage {
         id_usuario: this.perfilId
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/getStats';
+      let link = 'https://wa-studio.com/redelive/usuarios/getStats';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -218,7 +218,7 @@ export class PerfilPage {
         id_usuario: id_usuario
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/DeixarSeguir';
+      let link = 'https://wa-studio.com/redelive/usuarios/DeixarSeguir';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -238,7 +238,7 @@ export class PerfilPage {
         id_usuario: id_usuario
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/seguir';
+      let link = 'https://wa-studio.com/redelive/usuarios/seguir';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -263,7 +263,7 @@ export class PerfilPage {
         id_usuario: id_usuario
       }
 
-      let link = 'https://bluedropsproducts.com/app/usuarios/checkSeguidor';
+      let link = 'https://wa-studio.com/redelive/usuarios/checkSeguidor';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -274,7 +274,7 @@ export class PerfilPage {
   }
 
   ampliarImagem(imagem, texto = "") {
-    this.photoViewer.show('https://bluedropsproducts.com/app/uploads/'+imagem,texto,{share:true});
+    this.photoViewer.show('https://wa-studio.com/redelive/uploads/'+imagem,texto,{share:true});
   }
 
   getImage(image) {
@@ -325,7 +325,7 @@ export class PerfilPage {
               id_anuncio: post.id_anuncio,
             }
 
-            let link = 'https://bluedropsproducts.com/app/anuncios/deletar';
+            let link = 'https://wa-studio.com/redelive/anuncios/deletar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
             .map(res => res.json())
@@ -379,7 +379,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/setUsuarioProfissional';
+    let link = 'https://wa-studio.com/redelive/ferramentas/setUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -404,7 +404,7 @@ export class PerfilPage {
       id: this.perfilId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioProfissional';
+    let link = 'https://wa-studio.com/redelive/ferramentas/getUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -487,9 +487,9 @@ export class PerfilPage {
         mimeType: "multipart/form-data",
         headers: {}
       }
-      fileTransfer.upload(fileToUp, encodeURI('https://bluedropsproducts.com/upload.php'), options)
+      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/upload.php'), options)
           .then((data) => {
-            this.perfil_imagem = 'https://bluedropsproducts.com/app/uploads/' + this.imageFileName;
+            this.perfil_imagem = 'https://wa-studio.com/redelive/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
             this.setImage();
 
@@ -506,11 +506,11 @@ export class PerfilPage {
     headers.append('content-type', 'application/json');
 
     let body = {
-      image: 'https://bluedropsproducts.com/app/uploads/' + this.imageFileName,
+      image: 'https://wa-studio.com/redelive/uploads/' + this.imageFileName,
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/setNewImage';
+    let link = 'https://wa-studio.com/redelive/ferramentas/setNewImage';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -543,7 +543,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuarioProfissional';
+    let link = 'https://wa-studio.com/redelive/ferramentas/updateUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -576,7 +576,7 @@ export class PerfilPage {
         id: this.userId
       }
 
-      let link = 'https://bluedropsproducts.com/app/ferramentas/setNovoNome';
+      let link = 'https://wa-studio.com/redelive/ferramentas/setNovoNome';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -603,7 +603,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/setUsuarioPessoal';
+    let link = 'https://wa-studio.com/redelive/ferramentas/setUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -629,7 +629,7 @@ export class PerfilPage {
       id: this.perfilId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/getUsuarioPessoal';
+    let link = 'https://wa-studio.com/redelive/ferramentas/getUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -666,7 +666,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuarioPessoal';
+    let link = 'https://wa-studio.com/redelive/ferramentas/updateUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

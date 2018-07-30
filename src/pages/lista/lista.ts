@@ -23,7 +23,7 @@ export class ListaPage {
 
     let body = {productId: this.productId}
 
-    var link = 'https://bluedropsproducts.com/app/ferramentas/getLista';
+    var link = 'https://wa-studio.com/redelive/ferramentas/getLista';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

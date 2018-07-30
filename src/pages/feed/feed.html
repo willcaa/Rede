@@ -100,7 +100,7 @@
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
     <ion-item>
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">
-        <img  [src]="getSrc(item.user_image)" (click)="goPerfil(item.id)">
+        <img  [src]="getSrc(item.user_image)" (click)="prePerfilPage(item.id)">
       </ion-avatar>
       <P style="white-space: initial; max-width: 80%;">
         <b>{{ item.nome }}</b>

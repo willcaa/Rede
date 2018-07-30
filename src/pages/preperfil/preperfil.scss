@@ -34,6 +34,13 @@ page-preperfil {
       background-repeat: no-repeat;
       background-position: center;
     }
+    .scroll-content{
+      margin-top: 0px !important;
+
+    }
+    .toolbar-background-md{
+      background: transparent !important;
+    }
     .fundo-perfil {
       background-image: url("../assets/imgs/fundo_perfil.jpg");
       background-size: cover;
@@ -167,7 +174,7 @@ page-preperfil {
     .button-like {
       position: absolute;
       right: 0;
-      top: 298.75px;
+      top: 218.75px;
     }
     .header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before{
         background-image: none;
