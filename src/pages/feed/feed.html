@@ -23,7 +23,7 @@
           <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
         </ion-icon>
       </button>
-      <button ion-button icon-only (click)="goPerfil()">
+      <button ion-button icon-only (click)="prePerfilPage()">
         <img class="imageUserFeed" src="assets/imgs/user_round.png">
       </button>
     </ion-buttons>
@@ -149,7 +149,7 @@
     <ion-col col-7 >
         <button style="padding: 0; float: left; color: #ffc90e !important;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
           <ion-icon name="md-star"></ion-icon>
-          66
+          {{ item.comments }}
         </button>
         <button style="padding: 0; float: left; left: 90px;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
           <ion-icon name=""></ion-icon>

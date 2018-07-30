@@ -13,7 +13,7 @@
     <!-- <button ion-button icon-only (click)="goPerfil()">
         <img class="imageUserFeed" src="assets/imgs/user_round.png">
       </button> -->
-      <button class="salva">
+      <button class="salva" (click)="updateUsuarioPessoal(nome, nome_completo, email,genero)">
         Salvar
       </button>
     </ion-buttons>
@@ -24,7 +24,7 @@
 
 
 <ion-content padding>
-  <button class="zulinho">
+  <button class="zulinho"  (click)="alterarImagemPerfil()" >
     <img src="assets/imgs/janelas.png" alt="" class="janela">
         <h2 class="perfil">Trocar foto de perfil</h2>
   </button>
@@ -34,33 +34,38 @@
   </button>
     <ion-item>
       <ion-label color="primary" stacked>Nome</ion-label>
-      <ion-input type="name" placeholder="nome do lek"></ion-input>
+      <ion-input type="name" [(ngModel)]="name" placeholder="{{perfil_nome}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Nome do usuário</ion-label>
-      <ion-input type="name"type="email"placeholder="nome do usuário"></ion-input>
+      <ion-input type="nome_completo" [(ngModel)]="nome_completo" placeholder="{{nome_completo}}"></ion-input>
     </ion-item>
     <h4 style="margin-left: 10px; margin-top: 5px;">Informações privadas</h4>
       <ion-item>
         <ion-label color="primary" stacked>Endereço de Email</ion-label>
-        <ion-input type="email"placeholder="Email do lek"></ion-input>
+        <ion-input type="email" [(ngModel)]="email" placeholder="{{email}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Gênero</ion-label>
-        <ion-input type="email" placeholder="sexo do lek(a)"> </ion-input>
+        <ion-input type="genero" [(ngModel)]="genero" placeholder="{{genero}}"> </ion-input>
       </ion-item>
       <h3 style="margin-left: 10px;margin-top: 7px; margin-bottom: 5px;">Trocar senha</h3>
         <ion-item>
           <ion-label color="primary" stacked>Senha atual</ion-label>
-          <ion-input type="name" placeholder="Senha atua">l</ion-input>
+          <ion-input type="senha" [(ngModel)]="senha" placeholder="Senha atua">l</ion-input>
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Nova Senha</ion-label>
-            <ion-input type="password" placeholder="Nova Senha" ></ion-input>
+            <ion-input type="password" [(ngModel)]="password" placeholder="Nova Senha" ></ion-input>
           </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Confirmar Nova Senha</ion-label>
-            <ion-input type="password" placeholder="Nova Senha"></ion-input>
+            <ion-input type="password" [(ngModel)]="password2" placeholder="Nova Senha"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="password == password2 && password != null">
+          <button (click)="mudarSenha(password)">
+              Salvar Senha
+            </button>
           </ion-item>
 
 </ion-content>

@@ -12,6 +12,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { BrMaskerModule } from 'brmasker-ionic-3';
+import { PerfilPage } from '../perfil/perfil';
+
 
 /**
  * Generated class for the PreperfilPage page.
@@ -62,6 +64,9 @@ export class PreperfilPage {
     this.userId = this.navParams.get("userId");
     this.perfil_imagem = this.navParams.get("image");
     this.perfil_nome = this.navParams.get("nome");
+    this.stat_seguidores = this.navParams.get("seguidores");
+    this.stat_seguindo = this.navParams.get("seguindo");
+    this.stat_anuncios = this.navParams.get("post");
     this.enviandoSeguir = false;
   }
   
@@ -150,7 +155,39 @@ alterarTab(Id){
         userId: this.userId
       });
   }
+  goPerfil(id_perfil = this.userId) {
+    this.getData(id_perfil);
+    console.log(id_perfil);
+  }
 
+  goPagePerfil(perfilId, image, nome){
+    console.log(perfilId, image, nome);
+    this.navCtrl.push(PerfilPage, {
+        perfilId: perfilId, userId: this.userId, image: image, nome: nome
+    });
+  }
+
+  public getData(id_usuario = this.userId) {
+    console.log(id_usuario);
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      id_usuario: id_usuario
+    }
+
+    let link = 'https://bluedropsproducts.com/app/usuarios/getUserInfo';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      console.log(data)
+      this.goPagePerfil(data.usuario.id, data.usuario.user_image, data.usuario.nome);
+  
+    });
+  }
   getStats() {
     let headers = new Headers();
       headers.append('Access-Control-Allow-Origin', '*');

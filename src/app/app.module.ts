@@ -29,6 +29,8 @@ import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register';
 import { FeedPageModule } from '../pages/feed/feed.module';
 import { StatsPage } from '../pages/stats/stats';
+import { PreperfilPage } from '../pages/preperfil/preperfil';
+import { EditarperfilPage } from '../pages/editarperfil/editarperfil';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -45,6 +47,8 @@ import { PopoverNotificacoesComponent } from '../components/popover-notificacoes
 import { ListaPage } from '../pages/lista/lista';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { UploadsProvider } from '../providers/uploads/uploads';
+// import { PreperfilPageModule } from '../pages/preperfil/preperfil.module';
+
 
 var config = {
   apiKey: "AIzaSyDSm9-mf313F665PuNQiP4khMPpv6Hraac",
@@ -63,6 +67,8 @@ var config = {
     CheckinPage,
     ContactPage,
     PerfilPage,
+    PreperfilPage,
+    EditarperfilPage,
     HomePage,
     TabsPage,
     MapPage,
@@ -85,7 +91,8 @@ var config = {
     }),
     IonicStorageModule.forRoot(),
     FeedPageModule,
-    HttpModule
+    HttpModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -94,6 +101,8 @@ var config = {
     ContactPage,
     CheckinPage,
     PerfilPage,
+    PreperfilPage,
+    EditarperfilPage,
     HomePage,
     TabsPage,
     MapPage,

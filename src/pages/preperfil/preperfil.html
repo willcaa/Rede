@@ -49,7 +49,7 @@
         <ion-footer id="publicacoes" class="pagetabs" *ngIf="pageId == 'publicacoes'">
             <ion-item  style="height: 60px; ">
               <ion-row>
-                <ion-col style="text-align: center">
+                <ion-col style="text-align: center " (click)="goPerfil()">
                   {{ stat_anuncios }}<br>
                   Post
                 </ion-col>

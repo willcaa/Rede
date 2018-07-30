@@ -34,7 +34,9 @@ export class EditarperfilPage {
   public perfilId: any;
   public anuncios: any;
   public usuario: any;
-  public usuario_nome: any;
+  public nome_completo: any;
+  public email: any;
+  public genero: any;
   public usuario_imagem: any;
   public perfil_imagem: any;
   public perfil_nome: any;
@@ -61,6 +63,9 @@ export class EditarperfilPage {
       this.userId = this.navParams.get("userId");
       this.perfil_imagem = this.navParams.get("image");
       this.perfil_nome = this.navParams.get("nome");
+      this.nome_completo = this.navParams.get("nome_completo");
+      this.email = this.navParams.get("email");
+      this.genero = this.navParams.get("genero");
       this.enviandoSeguir = false;
     }
 
@@ -590,6 +595,32 @@ export class EditarperfilPage {
     });
   }
 
+
+  
+  mudarSenha(senha){
+  
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      senha: senha,
+      id: this.userId,
+    }
+    console.log(senha);
+    let link = 'https://bluedropsproducts.com/app/usuarios/mudarSenha';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      if(data){
+        console.log(data);
+        this.navCtrl.pop();   
+      }
+    });
+  }
+
   public getUsuarioPessoal(){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -622,7 +653,7 @@ export class EditarperfilPage {
     this.alterarTab('pessoal_o');
   }
 
-  updateUsuarioPessoal(nome, idade, endereco, tel){
+  updateUsuarioPessoal(nome, email, nome_completo, genero){
   
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -631,23 +662,21 @@ export class EditarperfilPage {
 
     let body = {
       nome: nome,
-      idade: idade,
-      endereco: endereco,
-      tel: tel,
+      nome_completo: nome_completo,
+      genero: genero,
+      email: email,
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuarioPessoal';
+    let link = 'https://bluedropsproducts.com/app/ferramentas/updateUsuario';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
       if(data){
         this.usuarioPessoal = data;
-        if(this.usuarioPessoal == data){
-          this.getUsuarioPessoal();
-        }
         console.log(data);
+        this.navCtrl.pop();
       }
     });
   }
