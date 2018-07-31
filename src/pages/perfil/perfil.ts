@@ -349,18 +349,25 @@ private save(key: string, data: string) {
   //   this.index_anuncio = this.index_anuncio + 1;
   // }
   getLogo() {
-    let options = {
-      outputType: 1,
-      maximumImagesCount: 1
-    };
-    this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-        this.logo = results[i];
-        this.logo64 = results[i];
-        this.save('logo', this.logo);
-        this.save('logo64', this.logo64);
-      }
-    }, (err) => { });
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      targetWidth: 1200,
+      targetHeight: 800
+    }
+    this.camera.getPicture(options).then((data: string) => {
+      this.logo = 'data:imag/jpg;base64,' + data;
+      this.logo64 = 'data:imag/jpg;base64,' + data;
+      this.save('logo', this.logo);
+      this.save('logo64',this.logo64)
+      
+    }, (err) => {
+      console.log(err);
+      
+    });
   }
 
   showAlert(title, text, button) {

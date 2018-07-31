@@ -1630,4 +1630,102 @@ export class OrcamentosPage {
         }
       });
   }
+
+  public editarOrcamento(fab){
+    this.getOrcamentoE(this.idToRemove[0], fab);
+    console.log(this.idToRemove[0]);
+  }
+  
+  getOrcamentoE(id, fab) {
+    
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id: id
+    }
+
+    var link = 'https://refriplaybusiness.com.br/ferramentas/getOrcamento';
+
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        this.total = 0;
+        if(data){
+          console.log(data);
+          this.dados = data.orcamento;
+          this.clienteSelecionado = true;
+          this.dadosProduto = data.orcamentoProdutos;
+          this.produtoSelecionado = true;
+          this.dadosServico = data.orcamentoServicos;
+          this.servicoSelecionado = true;
+          this.alterarTab('orcamentos_e', fab);
+          data.orcamentoProdutos.forEach(element => {
+            this.total = this.total + (parseInt(element.price) * parseInt(element.qty));
+            this.totalMateriais = parseInt(this.totalMateriais) + parseInt(element.price);
+            console.log(element.price, this.total);
+
+          });
+          data.orcamentoServicos.forEach(element => {
+            this.total = this.total + (parseInt(element.price) * parseInt(element.qty));
+            this.totalServicos =parseInt(this.totalServicos) + parseInt(element.price);
+            console.log(element.price, this.total);
+          });
+        
+        }
+      });
+      this.idToRemove = [];
+  }
+
+  updateOrcamento(descricao, formaDePagamento, fab) {
+    this.updateBudget(descricao, formaDePagamento, this.dados.technician_id, this.dados.client_id, fab);
+    
+  }
+
+  updateBudget(descricao, pagamento, technicianId, clientId, fab) {
+    if(descricao == null){
+      descricao = this.dados.description;
+    }
+    if(pagamento == null){
+      pagamento = this.dados.payment_details;
+    }
+    console.log(this.dadosProduto, this.dadosServico);
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+    console.log(descricao);
+    let body = {
+      description: descricao,
+      payment: pagamento,
+      tecid: technicianId,
+      clid: clientId,
+      products: this.dadosProduto,
+      services: this.dadosServico,
+      id: this.dados.id
+    }
+    console.log(this.dadosProduto);
+    console.log(this.dadosServico);
+    var link = 'https://refriplaybusiness.com.br/ferramentas/updateBudget';
+
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        if (data) {
+          this.orcamento = data;
+          console.log(data);
+          this.loadTotalOrcamentos();
+          this.alterarTab('orcamentos', fab);
+        }
+      });
+
+
+  }
+
 }

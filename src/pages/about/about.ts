@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController, ToastController, PopoverCo
 import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestMethod, RequestOptions, Request } from '@angular/http';
 import { HTTP } from '@ionic-native/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
@@ -131,7 +131,7 @@ export class AboutPage {
     }
   }
 
-  checkIn() {
+public checkIn() {
 
     
     //this.presentLoadingDefault();
@@ -144,13 +144,20 @@ export class AboutPage {
       
           this.currentPos = pos;
           console.log(pos.coords.latitude, pos.coords.longitude);
-          this.httpIon.setHeader('', "Access-Control-Allow-Origin", '*');
-          this.httpIon.setHeader('', 'Accept', 'application/json');
-          this.httpIon.setHeader('', 'content-type', 'application/json');
+          let headers = new Headers();
+          headers.append('Access-Control-Allow-Origin', '*');
+          headers.append('Accept', 'application/json');
+          headers.append('content-type', 'application/json');
+          
+          
           // this.getGeocode(pos.coords.latitude, pos.coords.longitude);
           let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + pos.coords.latitude + "," + pos.coords.longitude + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
+          
+         
+
+
           this.http.get(url2).map(res => res.json()).subscribe(data2 => {
-  
+            
             let alert = this.alertCtrl.create();
             alert.setTitle('Onde Você está?');
         
@@ -172,9 +179,10 @@ export class AboutPage {
             });
             alert.present();
           }, (err: any) => {
-
+           console.log(err);
           });
         }, (err: PositionError) => {
+          
           console.log("error : " + err.message);
         });    
       }
@@ -246,7 +254,7 @@ export class AboutPage {
           })
         }, (err) => {
           console.log(err);
-          this.presentToast(err);
+          
         });
       }
  
@@ -347,7 +355,7 @@ export class AboutPage {
     
         }, (err) => {
           console.log(err);
-          this.presentToast(err);
+          
         });
       }
     
@@ -591,7 +599,7 @@ export class AboutPage {
         let toast = this.toastCtrl.create({
           message: msg,
           duration: time,
-          position: 'bottom'
+          position: 'top'
         });
       
         toast.onDidDismiss(() => {

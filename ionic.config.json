@@ -8,7 +8,11 @@
   "proxies": [
     {
         "path": "*",
-        "proxyUrl": "https://*"
+        "proxyUrl": "https://refriplaybusiness.com.br"
+    },
+    {
+      "path": "*",
+      "proxyUrl": "https://maps.googleapis.com/"
     }
   ]
 }

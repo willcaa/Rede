@@ -48,7 +48,6 @@
     "com-badrit-base64": "^0.2.0",
     "com-sarriaroman-photoviewer": "^1.1.18",
     "cordova": "8.0.0",
-    "cordova-android": "7.0.0",
     "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-browser": "5.0.3",
     "cordova-plugin-actionsheet": "^2.3.3",
@@ -93,7 +92,8 @@
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.1",
     "x-ray": "^2.3.2",
     "xml2js": "^0.4.19",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "cordova-android": "~7.0.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.11",

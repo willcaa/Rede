@@ -113,8 +113,8 @@
             </div>
             <div style="overflow: hidden; max-height: 700px;" class="img_card" *ngIf="item.tipo == 3">
               <div  *ngIf='item.link'>
-                <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl('http://'+item.link)" width="100%" height="350px" scrolling="NO" frameborder="0"></iframe>
-                  <h5 (click)="openBrowser('http://'+item.link)">
+                <iframe [src]="_sanitizer.bypassSecurityTrustResourceUrl(+item.link)" width="100%" height="350px" scrolling="NO" frameborder="0"></iframe>
+                  <h5 (click)="openBrowser(item.link)">
                 {{ item.link }}</h5>
               </div>
             </div>
@@ -252,7 +252,7 @@
     <div id="profissional_n" class="pagetabs" *ngIf="pageId == 'profissional_n'">
       <br> <h5>Informações do profissional</h5><br>
       <br>
-      <img *ngIf="logo" src="{{logo}}" alt="" width="100%" height="auto">
+      <img *ngIf="logo" [src]="_sanitizer.bypassSecurityTrustUrl(logo)" alt="" width="100%" height="auto">
       <p>Formato indicado para logo: 200x100px</p>
       <button *ngIf="!logo" ion-button icon-end color="darkBlue" (click)="getLogo()">
         Escolher Logo          
