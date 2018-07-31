@@ -99,7 +99,7 @@ var config = {
     }),
     IonicStorageModule.forRoot(),
     FeedPageModule,
-    HttpModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
