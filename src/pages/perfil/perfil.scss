@@ -98,12 +98,12 @@ page-perfil {
       width: 25vw;
     }
     to {
-      width: 36.5vmin;
+      width: 35.0vmin;
     }
   }
   @keyframes reduzir_btn {
     from {
-      width: 36.5vmin;
+      width: 35.0vmin;
     }
     to {
       width: 25vw;
@@ -123,7 +123,7 @@ page-perfil {
     position: relative;
     right: -3px;
     top: 7px;
-    width: 36.5vmin;
+    width: 35.0vmin;
     text-transform: none;
     letter-spacing: 1px;
     animation: ampliar_btn 1s;

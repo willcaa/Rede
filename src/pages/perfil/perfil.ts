@@ -78,7 +78,7 @@ export class PerfilPage {
     });
   }
 
-  public EditarperfilPage(id_usuario = this.userId) {
+  public EditarperfilPage(id_usuario) {
     console.log(id_usuario);
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -175,10 +175,10 @@ export class PerfilPage {
     
 
 
-  goStats(which) {
+  goStats(which, perfilId) {
       this.navCtrl.push(StatsPage, {
         tipo: which,
-        userId: this.userId
+        userId: perfilId
       });
   }
 

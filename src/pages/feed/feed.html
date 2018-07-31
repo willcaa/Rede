@@ -23,7 +23,7 @@
           <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
         </ion-icon>
       </button>
-      <button ion-button icon-only (click)="prePerfilPage()">
+      <button ion-button icon-only (click)="prePerfilPage(userId)">
         <img class="imageUserFeed" src="assets/imgs/user_round.png">
       </button>
     </ion-buttons>

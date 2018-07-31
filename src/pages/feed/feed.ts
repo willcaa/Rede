@@ -766,7 +766,7 @@ export class FeedPage {
   goPagePreperfil(perfilId, image, nome,post,seguindo,seguidores){
     console.log(perfilId, image, nome);
     this.navCtrl.push(PreperfilPage, {
-        perfilId: perfilId, userId: this.userId, image: image, nome: nome,post: post, seguindo: seguindo,seguidores :seguidores
+        perfilId: perfilId, userId: this.userId , image: image, nome: nome,post: post, seguindo: seguindo,seguidores :seguidores
     });
   }
   scrollingFun(e) {
@@ -941,7 +941,7 @@ export class FeedPage {
     
   }
 
-  public prePerfilPage(id_usuario = this.userId) {
+  public prePerfilPage(id_usuario) {
     console.log(id_usuario);
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -957,7 +957,7 @@ export class FeedPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
-      console.log(data)
+      console.log("AQUI", data)
       this.goPagePreperfil(data.usuario.id, data.usuario.user_image, data.usuario.nome,data.posts,data.seguido,data.seguidor);
   
     });

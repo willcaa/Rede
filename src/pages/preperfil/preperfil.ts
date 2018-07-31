@@ -76,6 +76,7 @@ alterarTab(Id){
   }
 
   ionViewDidLoad() {
+    console.log(this.userId)
     this.alteraNome = false;
     this.usuarioPessoal = null;
     this.checkSeguir(this.perfilId, this.userId);
@@ -149,13 +150,13 @@ alterarTab(Id){
     
 
 
-  goStats(which) {
+  goStats(which, perfilId) {
       this.navCtrl.push(StatsPage, {
         tipo: which,
-        userId: this.userId
+        userId: perfilId
       });
   }
-  goPerfil(id_perfil = this.userId) {
+  goPerfil(id_perfil) {
     this.getData(id_perfil);
     console.log(id_perfil);
   }
@@ -167,7 +168,7 @@ alterarTab(Id){
     });
   }
 
-  public getData(id_usuario = this.userId) {
+  public getData(id_usuario) {
     console.log(id_usuario);
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
