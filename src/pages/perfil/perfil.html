@@ -37,7 +37,7 @@
           </div>
           <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)">
           
-          <button ion-button icon-only class="botao-editar-nome"  (click)="EditarperfilPage(perfilId)"><ion-icon name="brush"></ion-icon></button>
+          <button *ngIf="perfilId == userId" ion-button icon-only class="botao-editar-nome"  (click)="EditarperfilPage(perfilId)"><ion-icon name="brush"></ion-icon></button>
           <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="goEditarPerfil()"><ion-icon name="brush"></ion-icon></button>
           <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="goEditarPerfil();">OK</button> -->
           <ion-list >
