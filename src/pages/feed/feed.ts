@@ -73,6 +73,8 @@ export class FeedPage {
   public foto_usuario: any = 'assets/imgs/user.png';
   public notificacoes_qts: any;
    constructor(public platform: Platform, public sanitizer: DomSanitizer, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
+    this.carregaFeed();
+    
     if(navParams.get("slide")){
       this.local = navParams.get("slide");
       switch(navParams.get("slide")) {
@@ -154,6 +156,45 @@ export class FeedPage {
       
       
   }
+
+  public async carregaFeed(){
+    if(this.storage.get('lastFeed')){
+      this.storage.get('lastFeed').then(res =>{
+        this.lastFeed = res;
+        this.carregaLastFeed(this.lastFeed);
+      })
+      .catch(err =>{
+        this.getUserPosition();
+      })
+    }
+  }
+
+  public async carregaLastFeed(last){
+    last.forEach(element => {
+      // element.usuario == parseInt(element.usuario);
+      if(element.distance >= 1) {
+         element.unit = 'Km';
+         element.distance = parseInt(element.distance);
+        } else {
+          element.distance = element.distance * 1000;
+          element.distance = parseInt(element.distance);
+        element.unit = 'm';
+      }
+       console.log(element.distance);
+    });
+  
+    
+      last.forEach(element => {
+        console.log(element.distance);
+        this.feed.push(element);
+      });
+      
+      console.log(this.feed);
+      console.log(this.index_feed);
+
+      this.getUserPosition();
+  }
+
   public getBackground(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
@@ -212,7 +253,7 @@ export class FeedPage {
     return this.save(key, data);
   }
  
-  private save(key: string, data: string) {
+  private save(key: string, data: any) {
     return this.storage.set(key, data);
   }
  
@@ -632,7 +673,7 @@ export class FeedPage {
       this.getQtdNotificacoes();
     });
   }
-
+  public lastFeed: any = {};
   loadFeed(lat, long, infiniteScroll, hach: any = null) {
 
     let headers = new Headers();
@@ -685,6 +726,9 @@ export class FeedPage {
       .subscribe(data => {
         console.log( data.data, data.status);
         if ( data.data ) {
+          this.lastFeed = data.data;
+          console.log(this.lastFeed);
+          this.save('lastFeed', this.lastFeed);
           data.data.forEach(element => {
             // element.usuario == parseInt(element.usuario);
             if(element.distance >= 1) {

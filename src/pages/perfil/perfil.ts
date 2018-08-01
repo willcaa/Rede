@@ -55,7 +55,7 @@ export class PerfilPage {
     public alertCtrl: AlertController,
     public photoViewer: PhotoViewer, 
     public popoverCtrl: PopoverController, 
-    private _sanitizer: DomSanitizer, 
+    public _sanitizer: DomSanitizer, 
     public navParams: NavParams, 
     private imagePicker: ImagePicker,
     private base64: Base64,
@@ -349,21 +349,25 @@ private save(key: string, data: string) {
   //   this.index_anuncio = this.index_anuncio + 1;
   // }
   getLogo() {
-    let options = {
-      maximumImagesCount: 1
-    };
-    this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-        this.logo = results[i];
-        this.base64.encodeFile(results[i]).then((base64File: string) => {
-          this.logo64 = base64File;
-          this.save('logo', results[i]);
-          this.save('logo64', base64File);
-        }, (err) => {
-          console.log(err);
-        });
-      }
-    }, (err) => { });
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      targetWidth: 1200,
+      targetHeight: 800
+    }
+    this.camera.getPicture(options).then((data: string) => {
+      this.logo = 'data:imag/jpg;base64,' + data;
+      this.logo64 = 'data:imag/jpg;base64,' + data;
+      this.save('logo', this.logo);
+      this.save('logo64',this.logo64)
+      
+    }, (err) => {
+      console.log(err);
+      
+    });
   }
 
   showAlert(title, text, button) {
