@@ -88,10 +88,10 @@ export class FeedPage {
         case "cidade":
           this.range = 600;
           break;
-        case "estado":
+        case "top":
           this.range = 800;
           break;
-        case "pais":
+        case "News":
           this.range = 1000;
           break;
       }
@@ -319,7 +319,7 @@ export class FeedPage {
     });
 
     popover.onDidDismiss(popoverData => {
-      if(popoverData != this.topOrNews && (popoverData == "Top" || popoverData == "News")) {
+      if(popoverData != this.topOrNews && (popoverData == "Top" || popoverData == "pão")) {
         this.topOrNews = popoverData;
         this.index_feed = 0;
         this.feed = [];
@@ -434,10 +434,10 @@ export class FeedPage {
           this.local = "cidade";
           break;
         case 800:
-          this.local = "estado";
+          this.local = "top";
           break;
         case 1000:
-          this.local = "pais";
+          this.local = "News";
           break;
       }
     } else {
@@ -454,10 +454,10 @@ export class FeedPage {
         case "cidade":
           this.range = 600;
           break;
-        case "estado":
+        case "top":
           this.range = 800;
           break;
-        case "pais":
+        case "news":
           this.range = 1000;
           break;
       }
@@ -654,11 +654,11 @@ export class FeedPage {
     if(this.local == "bairro"){
       localNome = this.bairro;
     } else
-    if(this.local == "cidade"){
-      localNome = this.cidade;
+    if(this.local == "News"){
+      localNome = this.topOrNews;
     } else
-    if(this.local == "estado"){
-      localNome = this.estado;
+    if(this.local == "top"){
+      localNome = this.topOrNews;
     } else
     if(this.local == "pais"){
       localNome = this.pais;

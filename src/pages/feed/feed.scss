@@ -31,6 +31,15 @@ page-feed {
     color: #000 !important;
     border: 0;
   }
+  page-feed .segment-button img{
+    width: 16%;
+    height: auto;
+    margin-top: 5px;
+    text-align: center;
+  }
+  page-feed .toolbar-md-dark .toolbar-background-md{
+    background: linear-gradient(45deg, #12c107 0%, #184c14 100%);
+  }
   .segment-md .segment-button.segment-activated {
     color: #00a2e8 !important;
     border: 0;

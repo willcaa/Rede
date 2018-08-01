@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { Http, Headers, RequestOptions } from '@angular/http';
 import * as pdfmake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { FileChooser } from '@ionic-native/file-chooser';
@@ -9,7 +8,6 @@ import { FileOpener } from '@ionic-native/file-opener';
 import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
-import { isTrueProperty } from 'ionic-angular/util/util';
 
 @IonicPage()
 @Component({
