@@ -102,10 +102,15 @@
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">
         <img  [src]="getSrc(item.user_image)" (click)="prePerfilPage(item.id)">
       </ion-avatar>
-      <P style="white-space: initial; max-width: 80%;">
+      <P *ngIf="item.pai == 0" style="white-space: initial; max-width: 80%;">
         <b>{{ item.nome }}</b>
-        <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin"></ion-icon> {{ item.local }}</b></span>
+        <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin" style="font-size: 1.5em"></ion-icon> {{ item.local }}</b></span>
       </P>
+      <P *ngIf="item.pai != 0" style="white-space: initial; max-width: 80%;">
+          <b style="display: block;">{{ item.nome }}<span style="color: blue;"> Compartilhou:</span></b>
+          <b>{{ item.nome_pai }}</b>
+          <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin" style="font-size: 1.5em"></ion-icon> {{ item.local }}</b></span>
+        </P>
       <p>{{ item.atras }}</p>
       <button class="button-more" ion-button icon-only clear (click)="opts($event, item)">
         <ion-icon name="more"></ion-icon>
@@ -149,7 +154,7 @@
     <ion-col col-7 >
         <button style="padding: 0; float: left; color: #ffc90e !important;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
           <ion-icon name="md-star"></ion-icon>
-          {{ item.comments }}
+          {{ item.qtd }}
         </button>
         <button style="padding: 0; float: left; left: 90px;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
           <ion-icon name=""></ion-icon>
@@ -185,7 +190,7 @@
           <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
         </ion-item>
       </ion-col>
-      <button style="width: 57px; background-color: transparent;" (click)="coelho(item.id_anuncio)">
+      <button style="width: 57px; background-color: transparent;" (click)="compartilhar(item.id_anuncio)">
         <img class="imageUserFeed" src="assets/imgs/pessoas_preto.png">
       </button>
 

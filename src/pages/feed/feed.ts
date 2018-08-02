@@ -591,7 +591,7 @@ export class FeedPage {
     //     // console.log(data.data);
     //   });
   }
-  coelho() {
+  compartilhar(anuncio_id) {
 
     const confirm = this.alertCtrl.create({
       title: 'Compartilhar com seguidores?',
@@ -607,7 +607,24 @@ export class FeedPage {
         {
           text: 'Sim',
           handler: () => {
-            console.log('Agree clicked');
+            let headers = new Headers();
+            headers.append('Access-Control-Allow-Origin', '*');
+            headers.append('Accept', 'application/json');
+            headers.append('content-type', 'application/json');
+            headers.append('Access-Control-Expose-Headers', "true");
+
+            let body = {
+              id_anuncio: anuncio_id,
+              id_usuario: this.userId
+            }
+            var link = 'https://wa-studio.com/redelive/compartilhamentos/compartilhar';
+
+            this.http.post(link, JSON.stringify(body), { headers: headers })
+            .map(res => res.json())
+            .subscribe(data => {
+              console.log(data);
+            });
+
           }
         }
       ]
