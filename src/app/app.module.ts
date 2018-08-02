@@ -19,6 +19,7 @@ import { FileOpener } from '@ionic-native/file-opener';
 import { FilePath } from '@ionic-native/file-path';
 
 import { AboutPage } from '../pages/about/about';
+import { PesquisarPage } from '../pages/pesquisar/pesquisar';
 import { CommentsPage } from '../pages/comments/comments';
 import { CheckinPage } from '../pages/checkin/checkin'
 import { ContactPage } from '../pages/contact/contact';
@@ -47,6 +48,7 @@ import { PopoverNotificacoesComponent } from '../components/popover-notificacoes
 import { ListaPage } from '../pages/lista/lista';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { UploadsProvider } from '../providers/uploads/uploads';
+import { PesquisarPageModule } from '../pages/pesquisar/pesquisar.module';
 // import { PreperfilPageModule } from '../pages/preperfil/preperfil.module';
 
 
@@ -73,6 +75,7 @@ var config = {
     TabsPage,
     MapPage,
     StatsPage,
+    PesquisarPage,
     RegisterPage,
     PopoverDenunciarComponent,
     PopoverTopComponent,
@@ -109,6 +112,7 @@ var config = {
     StatsPage,
     RegisterPage,
     CommentsPage,
+    PesquisarPage,
     PopoverDenunciarComponent,
     PopoverTopComponent,
     PopoverOptsAnunciosComponent,
