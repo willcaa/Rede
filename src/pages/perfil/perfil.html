@@ -30,8 +30,9 @@
           </button>
 
           <div class="button-like">
-            <span class="bola"></span>
+              
             <button *ngIf="perfilId == userId" ion-button small class="botao-seguindo"></button>
+            <span class="bola"><img src="assets/imgs/local_round_blue2.png"></span>
             <button *ngIf="seguindo && perfilId != userId" ion-button small class="botao-seguindo" (click)="seguir(perfilId, userId)">Seguindo</button>
             <button *ngIf="!seguindo" ion-button small class="botao-seguir" (click)="seguir(perfilId, userId)">Seguir</button>
           </div>
