@@ -11,7 +11,7 @@
           <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
           </ion-refresher-content>
         </ion-refresher>
-      <div style="width: 100%; margin-top: 217px;">
+      <div style="width: 100%; margin-top: 286px;">
           <div>
             <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
               
@@ -28,6 +28,7 @@
             
             <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="alterarNome()"><ion-icon name="brush"></ion-icon></button> -->
             <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="setNovoNome(novoNome);">OK</button>
+           <div style="margin-top: 10px;">
             <ion-list >
               <h3 class="nome_usuario" *ngIf="alteraNome == false">{{ perfil_nome }}</h3>
               <ion-item *ngIf="alteraNome == true" style="margin-top: -17px;">
@@ -40,6 +41,7 @@
                 <!-- <ion-input class="altera-nome" [(ngModel)]="novoNome" type="text" placeholder="{{perfil_nome}}" *ngIf="alteraNome == true"></ion-input> -->
               </ion-item>
             </ion-list>
+          </div>
               
           </div>
           </div>
