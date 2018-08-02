@@ -1,7 +1,3 @@
-import { AngularFireModule, FirebaseApp } from 'angularfire2';
-import { AngularFireStorageModule, AngularFireStorage } from 'angularFire2/storage';
-import { AngularFireDatabaseModule, AngularFireDatabase  } from 'angularfire2/database';
-import firebase from 'firebase';
 declare var globalLat: any;
 declare var globalLng: any;
 import { HttpModule } from '@angular/http';
@@ -17,7 +13,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FileOpener } from '@ionic-native/file-opener';
 import { FilePath } from '@ionic-native/file-path';
-import { HTTP } from '@ionic-native/http';
+
 
 import { AboutPage } from '../pages/about/about';
 import { CommentsPage } from '../pages/comments/comments';
@@ -90,9 +86,7 @@ var config = {
   ],
   
   imports: [
-    AngularFireModule.initializeApp(config),
-    AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       backButtonIcon: 'ios-arrow-back',
@@ -131,8 +125,7 @@ var config = {
     Base64,
     ImagePicker,
     FileOpener,
-    Geolocation,
-    AngularFireStorage,
+    Geolocation, 
     GoogleMaps,
     InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -148,7 +141,7 @@ var config = {
     LocatonsProvider,
     ScreenOrientation,
     UploadsProvider,
-    HTTP
+   
   ]
 })
 export class AppModule {}

@@ -4,7 +4,6 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers, RequestMethod, RequestOptions, Request } from '@angular/http';
-import { HTTP } from '@ionic-native/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
@@ -86,7 +85,6 @@ export class AboutPage {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public http: Http, 
-    public httpIon: HTTP,
     public fileChooser: FileChooser,
     private storage: Storage,
     private file: File,
