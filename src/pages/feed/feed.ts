@@ -19,6 +19,7 @@ import { PopoverNotificacoesComponent } from '../../components/popover-notificac
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import $ from 'jquery';
+import { PesquisarPage } from '../pesquisar/pesquisar';
 /**
  * Generated class for the FeedPage page.
  *
@@ -133,6 +134,10 @@ export class FeedPage {
   
   getSrc(link) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(link);
+  }
+
+  goPesquisar(id){
+    this.navCtrl.push(PesquisarPage, {userId: id});
   }
 
   getUserInfo(user) {
