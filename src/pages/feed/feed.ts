@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams, Content, Platform } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams, Content, Platform, ToastController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
@@ -19,6 +19,7 @@ import { PopoverNotificacoesComponent } from '../../components/popover-notificac
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import $ from 'jquery';
+
 import { PesquisarPage } from '../pesquisar/pesquisar';
 /**
  * Generated class for the FeedPage page.
@@ -72,7 +73,7 @@ export class FeedPage {
   public nome_usuario: any;
   public foto_usuario: any;
   public notificacoes_qts: any;
-   constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer) {
+   constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer, private toastCtrl: ToastController) {
     if(navParams.get("slide")){
       this.local = navParams.get("slide");
       switch(navParams.get("slide")) {
@@ -628,6 +629,12 @@ export class FeedPage {
             .map(res => res.json())
             .subscribe(data => {
               console.log(data);
+              let toast = this.toastCtrl.create({
+                message: 'Compartilhado',
+                duration: 2000,
+                position: 'bottom'
+              });
+              toast.present();
             });
 
           }

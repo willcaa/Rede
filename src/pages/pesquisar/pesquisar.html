@@ -25,7 +25,7 @@
     <div class="pagetabs" id="search" *ngIf="tabId == 'search'">
       <ion-row>
         <ion-col col-9>
-          <ion-input type="text" [(ngModel)]="nomePesquisa" placeholder="Pesquise por um usuário" (ngModelChange)="pesquisar(nomePesquisa)"></ion-input>
+          <ion-input type="text" [(ngModel)]="nomePesquisa" placeholder="Pesquise por um usuário" (ngModelChange)="pesquisar(nomePesquisa)" style="color: white;"></ion-input>
         </ion-col>
         <ion-col>
           <button ion-button icon-only name="cancela-pesquisar" style="background: transparent; box-shadow: none" (click)="alterarTab('init'); limpaUsuarios()">
