@@ -8,7 +8,7 @@ import { CommentsPage } from '../comments/comments';
 import { PerfilPage } from '../perfil/perfil';
 import { PreperfilPage } from '../preperfil/preperfil';
 import { MapPage } from '../map/map';
-import { LaunchNavigator, LaunchNavigatorOptions, AppSelectionOptions, RememberChoiceOptions} from '@ionic-native/launch-navigator';
+import { LaunchNavigator, LaunchNavigatorOptions, AppSelectionOptions, RememberChoiceOptions } from '@ionic-native/launch-navigator';
 import { Storage } from '@ionic/storage';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { AlertController } from 'ionic-angular';
@@ -37,7 +37,7 @@ declare var globalLng: any;
 })
 export class FeedPage {
   @ViewChild("contentRef") contentHandle: Content;
-  texto:string;
+  texto: string;
   public feed: any;
   public btnTop: boolean;
   public btnNews: boolean;
@@ -58,10 +58,10 @@ export class FeedPage {
   public estado: string;
   public pais: string;
   private tabBarHeight;
-  private topOrBottom:string;
+  private topOrBottom: string;
   private contentBox;
-  destination:string;
-  start:string;
+  destination: string;
+  start: string;
   loginId: number;
   userId: any;
   userImagem: any;
@@ -73,10 +73,10 @@ export class FeedPage {
   public nome_usuario: any;
   public foto_usuario: any;
   public notificacoes_qts: any;
-   constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer, private toastCtrl: ToastController) {
-    if(navParams.get("slide")){
+  constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer, private toastCtrl: ToastController) {
+    if (navParams.get("slide")) {
       this.local = navParams.get("slide");
-      switch(navParams.get("slide")) {
+      switch (navParams.get("slide")) {
         case "proximidade":
           this.range = 0;
           break;
@@ -104,41 +104,41 @@ export class FeedPage {
       this.items.push({ "number": i });
     }
     this.storage.get('meuid')
-    .then( res =>{
-      this.getUserInfo(res);
+      .then(res => {
+        this.getUserInfo(res);
         console.log(res);
         this.userId = res;
-      } 
-    );
+      }
+      );
     this.storage.get('nome')
-    .then( res =>{
+      .then(res => {
         console.log(res);
         this.userName = res;
-      } 
-    );
+      }
+      );
     this.storage.get('imagem')
-    .then( res =>{
+      .then(res => {
         console.log(res);
         this.userImagem = res;
-      } 
-    );
+      }
+      );
     this.storage.get('email')
-    .then( res =>{
+      .then(res => {
         console.log(res);
         this.userEmail = res;
-      } 
-    );
+      }
+      );
   }
   getBackground(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
-  
+
   getSrc(link) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(link);
   }
 
-  goPesquisar(id){
-    this.navCtrl.push(PesquisarPage, {userId: id});
+  goPesquisar(id) {
+    this.navCtrl.push(PesquisarPage, { userId: id });
   }
 
   getUserInfo(user) {
@@ -154,34 +154,34 @@ export class FeedPage {
     let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
-    .map(res => res.json())
-    .subscribe(data => {
-      this.usuario = data['usuario'];
-      this.nome_usuario = this.usuario.nome;
-      this.foto_usuario = this.usuario.user_image;
-    });
+      .map(res => res.json())
+      .subscribe(data => {
+        this.usuario = data['usuario'];
+        this.nome_usuario = this.usuario.nome;
+        this.foto_usuario = this.usuario.user_image;
+      });
 
   }
 
   public checkLink() {
-    setTimeout(function() {
-  
+    setTimeout(function () {
+
       'use strict';
       var siteURL = '',
-          entries = document.querySelectorAll('ion-card-content.card-content > p'),
-          i;
-      
-      if ( entries.length > 0 ) {
+        entries = document.querySelectorAll('ion-card-content.card-content > p'),
+        i;
+
+      if (entries.length > 0) {
         for (i = 0; i < entries.length; i = i + 1) {
-          entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g,'<a href="#$1">#$1</a>');
-          entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g,'<a (click)="openBrowser(http$1)">http$1</a>');
-          entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g,'<a (click)="openBrowser(http://www$1)">www$1</a>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/#(\S+)/g, '<a href="#$1">#$1</a>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/http(\S+)/g, '<a (click)="openBrowser(http$1)">http$1</a>');
+          entries[i].innerHTML = entries[i].innerHTML.replace(/www(\S+)/g, '<a (click)="openBrowser(http://www$1)">www$1</a>');
         }
       }
     }, 1000);
-    
+
   };
-  openBrowser(url){
+  openBrowser(url) {
     console.log(url);
     const browser = this.iab.create(url);
   }
@@ -189,15 +189,15 @@ export class FeedPage {
   public update(key: string, data: string) {
     return this.save(key, data);
   }
- 
+
   private save(key: string, data: string) {
     return this.storage.set(key, data);
   }
- 
+
   public remove(key: string) {
     return this.storage.remove(key);
   }
-  
+
   public get(key: string) {
     return this.storage.get(key);
   }
@@ -245,8 +245,8 @@ export class FeedPage {
   }
 
   denunciarPost(post) {
-    if(post.id_anuncio == this.userId) {
-      this.showAlert("OPA!","Você não pode denunciar o proprio Post!","OK");
+    if (post.id_anuncio == this.userId) {
+      this.showAlert("OPA!", "Você não pode denunciar o proprio Post!", "OK");
     } else {
       let confirm = this.alertCtrl.create({
         title: 'Você realmente deseja denunciar este Post?',
@@ -263,7 +263,7 @@ export class FeedPage {
             handler: () => {
 
               let index = this.feed.indexOf(post);
-              if(index > -1){
+              if (index > -1) {
                 this.feed.splice(index, 1);
               }
               let headers = new Headers();
@@ -278,10 +278,10 @@ export class FeedPage {
               var link = 'https://wa-studio.com/redelive/post/denunciar';
 
               this.http.post(link, JSON.stringify(body), { headers: headers })
-              .map(res => res.json())
-              .subscribe(data => {
-                
-              });
+                .map(res => res.json())
+                .subscribe(data => {
+
+                });
             }
           }
         ]
@@ -290,29 +290,19 @@ export class FeedPage {
     }
   }
 
-  alterarTopNews(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverTopComponent,{atual:this.topOrNews},{cssClass:"popover-top"});
-    popover.present({
-      ev: myEvent
-    });
-
-    popover.onDidDismiss(popoverData => {
-      if(popoverData != this.topOrNews && (popoverData == "Top" || popoverData == "News")) {
-        this.topOrNews = popoverData;
-        this.index_feed = 0;
-        this.feed = [];
-        this.getUserPosition();
-      }
-    })
+  alterarTopNews() {
+    this.index_feed = 0;
+    this.feed = [];
+    this.getUserPosition();
   }
   opts(myEvent, post) {
-    let popover = this.popoverCtrl.create(PopoverOptsAnunciosComponent,{},{cssClass:"popover-opts"});
+    let popover = this.popoverCtrl.create(PopoverOptsAnunciosComponent, {}, { cssClass: "popover-opts" });
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData => {
-      if(popoverData == "denunciar") {
+      if (popoverData == "denunciar") {
         let headers = new Headers();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Accept', 'application/json');
@@ -325,28 +315,28 @@ export class FeedPage {
         var link = 'https://wa-studio.com/redelive/anuncios/denunciarAnuncio';
 
         this.http.post(link, JSON.stringify(body), { headers: headers })
-        .map(res => res.json())
-        .subscribe(data => {
-          let index = this.feed.indexOf(post);
-            if(index > -1){
+          .map(res => res.json())
+          .subscribe(data => {
+            let index = this.feed.indexOf(post);
+            if (index > -1) {
               this.feed.splice(index, 1);
             }
-        });
+          });
       }
     });
 
   }
   notificacoes(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverNotificacoesComponent,{id_usuario: this.userId},{cssClass:"popover-notificacoes"});
+    let popover = this.popoverCtrl.create(PopoverNotificacoesComponent, { id_usuario: this.userId }, { cssClass: "popover-notificacoes" });
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData => {
-      if(popoverData) {
-        if(popoverData.tipo == "perfil") {
+      if (popoverData) {
+        if (popoverData.tipo == "perfil") {
           this.goPerfil(popoverData.id);
-        } else if(popoverData.tipo == "post") {
+        } else if (popoverData.tipo == "post") {
           this.comments(popoverData.id);
         }
       }
@@ -361,10 +351,10 @@ export class FeedPage {
       var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        this.notificacoes_qts = 0;
-      });
+        .map(res => res.json())
+        .subscribe(data => {
+          this.notificacoes_qts = 0;
+        });
     })
   }
 
@@ -397,8 +387,8 @@ export class FeedPage {
   }
 
   alterarLocal(val) {
-    if(val == "range") {
-      switch(this.range) {
+    if (val == "range") {
+      switch (this.range) {
         case 0:
           this.local = "proximidade";
           break;
@@ -419,7 +409,7 @@ export class FeedPage {
           break;
       }
     } else {
-      switch(val) {
+      switch (val) {
         case "proximidade":
           this.range = 0;
           break;
@@ -453,9 +443,9 @@ export class FeedPage {
     let loading = this.loadingCtrl.create({
       content: 'Publicando...'
     });
-  
+
     loading.present();
-  
+
     setTimeout(() => {
       loading.dismiss();
     }, 5000);
@@ -467,7 +457,7 @@ export class FeedPage {
   }
 
   ampliarImagem(imagem, texto = "") {
-    this.photoViewer.show(imagem,texto,{share:true});
+    this.photoViewer.show(imagem, texto, { share: true });
   }
 
   deleteAnuncio(post) {
@@ -484,9 +474,9 @@ export class FeedPage {
           text: 'Aceitar',
           handler: () => {
             let index = this.feed.indexOf(post);
-              if(index > -1){
-                this.feed.splice(index, 1);
-              }
+            if (index > -1) {
+              this.feed.splice(index, 1);
+            }
             let headers = new Headers();
             headers.append('Access-Control-Allow-Origin', '*');
             headers.append('Accept', 'application/json');
@@ -499,11 +489,11 @@ export class FeedPage {
             let link = 'https://wa-studio.com/redelive/anuncios/deletar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
-            .map(res => res.json())
-            .subscribe(data => {
-              console.log(data)
-              post.id_anuncio
-            });
+              .map(res => res.json())
+              .subscribe(data => {
+                console.log(data)
+                post.id_anuncio
+              });
           }
         }
       ]
@@ -511,20 +501,20 @@ export class FeedPage {
     confirm.present();
   }
 
-  navigate(lat, lng){
+  navigate(lat, lng) {
     this.destination = lat + "," + lng;
     let options: LaunchNavigatorOptions = {
       start: this.start,
-      appSelection:{
-        rememberChoice: {enabled: false}
+      appSelection: {
+        rememberChoice: { enabled: false }
       }
     };
-    
+
     this.launchNavigator.navigate(this.destination, options)
-        .then(
-            success => alert('Launched navigator'),
-            error => alert('Error launching navigator: ' + error)
-    );
+      .then(
+        success => alert('Launched navigator'),
+        error => alert('Error launching navigator: ' + error)
+      );
   }
 
   getUserPosition(infiniteScroll = null) {
@@ -535,7 +525,7 @@ export class FeedPage {
     this.geolocation.getCurrentPosition(this.options).then((pos: Geoposition) => {
 
       this.currentPos = pos;
-      
+
       this.loadLocation(pos.coords.latitude, pos.coords.longitude, infiniteScroll);
       console.log(pos.coords.latitude, pos.coords.longitude);
 
@@ -550,7 +540,7 @@ export class FeedPage {
   }
 
   top(postId, tops, status) {
-    if(!status){
+    if (!status) {
       let headers = new Headers();
       headers.append('Access-Control-Allow-Origin', '*');
       headers.append('Accept', 'application/json');
@@ -563,23 +553,23 @@ export class FeedPage {
       var link = 'https://wa-studio.com/redelive/likes/top';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        console.log(tops);
-        console.log(data);
-        var div = document.getElementById('top' + data.anuncio);
-        div.innerHTML = "TOP " + (parseInt(tops) + 1);
-        var divA = document.getElementById('arrow' + data.anuncio);
-        if(divA){
-          divA.style.display = "none";
-        }
-      });
+        .map(res => res.json())
+        .subscribe(data => {
+          console.log(tops);
+          console.log(data);
+          var div = document.getElementById('top' + data.anuncio);
+          div.innerHTML = "TOP " + (parseInt(tops) + 1);
+          var divA = document.getElementById('arrow' + data.anuncio);
+          if (divA) {
+            divA.style.display = "none";
+          }
+        });
     }
   }
- 
+
   comments(postId) {
-   this.navCtrl.push(CommentsPage, {
-     anuncio: postId
+    this.navCtrl.push(CommentsPage, {
+      anuncio: postId
     });
     // let headers = new Headers();
     // headers.append('Access-Control-Allow-Origin', '*');
@@ -601,7 +591,7 @@ export class FeedPage {
 
     const confirm = this.alertCtrl.create({
       title: 'Compartilhar com seguidores?',
-      cssClass:'camelo',
+      cssClass: 'camelo',
       message: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
       buttons: [
         {
@@ -626,28 +616,28 @@ export class FeedPage {
             var link = 'https://wa-studio.com/redelive/compartilhamentos/compartilhar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
-            .map(res => res.json())
-            .subscribe(data => {
-              console.log(data);
-              let toast = this.toastCtrl.create({
-                message: 'Compartilhado',
-                duration: 2000,
-                position: 'bottom'
+              .map(res => res.json())
+              .subscribe(data => {
+                console.log(data);
+                let toast = this.toastCtrl.create({
+                  message: 'Compartilhado',
+                  duration: 2000,
+                  position: 'bottom'
+                });
+                toast.present();
               });
-              toast.present();
-            });
 
           }
         }
       ]
     });
     confirm.present();
-  
-  
 
-  //  this.navCtrl.push(CommentsPage, {
-  //    anuncio: postId
-  //   });
+
+
+    //  this.navCtrl.push(CommentsPage, {
+    //    anuncio: postId
+    //   });
     // let headers = new Headers();
     // headers.append('Access-Control-Allow-Origin', '*');
     // headers.append('Accept', 'application/json');
@@ -673,7 +663,7 @@ export class FeedPage {
       this.cidade = data.results[0].address_components[3].long_name;
       this.estado = data.results[0].address_components[5].short_name;
       this.pais = data.results[0].address_components[6].long_name;
-      this.loadFeed(lat,long, infiniteScroll);
+      this.loadFeed(lat, long, infiniteScroll);
       this.getQtdNotificacoes();
     });
   }
@@ -684,33 +674,33 @@ export class FeedPage {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
-    headers.append('Access-Control-Expose-Headers', "true"); 
+    headers.append('Access-Control-Expose-Headers', "true");
     this.userId = parseInt(this.userId);
     console.log(this.userId, this.userImagem);
-    let tipo:number;
-    
-    if(this.topOrNews == "Top") {
+    let tipo: number;
+
+    if (this.topOrNews == "Top") {
       tipo = 1;
-    } else if(this.topOrNews == "News") {
+    } else if (this.topOrNews == "News") {
       tipo = 2;
     }
 
     let localNome = "nulo";
-    if(this.local == "bairro"){
+    if (this.local == "bairro") {
       localNome = this.bairro;
     } else
-    if(this.local == "cidade"){
-      localNome = this.cidade;
-    } else
-    if(this.local == "estado"){
-      localNome = this.estado;
-    } else
-    if(this.local == "pais"){
-      localNome = this.pais;
-    } else
-    if(this.local == "proximidade"){
-      this.topOrNews = "News";
-    }
+      if (this.local == "cidade") {
+        localNome = this.cidade;
+      } else
+        if (this.local == "estado") {
+          localNome = this.estado;
+        } else
+          if (this.local == "pais") {
+            localNome = this.pais;
+          } else
+            if (this.local == "proximidade") {
+              this.topOrNews = "News";
+            }
     console.log(localNome);
     let body = {
       l_tipo: this.local,
@@ -728,23 +718,23 @@ export class FeedPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
-        console.log( data.data, data.status);
-        if ( data.data ) {
+        console.log(data.data, data.status);
+        if (data.data) {
           data.data.forEach(element => {
             // element.usuario == parseInt(element.usuario);
-            if(element.distance >= 1) {
-               element.unit = 'Km';
-               element.distance = parseInt(element.distance);
-              } else {
-                element.distance = element.distance * 1000;
-                element.distance = parseInt(element.distance);
+            if (element.distance >= 1) {
+              element.unit = 'Km';
+              element.distance = parseInt(element.distance);
+            } else {
+              element.distance = element.distance * 1000;
+              element.distance = parseInt(element.distance);
               element.unit = 'm';
             }
-             console.log(element.distance);
+            console.log(element.distance);
           });
         };
         if (this.feed && data.status && this.feed != data.data) {
-          if(!infiniteScroll) {
+          if (!infiniteScroll) {
             this.index_feed = 0;
             this.feed = [];
           }
@@ -752,24 +742,24 @@ export class FeedPage {
             console.log(element.distance);
             this.feed.push(element);
           });
-          
+
           console.log(this.feed);
           console.log(this.index_feed);
           this.checkLink();
-          if(infiniteScroll) {
+          if (infiniteScroll) {
             infiniteScroll.complete();
           }
         } else {
           if (!data.status) {
-            if(infiniteScroll) {
+            if (infiniteScroll) {
               infiniteScroll.complete();
             }
           } else {
-            if(this.feed != data.data) {
+            if (this.feed != data.data) {
               this.feed = data.data;
               this.checkLink();
             }
-            if(infiniteScroll) {
+            if (infiniteScroll) {
               infiniteScroll.complete();
             }
           }
@@ -779,46 +769,46 @@ export class FeedPage {
   }
 
   goImage() {
-    this.navCtrl.push(AboutPage, {slide: this.local});
+    this.navCtrl.push(AboutPage, { slide: this.local });
   }
 
   goPerfil(id_perfil = this.userId) {
     this.getData(id_perfil);
     console.log(id_perfil);
   }
-  goPagePerfil(perfilId, image, nome){
+  goPagePerfil(perfilId, image, nome) {
     console.log(perfilId, image, nome);
     this.navCtrl.push(PerfilPage, {
-        perfilId: perfilId, userId: this.userId, image: image, nome: nome
+      perfilId: perfilId, userId: this.userId, image: image, nome: nome
     });
   }
-  goPagePreperfil(perfilId, image, nome,post,seguindo,seguidores){
+  goPagePreperfil(perfilId, image, nome, post, seguindo, seguidores) {
     console.log(perfilId, image, nome);
     this.navCtrl.push(PreperfilPage, {
-        perfilId: perfilId, userId: this.userId , image: image, nome: nome,post: post, seguindo: seguindo,seguidores :seguidores
+      perfilId: perfilId, userId: this.userId, image: image, nome: nome, post: post, seguindo: seguindo, seguidores: seguidores
     });
   }
   scrollingFun(e) {
     if (e.scrollTop > 1) {
-      if(document.getElementsByClassName("scroll-content")[1]){
+      if (document.getElementsByClassName("scroll-content")[1]) {
         document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '100px';
       }
-      if(document.getElementsByClassName("scroll-content")[0]){
+      if (document.getElementsByClassName("scroll-content")[0]) {
         document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '100px';
       }
-      if(document.querySelector("#sendbar")){
+      if (document.querySelector("#sendbar")) {
         document.querySelector("#sendbar")['style'].display = 'none';
       }
 
-    } 
-    if(e.deltaY < 0) {
-      if(document.getElementsByClassName("scroll-content")[1]){
+    }
+    if (e.deltaY < 0) {
+      if (document.getElementsByClassName("scroll-content")[1]) {
         document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '145px';
       }
-      if(document.getElementsByClassName("scroll-content")[0]){
+      if (document.getElementsByClassName("scroll-content")[0]) {
         document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '145px';
       }
-      if(document.querySelector("#sendbar")){
+      if (document.querySelector("#sendbar")) {
         document.querySelector("#sendbar")['style'].display = 'flex';
       }
 
@@ -857,42 +847,42 @@ export class FeedPage {
 
         let alert = this.alertCtrl.create();
         alert.setTitle('Onde você está?');
-    
+
         alert.addInput({
           type: 'radio',
           label: this.local_array1,
           value: this.local_array1,
           checked: false
         });
-    
+
         alert.addInput({
           type: 'radio',
           label: this.local_array2,
           value: this.local_array2,
           checked: false
         });
-    
+
         alert.addInput({
           type: 'radio',
           label: this.local_array3,
           value: this.local_array3,
           checked: false
         });
-    
+
         alert.addInput({
           type: 'radio',
           label: this.local_array4,
           value: this.local_array4,
           checked: false
         });
-    
+
         alert.addInput({
           type: 'radio',
           label: this.local_array5,
           value: this.local_array5,
           checked: false
         });
-    
+
         alert.addButton('Cancel');
         alert.addButton({
           text: 'OK',
@@ -905,18 +895,18 @@ export class FeedPage {
     }, (err: PositionError) => {
       console.log("error : " + err.message);
     });
-    
+
   }
 
   // sendPost(lat, long, bairro, cidade, estado, pais, tipo, local) {
   sendPost(lat, lng, local) {
-    let tipo:number;
-    if(this.btnTop) {
+    let tipo: number;
+    if (this.btnTop) {
       tipo = 1;
-    } else if(this.btnNews) {
+    } else if (this.btnNews) {
       tipo = 2;
     }
-    
+
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -930,7 +920,7 @@ export class FeedPage {
       this.pais = data.results[0].address_components[6].long_name;
     });
 
-  
+
     let body = {
       local: local,
       userId: this.userId,
@@ -950,24 +940,24 @@ export class FeedPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
-        
+
         console.log(data["_body"]);
         this.navCtrl.push('FeedPage');
       });
 
   }
-  
-  getGeocode(lat, lng){
-        let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
-        this.http.get(url).map(res => res.json()).subscribe(data => {
 
-        });
-    
-        let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lng + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
-        this.http.get(url2).map(res => res.json()).subscribe(data2 => {
-        });
-        
-    
+  getGeocode(lat, lng) {
+    let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
+    this.http.get(url).map(res => res.json()).subscribe(data => {
+
+    });
+
+    let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lng + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
+    this.http.get(url2).map(res => res.json()).subscribe(data2 => {
+    });
+
+
   }
 
   public prePerfilPage(id_usuario) {
@@ -984,12 +974,12 @@ export class FeedPage {
     let link = 'https://wa-studio.com/redelive/usuarios/getUserInfoPreperfil';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
-    .map(res => res.json())
-    .subscribe(data => {
-      console.log("AQUI", data)
-      this.goPagePreperfil(data.usuario.id, data.usuario.user_image, data.usuario.nome,data.posts,data.seguido,data.seguidor);
-  
-    });
+      .map(res => res.json())
+      .subscribe(data => {
+        console.log("AQUI", data)
+        this.goPagePreperfil(data.usuario.id, data.usuario.user_image, data.usuario.nome, data.posts, data.seguido, data.seguidor);
+
+      });
   }
   public getData(id_usuario = this.userId) {
     console.log(id_usuario);
@@ -1005,12 +995,12 @@ export class FeedPage {
     let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
-    .map(res => res.json())
-    .subscribe(data => {
-      console.log(data)
-      this.goPagePerfil(data.usuario.id, data.usuario.user_image, data.usuario.nome);
-  
-    });
+      .map(res => res.json())
+      .subscribe(data => {
+        console.log(data)
+        this.goPagePerfil(data.usuario.id, data.usuario.user_image, data.usuario.nome);
+
+      });
   }
 
   setStorage() {

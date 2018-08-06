@@ -154,13 +154,13 @@ page-feed {
     padding: 0px !important;
   }
   .range-range .range-slider {
-    margin: 0 7% 0 23% !important;
+    margin: 0 7% 0 9% !important;
   }
   .range-range .range-slider .range-bar {
     height: 5px;
     background-color: #7f7f7f;
     width: 100vw;
-    left: -33%;
+    left: -11%;
   }
   .range-range .range-slider .range-bar.range-bar-active {
     background-color: #00a2e8;
@@ -298,5 +298,24 @@ page-feed {
   .card-md h3, .card-md h4, .card-md h5, .card-md h6{
     text-align: center;
     padding: 20px 10px;
+  }
+  .TopOrNewsContainer {
+    background-color: #99d9ea;
+    border: 2px solid #00a2e8;
+    border-radius: 5px;
+    width: 98%;
+    margin: 1%;
+  }
+  .TopOrNewsContainer .TopOrNewsButton {
+    color: #fff !important;
+    font-size: 1.6em;
+  }
+  .TopOrNewsContainer .TopOrNewsButton.segment-activated {
+    color: #fff !important;
+    background-color: #00a2e8;
+    font-size: 1.6em;
+  }
+  .TopOrNewsContainer .TopOrNewsButton .TopOrNewsButtonIcon {
+    color: #ffc90e;
   }
 }
