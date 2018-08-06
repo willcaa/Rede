@@ -30,7 +30,6 @@ page-perfil {
     padding: 0px !important;
   }
   .fundo-perfil {
-    background-image: url("../assets/imgs/fundo_perfil.jpg");
     background-size: cover;
     padding: 5% 0px 0px 0px;
   }
@@ -129,7 +128,7 @@ page-perfil {
     animation: ampliar_btn 1s;
     box-shadow: none;
     background-color: #00a2e8;
-    color: #000;
+    color: white;
     height: 17px;
   }
   .botao-seguir {
@@ -137,12 +136,13 @@ page-perfil {
     right: -3px;
     top: 7.5px;
     width: 25vw;
+    height: 25px;
     text-transform: none;
     letter-spacing: 1px;
     animation: reduzir_btn 1s;
     box-shadow: none;
-    background-color: #fff;
-    color: #000;
+    background-color: #00a2e8;
+    color: white;
     float: right;
   }
   .button-like {

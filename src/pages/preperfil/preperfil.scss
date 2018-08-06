@@ -5,6 +5,15 @@ page-preperfil {
     .item-md.item-block .item-inner {
       border: 0;
     }
+
+    .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+      color: white;
+      background-color: transparent;
+      
+    }
+    .back-button-icon-md{
+      font-size: 40px;
+    }
     .texto-excluir {
       display: block;
       width: 100%;
@@ -28,8 +37,14 @@ page-preperfil {
     }
     .scroll-content {
       padding: 0px !important;
-      background-image: url("../assets/imgs/fundo_perfil.jpg");
       background-size: cover;
+      padding: 5% 0px 0px 0px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .cover{
+      padding: 0px !important;
+      background-size: cover !important;
       padding: 5% 0px 0px 0px;
       background-repeat: no-repeat;
       background-position: center;
@@ -165,6 +180,7 @@ page-preperfil {
       right: -3px;
       top: 7.5px;
       width: 25vw;
+      height: 25px;
       text-transform: none;
       letter-spacing: 1px;
       animation: reduzir_btn 1s;
@@ -176,7 +192,7 @@ page-preperfil {
     .button-like {
       position: absolute;
       right: 0;
-      top: 283.75px;
+      top: 247.75px;
     }
     .header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before{
         background-image: none;

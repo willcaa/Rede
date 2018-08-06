@@ -330,7 +330,7 @@ export class AboutPage {
               headers: {}
             }
             
-            fileTransfer.upload(this.videoId, encodeURI('http://13.58.158.77/upload.php'), options)
+            fileTransfer.upload(this.videoId, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
             .then((data) => {
               console.log(data+" Uploaded Successfully");
               this.getUserPosition();
@@ -361,7 +361,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image1, encodeURI('https://wa-studio.com/upload.php'), options)
+          fileTransfer.upload(this.image1, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
@@ -401,7 +401,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image2, encodeURI('https://wa-studio.com/upload.php'), options)
+          fileTransfer.upload(this.image2, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
@@ -442,7 +442,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image3, encodeURI('https://wa-studio.com/upload.php'), options)
+          fileTransfer.upload(this.image3, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
@@ -482,7 +482,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image4, encodeURI('https://wa-studio.com/upload.php'), options)
+          fileTransfer.upload(this.image4, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
@@ -522,7 +522,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image5, encodeURI('https://wa-studio.com/upload.php'), options)
+          fileTransfer.upload(this.image5, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             if(this.image6 && this.image6 != null){
               console.log();

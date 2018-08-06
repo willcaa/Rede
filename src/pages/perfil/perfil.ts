@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Events } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { PopoverController } from 'ionic-angular';
@@ -41,6 +41,7 @@ export class PerfilPage {
   public perfil_nome: any;
   public index_anuncio: any;
   public alteraNome: boolean = false;
+  public cover: any;
   usuarioProfissional: any;
   usuarioPessoal: any;
   pageId: any = 'publicacoes';
@@ -57,13 +58,16 @@ export class PerfilPage {
     private iab: InAppBrowser,
     private storage: Storage,
     public camera: Camera,
-    public transfer: FileTransfer ) {
-    
+    public transfer: FileTransfer, public events: Events ) {
     this.perfilId = this.navParams.get("perfilId");
     this.userId = this.navParams.get("userId");
     this.perfil_imagem = this.navParams.get("image");
     this.perfil_nome = this.navParams.get("nome");
     this.enviandoSeguir = false;
+    this.events.subscribe('reloadDetails', () =>{
+      console.log('reload');
+      this.carregarPerfil();
+    })
   }
   
   alterarTab(Id){
@@ -151,7 +155,7 @@ export class PerfilPage {
     headers.append('content-type', 'application/json');
 
     let body = {
-      id_usuario: this.userId,
+      id_usuario: this.perfilId,
       id_perfil: this.perfilId
     }
     console.log('l');
@@ -162,11 +166,19 @@ export class PerfilPage {
     .map(res => res.json())
     .subscribe(data => {
       this.anuncios = data['anuncios'].data;
-      console.log(data['anuncios'].data);
+      console.log(data);
       this.usuario = data['usuario'];
       //this.perfil_nome = this.anuncios[0]['nome'];
         //this.perfil_imagem = this.anuncios[0]['user_image'];
         this.usuario_imagem = this.usuario['user_image'];
+        console.log(this.usuario);
+        if(this.usuario.cover_image != ""){
+          this.cover = this.usuario['cover_image'];
+        }
+        else{
+          this.cover = "https://wa-studio.com/redelive/uploads/fundo_perfil.jpg";
+        }
+        console.log(this.cover);
         this.checkLink();
       }, (err) => {
         // this.carregarPerfil();
@@ -487,7 +499,7 @@ export class PerfilPage {
         mimeType: "multipart/form-data",
         headers: {}
       }
-      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/upload.php'), options)
+      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             this.perfil_imagem = 'https://wa-studio.com/redelive/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");

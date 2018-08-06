@@ -6,41 +6,42 @@
 -->
 <ion-header>
 
-  <ion-navbar color="dark" button-end>
+  <ion-toolbar color="dark" button-end>
+      <button ion-button icon-only class="logofofa" (click)="goFeed()">
+          <img class="imageUserFeed" src="assets/imgs/logo-inicial.png">
+      </button>
 
-    <div class="pagetabs" id="init" *ngIf="tabId == 'init'">
-      <ion-row>
-          <ion-col col-9>
-            <ion-title style="margin-top: 10px;">Pesquisar</ion-title>
-          </ion-col>
-    
-          <ion-col>
-            <button ion-button icon-only name="botao-pesquisar" style="background: transparent; box-shadow: none" (click)="alterarTab('search')">
-              <ion-icon name="ios-search"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-    </div>
-
-    <div class="pagetabs" id="search" *ngIf="tabId == 'search'">
-      <ion-row>
-        <ion-col col-9>
-          <ion-input type="text" [(ngModel)]="nomePesquisa" placeholder="Pesquise por um usuário" (ngModelChange)="pesquisar(nomePesquisa)" style="color: white;"></ion-input>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-only name="cancela-pesquisar" style="background: transparent; box-shadow: none" (click)="alterarTab('init'); limpaUsuarios()">
-            <ion-icon name="ios-close-circle"></ion-icon>
+      <ion-buttons end>
+          <button ion-button icon-only>
+            <img class="imageUserFeed" src="assets/imgs/pesquisa.png" style="height: 45px;">
           </button>
-        </ion-col>
-      </ion-row>
-
-    </div>
-  </ion-navbar>
+          <button id="notification-button" ion-button clear (click)="notificacoes($event)">
+            <ion-icon name="notifications">
+              <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
+            </ion-icon>
+          </button>
+          <button ion-button icon-only (click)="prePerfilPage(userId)">
+            <img class="imageUserFeed" src="assets/imgs/user_round.png">
+          </button>
+        </ion-buttons>
+   
+  </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content padding>
+      <ion-row style="border: 1px solid;">
+        <ion-item style="width: 80%">
+            <ion-input type="text" autocomplete="on" [(ngModel)]="nomePesquisa" placeholder="Pesquisar" (ngModelChange)="pesquisar(nomePesquisa)" style="color: black;"></ion-input>
+          </ion-item>
+          <button ion-button icon-only style="background: transparent; box-shadow: none; color: black">
+            <ion-icon name="search">
+              </ion-icon>
+        </button>
+      </ion-row>
+    
+    
   <ion-card *ngFor="let item of usuarios">
     <ion-item (click)="prePerfilPage(item.id)">
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">

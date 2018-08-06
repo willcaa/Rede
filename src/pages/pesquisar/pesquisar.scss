@@ -1,7 +1,41 @@
 page-pesquisar {
 
+    .logofofa{
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+    .buttons_header {
+        padding: 20px 0 19px 0;
+    }
+    img.imageLogoFeed {
+        height: 50px;
+        margin: 0 0 -4px -12px
+    }
+    img.imageUserFeed {
+        height: 32px;
+    }
+    img.imageUserPes{
+        height: 45px;
+    }
     .toolbar-md-dark .toolbar-background-md {
         background: linear-gradient(to right, #73395c, #0a2386);
-      }
+    }
+    ion-icon{
+        display: inline-block;
+        font-size: 2.2em;
+    }
+    .item-input::after { 
+        border-bottom-color: transparent !important;
+    }
+    .item-input.ng-valid.input-has-value::after{ 
+        border-bottom-color: transparent;
+    } 
+    //IMPORTANT
+    .item-inner, ion-item {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+
 
 }
