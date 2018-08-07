@@ -25,10 +25,10 @@ export class RegisterPage {
   start: string;
   data:any = {};
   loginId: number;
-  cNome:any;
-  cEmail:any;
-  cPw:any;
-  cPw2:any;
+  cNome:string = "";
+  cEmail: string = "";
+  cPw: string = "";
+  cPw2: string = "";
   pageId:any;
   email:any;
   senha:any;
@@ -36,6 +36,7 @@ export class RegisterPage {
   msgCadastro:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage, private alertCtrl: AlertController) {
     this.pageId="login";
+    console.log(this.cNome);
     this.http = http;
     this.start = "";
     this.destination = "";

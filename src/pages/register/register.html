@@ -36,6 +36,7 @@
     </div>
     <div class="pagetabs" id="cadastro"  *ngIf="pageId == 'cadastro'">
       <ion-label color="danger" *ngIf="msgCadastro">{{msgCadastro}}</ion-label>
+      <ion-label color="secondary" *ngIf=" cNome < 4 || cEmail < 4 || cPw < 4 || cPw2 < 4">Por favor insira todos os dados</ion-label>
       <ion-item>
         <ion-input type="text" placeholder="Digite seu nome" style="text-align: left;" [(ngModel)]="cNome"></ion-input>
       </ion-item>
@@ -50,7 +51,8 @@
       </ion-item>
       <br>
       <br>
-      <button ion-button style="background-color:#62c1e7;" *ngIf="cPw != null && cPw == cPw2" (click)="cadastrar(cNome, cEmail, cPw)">Cadastrar</button>
+      <ion-label color="danger" *ngIf="cPw2 != '' && cPw != cPw2">As senhas devem ser iguais!</ion-label>
+      <button ion-button style="background-color:#62c1e7;" *ngIf="cPw != '' && cPw == cPw2" (click)="cadastrar(cNome, cEmail, cPw)">Cadastrar</button>
         <button ion-button color="#5f7cbb" (click)="alterarTab('login')">
             Voltar
         </button>

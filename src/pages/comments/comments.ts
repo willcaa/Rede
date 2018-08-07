@@ -56,7 +56,24 @@ export class CommentsPage {
       .subscribe(data => {
         console.log(data);
         this.comments = data;
-        // this.somarComments();
+        this.comments.forEach(element => {
+          if(element.minutos >= 60 && element.minutos< 1440){
+            element.minutos = element.minutos/60;
+            element.minutos = parseInt(element.minutos); 
+            element.minutos = element.minutos + ' hora(s) atrás' ;
+          }
+          else if(element.minutos < 60){
+            element.minutos = element.minutos + ' minuto(s) atrás';
+          }
+          else if(element.minutos >= 1440){
+            element.minutos = element.minutos/60;
+            element.minutos = element.minutos/24;
+            element.minutos = parseInt(element.minutos); 
+            element.minutos = element.minutos + ' dia(s) atrás';
+          }
+         
+          
+        });
     });
   }
   
@@ -69,7 +86,12 @@ export class CommentsPage {
     this.enviarSoma();
   }
 
+  goFeed(){
+    this.navCtrl.push('FeedPage');
+  }
+
   enviarSoma(){
+    console.log(this.totalComments);
     let headers = new Headers();
             headers.append('Access-Control-Allow-Origin', '*');
             headers.append('Accept', 'application/json');

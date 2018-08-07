@@ -396,7 +396,7 @@
         <br>  
       <h3>Informações Profissionais</h3>
       <br>
-      <img *ngIf="logo" [src]="_sanitizer.bypassSecurityTrustUrl(logo) || async" alt="" width="100%" height="auto">
+      <img *ngIf="logo && perfilId == userId" [src]="_sanitizer.bypassSecurityTrustUrl(logo) || async" alt="" width="100%" height="auto">
       <button *ngIf="!logo" ion-button icon-end color="darkBlue" (click)="getLogo()">
         Escolher Logo          
         <ion-icon name="md-image" item-end ></ion-icon> 

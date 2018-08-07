@@ -158,15 +158,14 @@ export class FeedPage {
   }
 
   public async carregaFeed(){
-    if(this.storage.get('lastFeed')){
-      this.storage.get('lastFeed').then(res =>{
-        this.lastFeed = res;
-        this.carregaLastFeed(this.lastFeed);
-      })
-      .catch(err =>{
-        this.getUserPosition();
-      })
-    }
+    this.storage.get('lastFeed').then(res =>{
+      this.lastFeed = res;
+      this.carregaLastFeed(this.lastFeed);
+    })
+    .catch(err =>{
+      this.getUserPosition();
+    })
+   
   }
 
   public async carregaLastFeed(last){
@@ -775,6 +774,24 @@ export class FeedPage {
         }
         console.log(data);
       });
+  }
+
+  eae(){
+    console.log('eae');
+  }
+
+  openLink(link, id){
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      click: 1,
+      id: id
+    };
+
+    let url = 'https://www.refriplaybusiness.com.br/ferramentas/somarClick'
   }
 
   goImage() {

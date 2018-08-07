@@ -415,7 +415,7 @@ export class OrcamentosPage {
 
       pageOrientation: 'portrait'
     };
-      // pdfmake.createPdf(docDefinition).open();
+    // pdfmake.createPdf(docDefinition).open();
 
     pdfmake.createPdf(docDefinition).getBuffer(function (buffer) {
       let utf8 = new Uint8Array(buffer);
@@ -1227,6 +1227,10 @@ export class OrcamentosPage {
     console.log(this.dadosServico, id);
   }
 
+  virgula(virgula){
+    return ',';
+  }
+
   aprovaOrcamento(fab) {
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -1341,12 +1345,15 @@ export class OrcamentosPage {
       .map(res => res.json())
       .subscribe(data => {
         if (data) {
-
           console.log(data);
           this.usuarioProfissional = data[0];
           if (this.orcamentoView.orcamentoProdutos[0]) {
             this.orcamentosProdutos0 = this.orcamentoView.orcamentoProdutos[0];
-            this.orcamentosProdutos0.price = this.orcamentosProdutos0.price + ',00';
+            if(this.orcamentosProdutos0.price.indexOf(',') == -1){
+              this.orcamentosProdutos0.price = this.orcamentosProdutos0.price + ',00';
+            }
+            
+            
           }
           else {
             this.orcamentosProdutos0['name'];
@@ -1355,7 +1362,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[1]) {
             this.orcamentosProdutos1 = this.orcamentoView.orcamentoProdutos[1];
-            this.orcamentosProdutos1.price = this.orcamentosProdutos1.price + ',00';
+            if(this.orcamentosProdutos1.price.indexOf(',') == -1){
+              this.orcamentosProdutos1.price = this.orcamentosProdutos1.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos1.name = ' ';
@@ -1365,7 +1374,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[2]) {
             this.orcamentosProdutos2 = this.orcamentoView.orcamentoProdutos[2];
-            this.orcamentosProdutos2.price = this.orcamentosProdutos2.price + ',00';
+            if(this.orcamentosProdutos2.price.indexOf(',') == -1){
+              this.orcamentosProdutos2.price = this.orcamentosProdutos2.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos2.name = ' ';
@@ -1375,7 +1386,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[3]) {
             this.orcamentosProdutos3 = this.orcamentoView.orcamentoProdutos[3];
-            this.orcamentosProdutos3.price = this.orcamentosProdutos3.price + ',00';
+            if(this.orcamentosProdutos3.price.indexOf(',') == -1){
+              this.orcamentosProdutos3.price = this.orcamentosProdutos3.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos3.name = ' ';
@@ -1385,7 +1398,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[4]) {
             this.orcamentosProdutos4 = this.orcamentoView.orcamentoProdutos[4];
-            this.orcamentosProdutos4.price = this.orcamentosProdutos4.price + ',00';
+            if(this.orcamentosProdutos4.price.indexOf(',') == -1){
+              this.orcamentosProdutos4.price = this.orcamentosProdutos4.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos4.name = ' ';
@@ -1395,7 +1410,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[5]) {
             this.orcamentosProdutos5 = this.orcamentoView.orcamentoProdutos[5];
-            this.orcamentosProdutos5.price = this.orcamentosProdutos5.price + ',00';
+            if(this.orcamentosProdutos5.price.indexOf(',') == -1){
+              this.orcamentosProdutos5.price = this.orcamentosProdutos5.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos5.name = ' ';
@@ -1405,7 +1422,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[6]) {
             this.orcamentosProdutos6 = this.orcamentoView.orcamentoProdutos[6];
-            this.orcamentosProdutos6.price = this.orcamentosProdutos6.price + ',00';
+            if(this.orcamentosProdutos6.price.indexOf(',') == -1){
+              this.orcamentosProdutos6.price = this.orcamentosProdutos6.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos6.name = ' ';
@@ -1415,7 +1434,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[7]) {
             this.orcamentosProdutos7 = this.orcamentoView.orcamentoProdutos[7];
-            this.orcamentosProdutos7.price = this.orcamentosProdutos7.price + ',00';
+            if(this.orcamentosProdutos7.price.indexOf(',') == -1){
+              this.orcamentosProdutos7.price = this.orcamentosProdutos7.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos7.name = ' ';
@@ -1425,7 +1446,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[8]) {
             this.orcamentosProdutos8 = this.orcamentoView.orcamentoProdutos[8];
-            this.orcamentosProdutos8.price = this.orcamentosProdutos8.price + ',00';
+            if(this.orcamentosProdutos8.price.indexOf(',') == -1){
+              this.orcamentosProdutos8.price = this.orcamentosProdutos8.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos8.name = ' ';
@@ -1435,7 +1458,9 @@ export class OrcamentosPage {
           }
           if (this.orcamentoView.orcamentoProdutos[9]) {
             this.orcamentosProdutos9 = this.orcamentoView.orcamentoProdutos[9];
-            this.orcamentosProdutos9.price = this.orcamentosProdutos9.price + ',00';
+            if(this.orcamentosProdutos9.price.indexOf(',') == -1){
+              this.orcamentosProdutos9.price = this.orcamentosProdutos9.price + ',00';
+            }
           }
           else {
             this.orcamentosProdutos9.name = ' ';
@@ -1448,7 +1473,10 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[0]) {
             this.orcamentosServicos0 = this.orcamentoView.orcamentoServicos[0];
-            this.orcamentosServicos0.price = this.orcamentosServicos0.price + ',00';
+            if(this.orcamentosServicos0.price.indexOf(',') == -1){
+              this.orcamentosServicos0.price = this.orcamentosServicos0.price + ',00';
+            }
+            
           }
           else {
             this.orcamentosServicos0.name = ' ';
@@ -1459,7 +1487,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[1]) {
             this.orcamentosServicos1 = this.orcamentoView.orcamentoServicos[1];
-            this.orcamentosServicos1.price = this.orcamentosServicos1.price + ',00';
+            if(this.orcamentosServicos1.price.indexOf(',') == -1){
+              this.orcamentosServicos1.price = this.orcamentosServicos1.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos1.name = ' ';
@@ -1470,7 +1500,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[2]) {
             this.orcamentosServicos2 = this.orcamentoView.orcamentoServicos[2];
-            this.orcamentosServicos2.price = this.orcamentosServicos2.price + ',00';
+            if(this.orcamentosServicos1.price.indexOf(',') == -1){
+              this.orcamentosServicos1.price = this.orcamentosServicos1.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos2.name = ' ';
@@ -1481,7 +1513,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[3]) {
             this.orcamentosServicos3 = this.orcamentoView.orcamentoServicos[3];
-            this.orcamentosServicos3.price = this.orcamentosServicos3.price + ',00';
+            if(this.orcamentosServicos3.price.indexOf(',') == -1){
+              this.orcamentosServicos3.price = this.orcamentosServicos3.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos3.name = ' ';
@@ -1492,7 +1526,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[4]) {
             this.orcamentosServicos4 = this.orcamentoView.orcamentoServicos[4];
-            this.orcamentosServicos4.price = this.orcamentosServicos4.price + ',00';
+            if(this.orcamentosServicos4.price.indexOf(',') == -1){
+              this.orcamentosServicos4.price = this.orcamentosServicos4.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos4.name = ' ';
@@ -1503,7 +1539,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[5]) {
             this.orcamentosServicos5 = this.orcamentoView.orcamentoServicos[5];
-            this.orcamentosServicos5.price = this.orcamentosServicos5.price + ',00';
+            if(this.orcamentosServicos5.price.indexOf(',') == -1){
+              this.orcamentosServicos5.price = this.orcamentosServicos5.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos5.name = ' ';
@@ -1514,7 +1552,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[6]) {
             this.orcamentosServicos6 = this.orcamentoView.orcamentoServicos[6];
-            this.orcamentosServicos6.price = this.orcamentosServicos6.price + ',00';
+            if(this.orcamentosServicos6.price.indexOf(',') == -1){
+              this.orcamentosServicos6.price = this.orcamentosServicos6.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos6.name = ' ';
@@ -1523,20 +1563,13 @@ export class OrcamentosPage {
             console.log('a');
           }
       
-          if (this.orcamentoView.orcamentoServicos[6]) {
-            this.orcamentosServicos6 = this.orcamentoView.orcamentoServicos[6];
-            this.orcamentosServicos6.price = this.orcamentosServicos6.price + ',00';
-          }
-          else {
-            this.orcamentosServicos6.name = ' ';
-            this.orcamentosServicos6.price = ' ';
-            this.orcamentosServicos6.qty = ' ';
-            console.log('a');
-          }
+          
       
           if (this.orcamentoView.orcamentoServicos[7]) {
             this.orcamentosServicos7 = this.orcamentoView.orcamentoServicos[7];
-            this.orcamentosServicos7.price = this.orcamentosServicos7.price + ',00';
+            if(this.orcamentosServicos7.price.indexOf(',') == -1){
+              this.orcamentosServicos7.price = this.orcamentosServicos7.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos7.name = ' ';
@@ -1547,7 +1580,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[8]) {
             this.orcamentosServicos8 = this.orcamentoView.orcamentoServicos[8];
-            this.orcamentosServicos8.price = this.orcamentosServicos0.price + ',00';
+            if(this.orcamentosServicos8.price.indexOf(',') == -1){
+              this.orcamentosServicos8.price = this.orcamentosServicos8.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos8.name = ' ';
@@ -1558,7 +1593,9 @@ export class OrcamentosPage {
       
           if (this.orcamentoView.orcamentoServicos[9]) {
             this.orcamentosServicos9 = this.orcamentoView.orcamentoServicos[9];
-            this.orcamentosServicos9.price = this.orcamentosServicos0.price + ',00';
+            if(this.orcamentosServicos9.price.indexOf(',') == -1){
+              this.orcamentosServicos9.price = this.orcamentosServicos9.price + ',00';
+            }
           }
           else {
             this.orcamentosServicos9.name = ' ';

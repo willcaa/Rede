@@ -13,6 +13,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FileOpener } from '@ionic-native/file-opener';
 import { FilePath } from '@ionic-native/file-path';
+// import { OneSignal } from '@ionic-native/onesignal';
 
 
 import { AboutPage } from '../pages/about/about';
