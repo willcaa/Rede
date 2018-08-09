@@ -43,6 +43,7 @@ export class PreperfilPage {
   public perfil_nome: any;
   public index_anuncio: any;
   public alteraNome: boolean = false;
+  public cover: any;
   usuarioProfissional: any;
   usuarioPessoal: any;
   pageId: any = 'publicacoes';
@@ -69,6 +70,7 @@ export class PreperfilPage {
     this.stat_seguindo = this.navParams.get("seguindo");
     this.stat_anuncios = this.navParams.get("post");
     this.enviandoSeguir = false;
+    this.carregarPerfil();
   }
   
 alterarTab(Id){
@@ -154,7 +156,7 @@ alterarTab(Id){
     headers.append('content-type', 'application/json');
 
     let body = {
-      id_usuario: this.userId,
+      id_usuario: this.perfilId,
       id_perfil: this.perfilId
     }
     console.log('l');
@@ -165,11 +167,18 @@ alterarTab(Id){
     .map(res => res.json())
     .subscribe(data => {
       this.anuncios = data['anuncios'].data;
-      console.log(data['anuncios'].data);
+      console.log(data);
       this.usuario = data['usuario'];
       //this.perfil_nome = this.anuncios[0]['nome'];
         //this.perfil_imagem = this.anuncios[0]['user_image'];
         this.usuario_imagem = this.usuario['user_image'];
+        if(this.usuario['cover_image'] != ""){
+          this.cover = this.usuario['cover_image'];
+        }
+        else{
+          this.cover = "https://wa-studio.com/redelive/uploads/fundo_perfil.jpg"
+        }
+        console.log(this.cover);
         this.checkLink();
       }, (err) => {
         // this.carregarPerfil();
@@ -313,6 +322,7 @@ alterarTab(Id){
   }
 
   getImage(image) {
+    console.log(image);
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
 
@@ -458,7 +468,7 @@ alterarTab(Id){
         mimeType: "multipart/form-data",
         headers: {}
       }
-      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/upload.php'), options)
+      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             this.perfil_imagem = 'https://wa-studio.com/redelive/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
@@ -478,7 +488,7 @@ alterarTab(Id){
 
     let body = {
       image: 'https://wa-studio.com/redelive/uploads/' + this.imageFileName,
-      id: this.userId
+      id: this.perfilId
     }
     console.log(this.userId);
     let link = 'https://wa-studio.com/redelive/ferramentas/setNewImage';

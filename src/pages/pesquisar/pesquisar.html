@@ -6,6 +6,7 @@
 -->
 <ion-header>
 
+<<<<<<< HEAD
   <ion-navbar color="dark" button-end>
 
     <div class="pagetabs" id="init" *ngIf="tabId == 'init'">
@@ -38,11 +39,34 @@
 
 
   </ion-navbar>
+=======
+  <ion-toolbar color="dark" button-end>
+      <button ion-button icon-only class="logofofa" (click)="goFeed()">
+          <img class="imageUserFeed" src="assets/imgs/logo-inicial.png">
+      </button>
+
+      <ion-buttons end>
+          <button ion-button icon-only>
+            <img class="imageUserFeed" src="assets/imgs/pesquisa.png" style="height: 45px;">
+          </button>
+          <button id="notification-button" ion-button clear (click)="notificacoes($event)">
+            <ion-icon name="notifications">
+              <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
+            </ion-icon>
+          </button>
+          <button ion-button icon-only (click)="prePerfilPage(userId)">
+            <img class="imageUserFeed" src="assets/imgs/user_round.png">
+          </button>
+        </ion-buttons>
+   
+  </ion-toolbar>
+>>>>>>> f8e6caa8f7b404c99bd54f9068e84ed44601b8c8
 
 </ion-header>
 
 
 <ion-content padding>
+<<<<<<< HEAD
     <!-- <div class="pagetabs" id="search" >
         <ion-row>
           <ion-col col-9>
@@ -57,6 +81,19 @@
   
       </div> -->
       <ion-searchbar [(ngModel)]="nomePesquisa" (ngModelChange)="pesquisar(nomePesquisa)" placeholder="Pesquisar"></ion-searchbar>
+=======
+      <ion-row style="border: 1px solid;">
+        <ion-item style="width: 80%">
+            <ion-input type="text" autocomplete="on" [(ngModel)]="nomePesquisa" placeholder="Pesquisar" (ngModelChange)="pesquisar(nomePesquisa)" style="color: black;"></ion-input>
+          </ion-item>
+          <button ion-button icon-only style="background: transparent; box-shadow: none; color: black">
+            <ion-icon name="search">
+              </ion-icon>
+        </button>
+      </ion-row>
+    
+    
+>>>>>>> f8e6caa8f7b404c99bd54f9068e84ed44601b8c8
   <ion-card *ngFor="let item of usuarios">
     <ion-item (click)="prePerfilPage(item.id)">
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">

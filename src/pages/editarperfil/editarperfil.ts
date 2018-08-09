@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
@@ -57,7 +57,7 @@ export class EditarperfilPage {
     private iab: InAppBrowser,
     private storage: Storage,
     public camera: Camera,
-    public transfer: FileTransfer) {
+    public transfer: FileTransfer, public events: Events) {
     
       this.perfilId = this.navParams.get("perfilId");
       this.userId = this.navParams.get("userId");
@@ -334,70 +334,7 @@ export class EditarperfilPage {
     })
   }
 
-  setUsuarioProfissional(nome, tipo, doc, xp, esp1, sub1, esp2, sub2, formacao, subesp){
-  console.log(nome, tipo, doc, xp, esp1, sub1, esp2, sub2, formacao, subesp);
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Accept', 'application/json');
-    headers.append('content-type', 'application/json');
-
-    let body = {
-      nome: nome,
-      tipo: tipo,
-      doc: doc,
-      xp: xp,
-      esp1: esp1,
-      sub1: sub1,
-      esp2: esp2,
-      sub2: sub2,
-      subesp: subesp,
-      formacao: formacao,
-      id: this.userId
-    }
-    console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/setUsuarioProfissional';
-
-    this.http.post(link, JSON.stringify(body), { headers: headers })
-    .map(res => res.json())
-    .subscribe(data => {
-      if(data){
-        this.usuarioProfissional = data;
-        if(this.usuarioProfissional == data){
-          this.getUsuarioProfissional();
-        }
-        console.log(data);
-      }
-    });
-  }
-
-  getUsuarioProfissional(){
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Accept', 'application/json');
-    headers.append('content-type', 'application/json');
-
-    let body = {
-      id: this.perfilId
-    }
-    console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/getUsuarioProfissional';
-
-    this.http.post(link, JSON.stringify(body), { headers: headers })
-    .map(res => res.json())
-    .subscribe(data => {
-      if(data){
-        this.usuarioProfissional = data;
-        console.log(data);
-        if(data.length != 0 && data.length){
-          this.alterarTab("profissional_m");
-          return data;
-        }
-        else{
-          this.alterarTab("profissional_n");
-        }
-      }
-    });
-  }
+  
 
   public checkLink() {
     setTimeout(function() {
@@ -444,6 +381,26 @@ export class EditarperfilPage {
       
     });
   }
+
+  alterarFotoFundo(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      correctOrientation: true,
+      targetWidth: 400,
+      targetHeight: 400
+    }
+  
+    this.camera.getPicture(options).then((imageData) => {
+      this.imageURI = imageData;
+      this.uploadFileFundo(imageData);
+    }, (err) => {
+      console.log(err);
+      
+    });
+  }
+
   uploadFile(fileToUp){
     if(fileToUp != null) {
       const fileTransfer: FileTransferObject = this.transfer.create();
@@ -463,11 +420,41 @@ export class EditarperfilPage {
         mimeType: "multipart/form-data",
         headers: {}
       }
-      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/upload.php'), options)
+      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
           .then((data) => {
             this.perfil_imagem = 'https://wa-studio.com/redelive/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
             this.setImage();
+
+          }, (err) => {
+            console.log(err);
+          });
+    }
+  }
+
+  uploadFileFundo(fileToUp){
+    if(fileToUp != null) {
+      const fileTransfer: FileTransferObject = this.transfer.create();
+      
+      let formattedDate = new Date();
+      let d = formattedDate.getDate();
+      let m = formattedDate.getMonth();
+      m += 1;  // JavaScript months are 0-11
+      let y = formattedDate.getFullYear();
+      let random = Math.floor(Math.random() * 1000000) + 100000;
+      let random2 = Math.floor(Math.random() * 1000000) + 100000;
+      this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+      let options: FileUploadOptions = {
+        fileKey: 'imagem',
+        fileName: this.imageFileName,
+        chunkedMode: false,
+        mimeType: "multipart/form-data",
+        headers: {}
+      }
+      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+          .then((data) => {
+            console.log(data+" Uploaded Successfully");
+            this.setCoverImage();
 
           }, (err) => {
             console.log(err);
@@ -498,41 +485,30 @@ export class EditarperfilPage {
     });
   }
 
-  updateUsuarioProfissional(nome, tipo, doc, xp, esp1, sub1, esp2, sub2, formacao, subesp){
-  
+  setCoverImage(){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
 
     let body = {
-      nome: nome,
-      tipo: tipo,
-      doc: doc,
-      xp: xp,
-      esp1: esp1,
-      sub1: sub1,
-      esp2: esp2,
-      sub2: sub2,
-      subesp: subesp,
-      formacao: formacao,
+      image: 'https://wa-studio.com/redelive/uploads/' + this.imageFileName,
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/updateUsuarioProfissional';
+    let link = 'https://wa-studio.com/redelive/ferramentas/setCoverImage';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
     .subscribe(data => {
       if(data){
-        this.usuarioProfissional[0] = data;
-        if(this.usuarioProfissional[0] == data){
-          this.getUsuarioProfissional();
-        }
         console.log(data);
       }
     });
   }
+
+
+  
 
   updatePerfilProfissional(){
     this.alterarTab('profissional_o');
@@ -676,7 +652,9 @@ export class EditarperfilPage {
       if(data){
         this.usuarioPessoal = data;
         console.log(data);
+        this.events.publish('reloadDetails');
         this.navCtrl.pop();
+        
       }
     });
   }

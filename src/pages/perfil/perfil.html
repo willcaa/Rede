@@ -24,7 +24,7 @@
         </ion-refresher-content>
       </ion-refresher>
     <div style="width: 100%">
-        <div class="fundo-perfil">
+        <div class="fundo-perfil" [style.background-image]="getImage(cover)">
           <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
             
           </button>

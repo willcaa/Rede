@@ -1,9 +1,10 @@
 
 
   
-  <ion-content padding class="pagetabs" style="height: 100%;">
-    <div style="background: linear-gradient(#39477291, #005396); display: flex; width: 100%; height: 91%;">
+  <ion-content padding class="pagetabs" style="height: 100%;" >
+    <div [style.background-image]="getImage(cover)" style="background: linear-gradient(#39477291, #005396); display: flex; width: 100%; height: 91%;" class="cover">
       <ion-refresher (ionRefresh)="doRefresh($event)">
+<<<<<<< HEAD
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
         </ion-refresher-content>
       </ion-refresher>
@@ -15,6 +16,18 @@
           
           <button ion-button style="position:  absolute;top: 0%;right:  0%;width: 85px;height:  40px;font-size: 40px;background: transparent;box-shadow: none;" ><ion-icon name="ios-more"></ion-icon></button>
           <div class="button-like">
+=======
+          <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
+          </ion-refresher-content>
+        </ion-refresher>
+      <div style="width: 100%; margin-top: 250px;">
+          <div>
+            <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
+              
+            </button>
+  
+            <div class="button-like">
+>>>>>>> f8e6caa8f7b404c99bd54f9068e84ed44601b8c8
               
               <button  ion-button small class="botao-seguindo"></button>
               <span class="bola"><img src="assets/imgs/local_round_blue2.png"></span>

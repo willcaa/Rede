@@ -20,6 +20,10 @@ export class PesquisarPage {
     this.userId = this.navParams.get("userId");
   }
 
+  goFeed(){
+    this.navCtrl.pop();
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad PesquisarPage');
   }
