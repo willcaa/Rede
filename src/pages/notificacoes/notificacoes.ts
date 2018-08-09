@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams, Content, Platform, ToastController } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams, Content, Platform, ToastController, ViewController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
@@ -21,22 +21,20 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import $ from 'jquery';
 
 import { PesquisarPage } from '../pesquisar/pesquisar';
-import { NotificacoesPage } from '../notificacoes/notificacoes';
+
 /**
- * Generated class for the FeedPage page.
+ * Generated class for the NotificacoesPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-declare var globalLat: any;
-declare var globalLng: any;
 
 @IonicPage()
 @Component({
-  selector: 'page-feed',
-  templateUrl: 'feed.html',
+  selector: 'page-notificacoes',
+  templateUrl: 'notificacoes.html',
 })
-export class FeedPage {
+export class NotificacoesPage {
   @ViewChild("contentRef") contentHandle: Content;
   texto: string;
   public feed: any;
@@ -75,61 +73,44 @@ export class FeedPage {
   public nome_usuario: any;
   public foto_usuario: any;
   public notificacoes_qts: any;
-  constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer, private toastCtrl: ToastController) {
-    if (navParams.get("slide")) {
-      this.local = navParams.get("slide");
-      switch (navParams.get("slide")) {
-        case "proximidade":
-          this.range = 0;
-          break;
-        case "amigos":
-          this.range = 200;
-          break;
-        case "bairro":
-          this.range = 400;
-          break;
-        case "cidade":
-          this.range = 600;
-          break;
-        case "estado":
-          this.range = 800;
-          break;
-        case "pais":
-          this.range = 1000;
-          break;
-      }
-    }
+  constructor(public viewCtrl: ViewController, public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer, private toastCtrl: ToastController) {
     this.http = http;
-    this.start = "";
-    this.destination = "";
-    for (let i = 1; i <= 50; i++) {
-      this.items.push({ "number": i });
+    this.userId = navParams.get("id_usuario");
+    this.carregar_notificacoes();
+  }
+  carregar_notificacoes() {
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    headers.append('Access-Control-Expose-Headers', "true");
+
+    let body = {
+      id_usuario: this.userId
     }
-    this.storage.get('meuid')
-      .then(res => {
-        this.getUserInfo(res);
-        console.log(res);
-        this.userId = res;
-      }
-      );
-    this.storage.get('nome')
-      .then(res => {
-        console.log(res);
-        this.userName = res;
-      }
-      );
-    this.storage.get('imagem')
-      .then(res => {
-        console.log(res);
-        this.userImagem = res;
-      }
-      );
-    this.storage.get('email')
-      .then(res => {
-        console.log(res);
-        this.userEmail = res;
-      }
-      );
+    var link = 'https://wa-studio.com/redelive/usuarios/notificacoes';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+      .map(res => res.json())
+      .subscribe(data => {
+        this.notificacoes = data;
+        console.log(data);
+      });
+  }
+  goPost(post_id) {
+    let data = {
+      tipo: "post",
+      id: post_id
+    }
+    this.viewCtrl.dismiss(data);
+  }
+
+  goPerfil(perfil_id) {
+    let data = {
+      tipo: "perfil",
+      id: perfil_id
+    }
+    this.viewCtrl.dismiss(data);
   }
   getBackground(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
@@ -774,18 +755,8 @@ export class FeedPage {
   goImage() {
     this.navCtrl.push(AboutPage, { slide: this.local });
   }
-
-  goPerfil(id_perfil = this.userId) {
-    this.getData(id_perfil);
-    console.log(id_perfil);
-  }
   goPesquisa(id_perfil = this.userId) {
     this.navCtrl.push(PesquisarPage, {
-    });
-    console.log(id_perfil);
-  }
-  goNotif(id_perfil = this.userId) {
-    this.navCtrl.push(NotificacoesPage, {
     });
     console.log(id_perfil);
   }
@@ -1059,6 +1030,5 @@ export class FeedPage {
     this.getUserPosition();
 
   }
-
 
 }

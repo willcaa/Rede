@@ -3,5 +3,22 @@ page-pesquisar {
     .toolbar-md-dark .toolbar-background-md {
         background: linear-gradient(to right, #73395c, #0a2386);
       }
+      .card-md{
+        box-shadow: none;
+      }
+      .item-md ion-avatar ion-img, .item-md ion-avatar img{
+        width: 80px;
+        height: 80px;
+    
+      }
+      img.imageUserFeed {
+        height: 40px;
+      }
+      .logofofa{
+        border: none;
+        box-shadow: none;
+        background: transparent;
+      }
+      
 
 }

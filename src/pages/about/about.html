@@ -6,9 +6,12 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button *ngIf="!publicando && postType != 1 && postType != 2" (click)="getUserPosition()">
+      <button ion-button *ngIf="!publicando && postType != 1 && postType != 2" (click)="Publicar()">
         PUBLICAR
       </button>
+      <!-- <button ion-button *ngIf="!publicando && postType != 1 && postType != 2" (click)="getUserPosition()">
+          PUBLICAR
+        </button> -->
       <button ion-button *ngIf="!publicando && postType == 1" (click)="uploadImage1()">
         PUBLICAR
       </button>
@@ -88,33 +91,17 @@
     
 
   </ion-item>
-  <ion-item>
+  <ion-item class="texto">
       <ion-textarea [(ngModel)]="texto" (ngModelChange)="checkLink('#textoPost')" rows="4" placeholder="O que gostaria de informar?" id="textoPost"></ion-textarea>
   </ion-item>
   <ion-list style="margin-top: 50px;">
-    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getImages(); setPostType(1);">
-      <ion-icon color="secondary" name="images" isActive="true" item-start></ion-icon>
+    <ion-item style="text-align: center;color: #3e9ef8;" (click)="getImages(); setPostType(1);">
+      <img src="assets/imgs/janelas.png" alt="" style="width: 100px;"><br>
         Imagens
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="getVideo(); setPostType(2);">
-      <ion-icon color="primary" name="ios-videocam" isActive="true" item-start></ion-icon>
-        Video
-    </ion-item> 
-    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="setPostType(3);">
-      <ion-icon color="yellow" name="ios-link" isActive="true" item-start></ion-icon>
-        Link
-    </ion-item>
-    <ion-item style="border-bottom: solid 1px #eaeaea;border-top: solid 1px #eaeaea;" (click)="setPostType(4);">
-      <ion-icon color="red" name="logo-youtube" isActive="true" item-start></ion-icon>
-        Youtube
-    </ion-item>
-    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="getPicture(); setPostType(1);">
-      <ion-icon color="maroon" name="camera" isActive="true" item-start></ion-icon>
+    <ion-item style="text-align: center;color: #3e9ef8;top: 40px;" (click)="getPicture(); setPostType(1);">
+     <img src="assets/imgs/celular.png" alt="" style="width: 100px;"><br>
         Foto
-    </ion-item>
-    <ion-item style="border-bottom: solid 1px #eaeaea;" (click)="checkIn();">
-      <ion-icon color="orange" name="pin" isActive="true" item-start></ion-icon>
-        Check-in
     </ion-item>
   </ion-list>
 </ion-content>

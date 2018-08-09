@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, PopoverController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, PopoverController, ModalController} from 'ionic-angular';
 import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -14,6 +14,7 @@ import { FileChooser } from '@ionic-native/file-chooser';
 import { File } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { ActionSheetController } from 'ionic-angular';
 declare var window: any;
 @Component({
   selector: 'page-about',
@@ -76,7 +77,9 @@ export class AboutPage {
   videos:any;
   constructor(public navCtrl: NavController,
     private transfer: FileTransfer,
+    public modalCtrl: ModalController,
     private camera: Camera,
+    public actionSheetCtrl: ActionSheetController,
     private _sanitizer: DomSanitizer,
     private imagePicker: ImagePicker,
     public loadingCtrl: LoadingController,
@@ -106,6 +109,14 @@ export class AboutPage {
       return el.id !== id; 
         });
         console.log( this.imagesNames, id);
+  }
+  Publicar() {
+    let profileModal = this.modalCtrl.create('PublicarPage');
+    profileModal.present();
+
+    profileModal.onDidDismiss(data => {  
+      console.log(data);
+    });
   }
   
   cahngeLink(){
@@ -692,7 +703,33 @@ export class AboutPage {
     this.options = null;
     this.currentPos = null;
   }
-
+  public  presentActionSheet() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Onde Você está ?',
+      buttons: [
+        {
+          text: 'Destructive',
+          role: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+      
+    });
+    actionSheet.present();
+  }
   getID() {
     this.storage.get('meuid').then((val) => {
       console.log('Id', val);

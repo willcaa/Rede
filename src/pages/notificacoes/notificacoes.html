@@ -1,0 +1,83 @@
+<!--
+  Generated template for the NotificacoesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+    <button ion-button icon-only class="logofofa" (click)="goPerfil()">
+      <img class="imageUserFeed" src="assets/imgs/logo-inicial.png">
+    </button>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goPesquisa()">
+        <img class="imageUserFeed" src="assets/imgs/pesquisa.png" style="height: 45px;">
+      </button>
+      <button ion-button icon-only (click)="prePerfilPage(userId)">
+        <img class="imageUserFeed" src="assets/imgs/user_round.png">
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card >
+    <ion-item >
+      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
+        <img src="{{ item.user_image }}" alt="">
+      </ion-avatar>
+      <img src="assets/imgs/star.png" style="position:  absolute;width: 43px;left: 20%;top: 0%;"alt="">
+      <P style="white-space: initial; max-width: 80%;">
+        <b>{{ item.nome }}</b>
+      </P>
+      <p >
+        Votou na sua postagem
+      </p>
+
+    </ion-item>
+    <button ion-button class="butVer">
+      Ver
+    </button>
+  </ion-card>
+  <ion-card >
+    <ion-item >
+      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
+        <img src="{{ item.user_image }}" alt="">
+      </ion-avatar>
+      <img src="assets/imgs/chat.png" style="position:  absolute;width: 43px;left: 20%;top: 0%;"alt="">
+      <P style="white-space: initial; max-width: 80%;">
+        <b>{{ item.nome }}</b>
+      </P>
+      <p>
+        comentou na sua postagem
+      </p>
+
+    </ion-item>
+    <button ion-button class="butVer" (click)="goPost(item.id_anuncio)">
+      Ver
+    </button>
+  </ion-card>
+  <ion-card >
+    <ion-item >
+      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
+        <img src="{{ item.user_image }}" alt="">
+      </ion-avatar>
+      <img src="assets/imgs/local_amarelo.png" style="position:  absolute;width: 39px;left: 20%;top: 0%;"alt="">
+      <P style="white-space: initial; max-width: 80%;">
+        <b>{{ item.nome }}</b>
+      </P>
+      <p >
+        começou a te seguir
+      </p>
+
+    </ion-item>
+    <button ion-button class="butVer">
+      Ver
+    </button>
+  </ion-card>
+</ion-content>

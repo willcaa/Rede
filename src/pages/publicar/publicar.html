@@ -1,0 +1,59 @@
+<!--
+  Generated template for the PublicarPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->  
+    <button ion-button class="cima" (click)="back()" ><ion-icon name="ios-arrow-down" style="height: 8px;"></ion-icon></button>
+<ion-header>
+
+  <ion-navbar>
+    <ion-title><img src="assets/imgs/local_round_blue.png" alt="" class="imgtitle">Onde Você está?</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list radio-group>
+        <ion-item>
+          <ion-radio value="padrao" checked item-left></ion-radio>
+          <ion-label>Padrão</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-radio value="local" item-left></ion-radio>
+          <ion-label>Ocultar local</ion-label>
+        </ion-item>
+      </ion-list>
+      <p class="distanci" style="top: 7%; left: 15%;">(Mostrar distancia e localzação da postagem)</p>
+      <p class="distanci" style="top: 15%; left: 15%;">(Mostrar apenas distancia)</p>
+      <ion-searchbar [(ngModel)]="terms" item-right placeholder="Pesquisar"></ion-searchbar>
+      <h4 class="prox">Nas proximidades:</h4>
+      <ion-list radio-group style="margin-bottom: -10% !important;">
+          <ion-item>
+            <ion-radio value="padrao" checked item-left></ion-radio>
+            <ion-label>Edifício empire state building</ion-label>
+          </ion-item>
+          <ion-item style="top:  -12px;">
+            <ion-radio value="local" item-left></ion-radio>
+            <ion-label>condominio lar feliz</ion-label>
+          </ion-item>
+          <ion-item style="top: -22px;">
+            <ion-radio value="local2" item-left></ion-radio>
+            <ion-label>condominio Edifício sun life</ion-label>
+          </ion-item>
+          <ion-item style="top: -32px;">
+            <ion-radio value="local3" item-left></ion-radio>
+            <ion-label>condominio Edifício Ravier Dutra</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-list style="background-color:#00a2e8; height: 25%;">
+            <ion-item style="background-color: transparent">
+                <p style="color: #fff;font-size: 16px;font-weight: 400;">Compartilhar com:</p>
+                <button ion-button class="but"><img src="assets/imgs/pessoasbot.png" alt="" style="width: 70px;"></button>
+                  <h6 style="position:  absolute;left: 41%;color: #fff;font-size: 16px;">Seguidores</h6>
+                <button ion-button class="but"><img src="assets/imgs/logofundo.png" alt="" style="width: 70px;"></button>
+                  <h6 style="position:  relative;left: 78%;color: #fff;font-size: 16px;">Publico</h6>
+               </ion-item>
+          </ion-list>
+</ion-content>

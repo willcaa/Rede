@@ -9,6 +9,12 @@ page-feed {
     width: 1px;
     height: auto;
   }
+  .compartilhar{
+    width: 57px;
+    background-color: transparent;
+    position: relative;
+    top: 10px;
+  }
   .buttons_header {
     padding: 20px 0 19px 0;
   }
@@ -300,22 +306,28 @@ page-feed {
     padding: 20px 10px;
   }
   .TopOrNewsContainer {
-    background-color: #99d9ea;
-    border: 2px solid #00a2e8;
     border-radius: 5px;
     width: 98%;
     margin: 1%;
+    height: 7%;
   }
   .TopOrNewsContainer .TopOrNewsButton {
-    color: #fff !important;
-    font-size: 1.6em;
+    color: #000 !important;
+    font-size: 1.2em;
   }
   .TopOrNewsContainer .TopOrNewsButton.segment-activated {
-    color: #fff !important;
-    background-color: #00a2e8;
-    font-size: 1.6em;
-  }
+    color: #000 !important;
+    font-size: 1.2em;
+}
   .TopOrNewsContainer .TopOrNewsButton .TopOrNewsButtonIcon {
-    color: #ffc90e;
+    color: #000;
+    font-weight: 800;
+    font-size: 2.0rem !important;
+    line-height: 4rem !important;
+  }
+  .clok{
+    font-weight: 600;
+    font-size: 2.0rem !important;
+    line-height: 4rem !important;
   }
 }

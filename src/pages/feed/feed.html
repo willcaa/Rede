@@ -15,10 +15,10 @@
       <img class="imageUserFeed" src="assets/imgs/logo-inicial.png">
     </button>
     <ion-buttons end>
-      <button ion-button icon-only (click)="goPerfil()">
+      <button ion-button icon-only (click)="goPesquisa()">
         <img class="imageUserFeed" src="assets/imgs/pesquisa.png" style="height: 45px;">
       </button>
-      <button id="notification-button" ion-button clear (click)="notificacoes($event)">
+      <button id="notification-button" ion-button clear (click)="goNotif()"> 
         <ion-icon name="notifications">
           <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
         </ion-icon>
@@ -99,15 +99,15 @@
   </ion-refresher>
 
   <ion-segment class="TopOrNewsContainer" *ngIf="local == 'amigos' || local == 'bairro'" [(ngModel)]="topOrNews" color="primary">
-    <ion-segment-button class="TopOrNewsButton" value="Top" (ionSelect)="alterarTopNews()">
-      <ion-icon class="TopOrNewsButtonIcon" name="md-star"></ion-icon>
-      Top
-    </ion-segment-button>
-    <ion-segment-button class="TopOrNewsButton" value="News" (ionSelect)="alterarTopNews()">
+    <ion-segment-button class="TopOrNewsButton" value="News" (ionSelect)="alterarTopNews()"(click)="showRadio();" *ngIf="buttonId == 'News'">
+        <ion-icon class="clok" name="ios-time-outline"></ion-icon>
       News
     </ion-segment-button>
+    <ion-segment-button *ngIf="buttonId == 'Top' " class="TopOrNewsButton" value="Top" (click)="showRadio()" (ionSelect)="alterarTopNews()">
+      <ion-icon class="TopOrNewsButtonIcon" name="ios-star-outline"></ion-icon>
+      Top
+    </ion-segment-button>
   </ion-segment>
-
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
     <ion-item>
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">
@@ -168,11 +168,7 @@
       </div>
     </div>
 
-    <div style="overflow: hidden; max-height: 340px;" class="img_card" *ngIf="item.tipo == 4">
-      <div *ngIf='item.youtube'>
-        <iframe [src]='getSrc(item.youtube)' width="100%" style="min-height: 200px;" height="auto" frameborder="0"></iframe>
-      </div>
-    </div>
+
     <ion-col col-7>
       <button style="padding: 0; float: left; color: #ffc90e !important;" (click)="comments( item.id_anuncio )" ion-button icon-left
         clear small>
@@ -213,7 +209,7 @@
           <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
         </ion-item>
       </ion-col>
-      <button style="width: 57px; background-color: transparent;" (click)="compartilhar(item.id_anuncio)">
+      <button class="compartilhar" (click)="compartilhar(item.id_anuncio)"*ngIf="userId != item.id">
         <img class="imageUserFeed" src="assets/imgs/pessoas_preto.png">
       </button>
 

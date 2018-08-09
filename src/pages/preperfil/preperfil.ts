@@ -13,6 +13,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { PerfilPage } from '../perfil/perfil';
+import { EditarperfilPage } from '../editarperfil/editarperfil';
 
 
 /**
@@ -74,7 +75,34 @@ alterarTab(Id){
     this.pageId = Id;
     console.log(this.pageId);
   }
+  goPageEditarperfil(perfilId, image, nome,nome_completo,email,genero){
+    console.log(perfilId, image, nome,nome_completo,email,genero);
+    this.navCtrl.push(EditarperfilPage, {
+        perfilId: perfilId, userId: this.userId, image: image, nome: nome, nome_completo: nome_completo,email :email, genero: genero
+    });
+  }
 
+  public EditarperfilPage(id_usuario) {
+    console.log(id_usuario);
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+
+    let body = {
+      id_usuario: id_usuario
+    }
+
+    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfoEditarperfil';
+
+    this.http.post(link, JSON.stringify(body), { headers: headers })
+    .map(res => res.json())
+    .subscribe(data => {
+      console.log(data)
+      this.goPageEditarperfil(data.usuario.id, data.usuario.user_image, data.usuario.nome, data.usuario.nome_completo, data.usuario.email,data.usuario.genero);
+  
+    });
+  }
   ionViewDidLoad() {
     console.log(this.userId)
     this.alteraNome = false;

@@ -38,15 +38,20 @@ page-editarperfil .scroll-content{
     margin-top: -36px;
     margin-left: 52px;
 }
-  button.zulinho{
+  button.border{
     width: 245px;
     background-color: transparent;
-    border: solid 3px;
     border-color: #00a2e8;
     border-radius: 10px;
-    margin-top: 16px;
+    margin-top: 5px;
     margin-left: 10px;
   }
+  .list-md{
+    margin-left: -5%;
+}
+.item-md .radio-md[item-left], .item-md .radio-md[item-start]{
+  margin: 11px 15px 10px 4px;
+}
   .texto-excluir {
     display: block;
     width: 100%;
