@@ -20,7 +20,6 @@ page-pesquisar {
     }
     .toolbar-md-dark .toolbar-background-md {
         background: linear-gradient(to right, #73395c, #0a2386);
-<<<<<<< HEAD
       }
       .card-md{
         box-shadow: none;
@@ -39,24 +38,5 @@ page-pesquisar {
         background: transparent;
       }
       
-=======
-    }
-    ion-icon{
-        display: inline-block;
-        font-size: 2.2em;
-    }
-    .item-input::after { 
-        border-bottom-color: transparent !important;
-    }
-    .item-input.ng-valid.input-has-value::after{ 
-        border-bottom-color: transparent;
-    } 
-    //IMPORTANT
-    .item-inner, ion-item {
-        border-bottom-color: transparent !important;
-        box-shadow: none !important;
-    }
-
->>>>>>> f8e6caa8f7b404c99bd54f9068e84ed44601b8c8
 
 }
