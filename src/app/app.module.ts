@@ -50,6 +50,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { UploadsProvider } from '../providers/uploads/uploads';
 import { PesquisarPageModule } from '../pages/pesquisar/pesquisar.module';
 // import { PreperfilPageModule } from '../pages/preperfil/preperfil.module';
+import { NotificacoesPage } from '../pages/notificacoes/notificacoes';
 
 
 var config = {
@@ -71,6 +72,7 @@ var config = {
     PerfilPage,
     PreperfilPage,
     EditarperfilPage,
+    NotificacoesPage,
     HomePage,
     TabsPage,
     MapPage,
@@ -109,6 +111,7 @@ var config = {
     HomePage,
     TabsPage,
     MapPage,
+    NotificacoesPage,
     StatsPage,
     RegisterPage,
     CommentsPage,

@@ -22,7 +22,7 @@ export class MyApp {
       // screen.lock(screen.ORIENTATIONS.PORTRAIT);
       storage.get('meuid').then((val) => {
         if(val) {
-          this.rootPage = RegisterPage;
+          this.rootPage = FeedPage;
         } else {
           this.rootPage = RegisterPage;
         } 

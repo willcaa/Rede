@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-toolbar>
     <ion-title></ion-title>
     <button ion-button icon-only class="logofofa" (click)="goPerfil()">
       <img class="imageUserFeed" src="assets/imgs/logo-inicial.png">
@@ -20,16 +20,16 @@
       </button>
     </ion-buttons>
 
-  </ion-navbar>
+  </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-card >
-    <ion-item >
+  <ion-card *ngFor="let item of notificacoesPost">
+    <ion-item  *ngIf="item.tipo_notificacao == 'avaliou'">
       <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
-        <img src="{{ item.user_image }}" alt="">
+        <img src="item.user_image" alt="">
       </ion-avatar>
       <img src="assets/imgs/star.png" style="position:  absolute;width: 43px;left: 20%;top: 0%;"alt="">
       <P style="white-space: initial; max-width: 80%;">
@@ -39,13 +39,12 @@
         Votou na sua postagem
       </p>
 
+      <button ion-button class="butVer">
+        Ver
+      </button>
     </ion-item>
-    <button ion-button class="butVer">
-      Ver
-    </button>
-  </ion-card>
-  <ion-card >
-    <ion-item >
+
+    <ion-item *ngIf="item.tipo_notificacao == 'comentario'" >
       <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
         <img src="{{ item.user_image }}" alt="">
       </ion-avatar>
@@ -57,13 +56,12 @@
         comentou na sua postagem
       </p>
 
+      <button ion-button class="butVer" (click)="goPost(item.id_anuncio)">
+        Ver
+      </button>
     </ion-item>
-    <button ion-button class="butVer" (click)="goPost(item.id_anuncio)">
-      Ver
-    </button>
-  </ion-card>
-  <ion-card >
-    <ion-item >
+
+    <ion-item  *ngIf="item.tipo_notificacao == 'seguidor'">
       <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
         <img src="{{ item.user_image }}" alt="">
       </ion-avatar>
@@ -75,9 +73,9 @@
         começou a te seguir
       </p>
 
+      <button ion-button class="butVer">
+        Ver
+      </button>
     </ion-item>
-    <button ion-button class="butVer">
-      Ver
-    </button>
   </ion-card>
 </ion-content>

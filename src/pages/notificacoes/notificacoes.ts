@@ -73,12 +73,13 @@ export class NotificacoesPage {
   public nome_usuario: any;
   public foto_usuario: any;
   public notificacoes_qts: any;
+  public notificacoesPost:any;
   constructor(public viewCtrl: ViewController, public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer, private toastCtrl: ToastController) {
     this.http = http;
-    this.userId = navParams.get("id_usuario");
+    this.userId = navParams.get("userId");
     this.carregar_notificacoes();
   }
-  carregar_notificacoes() {
+  async carregar_notificacoes() {
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
@@ -93,8 +94,9 @@ export class NotificacoesPage {
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
-        this.notificacoes = data;
-        console.log(data);
+        this.notificacoesPost = data;
+        console.log(this.notificacoes);
+        this.getUserInfo(this.userId);
       });
   }
   goPost(post_id) {
@@ -276,7 +278,7 @@ export class NotificacoesPage {
   alterarTopNews() {
     this.index_feed = 0;
     this.feed = [];
-    this.getUserPosition();
+    
   }
   opts(myEvent, post) {
     let popover = this.popoverCtrl.create(PopoverOptsAnunciosComponent, {}, { cssClass: "popover-opts" });
@@ -343,7 +345,6 @@ export class NotificacoesPage {
 
   doRefresh(refresher) {
     setTimeout(() => {
-      this.getUserPosition();
       refresher.complete();
     }, 2000);
   }
@@ -419,7 +420,6 @@ export class NotificacoesPage {
   limparFeed() {
     this.index_feed = 0;
     this.feed = [];
-    this.getUserPosition();
   }
 
   presentLoadingDefault() {
@@ -434,10 +434,7 @@ export class NotificacoesPage {
     }, 5000);
   }
 
-  loadMore(infiniteScroll = null) {
-    this.index_feed = this.index_feed + 1;
-    this.getUserPosition(infiniteScroll);
-  }
+  
 
   ampliarImagem(imagem, texto = "") {
     this.photoViewer.show(imagem, texto, { share: true });
@@ -500,23 +497,7 @@ export class NotificacoesPage {
       );
   }
 
-  getUserPosition(infiniteScroll = null) {
-    console.log('aqui');
-    this.options = {
-      enableHighAccuracy: true
-    };
-
-    this.geolocation.getCurrentPosition(this.options).then((pos: Geoposition) => {
-
-      this.currentPos = pos;
-
-      this.loadLocation(pos.coords.latitude, pos.coords.longitude, infiniteScroll);
-      console.log(pos.coords.latitude, pos.coords.longitude);
-
-    }, (err: PositionError) => {
-      console.log("error : " + err.message);
-    });
-  }
+  
 
   showAlert(title, text, button) {
     let alert = this.alertCtrl.create({ title: title, subTitle: text, buttons: [button] });
@@ -639,118 +620,8 @@ export class NotificacoesPage {
     //   });
   }
 
-  loadLocation(lat, long, infiniteScroll) {
-    let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
-    this.http.get(url).map(res => res.json()).subscribe(data => {
-      console.log(data);
-      this.bairro = data.results[0].address_components[2].long_name;
-      this.cidade = data.results[0].address_components[3].long_name;
-      this.estado = data.results[0].address_components[5].short_name;
-      this.pais = data.results[0].address_components[6].long_name;
-      this.loadFeed(lat, long, infiniteScroll);
-      this.getQtdNotificacoes();
-    });
-  }
-
-  loadFeed(lat, long, infiniteScroll, hach: any = null) {
-
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Accept', 'application/json');
-    headers.append('content-type', 'application/json');
-    headers.append('Access-Control-Expose-Headers', "true");
-    this.userId = parseInt(this.userId);
-    console.log(this.userId, this.userImagem);
-    let tipo: number;
-
-    if (this.topOrNews == "Top") {
-      tipo = 1;
-    } else if (this.topOrNews == "News") {
-      tipo = 2;
-    }
-
-    let localNome = "nulo";
-    if (this.local == "bairro") {
-      localNome = this.bairro;
-    } else
-      if (this.local == "cidade") {
-        localNome = this.cidade;
-      } else
-        if (this.local == "estado") {
-          localNome = this.estado;
-        } else
-          if (this.local == "pais") {
-            localNome = this.pais;
-          } else
-            if (this.local == "proximidade") {
-              this.topOrNews = "News";
-            }
-    console.log(localNome);
-    let body = {
-      l_tipo: this.local,
-      local: localNome,
-      userId: this.userId,
-      index: this.index_feed,
-      publico: 1,
-      lat: lat,
-      long: long,
-      tipo: tipo,
-      hach: hach
-    }
-    var link = 'https://wa-studio.com/redelive/anuncios/puxarTodos';
-
-    this.http.post(link, JSON.stringify(body), { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        console.log(data.data, data.status);
-        if (data.data) {
-          data.data.forEach(element => {
-            // element.usuario == parseInt(element.usuario);
-            if (element.distance >= 1) {
-              element.unit = 'Km';
-              element.distance = parseInt(element.distance);
-            } else {
-              element.distance = element.distance * 1000;
-              element.distance = parseInt(element.distance);
-              element.unit = 'm';
-            }
-            console.log(element.distance);
-          });
-        };
-        if (this.feed && data.status && this.feed != data.data) {
-          if (!infiniteScroll) {
-            this.index_feed = 0;
-            this.feed = [];
-          }
-          data.data.forEach(element => {
-            console.log(element.distance);
-            this.feed.push(element);
-          });
-
-          console.log(this.feed);
-          console.log(this.index_feed);
-          this.checkLink();
-          if (infiniteScroll) {
-            infiniteScroll.complete();
-          }
-        } else {
-          if (!data.status) {
-            if (infiniteScroll) {
-              infiniteScroll.complete();
-            }
-          } else {
-            if (this.feed != data.data) {
-              this.feed = data.data;
-              this.checkLink();
-            }
-            if (infiniteScroll) {
-              infiniteScroll.complete();
-            }
-          }
-        }
-        console.log(data);
-      });
-  }
+  
+  
 
   goImage() {
     this.navCtrl.push(AboutPage, { slide: this.local });
@@ -1013,22 +884,15 @@ export class NotificacoesPage {
       handler: data =>{
         this.topOrNews = data;
         this.buttonId = data;
-        this.getUserPosition();
       }
     });
     alert.present();
-    
   }
 
 
-  setStorage() {
-    this.getUserPosition();
-  }
-
+ 
   ionViewDidLoad() {
     this.index_feed = 0;
-    this.getUserPosition();
-
   }
 
 }

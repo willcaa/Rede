@@ -785,8 +785,7 @@ export class FeedPage {
     console.log(id_perfil);
   }
   goNotif(id_perfil = this.userId) {
-    this.navCtrl.push(NotificacoesPage, {
-    });
+    this.navCtrl.push(NotificacoesPage, {userId: id_perfil});
     console.log(id_perfil);
   }
   goPagePerfil(perfilId, image, nome) {
