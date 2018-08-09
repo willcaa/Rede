@@ -27,7 +27,7 @@
 
 <ion-content padding>
   <ion-card *ngFor="let item of notificacoesPost">
-    <ion-item  *ngIf="item.tipo_notificacao == 'avaliou'">
+    <ion-item  *ngIf="item.tipo_notificacao == 'avaliou'" style="left: -5%; width: 112%;">
       <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
         <img src="item.user_image" alt="">
       </ion-avatar>
@@ -44,7 +44,7 @@
       </button>
     </ion-item>
 
-    <ion-item *ngIf="item.tipo_notificacao == 'comentario'" >
+    <ion-item *ngIf="item.tipo_notificacao == 'comentario'" style="left: -5%; width: 112%;">
       <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
         <img src="{{ item.user_image }}" alt="">
       </ion-avatar>
@@ -61,7 +61,7 @@
       </button>
     </ion-item>
 
-    <ion-item  *ngIf="item.tipo_notificacao == 'seguidor'">
+    <ion-item  *ngIf="item.tipo_notificacao == 'seguidor'" style="left: -5%; width: 112%;">
       <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
         <img src="{{ item.user_image }}" alt="">
       </ion-avatar>
