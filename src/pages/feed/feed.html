@@ -18,7 +18,7 @@
       <button ion-button icon-only (click)="goPesquisa()">
         <img class="imageUserFeed" src="assets/imgs/pesquisa.png" style="height: 45px;">
       </button>
-      <button id="notification-button" ion-button clear (click)="goNotif()"> 
+      <button id="notification-button" ion-button clear (click)="goNotif()">
         <ion-icon name="notifications">
           <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
         </ion-icon>
