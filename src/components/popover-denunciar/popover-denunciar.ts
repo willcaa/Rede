@@ -24,6 +24,8 @@ export class PopoverDenunciarComponent {
       this.viewCtrl.dismiss("bloquear");
     } else if(opt == 3) {
       this.viewCtrl.dismiss("cancelar");
+    }else if(opt == 4){
+      this.viewCtrl.dismiss("logout");
     }
   }
 

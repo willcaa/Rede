@@ -1,5 +1,11 @@
 
-
+<ion-header>
+  <ion-navbar color="transparent">
+    <button ion-button style="position:  absolute;top: 0%;right:  0%;width: 85px;height:  40px;font-size: 40px;background: transparent;box-shadow: none;"(click)="presentPopover($event)" >
+      <ion-icon name="ios-more"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
   
   <ion-content padding class="pagetabs" style="height: 100%;" >
     <div [style.background-image]="getImage(cover)" style="background: linear-gradient(#39477291, #005396); display: flex; width: 100%; height: 91%;" class="cover">
@@ -7,13 +13,13 @@
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
         </ion-refresher-content>
       </ion-refresher>
-      <div style="width: 100%; margin-top: 286px;">
+      <div style="width: 100%; margin-top: 70%;">
         <div>
           <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
             
           </button>
           
-          <button ion-button style="position:  absolute;top: 0%;right:  0%;width: 85px;height:  40px;font-size: 40px;background: transparent;box-shadow: none;" ><ion-icon name="ios-more"></ion-icon></button>
+          
           <div class="button-like">
               
               <button  ion-button small class="botao-seguindo"></button>
@@ -25,7 +31,7 @@
             <!-- <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)"> -->
             
             <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="alterarNome()"><ion-icon name="brush"></ion-icon></button> -->
-            <button *ngIf="perfilId == userId" ion-button style="position: absolute;right: 20%;width: 85px;height: 40px;background: transparent;box-shadow: none;top: 57%;"><img src="assets/imgs/edit.png" alt=""(click)="EditarperfilPage(perfilId)"></button>
+            <button *ngIf="perfilId == userId" ion-button style="position: absolute;right: 20%;width: 85px;height: 40px;background: transparent;box-shadow: none;top: 52%;"><img src="assets/imgs/edit.png" alt=""(click)="EditarperfilPage(perfilId)"></button>
             <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="setNovoNome(novoNome);">OK</button>
            <div style="margin-top: 10px;">
             <ion-list >

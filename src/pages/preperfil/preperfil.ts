@@ -14,6 +14,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { PerfilPage } from '../perfil/perfil';
 import { EditarperfilPage } from '../editarperfil/editarperfil';
+import { RegisterPage } from '../register/register';
 
 
 /**
@@ -83,6 +84,8 @@ alterarTab(Id){
         perfilId: perfilId, userId: this.userId, image: image, nome: nome, nome_completo: nome_completo,email :email, genero: genero
     });
   }
+  
+  
 
   public EditarperfilPage(id_usuario) {
     console.log(id_usuario);
@@ -398,6 +401,11 @@ alterarTab(Id){
     popover.present({ ev: myEvent });
     popover.onDidDismiss(popoverData => {
       if(popoverData) {
+        if(popoverData == 'logout'){
+          console.log(popoverData);
+          this.storage.clear();
+          this.navCtrl.push(RegisterPage, {});
+        }
 
       }
     })
