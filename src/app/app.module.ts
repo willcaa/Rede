@@ -17,7 +17,6 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FileOpener } from '@ionic-native/file-opener';
 import { FilePath } from '@ionic-native/file-path';
-import { HTTP } from '@ionic-native/http';
 
 import { AboutPage } from '../pages/about/about';
 import { CommentsPage } from '../pages/comments/comments';
@@ -147,8 +146,7 @@ var config = {
     FileChooser,
     LocatonsProvider,
     ScreenOrientation,
-    UploadsProvider,
-    HTTP
+    UploadsProvider
   ]
 })
 export class AppModule {}

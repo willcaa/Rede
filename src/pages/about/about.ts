@@ -4,7 +4,6 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers } from '@angular/http';
-import { HTTP } from '@ionic-native/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
@@ -86,7 +85,6 @@ export class AboutPage {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public http: Http, 
-    public httpIon: HTTP,
     public fileChooser: FileChooser,
     private storage: Storage,
     private file: File,
@@ -144,9 +142,7 @@ export class AboutPage {
       
           this.currentPos = pos;
           console.log(pos.coords.latitude, pos.coords.longitude);
-          this.httpIon.setHeader('', "Access-Control-Allow-Origin", '*');
-          this.httpIon.setHeader('', 'Accept', 'application/json');
-          this.httpIon.setHeader('', 'content-type', 'application/json');
+
           // this.getGeocode(pos.coords.latitude, pos.coords.longitude);
           let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + pos.coords.latitude + "," + pos.coords.longitude + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
           this.http.get(url2).map(res => res.json()).subscribe(data2 => {

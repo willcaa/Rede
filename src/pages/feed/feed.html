@@ -100,7 +100,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
-    <ion-item>
+    <ion-item >
         <ion-avatar item-start *ngIf="item.user_image && item.user_image != 'none'">
             <img  [src]="getSrc(item.user_image)" (click)="goPerfil(item.id)">
           </ion-avatar>
@@ -131,7 +131,10 @@
    
     <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 5">
       <ion-row>
-          <ion-item  [style.background-image]="getBackground(item.imagem)" style="background-size: cover; background-position-y: center; height: auto; width: 100%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
+          <!-- <ion-item  [style.background-image]="getBackground(item.imagem)" style="height: 340px; background-repeat: no-repeat; background-size: 100%; background-position-y: center; height: 400pv; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item> -->
+          <ion-item   style="height: auto;  width: 100%;">
+            <img [src]="getSrc(item.imagem)" style="height: auto;  width: 100%;" >
+          </ion-item>
       </ion-row>
     </div>
 

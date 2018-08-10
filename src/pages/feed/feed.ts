@@ -678,7 +678,7 @@ export class FeedPage {
       tipo: tipo,
       hach: hach
     }
-    var link = 'https://refriplaybusiness.com.br/anuncios/puxarTodos';
+    var link = 'https://refriplaybusiness.com.br/anuncios/puxarTodos1';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
