@@ -42,7 +42,7 @@
           <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="goEditarPerfil()"><ion-icon name="brush"></ion-icon></button>
           <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="goEditarPerfil();">OK</button> 
           <ion-list >
-            <h3 class="nome_usuario" *ngIf="alteraNome == false">{{ perfil_nome }}</h3>
+            <h3 class="nome_usuario" *ngIf="alteraNome == false"></h3>
             <ion-item *ngIf="alteraNome == true" style="margin-top: -17px;">
               <ion-input class="altera-nome" [(ngModel)]="novoNome" type="text" placeholder="{{perfil_nome}}" *ngIf="alteraNome == true"></ion-input>
             </ion-item>
