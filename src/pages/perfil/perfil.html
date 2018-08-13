@@ -38,7 +38,7 @@
           <!-- <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)"> -->
           
           <button *ngIf="perfilId == userId" ion-button icon-only class="botao-editar-nome"  (click)="EditarperfilPage(perfilId)"><img src="assets/imgs/edit.png" alt=""></button>
-          <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="goEditarPerfil()"><ion-icon name="brush"></ion-icon></button>
+          <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="goEditarPerfil()"><ion-icon name="brush"></ion-icon></button>-->
           <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="goEditarPerfil();">OK</button> 
           <ion-list >
             <h3 class="nome_usuario" *ngIf="alteraNome == false">{{ perfil_nome }}</h3>
@@ -48,15 +48,9 @@
             </ion-item>
           </ion-list>
             
-<<<<<<< HEAD
-        </div>
-        
-      </div> -->
-=======
           </div>
          </div>
       </div>
->>>>>>> 3f5f7fdd43280cb95ed6b6a13a651607ce2ea5e3
       <div id="publicacoes" class="pagetabs" *ngIf="pageId == 'publicacoes'">
           <ion-item  style="height: 60px; ">
             <ion-row>

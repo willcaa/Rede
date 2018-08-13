@@ -30,8 +30,8 @@
       <ion-searchbar [(ngModel)]="terms" item-right placeholder="Pesquisar"></ion-searchbar>
       <h4 class="prox">Nas proximidades:</h4>
       <ion-list radio-group style="margin-bottom: -10% !important;">
-          <ion-item *ngFor="let item of locais">
-              <ion-radio value="{{item}}" item-end></ion-radio>
+          <ion-item *ngFor="let item of locais" style="margin-bottom: -10px;">
+              <ion-radio value="{{item}}" item-left></ion-radio>
               <ion-label>{{item}}</ion-label>
             </ion-item>
         </ion-list>
