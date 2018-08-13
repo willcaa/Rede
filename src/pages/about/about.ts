@@ -15,6 +15,7 @@ import { File } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ActionSheetController } from 'ionic-angular';
+import { PostPage } from '../post/post';
 declare var window: any;
 @Component({
   selector: 'page-about',
@@ -72,6 +73,7 @@ export class AboutPage {
   image3: any = null;
   image4: any = null;
   image5: any = null;
+  public locais: any = [];
   image6: any = null;
   localBack: any;
   videos:any;
@@ -95,7 +97,7 @@ export class AboutPage {
     private geolocation: Geolocation) {
       this.localBack = this.navParams.get("slide");
 
-  }
+    }
 
   cahngeYoutube(){
     let link;
@@ -111,12 +113,7 @@ export class AboutPage {
         console.log( this.imagesNames, id);
   }
   Publicar() {
-    let profileModal = this.modalCtrl.create('PublicarPage');
-    profileModal.present();
-
-    profileModal.onDidDismiss(data => {  
-      console.log(data);
-    });
+    this.checkIn();
   }
   
   cahngeLink(){
@@ -124,7 +121,7 @@ export class AboutPage {
     console.log(this.youtubeSaneado);
   }
 
-  checkIn() {
+  async checkIn() {
     //this.presentLoadingDefault();
     this.options = {
       enableHighAccuracy: true
@@ -138,33 +135,39 @@ export class AboutPage {
     
           let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + pos.coords.latitude + "," + pos.coords.longitude + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
           this.http.get(url2).map(res => res.json()).subscribe(data2 => {
-    
-            let alert = this.alertCtrl.create();
-            alert.setTitle('Onde Você está?');
-        
-            for(var i = 0; i < 20; i++) {
-              alert.addInput({
-                type: 'radio',
-                label: data2.results[i].name,
-                value: data2.results[i].name,
-                checked: false
-              });
+            this.locais = [];
+            for(let i = 0; i < 5; i++){
+              this.locais.push(data2.results[i].name);
             }
-
-            alert.addButton('Cancel');
-            alert.addButton({
-              text: 'OK',
-              handler: data => {
-                this.checkin = data;
-              }
-            });
-            alert.present();
+            this.getLocal();
           });
+          
         }, (err: PositionError) => {
           console.log("error : " + err.message);
         });    
       }
 
+    publish(data){
+      if(this.postType == 1){
+        this.uploadImage1();
+      }
+      if(data == 'followers'){
+
+      }else if(data == 'public'){
+        
+      }
+
+    }
+    async getLocal(){
+      let profileModal = this.modalCtrl.create('PublicarPage', this.locais);
+      profileModal.present();
+      
+
+      profileModal.onDidDismiss(data => {  
+        this.publish(data);
+        console.log(data);
+      });
+    }
 
       presentLoadingDefault() {
         this.loading = this.loadingCtrl.create({

@@ -14,14 +14,20 @@ import { IonicPage, NavController, NavParams ,ViewController  } from 'ionic-angu
   templateUrl: 'publicar.html',
 })
 export class PublicarPage {
-
+  public locais: any;
+  public type: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+    this.locais = this.viewCtrl.data;
+  }
+
+  setType(type){
+    this.type = type;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicarPage');
   }
   back() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.type);
   }
 }

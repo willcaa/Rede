@@ -397,7 +397,7 @@ alterarTab(Id){
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverDenunciarComponent,{},{cssClass:"popover-denuncia"});
+    let popover = this.popoverCtrl.create(PopoverDenunciarComponent,{perfilId: this.perfilId, userId: this.userId},{cssClass:"popover-denuncia"});
     popover.present({ ev: myEvent });
     popover.onDidDismiss(popoverData => {
       if(popoverData) {

@@ -6,18 +6,13 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button *ngIf="!publicando && postType != 1 && postType != 2" (click)="Publicar()">
+      <button ion-button *ngIf="!publicando" (click)="Publicar()">
         PUBLICAR
       </button>
       <!-- <button ion-button *ngIf="!publicando && postType != 1 && postType != 2" (click)="getUserPosition()">
           PUBLICAR
         </button> -->
-      <button ion-button *ngIf="!publicando && postType == 1" (click)="uploadImage1()">
-        PUBLICAR
-      </button>
-      <button ion-button *ngIf="!publicando && postType == 2" (click)="uploadVideo()">
-        PUBLICAR
-      </button>
+      
     </ion-buttons>
 
   </ion-navbar>
