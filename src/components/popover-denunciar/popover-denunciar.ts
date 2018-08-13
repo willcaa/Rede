@@ -12,9 +12,11 @@ import { ViewController } from 'ionic-angular';
   templateUrl: 'popover-denunciar.html'
 })
 export class PopoverDenunciarComponent {
-
+  public perfilId: any;
+  public userId: any;
   constructor(public viewCtrl: ViewController) {
-
+    this.perfilId = this.viewCtrl.data.perfilId;
+    this.userId = this.viewCtrl.data.userId;
   }
 
   sair(opt) {

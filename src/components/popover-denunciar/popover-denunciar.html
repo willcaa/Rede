@@ -1,14 +1,17 @@
-<ion-list>
-  <ion-item (click)="sair(1)" *ngIf="perfilId != userId">
+<ion-list *ngIf="perfilId != userId" style="width: 160px !important; right: -7px !important; height: 138px;">
+  <ion-item (click)="sair(1)" style="padding-left: 10px;">
     Denunciar Usuário
   </ion-item>
-  <ion-item (click)="sair(2)" *ngIf="perfilId != userId">
+  <ion-item (click)="sair(2)" style="padding-left: 10px;">
     Bloquear Usuário
   </ion-item>
-  <ion-item (click)="sair(3)" *ngIf="perfilId != userId">
+  <ion-item (click)="sair(3)" style="padding-left: 10px;">
     Cancelar
   </ion-item>
-  <ion-item (click)="sair(4)" *ngIf="perfilId == userId">
+</ion-list>
+
+<ion-list *ngIf="perfilId == userId">
+  <ion-item (click)="sair(4)" >
     Sair
   </ion-item>
 </ion-list>
