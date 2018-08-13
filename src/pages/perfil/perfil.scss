@@ -5,6 +5,15 @@ page-perfil {
   .item-md.item-block .item-inner {
     border: 0;
   }
+
+  .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+    color: white;
+    background-color: transparent;
+    
+  }
+  .back-button-icon-md{
+    font-size: 40px;
+  }
   .texto-excluir {
     display: block;
     width: 100%;
@@ -28,17 +37,37 @@ page-perfil {
   }
   .scroll-content {
     padding: 0px !important;
+    background-size: cover;
+    padding: 5% 0px 0px 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .cover{
+    padding: 0px !important;
+    background-size: cover !important;
+    padding: 5% 0px 0px 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .scroll-content{
+    margin-top: 0px !important;
+
+  }
+  .toolbar-background-md{
+    background: transparent !important;
   }
   .fundo-perfil {
     background-size: cover;
     padding: 5% 0px 0px 0px;
+    height: 100%;
   }
+  
   .imagem_fundo {
     width: 120px;
     height: 120px;
     // margin-left: 40px !important;
     border-radius: 100%;
-    mask-image: url("../assets/imgs/perfil_mask.png");
+    mask-image: url("../assets/imgs/perfil_mask2.png");
     -webkit-mask-image: url("../assets/imgs/perfil_mask2.png");
     -webkit-mask-size: cover;
     background-origin: initial !important;
@@ -49,6 +78,8 @@ page-perfil {
     text-align: center;
     margin: 0px;
     color: white;
+    position: relative;
+    top: 6px;
   }
   .buttons_header {
     min-height: 0px;
@@ -97,12 +128,12 @@ page-perfil {
       width: 25vw;
     }
     to {
-      width: 35.0vmin;
+      width: 35.5vmin;
     }
   }
   @keyframes reduzir_btn {
     from {
-      width: 35.0vmin;
+      width: 35.5vmin;
     }
     to {
       width: 25vw;
@@ -130,6 +161,21 @@ page-perfil {
     background-color: #00a2e8;
     color: white;
     height: 17px;
+
+  }
+  .item-md{
+      padding-left: 16px;
+  padding-right: 0;
+  position: relative;
+  font-size: 1.6rem;
+  font-weight: normal;
+  text-transform: none;
+  color: #fff;
+  background-color: #005396;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .botao-seguir {
     position: relative;
@@ -145,10 +191,26 @@ page-perfil {
     color: white;
     float: right;
   }
+  .seguir{
+    position: fixed;
+    right: 0%;
+    background: transparent;
+    box-shadow: none;
+    font-size: 14px;
+    width: 33%;
+  }
   .button-like {
     position: absolute;
     right: 0;
-    top: 15.75px;
+    top: -0.25px;
+  }
+  .header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before{
+      background-image: none;
+  }
+  h4 {
+      color: #00a2e8 !important;
+      font-size: 15px;
+      position: relative;
   }
   .bola {
     display: inline-block;
@@ -161,6 +223,7 @@ page-perfil {
     float: left;
     left: 17px;
   }
+  
   .item-post-range {
     margin-top: -2%;
     height: 24px;
@@ -292,15 +355,18 @@ page-perfil {
   
   .botao-editar-nome{
     position: absolute;
-    top: 124px;
-    left: 88%;
-    border-radius: 100%;
-    width: 36px;
-    z-index: 10000000;
-    background-color: rgba (70, 140, 120, 0.7);
+    top: 45%;
+    left: 65%;
+    background: transparent;
+    box-shadow: none;
   }
   .altera-nome{
     background-color: #fff;
     width: 100px;
+  }
+  .ar_usuario{
+    color: #00a2e8 !important;
+    font-size: 15px;
+    position: relative;
   }
 }
