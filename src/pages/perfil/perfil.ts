@@ -13,6 +13,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { EditarperfilPage } from '../editarperfil/editarperfil';
+import { RegisterPage } from '../register/register';
 
 /**
  * Generated class for the PerfilPage page.
@@ -292,6 +293,9 @@ export class PerfilPage {
   getImage(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
+  getFundo(image) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(`${image}`);
+  }
 
   // public checkLink() {
   //   setTimeout(function() {
@@ -365,6 +369,11 @@ export class PerfilPage {
     popover.present({ ev: myEvent });
     popover.onDidDismiss(popoverData => {
       if(popoverData) {
+        if(popoverData == 'logout'){
+          console.log(popoverData);
+          this.storage.clear();
+          this.navCtrl.push(RegisterPage, {});
+        }
 
       }
     })

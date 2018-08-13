@@ -23,7 +23,7 @@
           <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
         </ion-icon>
       </button>
-      <button ion-button icon-only (click)="prePerfilPage(userId)">
+      <button ion-button icon-only (click)="goPerfil(perfilId)">
         <img class="imageUserFeed" src="assets/imgs/user_round.png">
       </button>
     </ion-buttons>
@@ -111,7 +111,7 @@
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
     <ion-item>
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">
-        <img [src]="getSrc(item.user_image)" (click)="prePerfilPage(item.id)">
+        <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)">
       </ion-avatar>
       <P *ngIf="item.pai == 0" style="white-space: initial; max-width: 80%;">
         <b>{{ item.nome }}</b>
