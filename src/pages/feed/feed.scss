@@ -103,7 +103,7 @@ page-feed {
     font-weight: bolder;
   }
   .button-clear-md {
-    color: #777777 !important;
+    color: #777777;
   }
   .button-clear-md:focus {
     color: #00a2ed !important;
@@ -210,7 +210,7 @@ page-feed {
     height: 5px;
     background-color: #7f7f7f;
     width: 200%;
-    left: -33%;
+    // left: -33%;
   }
   .post-range .range-slider .range-bar.range-bar-active {
     background-color: #00a2e8;
@@ -228,7 +228,7 @@ page-feed {
     border: 0;
     padding: 0;
     width: 20%;
-    margin-right: -2.5%;
+    margin-right: -5.8%;
     background-color: #fafafa;
   }
   .icon-star {
