@@ -25,10 +25,10 @@ export class AboutPage {
   
   public Fbref: any;
   public local_array: any;
-  public bairro: string;
-  public cidade: string;
-  public estado: string;
-  public pais: string;
+  public bairro: string = ' ';
+  public cidade: string = ' ';
+  public estado: string = ' ';
+  public pais: string = "Brasil";
   public checkin: any = null;
   public local_array1: any;
   public local_array2: any;
@@ -74,6 +74,7 @@ export class AboutPage {
   image4: any = null;
   image5: any = null;
   public locais: any = [];
+  public locaisFull: any = [];
   image6: any = null;
   localBack: any;
   videos:any;
@@ -136,9 +137,13 @@ export class AboutPage {
           let url2 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + pos.coords.latitude + "," + pos.coords.longitude + "&rankby=distance&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
           this.http.get(url2).map(res => res.json()).subscribe(data2 => {
             this.locais = [];
+            this.locaisFull =[];
             for(let i = 0; i < 5; i++){
               this.locais.push(data2.results[i].name);
             }
+            data2.results.forEach(element => {
+              this.locaisFull.push(element.name);
+            });
             this.getLocal();
           });
           
@@ -148,25 +153,38 @@ export class AboutPage {
       }
 
     publish(data){
+      this.presentLoadingDefault();
       if(this.postType == 1){
         this.uploadImage1();
       }
-      if(data == 'followers'){
-
-      }else if(data == 'public'){
-        
-      }
+      this.sendPost(this.currentPos.coords.latitude, this.currentPos.coords.longitude, data);
+      
 
     }
     async getLocal(){
-      let profileModal = this.modalCtrl.create('PublicarPage', this.locais);
+      let profileModal = this.modalCtrl.create('PublicarPage', {locais: this.locais, locaisFull: this.locaisFull});
       profileModal.present();
       
 
       profileModal.onDidDismiss(data => {  
-        this.publish(data);
-        console.log(data);
+        this.carregaLocal(data);
       });
+    }
+
+    carregaLocal(mod){
+      let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + this.currentPos.coords.latitude + "," + this.currentPos.coords.longitude + "&key=AIzaSyDSO6Siell1ljeulEnHXDL4a5pfrCttnTc";
+        this.http.get(url).map(res => res.json()).subscribe(data => {
+          console.log(data);
+          this.bairro = data.results[0].address_components[2].long_name;
+          this.cidade = data.results[0].address_components[3].long_name;
+          this.estado = data.results[0].address_components[5].short_name;
+          this.pais = data.results[0].address_components[6].long_name;
+          this.publish(mod);
+        }, (err) => {
+          this.getUserPosition(),
+          this.loading.dismiss();
+          });
+
     }
 
       presentLoadingDefault() {
@@ -284,7 +302,6 @@ export class AboutPage {
           this.cidade = data.results[0].address_components[3].long_name;
           this.estado = data.results[0].address_components[5].short_name;
           this.pais = data.results[0].address_components[6].long_name;
-          this.sendPost(lat, long);
         }, (err) => {
           this.getUserPosition(),
           this.loading.dismiss();
@@ -602,7 +619,7 @@ export class AboutPage {
       }
       
       
-      sendPost(lat, long) {
+      sendPost(lat, long, pub) {
         // this.presentToast(this.pais);
         let headers = new Headers();
         headers.append('Access-Control-Allow-Origin', '*');
@@ -627,7 +644,8 @@ export class AboutPage {
           link: this.linkPost,
           youtubeA: this.youtubeSaneado,
           video: this.videoFileName,
-          local: this.checkin
+          local: this.checkin,
+          pub: pub
         }
         
         var link = 'https://wa-studio.com/redelive/anuncios/criarRefri';
@@ -691,10 +709,10 @@ export class AboutPage {
 
   reset() {
     this.local_array = null;
-    this.bairro = null;
-    this.cidade = null;
-    this.estado = null;
-    this.pais = null;
+    this.bairro = ' ';
+    this.cidade = ' ';
+    this.estado = ' ';
+    this.pais = 'Brasil';
     this.checkin = null;
     this.publicando = null;
     this.texto = "";
@@ -705,6 +723,7 @@ export class AboutPage {
     this.localFileName = null;
     this.options = null;
     this.currentPos = null;
+    
   }
   public  presentActionSheet() {
     const actionSheet = this.actionSheetCtrl.create({
