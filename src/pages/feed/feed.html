@@ -130,7 +130,10 @@
             <ion-icon name="ios-pin" style="font-size: 1.5em"></ion-icon> {{ item.local }}</b>
         </span>
       </P>
-      <p>{{ item.atras }}</p>
+      <p>{{ item.atras }} - <span>Publicado 
+        <img  src="assets/imgs/amigos.png" alt="" style=" width: 25px; display: inline; height: 16px;">
+        <img *ngIf="item.local != publico" src="assets/imgs/publico.png" alt="" style=" width: 30px; display: inline; height: 18px;">
+      </span></p>
       <button class="button-more" ion-button icon-only clear (click)="opts($event, item)">
         <ion-icon name="more"></ion-icon>
       </button>
@@ -170,9 +173,9 @@
 
 
     <ion-col col-7>
-      <button style="padding: 0; float: left; color: #ffc90e !important;" (click)="comments( item.id_anuncio )" ion-button icon-left
+      <button style="padding: 0; float: left; color: #ffc90e !important;" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"(click)="comments( item.id_anuncio )" ion-button icon-left
         clear small>
-        <ion-icon name="md-star"></ion-icon>
+        <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
         {{ item.qtd }}
       </button>
       <button style="padding: 0; float: left; left: 90px;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
@@ -190,24 +193,26 @@
       </ion-col>
 
       <ion-col *ngIf="userId != item.id">
-        <button class="btn-star">
+        
+        <button class="btn-star" style="margin-left: 8%;">
           <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
         </button>
-        <button class="btn-star">
+        <button class="btn-star" style="margin-right: -13px;margin-left: 1%;">
           <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
         </button>
-        <button class="btn-star">
+        <button class="btn-star" style="margin-right: -5%;">
           <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
         </button>
-        <button class="btn-star">
+        <button class="btn-star" >
           <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
         </button>
-        <button class="btn-star">
+        <button class="btn-star" >
           <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
         </button>
-        <ion-item class="item-post-range" style="margin-top: -1%;">
-          <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
+        <ion-item class="item-post-range" style="margin-top: -1%;left: -27px;width: 109%;">
+          <ion-range class="post-range" min="0" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
         </ion-item>
+      
       </ion-col>
       <button class="compartilhar" (click)="compartilhar(item.id_anuncio)"*ngIf="userId != item.id">
         <img class="imageUserFeed" src="assets/imgs/pessoas_preto.png">
