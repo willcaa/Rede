@@ -15,19 +15,47 @@ import { IonicPage, NavController, NavParams ,ViewController  } from 'ionic-angu
 })
 export class PublicarPage {
   public locais: any;
+  public locaisFull: any;
+  public search: any;
   public type: any;
+  public tabId: any = "locais";
+  public local: any;
+  public localChoose: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
-    this.locais = this.viewCtrl.data;
+    this.locais = this.viewCtrl.data.locais;
+    this.locaisFull = this.viewCtrl.data.locaisFull;
+
+  }
+  searchLocal(terms){
+    if(this.tabId == "locais"){
+      this.tabId = "locaisFull";
+    }
+    if(terms == ''){
+      this.tabId = "locais";
+    }
+    this.search = this.filterLocais(terms);
+    console.log(this.search);
+  }
+
+  filterLocais(terms){
+   return this.locaisFull.filter((item) => {
+      console.log(item);
+      return item.toLowerCase().indexOf(terms.toLowerCase()) > -1;
+    })
   }
 
   setType(type){
     this.type = type;
+    this.back();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicarPage');
   }
   back() {
-    this.viewCtrl.dismiss(this.type);
+    if(this.localChoose == 'local'){
+      this.local = "none"
+    }
+    this.viewCtrl.dismiss({type: this.type, local: this.local});
   }
 }

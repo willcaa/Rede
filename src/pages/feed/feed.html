@@ -125,14 +125,14 @@
           <span style="color: blue;"> Compartilhou:</span>
         </b>
         <b>{{ item.nome_pai }}</b>
-        <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em
+        <span *ngIf="item.local != null && item.local != 'none'" (click)="navigate(item.lat, item.lng)"> está em
           <b>
             <ion-icon name="ios-pin" style="font-size: 1.5em"></ion-icon> {{ item.local }}</b>
         </span>
       </P>
       <p>{{ item.atras }} - <span>Publicado 
-        <img  src="assets/imgs/amigos.png" alt="" style=" width: 25px; display: inline; height: 16px;">
-        <img *ngIf="item.local != publico" src="assets/imgs/publico.png" alt="" style=" width: 30px; display: inline; height: 18px;">
+        <img *ngIf="item.public == 0" src="assets/imgs/amigos.png" alt="" style=" width: 25px; display: inline; height: 16px;">
+        <img *ngIf="item.public == 1" src="assets/imgs/publico.png" alt="" style=" width: 30px; display: inline; height: 18px;">
       </span></p>
       <button class="button-more" ion-button icon-only clear (click)="opts($event, item)">
         <ion-icon name="more"></ion-icon>

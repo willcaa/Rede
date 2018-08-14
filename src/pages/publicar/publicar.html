@@ -15,7 +15,7 @@
 
 
 <ion-content padding>
-    <ion-list radio-group>
+    <ion-list radio-group [(ngModel)]="localChoose">
         <ion-item>
           <ion-radio value="padrao" checked item-left></ion-radio>
           <ion-label>Padrão</ion-label>
@@ -27,10 +27,16 @@
       </ion-list>
       <p class="distanci" style="top: 7%; left: 15%;">(Mostrar distancia e localzação da postagem)</p>
       <p class="distanci" style="top: 15%; left: 15%;">(Mostrar apenas distancia)</p>
-      <ion-searchbar [(ngModel)]="terms" item-right placeholder="Pesquisar"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="terms" item-right placeholder="Pesquisar" (ngModelChange)="searchLocal(terms)"></ion-searchbar>
       <h4 class="prox">Nas proximidades:</h4>
-      <ion-list radio-group style="margin-bottom: -10% !important;">
+      <ion-list radio-group style="margin-bottom: -10% !important;" *ngIf="tabId == 'locais'" [(ngModel)]="local">
           <ion-item *ngFor="let item of locais" style="margin-bottom: -10px;">
+              <ion-radio value="{{item}}" item-left></ion-radio>
+              <ion-label>{{item}}</ion-label>
+            </ion-item>
+        </ion-list>
+      <ion-list radio-group style="margin-bottom: -10% !important;" *ngIf="tabId == 'locaisFull'" [(ngModel)]="local">
+          <ion-item *ngFor="let item of search" style="margin-bottom: -10px;">
               <ion-radio value="{{item}}" item-left></ion-radio>
               <ion-label>{{item}}</ion-label>
             </ion-item>
