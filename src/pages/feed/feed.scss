@@ -204,12 +204,12 @@ page-feed {
     padding: 0px !important;
   }
   .post-range .range-slider {
-    margin: 0 15% 0 10% !important;
+    margin: 0 2% 0 12% !important;
   }
   .post-range .range-slider .range-bar {
-    height: 5px;
     background-color: #7f7f7f;
     width: 200%;
+    height: 4px;
     // left: -33%;
   }
   .post-range .range-slider .range-bar.range-bar-active {
@@ -227,12 +227,12 @@ page-feed {
     height: 2rem;
     border: 0;
     padding: 0;
-    width: 20%;
+    width: 24%;
     margin-right: -5.8%;
     background-color: #fafafa;
   }
   .icon-star {
-    font-size: 2rem;
+    font-size: 1.2rem;
     line-height: 2rem;
     height: 2rem;
     color: #7f7f7f;
