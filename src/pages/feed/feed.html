@@ -127,9 +127,9 @@
         </span>
       </P>
       <P *ngIf="item.pai != 0" style="white-space: initial; max-width: 80%;">
-        <b style="display: block;">{{ item.nome }}
+        <b style="display: block; color: #84888c">{{ item.nome }}
         </b>
-        <b>{{ item.nome_pai }}</b>
+        <b style="color:#3c3838">{{ item.nome_pai }}</b>
         <span *ngIf="item.local != null && item.local != 'none'" (click)="navigate(item.lat, item.lng)"> está em
           <b>
             <ion-icon name="ios-pin" style="font-size: 1.5em"></ion-icon> {{ item.local }}</b>

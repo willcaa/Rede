@@ -73,7 +73,7 @@
           <ion-avatar item-start  *ngIf="getSrc(item.user_image) && item.pai == 0" >
             <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)" >
           </ion-avatar>
-          <ion-avatar item-start  *ngIf="getSrc(item.user_image) && item.pai != 0" style="border: solid; border-color: #fff; border-radius: 100%; position: absolute; left: 10%; width: 8%; height: 38%; top: 0px; min-width: 0px; min-height: 0px;">
+          <ion-avatar item-start  *ngIf="getSrc(item.user_image) && item.pai != 0" style="border: solid; border-color: #fff; border-radius: 100%; position: absolute; left: 10%; width: 8%; height: 35%; top: 0px; min-width: 0px; min-height: 0px;">
             <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)" style="width: 100%;height: 100%;">
           </ion-avatar>
           <ion-avatar item-start *ngIf="getSrc(item.image_pai) && item.pai != 0">
@@ -84,11 +84,15 @@
               <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin" style="font-size: 1.5em"></ion-icon> {{ item.local }}</b></span>
             </P>
             <P *ngIf="item.pai != 0" style="white-space: initial; max-width: 80%;">
-              <b style="display: block;">{{ item.nome }}</b>
-              <b>{{ item.nome_pai }}</b>
+              <b style="display: block; color: #84888c">{{ item.nome }}</b>
+              <b style="color:#3c3838">{{ item.nome_pai }}</b>
               <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em <b><ion-icon name="ios-pin" style="font-size: 1.5em"></ion-icon> {{ item.local }}</b></span>
             </P>
-          <p>{{ item.atras }}</p>
+          <p>{{ item.atras }} <span> - Publicado 
+            <img *ngIf="item.public == 0" src="assets/imgs/amigos.png" alt="" style=" width: 25px; display: inline; height: 16px;">
+            <img *ngIf="item.public == 1" src="assets/imgs/publico.png" alt="" style=" width: 30px; display: inline; height: 18px;">
+          </span></p>
+          
         </ion-item>
         <ion-card-content>
           <p>{{ item.texto }}</p>
