@@ -110,10 +110,13 @@
   </ion-segment>
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
     <ion-item>
-      <ion-avatar item-start *ngIf="getSrc(item.user_image)">
-        <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)">
+      <ion-avatar item-start  *ngIf="getSrc(item.user_image) && item.pai == 0" >
+        <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)" >
       </ion-avatar>
-      <ion-avatar item-start *ngIf="getSrc(item.image_pai)">
+      <ion-avatar item-start  *ngIf="getSrc(item.user_image) && item.pai != 0" style="border: solid; border-color: #fff; border-radius: 100%; position: absolute; left: 10%; width: 8%; height: 65%; top: -3px; min-width: 0px; min-height: 0px;">
+        <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)" style="width: 100%;height: 100%;">
+      </ion-avatar>
+      <ion-avatar item-start *ngIf="getSrc(item.image_pai) && item.pai != 0">
         <img [src]="getSrc(item.image_pai)">
       </ion-avatar>
       <P *ngIf="item.pai == 0" style="white-space: initial; max-width: 80%;">
