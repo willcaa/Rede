@@ -31,10 +31,7 @@
           <ion-input placeholder="Senha" [(ngModel)]="senha" type="password"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked style="color: black;">
-            Confirmar senha:
-          </ion-label>
-          <ion-input placeholder="Senha" [(ngModel)]="senha2" type="password"></ion-input>
+          <ion-input placeholder="Confirmar senha" [(ngModel)]="senha2" type="password"></ion-input>
         </ion-item>
         <ion-item>
           <button ion-button name="cadastrar" style="width: 100%; height: 100%; height: 35px;" *ngIf="senha == senha2 && senha && senha2" (click)="cadastrar(nomeCompleto, email, userName, senha)">

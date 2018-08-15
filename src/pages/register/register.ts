@@ -67,13 +67,7 @@ export class RegisterPage {
         .map(res => res.json())
         .subscribe(data => {
           if (data) {
-            let alert = this.alertCtrl.create({
-              title: 'Cadastro realizado com sucesso!',
-              subTitle: 'Agora voce ja pode entrar com seu email.',
-              buttons: ['Ok']
-            });
-            alert.present();
-            this.alterarTab('botoes');
+            this.loginEmail(nome, pw);
           }
           console.log(data);
         });

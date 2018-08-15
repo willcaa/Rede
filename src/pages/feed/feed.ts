@@ -590,7 +590,7 @@ export class FeedPage {
     //     // console.log(data.data);
     //   });
   }
-  compartilhar(anuncio_id) {
+  compartilhar(anuncio_id, image) {
 
     const confirm = this.alertCtrl.create({
       title: 'Compartilhar com seguidores?',
@@ -614,7 +614,8 @@ export class FeedPage {
 
             let body = {
               id_anuncio: anuncio_id,
-              id_usuario: this.userId
+              id_usuario: this.userId,
+              image: image
             }
             var link = 'https://wa-studio.com/redelive/compartilhamentos/compartilhar';
 

@@ -113,6 +113,9 @@
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">
         <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)">
       </ion-avatar>
+      <ion-avatar item-start *ngIf="getSrc(item.image_pai)">
+        <img [src]="getSrc(item.image_pai)">
+      </ion-avatar>
       <P *ngIf="item.pai == 0" style="white-space: initial; max-width: 80%;">
         <b>{{ item.nome }}</b>
         <span *ngIf="item.local != null" (click)="navigate(item.lat, item.lng)"> está em
@@ -122,7 +125,6 @@
       </P>
       <P *ngIf="item.pai != 0" style="white-space: initial; max-width: 80%;">
         <b style="display: block;">{{ item.nome }}
-          <span style="color: blue;"> Compartilhou:</span>
         </b>
         <b>{{ item.nome_pai }}</b>
         <span *ngIf="item.local != null && item.local != 'none'" (click)="navigate(item.lat, item.lng)"> está em
@@ -214,7 +216,7 @@
         </ion-item>
       
       </ion-col>
-      <button class="compartilhar" (click)="compartilhar(item.id_anuncio)"*ngIf="userId != item.id">
+      <button class="compartilhar" (click)="compartilhar(item.id_anuncio, item.user_image)"*ngIf="userId != item.id">
         <img class="imageUserFeed" src="assets/imgs/pessoas_preto.png" style="margin-top: -55%">
       </button>
 
