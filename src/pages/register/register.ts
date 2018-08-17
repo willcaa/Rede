@@ -27,6 +27,8 @@ export class RegisterPage {
   loginId: number;
   pageId:any;
   user: any;
+  canLogin: any = "not yet";
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage, private alertCtrl: AlertController) {
     this.pageId="botoes";
     this.http = http;
@@ -72,6 +74,19 @@ export class RegisterPage {
           console.log(data);
         });
     
+  }
+
+  checkEmail(email){
+    let check = email.split("@", 2);
+    console.log(check);
+    if(check.length > 1){
+      let test = check[1].split(".", 2);
+      console.log(test);
+      if(test.length > 1 && test[1] == "com"){
+        this.canLogin = " ";
+      }
+
+    }
   }
 
   setStorage(data) {
@@ -151,7 +166,7 @@ export class RegisterPage {
   ionViewDidLoad() {
     
     console.log('ionViewDidLoad RegisterPage');
-    // this.cadastrar();
+    this.canLogin = "not yet";
   }
 
   novaSenha(email){

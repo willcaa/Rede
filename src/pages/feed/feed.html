@@ -77,7 +77,7 @@
     </ion-buttons>
   </ion-toolbar> -->
 
-  <ion-toolbar id="sendbar" color="light" style="height: 45px; min-height: 0px;" (click)="goImage()">
+  <ion-toolbar class="sendbar" id="sendbar" color="light" (click)="goImage()">
     <ion-item>
       <p>O que gostaria de informar ?</p>
       <ion-avatar item-start *ngIf="getSrc(foto_usuario)">
@@ -143,13 +143,18 @@
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
-    <ion-card-content style="padding: 0">
+    <ion-card-content style="padding: 0" *ngIf="item.vermais == 0">
       <p style="padding: 5px 10px;">{{ item.texto }}</p>
+    </ion-card-content>
+    <ion-card-content style="padding: 0" *ngIf="item.vermais == 1">
+        <p style="padding: 5px 10px; overflow: hidden;" [ngStyle]="{'height': alturaVerMais}">{{ item.texto }}</p>
+      <button ion-button class="vermais" (click)="vermais()" style="background-color: transparent; box-shadow: none; color: grey;" *ngIf="boolVer == 'false'">Ver mais...</button>
+      <button ion-button class="vermais" (click)="vermais()" style="background-color: transparent; box-shadow: none; color: grey;" *ngIf="boolVer == 'true'">Ver menos...</button>
     </ion-card-content>
 
     <div style="overflow: hidden; max-height: 500px;" class="img_card" *ngIf="item.tipo == 1">
       <ion-row>
-        <ion-col *ngFor="let imagem of item.imagem" style="min-width: 50%">
+        <ion-col *ngFor="let imagem of item.imagem" style="min-width: 50%; padding-left: 0px;padding-bottom: 0px;padding-right: 0px;padding-top: 0px;">
           <ion-item *ngIf="item.hasImage == true && item.imagem.length > 1" [style.background-image]="getBackground(imagem.img_name)"
             style="background-size: cover; background-position-y: center; height: 200px; width: 100%; min-width: 45%;" (click)="ampliarImagem(imagem.img_name, item.texto)"></ion-item>
           <ion-item *ngIf="item.hasImage == true && item.imagem.length <= 1" [style.background-image]="getBackground(imagem.img_name)"

@@ -35,6 +35,7 @@ export class AboutPage {
   public local_array3: any;
   public local_array4: any;
   public local_array5: any;
+  
   public userImagem: any;
   public usuario: any;
   public nome_usuario: any;
@@ -68,6 +69,7 @@ export class AboutPage {
   flag_play = true;
   aImages: any;
   images: any = [];
+  public length: any;
   image1: any = null;
   image2: any = null;
   image3: any = null;
@@ -120,6 +122,20 @@ export class AboutPage {
   cahngeLink(){
     this.linkPost = this.linkPost;
     console.log(this.youtubeSaneado);
+  }
+  public altura = '10';
+  checkLength(text){
+    console.log(text.length)
+    this.length = text.length;
+    if(this.length >= 99 && this.length < 350){
+
+      this.altura = this.length.toString() + 'px';
+
+    }else if(this.length < 99){
+      this.altura = '10';
+    }else{
+      this.altura = '350';
+    }
   }
 
   async checkIn() {
@@ -628,8 +644,10 @@ export class AboutPage {
         if (!this.imageFileName) {
           this.imageFileName = "none";
         }
-        
-        
+        let vermais = false;
+        if(this.texto.length > 240){
+          vermais = true;
+        }
         let body = {
           imagem: this.imagesNames,
           texto: this.texto,
@@ -645,7 +663,8 @@ export class AboutPage {
           youtubeA: this.youtubeSaneado,
           video: this.videoFileName,
           local: this.checkin,
-          pub: pub
+          pub: pub,
+          vermais: vermais
         }
         
         var link = 'https://wa-studio.com/redelive/anuncios/criarRefri';
@@ -658,8 +677,8 @@ export class AboutPage {
           this.imagesNames = '';
           //this.presentToast(data.data);
           this.loading.dismiss().then( results =>{
-            this.navCtrl.push('FeedPage', { id: this.userId, slide: this.localBack});
           });
+          this.navCtrl.push('FeedPage', { id: this.userId, slide: this.localBack});
         console.log(data.data);
       
       }, (err) => {

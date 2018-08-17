@@ -47,12 +47,14 @@ export class FeedPage {
   options: GeolocationOptions;
   currentPos: Geoposition;
   public items = [];
+  public boolVer = 'false';
   public local_array: any;
   public local_array1: any;
   public local_array2: any;
   public local_array3: any;
   public local_array4: any;
   public local_array5: any;
+  public alturaVerMais = '240px';
   public teste: any;
   public bairro: string;
   public cidade: string;
@@ -142,6 +144,18 @@ export class FeedPage {
   goPesquisar(id) {
     this.navCtrl.push(PesquisarPage, { userId: id });
   }
+  
+  vermais(){
+    if(this.boolVer == 'false'){
+      this.alturaVerMais = '700px';
+      this.boolVer = 'true';
+    }
+    else if(this.boolVer == 'true'){
+      this.alturaVerMais = '240px';
+      this.boolVer = 'false';
+    }
+  }
+  
 
   getUserInfo(user) {
     let headers = new Headers();
@@ -599,12 +613,14 @@ export class FeedPage {
       buttons: [
         {
           text: 'Não',
+          cssClass: 'nao',
           handler: () => {
             console.log('Disagree clicked');
           }
         },
         {
           text: 'Sim',
+          
           handler: () => {
             let headers = new Headers();
             headers.append('Access-Control-Allow-Origin', '*');
@@ -801,36 +817,31 @@ export class FeedPage {
       perfilId: perfilId, userId: this.userId, image: image, nome: nome, post: post, seguindo: seguindo, seguidores: seguidores
     });
   }
+ 
   scrollingFun(e) {
-    if (e.scrollTop > 1) {
-      if (document.getElementsByClassName("scroll-content")[1]) {
+    // console.log(e);
+    console.log(document.getElementsByClassName("scroll-content"));
+    if(e.scrollTop > 1) {
         document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '100px';
-      }
-      if (document.getElementsByClassName("scroll-content")[0]) {
         document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '100px';
-      }
-      if (document.querySelector("#sendbar")) {
-        document.querySelector("#sendbar")['style'].display = 'none';
-      }
-
+        document.getElementsByClassName("scroll-content")[2]['style'].marginTop = '100px';
+        document.getElementsByClassName("sendbar")[0]['style'].display = 'none';
+        document.getElementsByClassName("sendbar")[1]['style'].display = 'none';
+        console.log("hide");
     }
-    if (e.deltaY < 0) {
-      if (document.getElementsByClassName("scroll-content")[1]) {
+    else if(e.deltaY < 0) {
         document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '145px';
-      }
-      if (document.getElementsByClassName("scroll-content")[0]) {
         document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '145px';
-      }
-      if (document.querySelector("#sendbar")) {
-        document.querySelector("#sendbar")['style'].display = 'flex';
-      }
-
+        document.getElementsByClassName("scroll-content")[2]['style'].marginTop = '145px';
+        document.getElementsByClassName("sendbar")[0]['style'].display = 'flex'; 
+        document.getElementsByClassName("sendbar")[1]['style'].display = 'flex'; 
+        console.log("show");
     }//if 
   }//scrollingFun
   goMap(lat, lng, img, user) {
     console.log(img, user);
     let data = {
-      lat: lat,
+      lat: lat, 
       lng: lng,
       imagem: img,
       user: user
@@ -932,7 +943,7 @@ export class FeedPage {
       this.estado = data.results[0].address_components[5].short_name;
       this.pais = data.results[0].address_components[6].long_name;
     });
-
+    
 
     let body = {
       local: local,
@@ -984,7 +995,7 @@ export class FeedPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfoPerfilPage';
+    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

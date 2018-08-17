@@ -20,7 +20,7 @@ export class PublicarPage {
   public type: any;
   public tabId: any = "locais";
   public local: any;
-  public localChoose: any;
+  public localChoose: any = "padrao";
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.locais = this.viewCtrl.data.locais;
     this.locaisFull = this.viewCtrl.data.locaisFull;
