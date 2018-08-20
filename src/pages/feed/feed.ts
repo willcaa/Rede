@@ -77,6 +77,7 @@ export class FeedPage {
   public nome_usuario: any;
   public foto_usuario: any;
   public notificacoes_qts: any;
+  public progress: any;
   constructor(public platform: Platform, private iab: InAppBrowser, public navCtrl: NavController, private _sanitizer: DomSanitizer, public popoverCtrl: PopoverController, public alertCtrl: AlertController, public navParams: NavParams, public http: Http, private geolocation: Geolocation, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, private storage: Storage, private photoViewer: PhotoViewer, private toastCtrl: ToastController) {
     if (navParams.get("slide")) {
       this.local = navParams.get("slide");
@@ -100,6 +101,10 @@ export class FeedPage {
           this.range = 1000;
           break;
       }
+    }
+    if(this.navParams.get("progress")){
+      this.progress = true;
+      this.loadProgress();
     }
     this.http = http;
     this.start = "";
@@ -145,6 +150,12 @@ export class FeedPage {
     this.navCtrl.push(PesquisarPage, { userId: id });
   }
   
+  loadProgress(){
+    setTimeout(() =>{
+      this.progress = false;
+    }, 6000)
+  }
+
   vermais(){
     if(this.boolVer == 'false'){
       this.alturaVerMais = '700px';
@@ -802,7 +813,23 @@ export class FeedPage {
     console.log(id_perfil);
   }
   goNotif(id_perfil = this.userId) {
+    
     this.navCtrl.push(NotificacoesPage, {userId: id_perfil});
+    let headers = new Headers();
+      headers.append('Access-Control-Allow-Origin', '*');
+      headers.append('Accept', 'application/json');
+      headers.append('content-type', 'application/json');
+
+      let body = {
+        id_usuario: this.userId,
+      }
+      var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
+
+      this.http.post(link, JSON.stringify(body), { headers: headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          this.notificacoes_qts = 0;
+        });
     console.log(id_perfil);
   }
   goPagePerfil(perfilId, image, nome) {
@@ -819,23 +846,40 @@ export class FeedPage {
   }
  
   scrollingFun(e) {
-    // console.log(e);
-    console.log(document.getElementsByClassName("scroll-content"));
-    if(e.scrollTop > 1) {
-        document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '100px';
-        document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '100px';
-        document.getElementsByClassName("scroll-content")[2]['style'].marginTop = '100px';
-        document.getElementsByClassName("sendbar")[0]['style'].display = 'none';
-        document.getElementsByClassName("sendbar")[1]['style'].display = 'none';
+    console.log(e);
+    
+    if(e.scrollTop > 1 && e.deltaY >=0) {
+        for(let i=0; i < document.getElementsByClassName("scroll-content").length; i++){
+          console.log(i);
+          document.getElementsByClassName("scroll-content")[i]['style'].marginTop = '100px';
+        } 
+        // document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '100px';
+        // document.getElementsByClassName("scroll-content")[2]['style'].marginTop = '100px';
+        for(let i = 0; i < document.getElementsByClassName("sendbar").length; i++){
+          document.getElementsByClassName("sendbar")[i]['style'].display = 'none';
+          console.log(i);
+        }
+        // document.getElementsByClassName("sendbar")[0]['style'].display = 'none';
+        // document.getElementsByClassName("sendbar")[1]['style'].display = 'none';
         console.log("hide");
     }
     else if(e.deltaY < 0) {
-        document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '145px';
-        document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '145px';
-        document.getElementsByClassName("scroll-content")[2]['style'].marginTop = '145px';
-        document.getElementsByClassName("sendbar")[0]['style'].display = 'flex'; 
-        document.getElementsByClassName("sendbar")[1]['style'].display = 'flex'; 
-        console.log("show");
+      for(let i=0; i < document.getElementsByClassName("scroll-content").length; i++){
+        document.getElementsByClassName("scroll-content")[i]['style'].marginTop = '145px';
+        console.log(i);
+      } 
+        // document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '145px';
+        // document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '145px';
+        // document.getElementsByClassName("scroll-content")[2]['style'].marginTop = '145px';
+
+        for(let i = 0; i < document.getElementsByClassName("sendbar").length; i++){
+          document.getElementsByClassName("sendbar")[i]['style'].display = 'flex';
+          console.log(i);
+        }
+
+        // document.getElementsByClassName("sendbar")[0]['style'].display = 'flex'; 
+        // document.getElementsByClassName("sendbar")[1]['style'].display = 'flex'; 
+        // console.log("show");
     }//if 
   }//scrollingFun
   goMap(lat, lng, img, user) {

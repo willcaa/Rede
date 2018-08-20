@@ -21,6 +21,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import $ from 'jquery';
 
 import { PesquisarPage } from '../pesquisar/pesquisar';
+import { FeedPage } from '../feed/feed';
 
 /**
  * Generated class for the NotificacoesPage page.
@@ -95,7 +96,8 @@ export class NotificacoesPage {
       .map(res => res.json())
       .subscribe(data => {
         this.notificacoesPost = data;
-        console.log(this.notificacoes);
+        console.log(this.notificacoesPost);
+        // console.log(this.notificacoes);
         this.getUserInfo(this.userId);
       });
   }
@@ -107,12 +109,9 @@ export class NotificacoesPage {
     this.viewCtrl.dismiss(data);
   }
 
-  goPerfil(perfil_id) {
-    let data = {
-      tipo: "perfil",
-      id: perfil_id
-    }
-    this.viewCtrl.dismiss(data);
+  goPerfil(perfil_id, image, nome) {
+    console.log(perfil_id);
+    this.navCtrl.push(PerfilPage, {userId: this.userId, perfilId: perfil_id, image: image, nome: nome});
   }
   getBackground(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
@@ -125,7 +124,9 @@ export class NotificacoesPage {
   goPesquisar(id) {
     this.navCtrl.push(PesquisarPage, { userId: id });
   }
-
+  goFeed(){
+    this.navCtrl.push(FeedPage);
+  }
   getUserInfo(user) {
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -311,37 +312,37 @@ export class NotificacoesPage {
     });
 
   }
-  notificacoes(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverNotificacoesComponent, { id_usuario: this.userId }, { cssClass: "popover-notificacoes" });
-    popover.present({
-      ev: myEvent
-    });
+  // notificacoes(myEvent) {
+  //   let popover = this.popoverCtrl.create(PopoverNotificacoesComponent, { id_usuario: this.userId }, { cssClass: "popover-notificacoes" });
+  //   popover.present({
+  //     ev: myEvent
+  //   });
 
-    popover.onDidDismiss(popoverData => {
-      if (popoverData) {
-        if (popoverData.tipo == "perfil") {
-          this.goPerfil(popoverData.id);
-        } else if (popoverData.tipo == "post") {
-          this.comments(popoverData.id);
-        }
-      }
-      let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin', '*');
-      headers.append('Accept', 'application/json');
-      headers.append('content-type', 'application/json');
+  //   popover.onDidDismiss(popoverData => {
+  //     if (popoverData) {
+  //       if (popoverData.tipo == "perfil") {
+  //         this.goPerfil(popoverData.id, this.);
+  //       } else if (popoverData.tipo == "post") {
+  //         this.comments(popoverData.id);
+  //       }
+  //     }
+  //     let headers = new Headers();
+  //     headers.append('Access-Control-Allow-Origin', '*');
+  //     headers.append('Accept', 'application/json');
+  //     headers.append('content-type', 'application/json');
 
-      let body = {
-        id_usuario: this.userId,
-      }
-      var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
+  //     let body = {
+  //       id_usuario: this.userId,
+  //     }
+  //     var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
 
-      this.http.post(link, JSON.stringify(body), { headers: headers })
-        .map(res => res.json())
-        .subscribe(data => {
-          this.notificacoes_qts = 0;
-        });
-    })
-  }
+  //     this.http.post(link, JSON.stringify(body), { headers: headers })
+  //       .map(res => res.json())
+  //       .subscribe(data => {
+  //         this.notificacoes_qts = 0;
+  //       });
+  //   })
+  // }
 
   doRefresh(refresher) {
     setTimeout(() => {

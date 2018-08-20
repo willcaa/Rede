@@ -195,7 +195,7 @@ export class PerfilPage {
       });
   }
 
-  getStats() {
+  async getStats() {
     let headers = new Headers();
       headers.append('Access-Control-Allow-Origin', '*');
       headers.append('Accept', 'application/json');

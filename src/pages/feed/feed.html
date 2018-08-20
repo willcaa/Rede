@@ -97,7 +97,7 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
     </ion-refresher-content>
   </ion-refresher>
-
+  
   <ion-segment class="TopOrNewsContainer" *ngIf="local == 'amigos' || local == 'bairro'" [(ngModel)]="topOrNews" color="primary">
     <ion-segment-button class="TopOrNewsButton" value="News" (ionSelect)="alterarTopNews()"(click)="showRadio();" *ngIf="buttonId == 'News'">
         <ion-icon class="clok" name="ios-time-outline"></ion-icon>
@@ -108,6 +108,11 @@
       Top
     </ion-segment-button>
   </ion-segment>
+  <div id="progress-bar" class="progress-bar" *ngIf="progress">
+  </div>
+  <P style="margin-left: 25%" *ngIf="progress">
+    Seu post está sendo publicado
+  </P>
   <ion-card *ngFor="let item of feed" style="width: 100%; margin: 10px 0;">
     <ion-item>
       <ion-avatar item-start  *ngIf="getSrc(item.user_image) && item.pai == 0" >

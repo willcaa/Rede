@@ -1,4 +1,19 @@
 page-feed {
+
+  @keyframes progress {
+    from {width: 0%;}
+    to {width: 100%;}
+  }
+
+  .progress-bar{
+    background: #00a2e8;
+    animation-name: progress;
+    animation-duration: 6s;  
+    height: 2%;
+    border-bottom-right-radius: 10%;
+    border-top-right-radius: 10%
+  }
+  
   .logofofa{
     border: none;
     box-shadow: none;

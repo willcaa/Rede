@@ -169,7 +169,7 @@ export class AboutPage {
       }
 
     publish(data){
-      this.presentLoadingDefault();
+      // this.presentLoadingDefault();
       if(this.postType == 1){
         this.uploadImage1();
       }
@@ -195,6 +195,7 @@ export class AboutPage {
           this.cidade = data.results[0].address_components[3].long_name;
           this.estado = data.results[0].address_components[5].short_name;
           this.pais = data.results[0].address_components[6].long_name;
+          console.log(mod);
           this.publish(mod);
         }, (err) => {
           this.getUserPosition(),
@@ -210,13 +211,13 @@ export class AboutPage {
       
         this.loading.present();
       }
-      presentLoadingCarregando() {
-        this.loading = this.loadingCtrl.create({
-          content: 'Preparando Imagem...'
-        });
+      // presentLoadingCarregando() {
+      //   this.loading = this.loadingCtrl.create({
+      //     content: 'Preparando Imagem...'
+      //   });
       
-        this.loading.present();
-      }
+      //   this.loading.present();
+      // }
       presentLoadingCarregandoVideo() {
         this.loading = this.loadingCtrl.create({
           content: 'Carregando Vídeo...'
@@ -225,7 +226,7 @@ export class AboutPage {
         this.loading.present();
       }
       
-      getImages(){
+      async getImages(){
         let options = {
           maximumImagesCount: 5,
           width: 800,
@@ -233,7 +234,7 @@ export class AboutPage {
           quality: 75,
         }
       
-        this.imagePicker.getPictures(options).then( results =>{
+        this.imagePicker.getPictures(options).then(results =>{
           console.log(results);
           this.images = [];
           this.image1 = results[0];
@@ -245,6 +246,11 @@ export class AboutPage {
             this.images.push(results[i]);
           };
         });
+
+        let toast = this.toastCtrl.create({
+          message: this.image1
+        });
+        toast.present();
       }
 
       getVideo() {
@@ -328,7 +334,7 @@ export class AboutPage {
         this.navCtrl.push('FeedPage');
       }
 
-      getPicture() {
+      async getPicture() {
         const options: CameraOptions = {
           quality: 70,
           destinationType: this.camera.DestinationType.FILE_URI,
@@ -355,6 +361,10 @@ export class AboutPage {
           console.log(err);
           this.presentToast(err);
         });
+        let toast = this.toastCtrl.create({
+          message: this.image1
+        });
+        toast.present();
       }
     
         uploadVideo() {
@@ -388,8 +398,8 @@ export class AboutPage {
           }
 
       uploadImage1(){
-        this.presentLoadingCarregando();
-        if(this.image1 != null) {
+        
+        if(this.image1) {
           const fileTransfer: FileTransferObject = this.transfer.create();
           
           let formattedDate = new Date();
@@ -636,6 +646,7 @@ export class AboutPage {
       
       
       sendPost(lat, long, pub) {
+        this.navCtrl.push('FeedPage', { id: this.userId, slide: this.localBack, progress: true});
         // this.presentToast(this.pais);
         let headers = new Headers();
         headers.append('Access-Control-Allow-Origin', '*');
@@ -676,9 +687,8 @@ export class AboutPage {
           this.publicando = false;
           this.imagesNames = '';
           //this.presentToast(data.data);
-          this.loading.dismiss().then( results =>{
-          });
-          this.navCtrl.push('FeedPage', { id: this.userId, slide: this.localBack});
+          this.navCtrl.push('FeedPage', { id: this.userId, slide: this.localBack, progress: false});
+          
         console.log(data.data);
       
       }, (err) => {
