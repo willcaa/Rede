@@ -1,14 +1,14 @@
 {
   "name": "redelive",
-  "app_id": "a3faf44b",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
   },
+  "type": "ionic-angular",
   "proxies": [
     {
-        "path": "*",
-        "proxyUrl": "http://13.58.158.77"
+      "path": "*",
+      "proxyUrl": "http://13.58.158.77"
     }
-  ]
+  ],
+  "pro_id": "a3faf44b"
 }
