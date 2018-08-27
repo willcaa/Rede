@@ -182,7 +182,6 @@ page-perfil {
     right: -3px;
     top: 7.5px;
     width: 25vw;
-    height: 25px;
     text-transform: none;
     letter-spacing: 1px;
     animation: reduzir_btn 1s;
@@ -190,6 +189,7 @@ page-perfil {
     background-color: #00a2e8;
     color: white;
     float: right;
+    height: 17px;
   }
   .seguir{
     position: fixed;

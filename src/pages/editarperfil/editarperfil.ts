@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams ,AlertController, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { Http, Headers } from '@angular/http';
+import { DomSanitizer } from '@angular/platform-browser';
 import { PopoverController } from 'ionic-angular';
 import { PopoverDenunciarComponent } from '../../components/popover-denunciar/popover-denunciar';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
@@ -11,7 +11,6 @@ import { StatsPage } from '../stats/stats';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { BrMaskerModule } from 'brmasker-ionic-3';
 
 /**
  * Generated class for the EditarperfilPage page.
@@ -48,6 +47,7 @@ export class EditarperfilPage {
   enviandoSeguir: boolean;
   public imageURI: any;
   imageFileName: any;
+  coverFileName: any;
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
     public photoViewer: PhotoViewer, 
     public popoverCtrl: PopoverController, 
@@ -388,8 +388,8 @@ export class EditarperfilPage {
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       correctOrientation: true,
-      targetWidth: 400,
-      targetHeight: 400
+      targetWidth: 1080,
+      targetHeight: 1080
     }
   
     this.camera.getPicture(options).then((imageData) => {
@@ -443,10 +443,10 @@ export class EditarperfilPage {
       let y = formattedDate.getFullYear();
       let random = Math.floor(Math.random() * 1000000) + 100000;
       let random2 = Math.floor(Math.random() * 1000000) + 100000;
-      this.imageFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
+      this.coverFileName = d + "_" + m + "_" + y + "_" + random + "_" + random2 + ".jpg";
       let options: FileUploadOptions = {
         fileKey: 'imagem',
-        fileName: this.imageFileName,
+        fileName: this.coverFileName,
         chunkedMode: false,
         mimeType: "multipart/form-data",
         headers: {}
@@ -492,7 +492,7 @@ export class EditarperfilPage {
     headers.append('content-type', 'application/json');
 
     let body = {
-      image: 'https://wa-studio.com/redelive/uploads/' + this.imageFileName,
+      image: 'https://wa-studio.com/redelive/uploads/' + this.coverFileName,
       id: this.userId
     }
     console.log(this.userId);

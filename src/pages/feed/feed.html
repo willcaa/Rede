@@ -122,7 +122,7 @@
         <img [src]="getSrc(item.user_image)" (click)="PerfilPage(item.id)" style="width: 100%;height: 100%;">
       </ion-avatar>
       <ion-avatar item-start *ngIf="getSrc(item.image_pai) && item.pai != 0">
-        <img [src]="getSrc(item.image_pai)">
+        <img [src]="getSrc(item.image_pai.user_image)">
       </ion-avatar>
       <P *ngIf="item.pai == 0" style="white-space: initial; max-width: 80%;">
         <b>{{ item.nome }}</b>
@@ -209,13 +209,13 @@
 
       <ion-col *ngIf="userId != item.id">
         
-        <button class="btn-star" >
+        <button class="btn-star" style="margin-left: 12%;">
           <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
         </button>
-        <button class="btn-star" style="margin-right: -13px;margin-left: 1%;">
+        <button class="btn-star">
           <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
         </button>
-        <button class="btn-star" style="margin-right: -5%;">
+        <button class="btn-star">
           <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
         </button>
         <button class="btn-star" >

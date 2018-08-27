@@ -42,6 +42,7 @@ export class AboutPage {
   public foto_usuario: any;
   public topOrNews: any = 'Top';
   public publicando: boolean;
+  dataPost: any;
   userId: any;
   texto:string = "";
   public imageURI:any = [];
@@ -170,12 +171,8 @@ export class AboutPage {
 
     publish(data){
       // this.presentLoadingDefault();
-      if(this.postType == 1){
-        this.uploadImage1();
-      }
-      this.sendPost(this.currentPos.coords.latitude, this.currentPos.coords.longitude, data);
-      
-
+      this.dataPost = data;
+      this.uploadImage1();
     }
     async getLocal(){
       let profileModal = this.modalCtrl.create('PublicarPage', {locais: this.locais, locaisFull: this.locaisFull});
@@ -183,6 +180,7 @@ export class AboutPage {
       
 
       profileModal.onDidDismiss(data => {  
+        this.checkin = data.local;
         this.carregaLocal(data);
       });
     }
@@ -324,6 +322,7 @@ export class AboutPage {
           this.cidade = data.results[0].address_components[3].long_name;
           this.estado = data.results[0].address_components[5].short_name;
           this.pais = data.results[0].address_components[6].long_name;
+          this.sendPost(this.currentPos.coords.latitude, this.currentPos.coords.longitude, this.dataPost);
         }, (err) => {
           this.getUserPosition(),
           this.loading.dismiss();
@@ -340,8 +339,8 @@ export class AboutPage {
           destinationType: this.camera.DestinationType.FILE_URI,
           sourceType: this.camera.PictureSourceType.CAMERA,
           correctOrientation: true,
-          targetWidth: 800,
-          targetHeight: 800
+          targetWidth: 1080,
+          targetHeight: 1080
         }
       
         this.camera.getPicture(options).then((imageData) => {

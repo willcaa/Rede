@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Sanitizer } from '@angular/core';
 import { IonicPage, LoadingController, NavController, ToastController, NavParams, Content, AlertController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -28,6 +28,7 @@ export class RegisterPage {
   pageId:any;
   user: any;
   canLogin: any = "not yet";
+  _sanitizer: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: Http, public loadingCtrl: LoadingController, private fb: Facebook, private storage: Storage, private alertCtrl: AlertController) {
     this.pageId="botoes";
@@ -69,7 +70,7 @@ export class RegisterPage {
         .map(res => res.json())
         .subscribe(data => {
           if (data) {
-            this.loginEmail(nome, pw);
+            //this.loginEmail(nome, pw);
           }
           console.log(data);
         });
@@ -96,9 +97,15 @@ export class RegisterPage {
     this.save('meuid', data.id);
     this.goFeed(data);
   }
+
   private save(key: string, data: string) {
     return this.storage.set(key, data);
   }
+
+  private get(key: string) {
+    return this.storage.get(key);
+  }
+
   goFeed(data) {
     this.navCtrl.push('FeedPage',{
       data: data
@@ -118,15 +125,18 @@ export class RegisterPage {
       .catch(e => console.log('Error logging into Facebook', e));
   }
 
-  loginEmail(user, pw){
+  loginEmail(email, pw, nome = "none", img = null, fb = false){
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
     headers.append('content-type', 'application/json');
 
     let body = {
-      user: user,
-      pw: pw
+      login: email,
+      nome: nome,
+      pw: pw,
+      imagem: img,
+      fb: fb
     }
 
     let link = 'https://wa-studio.com/redelive/usuarios/loginEmail';
@@ -152,11 +162,16 @@ export class RegisterPage {
       .catch(e => console.log('Error logout from Facebook', e));
   }
 
+  getSrc(link) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(link);
+  }
+  
   getUserDetail(userid) {
     this.fb.api("/"+userid+"/?fields=picture.width(9999).height(9999),id,email,name,gender",["public_profile"])
       .then(res => {
         this.users = res;
-        this.cadastrar(this.users.name ,this.users.email, this.users.name, this.users.picture.data.url);
+        this.loginEmail(this.users.email, "none", this.users.name, this.users.picture.data.url, true);
+        //"facebookGeral"
       })
       .catch(e => {
         console.log(e);

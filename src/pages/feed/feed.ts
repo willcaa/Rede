@@ -6,7 +6,6 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { AboutPage } from '../about/about';
 import { CommentsPage } from '../comments/comments';
 import { PerfilPage } from '../perfil/perfil';
-import { PreperfilPage } from '../preperfil/preperfil';
 import { MapPage } from '../map/map';
 import { LaunchNavigator, LaunchNavigatorOptions, AppSelectionOptions, RememberChoiceOptions } from '@ionic-native/launch-navigator';
 import { Storage } from '@ionic/storage';
@@ -38,6 +37,7 @@ declare var globalLng: any;
 })
 export class FeedPage {
   @ViewChild("contentRef") contentHandle: Content;
+  public unregisterBackButtonAction: any;
   texto: string;
   public feed: any;
   public btnTop: boolean;
@@ -105,6 +105,13 @@ export class FeedPage {
     if(this.navParams.get("progress")){
       this.progress = true;
       this.loadProgress();
+      this.storage.get('meuid')
+      .then(res => {
+        this.getUserInfo(res);
+        console.log(res);
+        this.userId = res;
+      }
+      );
     }
     this.http = http;
     this.start = "";
@@ -138,6 +145,17 @@ export class FeedPage {
       }
       );
   }
+
+  public initializeBackButtonCustomHandler(): void {
+    this.unregisterBackButtonAction = this.platform.registerBackButtonAction(() => {
+        this.customHandleBackButton();
+    }, 10);
+  }
+
+  private customHandleBackButton(): void {
+      alert("NOPE!");
+  }
+
   getBackground(image) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
@@ -415,25 +433,18 @@ export class FeedPage {
 
   alterarLocal(val) {
     if (val == "range") {
-      switch (this.range) {
-        case 0:
-          this.local = "proximidade";
-          break;
-        case 200:
-          this.local = "amigos";
-          break;
-        case 400:
-          this.local = "bairro";
-          break;
-        case 600:
-          this.local = "cidade";
-          break;
-        case 800:
-          this.local = "estado";
-          break;
-        case 1000:
-          this.local = "pais";
-          break;
+      if(this.range <= 100) {
+        this.local = "proximidade";
+      } else if(this.range > 100 && this.range <= 300) {
+        this.local = "amigos";
+      } else if(this.range > 300 && this.range <= 500) {
+        this.local = "bairro";
+      } else if(this.range > 500 && this.range <= 700) {
+        this.local = "cidade";
+      } else if(this.range > 700 && this.range <= 900) {
+        this.local = "estado";
+      } else if(this.range > 900) {
+        this.local = "pais";
       }
     } else {
       switch (val) {
@@ -1112,8 +1123,14 @@ export class FeedPage {
   ionViewDidLoad() {
     this.index_feed = 0;
     this.getUserPosition();
-
+    this.getUserInfo(this.userId);
+    this.initializeBackButtonCustomHandler();
   }
+
+  ionViewWillLeave() {
+    // Unregister the custom back button action for this page
+    this.unregisterBackButtonAction && this.unregisterBackButtonAction();
+}
 
 
 }

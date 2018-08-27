@@ -172,14 +172,14 @@ export class PerfilPage {
       //this.perfil_nome = this.anuncios[0]['nome'];
         //this.perfil_imagem = this.anuncios[0]['user_image'];
         this.usuario_imagem = this.usuario['user_image'];
-        console.log(this.usuario);
+        console.log("usuario ",this.usuario);
         if(this.usuario.cover_image != ""){
           this.cover = this.usuario['cover_image'];
         }
         else{
           this.cover = "https://wa-studio.com/redelive/uploads/fundo_perfil.jpg";
         }
-        console.log(this.cover);
+        console.log("cover ",this.cover);
         this.checkLink();
       }, (err) => {
         // this.carregarPerfil();

@@ -28,7 +28,7 @@
 <ion-content padding>
   <ion-card *ngFor="let item of notificacoesPost">
     <ion-item  *ngIf="item.tipo_notificacao == 'avaliou'" style="left: -5%; width: 112%;">
-      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando)">
+      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando, item.user_image, item.nome)">
         <img src="item.user_image" alt="">
       </ion-avatar>
       <img src="assets/imgs/star.png" style="position:  absolute;width: 43px;left: 20%;top: 0%;"alt="">
@@ -45,7 +45,7 @@
     </ion-item>
 
     <ion-item *ngIf="item.tipo_notificacao == 'comentario'" style="left: -5%; width: 112%;">
-      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando, item.image, item.nome)">
+      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando, item.user_image, item.nome)">
         <img src="{{ item.user_image }}" alt="">
       </ion-avatar>
       <img src="assets/imgs/chat.png" style="position:  absolute;width: 43px;left: 20%;top: 0%;"alt="">
@@ -62,7 +62,7 @@
     </ion-item>
 
     <ion-item  *ngIf="item.tipo_notificacao == 'seguidor'" style="left: -5%; width: 112%;">
-      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando, item.image, item.nome)">
+      <ion-avatar item-start style="margin-top: 10px !important;" (click)="goPerfil(item.id_notificando, item.user_image, item.nome)">
         <img src="{{ item.user_image }}" alt="">
       </ion-avatar>
       <img src="assets/imgs/local_amarelo.png" style="position:  absolute;width: 39px;left: 20%;top: 0%;"alt="">
@@ -73,7 +73,7 @@
         começou a te seguir
       </p>
 
-      <button ion-button class="butVer" (click)="goPerfil(item.id_notificando, item.image, item.nome)">
+      <button ion-button class="butVer" (click)="goPerfil(item.id_notificando, item.user_image, item.nome)">
         Ver
       </button>
     </ion-item>

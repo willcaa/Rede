@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams ,ViewController} from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PreperfilPage } from '../preperfil/preperfil';
 import { PopoverController } from 'ionic-angular';
 import { PopoverNotificacoesComponent } from '../../components/popover-notificacoes/popover-notificacoes';
 import { CommentsPage } from '../comments/comments';
 import { NotificacoesPage } from '../notificacoes/notificacoes';
+import { PerfilPage } from '../perfil/perfil';
 
 @IonicPage()
 @Component({
@@ -75,14 +75,14 @@ export class PesquisarPage {
     })
   }
 
-  goPagePreperfil(perfilId, image, nome,post,seguindo,seguidores){
+  goPerfilPage(perfilId, image, nome, post, seguindo, seguidores) {
     console.log(perfilId, image, nome);
-    this.navCtrl.push(PreperfilPage, {
-        perfilId: perfilId, userId: this.userId , image: image, nome: nome,post: post, seguindo: seguindo,seguidores :seguidores
+    this.navCtrl.push(PerfilPage, {
+      perfilId: perfilId, userId: this.userId, image: image, nome: nome, post: post, seguindo: seguindo, seguidores: seguidores
     });
   }
 
-  public prePerfilPage(id_usuario) {
+  public PerfilPage(id_usuario) {
     console.log(id_usuario);
     let headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
@@ -99,7 +99,7 @@ export class PesquisarPage {
     .map(res => res.json())
     .subscribe(data => {
       console.log("AQUI", data)
-      this.goPagePreperfil(data.usuario.id, data.usuario.user_image, data.usuario.nome,data.posts,data.seguido,data.seguidor);
+      this.goPerfilPage(data.usuario.id, data.usuario.user_image, data.usuario.nome,data.posts,data.seguido,data.seguidor);
   
     });
   }

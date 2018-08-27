@@ -21,7 +21,7 @@
                       <ion-badge *ngIf="notificacoes_qts != 0" id="notifications-badge" color="primary">{{ notificacoes_qts }}</ion-badge>
                     </ion-icon>
                   </button>
-                  <button ion-button icon-only (click)="prePerfilPage(userId)">
+                  <button ion-button icon-only (click)="PerfilPage(userId)">
                     <img class="imageUserFeed" src="assets/imgs/user_round.png" style="height: 35px;">
                   </button>
                 </ion-buttons>
@@ -58,7 +58,7 @@
       </div> -->
       <ion-searchbar [(ngModel)]="nomePesquisa" (ngModelChange)="pesquisar(nomePesquisa)" placeholder="Pesquisar"></ion-searchbar>
   <ion-card *ngFor="let item of usuarios">
-    <ion-item (click)="prePerfilPage(item.id)">
+    <ion-item (click)="PerfilPage(item.id)">
       <ion-avatar item-start *ngIf="getSrc(item.user_image)">
         <img  [src]="getSrc(item.user_image)">
       </ion-avatar>

@@ -102,11 +102,9 @@ export class NotificacoesPage {
       });
   }
   goPost(post_id) {
-    let data = {
-      tipo: "post",
-      id: post_id
-    }
-    this.viewCtrl.dismiss(data);
+    this.navCtrl.push(CommentsPage, {
+      anuncio: post_id
+    });
   }
 
   goPerfil(perfil_id, image, nome) {

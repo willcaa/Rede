@@ -6,24 +6,21 @@
 -->
 <ion-header>
     <ion-navbar color="transparent">
-      <button ion-button style="position:  absolute;top: 0%;right:  0%;width: 85px;height:  40px;font-size: 40px;background: transparent;box-shadow: none;"(click)="presentPopover($event)" >
+      <button *ngIf="perfilId == userId" ion-button style="position:  absolute;top: 0%;right:  0%;width: 85px;height:  40px;font-size: 40px;background: transparent;box-shadow: none;"(click)="presentPopover($event)" >
         <ion-icon name="ios-more"></ion-icon>
       </button>
     </ion-navbar>
   </ion-header>
 
 <ion-content padding class="pagetabs">
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para Recarregar" refreshingSpinner="crescent" refreshingText="Recarregando...">
-        </ion-refresher-content>
-      </ion-refresher>
+
     <div style="width: 100% ; height: 91%; ">
       
       <!-- <div class="fundo-perfil" [style.background-image]="getImage(cover)"> -->
-        <img [src]="getFundo(cover)" alt="" style="height:  101%;">
+        <img [src]="getFundo(cover)" alt="" style="height:  100vh;">
           <div style="width: 100%; height: 60%; margin-top: -109%; background-image: linear-gradient(rgba(123, 153, 175, 0.07), rgba(0, 83, 150, 1)); position: absolute; max-height: 440px;">
           
-        <div style="top: 27%;position: absolute;width: 100%;">
+        <div style="top: 0;position: absolute;width: 100%;">
           <button class="imagem_fundo" [style.background-image]="getImage(perfil_imagem)" style="margin-left: 0px;" (click)="alterarImagemPerfil()">
             
           </button>
@@ -37,7 +34,7 @@
           </div>
           <!-- <img src="assets/imgs/plug.png" class="botao-denunciar" (click)="presentPopover($event)"> -->
           
-          <button *ngIf="perfilId == userId" ion-button icon-only class="botao-editar-nome"  (click)="EditarperfilPage(perfilId)"><img src="assets/imgs/edit.png" alt=""></button>
+          <button *ngIf="perfilId == userId" ion-button icon-only class="botao-editar-nome"  (click)="EditarperfilPage(perfilId)"><ion-icon name="md-create"></ion-icon></button>
           <!-- <button ion-button icon-only class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == false" (click)="goEditarPerfil()"><ion-icon name="brush"></ion-icon></button>-->
           <button ion-button class="botao-editar-nome" *ngIf="perfilId == userId && alteraNome == true" (click)="goEditarPerfil();">OK</button> 
           <ion-list >
@@ -133,26 +130,27 @@
             <a class="texto-excluir" *ngIf="userId == item.id" (click)="deleteAnuncio(item)">Excluir</a>
           </ion-col>
   
-          <ion-col col-5 *ngIf="userId != item.id">
-            <button class="btn-star">
-              <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+          <ion-col *ngIf="userId != item.id">
+        
+            <button class="btn-star" style="margin-left: 12%;">
+              <ion-icon class="icon-star" name="md-star" value="1" [ngStyle]="{'color': item.qtd >= 1 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
             </button>
             <button class="btn-star">
-              <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+              <ion-icon class="icon-star" name="md-star" value="2" [ngStyle]="{'color': item.qtd >= 2 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
             </button>
             <button class="btn-star">
-              <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+              <ion-icon class="icon-star" name="md-star" value="3" [ngStyle]="{'color': item.qtd >= 3 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
             </button>
-            <button class="btn-star">
-              <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+            <button class="btn-star" >
+              <ion-icon class="icon-star" name="md-star" value="4" [ngStyle]="{'color': item.qtd >= 4 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
             </button>
-            <button class="btn-star">
-              <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#7f7f7f'}"></ion-icon>
+            <button class="btn-star" >
+              <ion-icon class="icon-star" name="md-star" value="5" [ngStyle]="{'color': item.qtd >= 5 ? '#ffc90e' : '#c1c1c1'}"></ion-icon>
             </button>
-            <ion-item class="item-post-range">
-              <ion-range class="post-range" min="1" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
+            <ion-item class="item-post-range" style="margin-top: -4%;left: -27px;width: 109%;background: none;">
+              <ion-range class="post-range" min="0" max="5" step="1" [(ngModel)]="item.qtd" (ionChange)="enviarEstrelas(item.qtd, item.id_anuncio)"></ion-range>
             </ion-item>
-  
+          
           </ion-col>
           <ion-col col-7 style="border-left: 1px solid #7f7f7f; margin: 3px 0;">
             <button style="padding: 0; float: left;" (click)="comments( item.id_anuncio )" ion-button icon-left clear small>
