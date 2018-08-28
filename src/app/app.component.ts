@@ -19,10 +19,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleLightContent();
       statusBar.backgroundColorByHexString("#412e6d");
-      // screen.lock(screen.ORIENTATIONS.PORTRAIT);
+      screen.lock(screen.ORIENTATIONS.PORTRAIT);
       storage.get('meuid').then((val) => {
         if(val) {
-          this.rootPage = RegisterPage;
+          this.rootPage = FeedPage;
         } else {
           this.rootPage = RegisterPage;
         } 

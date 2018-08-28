@@ -180,8 +180,11 @@ export class AboutPage {
       
 
       profileModal.onDidDismiss(data => {  
-        this.checkin = data.local;
-        this.carregaLocal(data);
+        if(data.local && data.type){
+          this.checkin = data.local;
+          console.log(data)
+          this.carregaLocal(data.type);
+        }
       });
     }
 

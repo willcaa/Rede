@@ -16,38 +16,41 @@
 
 <ion-content padding>
     <ion-list radio-group [(ngModel)]="localChoose">
-        <ion-item>
-          <ion-radio value="padrao" checked="true" item-left></ion-radio>
+        <ion-item (click)="closeCallback()">
+          <ion-radio value="padrao" checked="true" item-left (click)="closeCallback()"></ion-radio>
           <ion-label>Padrão</ion-label>
+          <ion-label class="distanci" style="margin-top: 16px; left: 15%;">(Mostrar distancia e localzação da postagem)</ion-label>
         </ion-item>
-        <ion-item>
-          <ion-radio value="local" item-left></ion-radio>
+        <ion-item (click)="closeCallback()">
+          <ion-radio value="local" item-left (click)="closeCallback()"></ion-radio>
           <ion-label>Ocultar local</ion-label>
+          <ion-label class="distanci" style="margin-top: 16px; left: 15%;">(Mostrar apenas distancia)</ion-label>
         </ion-item>
       </ion-list>
-      <p class="distanci" style="top: 7%; left: 15%;">(Mostrar distancia e localzação da postagem)</p>
-      <p class="distanci" style="top: 15%; left: 15%;">(Mostrar apenas distancia)</p>
-      <ion-searchbar [(ngModel)]="terms" item-right placeholder="Pesquisar" (ngModelChange)="searchLocal(terms)" *ngIf="localChoose == 'padrao'"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="terms" item-right placeholder="Pesquisar" (ngModelChange)="searchLocal(terms)" *ngIf="localChoose == 'padrao'" (click)="keyboardCheck()"></ion-searchbar>
       <h4 class="prox" *ngIf="localChoose == 'padrao'">Nas proximidades:</h4>
       <ion-list radio-group style="margin-bottom: -10% !important;" *ngIf="tabId == 'locais' && localChoose == 'padrao'" [(ngModel)]="local">
-          <ion-item *ngFor="let item of locais" style="margin-bottom: -10px;">
-              <ion-radio value="{{item}}" item-left></ion-radio>
+          <ion-item *ngFor="let item of locaisFull" style="margin-bottom: -10px;" (click)="closeCallback()">
+              <ion-radio value="{{item}}" item-left (click)="closeCallback()"></ion-radio>
               <ion-label>{{item}}</ion-label>
             </ion-item>
         </ion-list>
       <ion-list radio-group style="margin-bottom: -10% !important;" *ngIf="tabId == 'locaisFull'" [(ngModel)]="local">
-          <ion-item *ngFor="let item of search" style="margin-bottom: -10px;">
-              <ion-radio value="{{item}}" item-left></ion-radio>
+          <ion-item *ngFor="let item of search" style="margin-bottom: -10px;" (click)="closeCallback()">
+              <ion-radio value="{{item}}" item-left (click)="closeCallback()"></ion-radio>
               <ion-label>{{item}}</ion-label>
             </ion-item>
-        </ion-list>
-        <ion-list style="background-color: #00a2e8;height: 21%; position: fixed;width: 100%;left: 16px; bottom: 14%;">
-            <ion-item style="background-color: transparent">
-                <p style="color: #fff;font-size: 13px;font-weight: 400;">Compartilhar com:</p>
-                <button ion-button class="but" style="margin-top: 0px; margin-bottom: 0px; padding-right: 0px; right: 0px; padding-left: 0px; margin-left: 7px;"><img src="assets/imgs/pessoasbot.png" alt="" style="width: 50px;" (click)="setType('followers')"></button>
-                  <h6 style="position:  absolute;left: 41%;color: #fff;font-size: 16px;">Seguidores</h6>
-                <button ion-button class="but"><img src="assets/imgs/logofundo.png" alt="" style="width: 50px;" (click)="setType('public')"></button>
-                  <h6 style="position:  relative;left: 78%;color: #fff;font-size: 16px; right: 0px; margin-bottom: 9px; margin-top: 0px;">Publico</h6>
-               </ion-item>
           </ion-list>
-</ion-content>
+          <ion-list style="background-color: #00a2e8;height: 240px; position: fixed; top: calc(100% - 240px); width: 100%;" class="keyboard-open">
+            <ion-item style="background-color: transparent">
+              <p style="color: #fff;font-size: 13px;font-weight: 400;">Compartilhar com:</p>
+              <button ion-button class="but" style="margin-top: 0px; margin-bottom: 0px; padding-right: 0px; right: 0px; padding-left: 0px; margin-left: 7px;"><img src="assets/imgs/pessoasbot.png" alt="" style="width: 50px;" (click)="setType('followers')"></button>
+                <h6 style="position: absolute;left: 41%;color: #fff;font-size: 16px;">Seguidores</h6>
+              <button ion-button class="but"><img src="assets/imgs/logofundo.png" alt="" style="width: 50px;" (click)="setType('public')"></button>
+                <h6 style="position: relative;left: 78%;color: #fff;font-size: 16px; right: 0px; margin-bottom: 9px; margin-top: 0px;">Publico</h6>
+            </ion-item>
+          </ion-list>  
+      </ion-content>
+      
+      <!-- <ion-footer style="background-color: #00a2e8;height: 240px;">
+      </ion-footer> -->

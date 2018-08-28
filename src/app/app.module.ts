@@ -18,6 +18,7 @@ import { FileChooser } from '@ionic-native/file-chooser';
 import { FileOpener } from '@ionic-native/file-opener';
 import { FilePath } from '@ionic-native/file-path';
 
+
 import { AboutPage } from '../pages/about/about';
 import { PesquisarPage } from '../pages/pesquisar/pesquisar';
 import { CommentsPage } from '../pages/comments/comments';
