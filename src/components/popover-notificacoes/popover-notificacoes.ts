@@ -33,7 +33,7 @@ export class PopoverNotificacoesComponent {
     let body = {
       id_usuario: this.userId
     }
-    var link = 'https://wa-studio.com/redelive/usuarios/notificacoes';
+    var link = 'http://18.217.102.194/usuarios/notificacoes';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

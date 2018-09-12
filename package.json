@@ -63,7 +63,7 @@
     "cordova-plugin-filechooser": "^1.0.1",
     "cordova-plugin-filepath": "^1.4.2",
     "cordova-plugin-geolocation": "^4.0.1",
-    "cordova-plugin-googlemaps": "^2.3.11",
+    "cordova-plugin-googlemaps": "^2.4.1",
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git#2.7.0",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic-webview": "^1.2.1",
@@ -93,7 +93,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.1.11",
+    "@ionic/app-scripts": "^3.2.0",
     "typescript": "^2.8.3"
   },
   "description": "An Ionic project",

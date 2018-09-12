@@ -35,7 +35,7 @@ export class StatsPage {
       tipo: this.tipo
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/Stats';
+    let link = 'http://18.217.102.194/usuarios/Stats';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

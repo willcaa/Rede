@@ -94,7 +94,7 @@ export class PerfilPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfoEditarperfil';
+    let link = 'http://18.217.102.194/usuarios/getUserInfoEditarperfil';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -136,7 +136,7 @@ export class PerfilPage {
      //   anuncio: postId,
      //   liker: this.userId
      // }
-     // var link = 'https://wa-studio.com/redelive/likes/top';
+     // var link = 'http://18.217.102.194/likes/top';
  
      // this.http.post(link, JSON.stringify(body), { headers: headers })
      //   // .map(res => res.json())
@@ -161,7 +161,7 @@ export class PerfilPage {
     }
     console.log('l');
     
-    let link = 'https://wa-studio.com/redelive/usuarios/perfil';
+    let link = 'http://18.217.102.194/usuarios/perfil';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -177,7 +177,7 @@ export class PerfilPage {
           this.cover = this.usuario['cover_image'];
         }
         else{
-          this.cover = "https://wa-studio.com/redelive/uploads/fundo_perfil.jpg";
+          this.cover = "http://18.217.102.194/uploads/fundo_perfil.jpg";
         }
         console.log("cover ",this.cover);
         this.checkLink();
@@ -205,7 +205,7 @@ export class PerfilPage {
         id_usuario: this.perfilId
       }
 
-      let link = 'https://wa-studio.com/redelive/usuarios/getStats';
+      let link = 'http://18.217.102.194/usuarios/getStats';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -231,7 +231,7 @@ export class PerfilPage {
         id_usuario: id_usuario
       }
 
-      let link = 'https://wa-studio.com/redelive/usuarios/DeixarSeguir';
+      let link = 'http://18.217.102.194/usuarios/DeixarSeguir';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -251,7 +251,7 @@ export class PerfilPage {
         id_usuario: id_usuario
       }
 
-      let link = 'https://wa-studio.com/redelive/usuarios/seguir';
+      let link = 'http://18.217.102.194/usuarios/seguir';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -276,7 +276,7 @@ export class PerfilPage {
         id_usuario: id_usuario
       }
 
-      let link = 'https://wa-studio.com/redelive/usuarios/checkSeguidor';
+      let link = 'http://18.217.102.194/usuarios/checkSeguidor';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -287,7 +287,7 @@ export class PerfilPage {
   }
 
   ampliarImagem(imagem, texto = "") {
-    this.photoViewer.show('https://wa-studio.com/redelive/uploads/'+imagem,texto,{share:true});
+    this.photoViewer.show('http://18.217.102.194/uploads/'+imagem,texto,{share:true});
   }
 
   getImage(image) {
@@ -341,7 +341,7 @@ export class PerfilPage {
               id_anuncio: post.id_anuncio,
             }
 
-            let link = 'https://wa-studio.com/redelive/anuncios/deletar';
+            let link = 'http://18.217.102.194/anuncios/deletar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
             .map(res => res.json())
@@ -400,7 +400,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/setUsuarioProfissional';
+    let link = 'http://18.217.102.194/ferramentas/setUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -425,7 +425,7 @@ export class PerfilPage {
       id: this.perfilId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/getUsuarioProfissional';
+    let link = 'http://18.217.102.194/ferramentas/getUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -508,9 +508,9 @@ export class PerfilPage {
         mimeType: "multipart/form-data",
         headers: {}
       }
-      fileTransfer.upload(fileToUp, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+      fileTransfer.upload(fileToUp, encodeURI('http://18.217.102.194/upload.php'), options)
           .then((data) => {
-            this.perfil_imagem = 'https://wa-studio.com/redelive/uploads/' + this.imageFileName;
+            this.perfil_imagem = 'http://18.217.102.194/uploads/' + this.imageFileName;
             console.log(data+" Uploaded Successfully");
             this.setImage();
 
@@ -527,11 +527,11 @@ export class PerfilPage {
     headers.append('content-type', 'application/json');
 
     let body = {
-      image: 'https://wa-studio.com/redelive/uploads/' + this.imageFileName,
+      image: 'http://18.217.102.194/uploads/' + this.imageFileName,
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/setNewImage';
+    let link = 'http://18.217.102.194/ferramentas/setNewImage';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -564,7 +564,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/updateUsuarioProfissional';
+    let link = 'http://18.217.102.194/ferramentas/updateUsuarioProfissional';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -597,7 +597,7 @@ export class PerfilPage {
         id: this.userId
       }
 
-      let link = 'https://wa-studio.com/redelive/ferramentas/setNovoNome';
+      let link = 'http://18.217.102.194/ferramentas/setNovoNome';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -624,7 +624,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/setUsuarioPessoal';
+    let link = 'http://18.217.102.194/ferramentas/setUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -650,7 +650,7 @@ export class PerfilPage {
       id: this.perfilId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/getUsuarioPessoal';
+    let link = 'http://18.217.102.194/ferramentas/getUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -687,7 +687,7 @@ export class PerfilPage {
       id: this.userId
     }
     console.log(this.userId);
-    let link = 'https://wa-studio.com/redelive/ferramentas/updateUsuarioPessoal';
+    let link = 'http://18.217.102.194/ferramentas/updateUsuarioPessoal';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())

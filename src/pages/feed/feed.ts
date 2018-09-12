@@ -153,7 +153,7 @@ export class FeedPage {
   }
 
   private customHandleBackButton(): void {
-      alert("NOPE!");
+      //alert("NOPE!");
   }
 
   getBackground(image) {
@@ -196,7 +196,7 @@ export class FeedPage {
       id_usuario: user
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
+    let link = 'http://18.217.102.194/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -258,7 +258,7 @@ export class FeedPage {
       id_usuario: this.userId,
     }
 
-    var link = 'https://wa-studio.com/redelive/usuarios/notificacoes_qtd';
+    var link = 'http://18.217.102.194/usuarios/notificacoes_qtd';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -280,7 +280,7 @@ export class FeedPage {
       n_estrelas: stars
     }
 
-    var link = 'https://wa-studio.com/redelive/anuncios/stars';
+    var link = 'http://18.217.102.194/anuncios/stars';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -320,7 +320,7 @@ export class FeedPage {
                 id_usuario: this.userId,
                 id_anuncio: post.id_anuncio
               }
-              var link = 'https://wa-studio.com/redelive/post/denunciar';
+              var link = 'http://18.217.102.194/post/denunciar';
 
               this.http.post(link, JSON.stringify(body), { headers: headers })
                 .map(res => res.json())
@@ -357,7 +357,7 @@ export class FeedPage {
           id_usuario: this.userId,
           id_anuncio: post.id
         }
-        var link = 'https://wa-studio.com/redelive/anuncios/denunciarAnuncio';
+        var link = 'http://18.217.102.194/anuncios/denunciarAnuncio';
 
         this.http.post(link, JSON.stringify(body), { headers: headers })
           .map(res => res.json())
@@ -393,7 +393,7 @@ export class FeedPage {
       let body = {
         id_usuario: this.userId,
       }
-      var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
+      var link = 'http://18.217.102.194/usuarios/limparNotificacoes';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -420,7 +420,7 @@ export class FeedPage {
     let body = {
       id_usuario: this.userId
     }
-    var link = 'https://wa-studio.com/redelive/anuncios/seguidores';
+    var link = 'http://18.217.102.194/anuncios/seguidores';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -524,7 +524,7 @@ export class FeedPage {
               id_anuncio: post.id_anuncio,
             }
 
-            let link = 'https://wa-studio.com/redelive/anuncios/deletar';
+            let link = 'http://18.217.102.194/anuncios/deletar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
               .map(res => res.json())
@@ -589,7 +589,7 @@ export class FeedPage {
         anuncio: postId,
         liker: this.userId
       }
-      var link = 'https://wa-studio.com/redelive/likes/top';
+      var link = 'http://18.217.102.194/likes/top';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -618,7 +618,7 @@ export class FeedPage {
     //   anuncio: postId,
     //   liker: this.userId
     // }
-    // var link = 'https://wa-studio.com/redelive/likes/top';
+    // var link = 'http://18.217.102.194/likes/top';
     // this.http.post(link, JSON.stringify(body), { headers: headers })
     //   // .map(res => res.json())
     //   .subscribe(data => {
@@ -655,7 +655,7 @@ export class FeedPage {
               id_usuario: this.userId,
               image: image
             }
-            var link = 'https://wa-studio.com/redelive/compartilhamentos/compartilhar';
+            var link = 'http://18.217.102.194/compartilhamentos/compartilhar';
 
             this.http.post(link, JSON.stringify(body), { headers: headers })
               .map(res => res.json())
@@ -688,7 +688,7 @@ export class FeedPage {
     //   anuncio: postId,
     //   liker: this.userId
     // }
-    // var link = 'https://wa-studio.com/redelive/likes/top';
+    // var link = 'http://18.217.102.194/likes/top';
     // this.http.post(link, JSON.stringify(body), { headers: headers })
     //   // .map(res => res.json())
     //   .subscribe(data => {
@@ -755,7 +755,7 @@ export class FeedPage {
       tipo: tipo,
       hach: hach
     }
-    var link = 'https://wa-studio.com/redelive/anuncios/puxarTodos';
+    var link = 'http://18.217.102.194/anuncios/puxarTodos';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -834,7 +834,7 @@ export class FeedPage {
       let body = {
         id_usuario: this.userId,
       }
-      var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
+      var link = 'http://18.217.102.194/usuarios/limparNotificacoes';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -1014,7 +1014,7 @@ export class FeedPage {
       tipo: tipo,
       usuario: this.userId
     }
-    var link = 'https://wa-studio.com/redelive/anuncios/criar';
+    var link = 'http://18.217.102.194/anuncios/criar';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -1050,7 +1050,7 @@ export class FeedPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
+    let link = 'http://18.217.102.194/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -1071,7 +1071,7 @@ export class FeedPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
+    let link = 'http://18.217.102.194/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

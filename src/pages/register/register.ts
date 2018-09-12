@@ -65,7 +65,7 @@ export class RegisterPage {
         pw: pw,
         imagem: 'none'
       }
-      var link = 'https://wa-studio.com/redelive/usuarios/cadastrar';
+      var link = 'http://18.217.102.194/usuarios/cadastrar';
       this.http.post(link, body, { headers: headerx })
         .map(res => res.json())
         .subscribe(data => {
@@ -139,7 +139,7 @@ export class RegisterPage {
       fb: fb
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/loginEmail';
+    let link = 'http://18.217.102.194/usuarios/loginEmail';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())
@@ -194,7 +194,7 @@ export class RegisterPage {
       email: email,
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/esqueciSenha';
+    let link = 'http://18.217.102.194/usuarios/esqueciSenha';
     
     this.http.post(link, JSON.stringify(body), { headers: headers })
       .map(res => res.json())

@@ -65,7 +65,7 @@ export class PesquisarPage {
       let body = {
         id_usuario: this.userId,
       }
-      var link = 'https://wa-studio.com/redelive/usuarios/limparNotificacoes';
+      var link = 'http://18.217.102.194/usuarios/limparNotificacoes';
 
       this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -93,7 +93,7 @@ export class PesquisarPage {
       id_usuario: id_usuario
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfoPreperfil';
+    let link = 'http://18.217.102.194/usuarios/getUserInfoPreperfil';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -115,7 +115,7 @@ export class PesquisarPage {
       nome: texto
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getAllUsersByName';
+    let link = 'http://18.217.102.194/usuarios/getAllUsersByName';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
@@ -147,7 +147,7 @@ export class PesquisarPage {
     //   anuncio: postId,
     //   liker: this.userId
     // }
-    // var link = 'https://wa-studio.com/redelive/likes/top';
+    // var link = 'http://18.217.102.194/likes/top';
     // this.http.post(link, JSON.stringify(body), { headers: headers })
     //   // .map(res => res.json())
     //   .subscribe(data => {

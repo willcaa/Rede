@@ -181,6 +181,11 @@ export class AboutPage {
 
       profileModal.onDidDismiss(data => {  
         this.checkin = data.local;
+        if(data.type == "public") {
+          this.postType = 1;
+        } else if(data.type == "followers") {
+          this.postType = 0
+        }
         this.carregaLocal(data);
       });
     }
@@ -386,7 +391,7 @@ export class AboutPage {
               headers: {}
             }
             
-            fileTransfer.upload(this.videoId, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+            fileTransfer.upload(this.videoId, encodeURI('http://18.217.102.194/upload.php'), options)
             .then((data) => {
               console.log(data+" Uploaded Successfully");
               this.getUserPosition();
@@ -417,9 +422,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image1, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+          fileTransfer.upload(this.image1, encodeURI('http://18.217.102.194/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
+            this.imagesNames.push('http://18.217.102.194/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image2 && this.image2 != null){
               this.uploadImage2();
@@ -457,9 +462,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image2, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+          fileTransfer.upload(this.image2, encodeURI('http://18.217.102.194/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
+            this.imagesNames.push('http://18.217.102.194/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image3 && this.image3 != null){
               this.uploadImage3();
@@ -498,9 +503,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image3, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+          fileTransfer.upload(this.image3, encodeURI('http://18.217.102.194/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
+            this.imagesNames.push('http://18.217.102.194/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image4 && this.image4 != null){
               this.uploadImage4();
@@ -538,9 +543,9 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image4, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+          fileTransfer.upload(this.image4, encodeURI('http://18.217.102.194/upload.php'), options)
           .then((data) => {
-            this.imagesNames.push('https://wa-studio.com/redelive/uploads/' + this.imageFileName);
+            this.imagesNames.push('http://18.217.102.194/uploads/' + this.imageFileName);
             console.log(data+" Uploaded Successfully");
             if(this.image5 && this.image5 != null){
               this.uploadImage5();
@@ -578,7 +583,7 @@ export class AboutPage {
             headers: {}
           }
           
-          fileTransfer.upload(this.image5, encodeURI('https://wa-studio.com/redelive/upload.php'), options)
+          fileTransfer.upload(this.image5, encodeURI('http://18.217.102.194/upload.php'), options)
           .then((data) => {
             if(this.image6 && this.image6 != null){
               console.log();
@@ -674,10 +679,11 @@ export class AboutPage {
           video: this.videoFileName,
           local: this.checkin,
           pub: pub,
-          vermais: vermais
+          vermais: vermais,
+          public: this.postType
         }
         
-        var link = 'https://wa-studio.com/redelive/anuncios/criarRefri';
+        var link = 'http://18.217.102.194/anuncios/criarRefri';
         // this.presentToast("antes");
         this.http.post(link, JSON.stringify(body), { headers: headers })
         .map(res => res.json())
@@ -706,7 +712,7 @@ export class AboutPage {
       id_usuario: this.userId
     }
 
-    let link = 'https://wa-studio.com/redelive/usuarios/getUserInfo';
+    let link = 'http://18.217.102.194/usuarios/getUserInfo';
 
     this.http.post(link, JSON.stringify(body), { headers: headers })
     .map(res => res.json())
