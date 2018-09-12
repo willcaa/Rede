@@ -180,21 +180,11 @@ export class AboutPage {
       
 
       profileModal.onDidDismiss(data => {  
-<<<<<<< HEAD
-        this.checkin = data.local;
-        if(data.type == "public") {
-          this.postType = 1;
-        } else if(data.type == "followers") {
-          this.postType = 0
-        }
-        this.carregaLocal(data);
-=======
         if(data.local && data.type){
           this.checkin = data.local;
           console.log(data)
           this.carregaLocal(data.type);
         }
->>>>>>> 41fe9441ad0d178bf62cd4c3b7ef744b53df0fa3
       });
     }
 
