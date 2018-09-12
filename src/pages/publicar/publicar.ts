@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,ViewController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,ViewController, Keyboard  } from 'ionic-angular';
+
+
 
 /**
  * Generated class for the PublicarPage page.
@@ -21,10 +23,10 @@ export class PublicarPage {
   public tabId: any = "locais";
   public local: any;
   public localChoose: any = "padrao";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public keyboard: Keyboard) {
     this.locais = this.viewCtrl.data.locais;
     this.locaisFull = this.viewCtrl.data.locaisFull;
-
+    this.keyboard.onClose(this.closeCallback);
   }
   searchLocal(terms){
     if(this.tabId == "locais"){
@@ -35,6 +37,11 @@ export class PublicarPage {
     }
     this.search = this.filterLocais(terms);
     console.log(this.search);
+  }
+  closeCallback() {
+    // call what ever functionality you want on keyboard close
+    console.log('Closing time');
+    document.getElementsByClassName("keyboard-open")[0]['style'].display = 'block';
   }
 
   filterLocais(terms){
@@ -51,6 +58,14 @@ export class PublicarPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicarPage');
+  }
+  keyboardCheck() {
+    if(this.keyboard.isOpen()){
+      document.getElementsByClassName("keyboard-open")[0]['style'].display = 'none';
+    }
+    else{
+      document.getElementsByClassName("keyboard-open")[0]['style'].display = 'true';
+    }
   }
   back() {
     if(this.localChoose == 'local'){

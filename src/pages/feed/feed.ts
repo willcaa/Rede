@@ -857,18 +857,15 @@ export class FeedPage {
   }
  
   scrollingFun(e) {
-    console.log(e);
     
     if(e.scrollTop > 1 && e.deltaY >=0) {
         for(let i=0; i < document.getElementsByClassName("scroll-content").length; i++){
-          console.log(i);
           document.getElementsByClassName("scroll-content")[i]['style'].marginTop = '100px';
         } 
         // document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '100px';
         // document.getElementsByClassName("scroll-content")[2]['style'].marginTop = '100px';
         for(let i = 0; i < document.getElementsByClassName("sendbar").length; i++){
           document.getElementsByClassName("sendbar")[i]['style'].display = 'none';
-          console.log(i);
         }
         // document.getElementsByClassName("sendbar")[0]['style'].display = 'none';
         // document.getElementsByClassName("sendbar")[1]['style'].display = 'none';
@@ -877,7 +874,7 @@ export class FeedPage {
     else if(e.deltaY < 0) {
       for(let i=0; i < document.getElementsByClassName("scroll-content").length; i++){
         document.getElementsByClassName("scroll-content")[i]['style'].marginTop = '145px';
-        console.log(i);
+
       } 
         // document.getElementsByClassName("scroll-content")[1]['style'].marginTop = '145px';
         // document.getElementsByClassName("scroll-content")[0]['style'].marginTop = '145px';
@@ -885,7 +882,6 @@ export class FeedPage {
 
         for(let i = 0; i < document.getElementsByClassName("sendbar").length; i++){
           document.getElementsByClassName("sendbar")[i]['style'].display = 'flex';
-          console.log(i);
         }
 
         // document.getElementsByClassName("sendbar")[0]['style'].display = 'flex'; 
